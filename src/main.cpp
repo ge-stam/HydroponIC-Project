@@ -160,7 +160,7 @@ void setup()
   lp.Init_LiquidPumps();
   
   
-  //Serial.println(date_buffer);
+  Serial.println(date_buffer);
   // Setup a function to be called every second for Blynk
   timer.setInterval(3000L, myTimerEvent);
 
