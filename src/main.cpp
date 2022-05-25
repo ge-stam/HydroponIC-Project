@@ -39,8 +39,10 @@ char auth[] = BLYNK_AUTH_TOKEN;
 char date_buffer[100];
 // Your WiFi credentials.
 // Set password to "" for open networks.
-char ssid[] = "Sensors";
-char pass[] = "sensorslab";
+//char ssid[] = "Sensors";
+//char pass[] = "sensorslab";
+char ssid[] = "HUAWEI Mate 20 lite";
+char pass[] = "e6c007a066d2";
 
 static unsigned long previous_time;
 static unsigned long current_time;
