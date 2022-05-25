@@ -15,6 +15,7 @@
 #include "WaterPump.h"
 #include "Sensors.h"
 #include "LiquidPumps.h"
+#include "EEPROM.h"
 // Template ID, Device Name and Auth Token are provided by the Blynk.Cloud
 // See the Device Info tab, or Template settings
 //#define BLYNK_TEMPLATE_ID           "TMPLavWBd3a0"
@@ -138,7 +139,7 @@ void setup()
   //Blynk.begin(auth, ssid, pass, IPAddress(147,102,21,114), 80);
   
   // connect to WiFi and get datte and time 
-  /*Serial.printf("Connecting to %s ", ssid);
+  Serial.printf("Connecting to %s ", ssid);
   WiFi.begin(ssid, pass);
   while (WiFi.status() != WL_CONNECTED) {
       delay(500);
@@ -148,23 +149,20 @@ void setup()
   //init and get the time
   configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
   printLocalTime();
-  //disconnect WiFi as it's no longer needed
-  WiFi.disconnect(true);
-  WiFi.mode(WIFI_OFF);
-  */
+  
+  
   /* Initialize sensors and parts */
   
+
+
   s.Init_sensors();
   wp.Init_WaterPump();
   wp.Set_WP_ON();
   lp.Init_LiquidPumps();
-  
-  
+
   Serial.println(date_buffer);
   // Setup a function to be called every second for Blynk
   timer.setInterval(3000L, myTimerEvent);
-
-  
 }
 
 void loop()
