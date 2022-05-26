@@ -106,11 +106,9 @@ BLYNK_CONNECTED()
 }
 
 // This function sends Arduino's uptime every second to Virtual Pin 2.
-void myTimerEvent()
+void HighFreqData()
 {
-  s.Read_sensors(); 
-  lp.check_ph();
-  lp.check_ec();
+  s.Read_high_freq_sensors(); 
   // You can send any value at any time.
   // Please don't send more that 10 values per second.
   Blynk.virtualWrite(V2, millis() / 1000);
@@ -118,21 +116,40 @@ void myTimerEvent()
   Blynk.virtualWrite(V5, s.Read_Hum());
   Blynk.virtualWrite(V6, s.Read_Light());
   Blynk.virtualWrite(V7, s.Read_DS18B20());
-  Blynk.virtualWrite(V8, s.Read_TDS());
-  Blynk.virtualWrite(V9, s.Read_PH());
   Blynk.virtualWrite(V12, date_buffer);
   if(wp.Get_WP_State()){
     Blynk.virtualWrite(V10, "ON");
-    }
-   else{
-    Blynk.virtualWrite(V10, "OFF");
-    }
-    
   }
+  else{
+    Blynk.virtualWrite(V10, "OFF");
+  }
+}
+
+void LowFreqData()
+{
+  s.Read_low_freq_sensors(); 
+  lp.check_ph();
+  lp.check_ec();
+
+  Blynk.virtualWrite(V8, s.Read_TDS());
+  Blynk.virtualWrite(V9, s.Read_PH());
+}
+
+void CloseOpenPumps()
+{
+  if(lp.get_PH_UP_state()){
+    lp.set_PH_UP_PUMP_OFF();
+  }
+  if(lp.get_PH_DOWN_state()){
+    lp.set_PH_DOWN_PUMP_OFF();
+  }
+  if(lp.get_EC_UP_state()){
+    lp.set_EC_UP_PUMP_OFF();
+  }
+}
 
 void setup()
 {
-
   Serial.begin(115200);
   /*Initialise Blynk*/
   Blynk.begin(auth, ssid, pass); 
@@ -154,17 +171,16 @@ void setup()
   
   
   /* Initialize sensors and parts */
-  
-
-
   s.Init_sensors();
   wp.Init_WaterPump();
-  wp.Set_WP_ON();
+  wp.Set_WP_OFF();
   lp.Init_LiquidPumps();
 
   Serial.println(date_buffer);
   // Setup a function to be called every second for Blynk
-  timer.setInterval(3000L, myTimerEvent);
+  timer.setInterval(2000L, HighFreqData);
+  timer.setInterval(10000L, LowFreqData);
+  timer.setInterval(11000L, CloseOpenPumps);
 }
 
 void loop()

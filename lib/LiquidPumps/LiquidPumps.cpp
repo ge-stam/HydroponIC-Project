@@ -31,30 +31,36 @@ int LiquidPumps::get_EC_UP_state(){
 
 void LiquidPumps::set_PH_UP_PUMP_ON(){
     digitalWrite(PH_UP_PIN, HIGH);
+    PH_UP_state = 1;
     Serial.println("PH UP PUMP STATE: ON ");
 }
 
 void LiquidPumps::set_PH_DOWN_PUMP_ON(){
     digitalWrite(PH_DOWN_PIN, HIGH);
+    PH_DOWN_state = 1;
     Serial.println("PH DOWN PUMP STATE: ON ");
 }
 
 void LiquidPumps::set_EC_UP_PUMP_ON(){
     digitalWrite(EC_UP_PIN, HIGH);
+    EC_UP_state = 1;
     Serial.println("PH UP PUMP STATE: ON ");
 }
 
 void LiquidPumps::set_PH_UP_PUMP_OFF(){
     digitalWrite(PH_UP_PIN, LOW);
+    PH_UP_state = 0;
     Serial.println("PH UP PUMP STATE: OFF ");
 }
 
 void LiquidPumps::set_PH_DOWN_PUMP_OFF(){
     digitalWrite(PH_DOWN_PIN, LOW);
+    PH_DOWN_state = 0;
     Serial.println("PH DOWN PUMP STATE: OFF ");
 }
 void LiquidPumps::set_EC_UP_PUMP_OFF(){
     digitalWrite(EC_UP_PIN, LOW);
+    EC_UP_state = 0;
     Serial.println("EC UP PUMP STATE: OFF");
 }
 

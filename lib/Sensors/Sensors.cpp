@@ -98,13 +98,11 @@ float Sensors::Read_PH(){
   return phValue;
 }
 
-void Sensors::Read_sensors(){
+void Sensors::Read_high_freq_sensors(){
   float light = Read_Light();       // Read light level
   float humidity = Read_Hum();      // Read humidity
   float temperature = Read_Temp();  // Read temperature as Celsius
   float water_temp = Read_DS18B20(); // Read water temperature
-  float tds_value = Read_TDS();     // Read TDS value
-  float ph_value = Read_PH();
   
   // Check if any reads failed and exit early (to try again).
   if (isnan(humidity) || isnan(temperature)) {
@@ -120,7 +118,13 @@ void Sensors::Read_sensors(){
   Serial.println(light);
   Serial.print("Water Temperature: ");
   Serial.print(water_temp);
-  Serial.print("°C ");
+  Serial.println("°C ");
+  }
+
+void Sensors::Read_low_freq_sensors(){
+  float tds_value = Read_TDS();     // Read TDS value
+  float ph_value = Read_PH();
+
   Serial.print("TDS Value: ");
   Serial.print(tds_value);
   Serial.print("ppm ");
@@ -128,4 +132,4 @@ void Sensors::Read_sensors(){
   Serial.print(ph_value);
   Serial.println("ppm ");
   Serial.println("");
-  }
+}
