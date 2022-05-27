@@ -39,10 +39,10 @@ char auth[] = BLYNK_AUTH_TOKEN;
 char date_buffer[100];
 // Your WiFi credentials.
 // Set password to "" for open networks.
-//char ssid[] = "Sensors";
-//char pass[] = "sensorslab";
-char ssid[] = "HUAWEI Mate 20 lite";
-char pass[] = "e6c007a066d2";
+char ssid[] = "Sensors";
+char pass[] = "sensorslab";
+//char ssid[] = "HUAWEI Mate 20 lite";
+//char pass[] = "e6c007a066d2";
 
 static unsigned long previous_time;
 static unsigned long current_time;
@@ -74,7 +74,6 @@ BLYNK_WRITE(V0)
 {
   // Set incoming value from pin V0 to a variable
   int value = param.asInt();
-
   // Update state
   Blynk.virtualWrite(V1, value);
 }
@@ -84,7 +83,6 @@ BLYNK_WRITE(V11)
 {
   // Set incoming value from pin V0 to a variable
   int value = param.asInt();
-
   // Update state
   if(value){
     Blynk.virtualWrite(V10, "ON");
@@ -117,12 +115,7 @@ void HighFreqData()
   Blynk.virtualWrite(V6, s.Read_Light());
   Blynk.virtualWrite(V7, s.Read_DS18B20());
   Blynk.virtualWrite(V12, date_buffer);
-  if(wp.Get_WP_State()){
-    Blynk.virtualWrite(V10, "ON");
-  }
-  else{
-    Blynk.virtualWrite(V10, "OFF");
-  }
+  
 }
 
 void LowFreqData()
@@ -132,7 +125,13 @@ void LowFreqData()
   lp.check_ec();
 
   Blynk.virtualWrite(V8, s.Read_TDS());
+  if(s.Read_TDS() > MAX_EC || s.Read_TDS() < MIN_EC){
+    Blynk.logEvent("ec_check");
+  }
   Blynk.virtualWrite(V9, s.Read_PH());
+  if(s.Read_PH() > MAX_PH || s.Read_PH() < MIN_PH){
+    Blynk.logEvent("ph_check");
+  }
 }
 
 void CloseOpenPumps()
@@ -187,15 +186,4 @@ void loop()
 {
   Blynk.run();
   timer.run();
-  // You can inject your own code or combine it with other sketches.
-  // Check other examples on how to communicate with Blynk. Remember
-  // to avoid delay() function!
-  /*current_time = millis();
-  if(current_time >= previous_time + ReadDataInterval){
-    s.Read_sensors(); 
-    lp.check_ph();
-    lp.check_ec();
-    previous_time = current_time; 
-  }*/
-  
 }
