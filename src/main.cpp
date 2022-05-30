@@ -16,6 +16,7 @@
 #include "Sensors.h"
 #include "LiquidPumps.h"
 #include "EEPROM.h"
+#include <Adafruit_NeoPixel.h>
 // Template ID, Device Name and Auth Token are provided by the Blynk.Cloud
 // See the Device Info tab, or Template settings
 //#define BLYNK_TEMPLATE_ID           "TMPLavWBd3a0"
@@ -39,8 +40,10 @@ char auth[] = BLYNK_AUTH_TOKEN;
 char date_buffer[100];
 // Your WiFi credentials.
 // Set password to "" for open networks.
-char ssid[] = "Sensors";
-char pass[] = "sensorslab";
+//char ssid[] = "Sensors";
+//char pass[] = "sensorslab";
+char ssid[] = "WIND_2.4G_12CA41";
+char pass[] = "U4T78YGG";
 //char ssid[] = "HUAWEI Mate 20 lite";
 //char pass[] = "e6c007a066d2";
 
@@ -49,6 +52,7 @@ static unsigned long current_time;
 static Sensors s;
 static WaterPump wp;
 static LiquidPumps lp;
+static Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, LED_RING_PIN, NEO_GRB + NEO_KHZ800);
 
 BlynkTimer timer;
 
@@ -168,7 +172,14 @@ void setup()
   configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
   printLocalTime();
   
-  
+  pixels.begin(); // This initializes the NeoPixel library.
+
+  for(int i=0;i<NUMPIXELS;i++)
+  {
+    // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
+    pixels.setPixelColor(i, pixels.Color(80,10,10)); // Moderately bright green color.
+    pixels.show(); // This sends the updated pixel color to the hardware.
+  }
   /* Initialize sensors and parts */
   s.Init_sensors();
   wp.Init_WaterPump();
