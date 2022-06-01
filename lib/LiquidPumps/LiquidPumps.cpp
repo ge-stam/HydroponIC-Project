@@ -44,7 +44,7 @@ void LiquidPumps::set_PH_DOWN_PUMP_ON(){
 void LiquidPumps::set_EC_UP_PUMP_ON(){
     digitalWrite(EC_UP_PIN, HIGH);
     EC_UP_state = 1;
-    Serial.println("PH UP PUMP STATE: ON ");
+    Serial.println("EC UP PUMP STATE: ON ");
 }
 
 void LiquidPumps::set_PH_UP_PUMP_OFF(){

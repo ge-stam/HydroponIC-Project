@@ -40,10 +40,10 @@ char auth[] = BLYNK_AUTH_TOKEN;
 char date_buffer[100];
 // Your WiFi credentials.
 // Set password to "" for open networks.
-//char ssid[] = "Sensors";
-//char pass[] = "sensorslab";
-char ssid[] = "WIND_2.4G_12CA41";
-char pass[] = "U4T78YGG";
+char ssid[] = "Sensors";
+char pass[] = "sensorslab";
+//char ssid[] = "WIND_2.4G_12CA41";
+//char pass[] = "U4T78YGG";
 //char ssid[] = "HUAWEI Mate 20 lite";
 //char pass[] = "e6c007a066d2";
 
@@ -98,6 +98,54 @@ BLYNK_WRITE(V11)
     }
 }
 
+// This function is called every time the Virtual Pin 0 state changes
+BLYNK_WRITE(V13)
+{
+  // Set incoming value from pin V0 to a variable
+  int value = param.asInt();
+  // Update state
+  if(value){
+    Blynk.virtualWrite(V16, "ON");
+    lp.set_PH_UP_PUMP_ON();
+    }
+   else{
+    Blynk.virtualWrite(V16, "OFF");
+    lp.set_PH_UP_PUMP_OFF();
+    }
+}
+
+// This function is called every time the Virtual Pin 0 state changes
+BLYNK_WRITE(V14)
+{
+  // Set incoming value from pin V0 to a variable
+  int value = param.asInt();
+  // Update state
+  if(value){
+    Blynk.virtualWrite(V17, "ON");
+    lp.set_PH_DOWN_PUMP_ON();
+    }
+   else{
+    Blynk.virtualWrite(V17, "OFF");
+    lp.set_PH_DOWN_PUMP_OFF();
+    }
+}
+
+// This function is called every time the Virtual Pin 0 state changes
+BLYNK_WRITE(V15)
+{
+  // Set incoming value from pin V0 to a variable
+  int value = param.asInt();
+  // Update state
+  if(value){
+    Blynk.virtualWrite(V18, "ON");
+    lp.set_EC_UP_PUMP_ON();
+    }
+   else{
+    Blynk.virtualWrite(V18, "OFF");
+    lp.set_EC_UP_PUMP_OFF();
+    }
+}
+
 // This function is called every time the device is connected to the Blynk.Cloud
 BLYNK_CONNECTED()
 {
@@ -106,6 +154,39 @@ BLYNK_CONNECTED()
   Blynk.setProperty(V3, "onImageUrl",  "https://static-image.nyc3.cdn.digitaloceanspaces.com/general/fte/congratulations_pressed.png");
   Blynk.setProperty(V3, "url", "https://docs.blynk.io/en/getting-started/what-do-i-need-to-blynk/how-quickstart-device-was-made");
 }
+/*
+void UltraHighFreqData(){
+  if(wp.Get_WP_State()){
+    Blynk.virtualWrite(V10, "ON");
+    }
+   else{
+    Blynk.virtualWrite(V10, "OFF");
+    }
+  if(lp.get_PH_UP_state()){
+    Blynk.virtualWrite(V16, "ON");
+    }
+   else{
+    Blynk.virtualWrite(V16, "OFF");
+    }
+  if(lp.get_PH_DOWN_state()){
+    Blynk.virtualWrite(V17, "ON");
+    }
+   else{
+    Blynk.virtualWrite(V17, "OFF");
+    }
+  if(lp.get_EC_UP_state()){
+    Blynk.virtualWrite(V18, "ON");
+    }
+   else{
+    Blynk.virtualWrite(V18, "OFF");
+    }
+    Blynk.virtualWrite(V2, millis() / 1000);
+  Blynk.virtualWrite(V4, s.Read_Temp());
+  Blynk.virtualWrite(V5, s.Read_Hum());
+  Blynk.virtualWrite(V6, s.Read_Light());
+  Blynk.virtualWrite(V7, s.Read_DS18B20());
+  Blynk.virtualWrite(V12, date_buffer);
+}*/
 
 // This function sends Arduino's uptime every second to Virtual Pin 2.
 void HighFreqData()
@@ -124,16 +205,18 @@ void HighFreqData()
 
 void LowFreqData()
 {
-  s.Read_low_freq_sensors(); 
+  s.Read_low_freq_sensors();
   lp.check_ph();
-  lp.check_ec();
+  lp.check_ec(); 
 
-  Blynk.virtualWrite(V8, s.Read_TDS());
-  if(s.Read_TDS() > MAX_EC || s.Read_TDS() < MIN_EC){
+  float tds_val = s.Read_TDS();
+  Blynk.virtualWrite(V8, tds_val);
+  if(tds_val > MAX_EC || tds_val < MIN_EC){
     Blynk.logEvent("ec_check");
   }
-  Blynk.virtualWrite(V9, s.Read_PH());
-  if(s.Read_PH() > MAX_PH || s.Read_PH() < MIN_PH){
+  float ph_val = s.Read_PH();
+  Blynk.virtualWrite(V9, ph_val);
+  if(ph_val > MAX_PH || ph_val < MIN_PH) {
     Blynk.logEvent("ph_check");
   }
 }
@@ -142,12 +225,15 @@ void CloseOpenPumps()
 {
   if(lp.get_PH_UP_state()){
     lp.set_PH_UP_PUMP_OFF();
+    //Blynk.virtualWrite(V16, "OFF");
   }
   if(lp.get_PH_DOWN_state()){
     lp.set_PH_DOWN_PUMP_OFF();
+    //Blynk.virtualWrite(V17, "OFF");
   }
   if(lp.get_EC_UP_state()){
     lp.set_EC_UP_PUMP_OFF();
+    //Blynk.virtualWrite(V18, "OFF");
   }
 }
 
@@ -177,20 +263,21 @@ void setup()
   for(int i=0;i<NUMPIXELS;i++)
   {
     // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
-    pixels.setPixelColor(i, pixels.Color(80,10,10)); // Moderately bright green color.
+    pixels.setPixelColor(i, pixels.Color(160,20,20)); // Moderately bright green color.
     pixels.show(); // This sends the updated pixel color to the hardware.
   }
   /* Initialize sensors and parts */
   s.Init_sensors();
   wp.Init_WaterPump();
-  wp.Set_WP_OFF();
+  wp.Set_WP_ON();
   lp.Init_LiquidPumps();
 
   Serial.println(date_buffer);
   // Setup a function to be called every second for Blynk
-  timer.setInterval(2000L, HighFreqData);
   timer.setInterval(10000L, LowFreqData);
   timer.setInterval(11000L, CloseOpenPumps);
+  //timer.setInterval(1000L, UltraHighFreqData);
+  timer.setInterval(2000L, HighFreqData);
 }
 
 void loop()

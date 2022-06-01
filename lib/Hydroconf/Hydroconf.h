@@ -20,8 +20,8 @@
 #define MAX_EC 850
 #define PH_PIN 34
 #define PH_IDEAL 700
-#define PH_ADJ_TIME 1000 //1 sec
+#define PH_ADJ_TIME 1500 //1 sec
 #define LED_RING_PIN   22
-#define NUMPIXELS      12
+#define NUMPIXELS      50
 
 #endif
