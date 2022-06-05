@@ -11,7 +11,7 @@ static int analogBufferTemp[SCOUNT];
 static int analogBufferIndex = 0, copyIndex = 0;
 static float averageVoltage = 0, tdsValue = 0, temperature = 25;
 static float voltage;
-static float phValue;
+static float pHValue;
 static int pHArray[PH_ArrayLenth];   //Store the average value of the sensor feedback
 static int pHArrayIndex=0;
 
@@ -121,6 +121,7 @@ float Sensors::Read_TDS(){
   gravityTds.setTemperature(Read_Temp()); // set the temperature and execute temperature compensation
   gravityTds.update();                    //sample and calculate 
   tdsValue = gravityTds.getTdsValue();    // then get the value
+  myTDS = tdsValue;
   return tdsValue;
 }
 
@@ -134,6 +135,7 @@ float Sensors::Read_PH(){
     if(pHArrayIndex==PH_ArrayLenth)pHArrayIndex=0;
     voltage = avergearray(pHArray, PH_ArrayLenth)*3.4/4096;
     pHValue = 3.5*voltage + PH_offset;
+    myPH = pHValue;
     samplingTime=millis();
   }
   if(millis() - printTime > PH_printInterval)   //Every 800 milliseconds, print a numerical, convert the state of the LED indicator
@@ -181,4 +183,12 @@ void Sensors::Read_low_freq_sensors(){
   Serial.print(ph_value,2);
   Serial.println(" ");
   Serial.println("");
+}
+
+float Sensors::get_my_PH(){
+  return myPH;
+}
+  
+float Sensors::get_my_TDS(){
+  return myTDS;
 }

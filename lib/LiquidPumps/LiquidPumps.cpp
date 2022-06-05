@@ -3,11 +3,12 @@
 #include "Hydroconf.h"
 #include "Sensors.h"
 
-static Sensors s;
+//static Sensors s;
 static unsigned long currentMillis;
 static unsigned long previousMillis;
 
-LiquidPumps::LiquidPumps(){
+LiquidPumps::LiquidPumps(Sensors &sens){
+    my_sens = sens;
 }
 
 void LiquidPumps::Init_LiquidPumps(){
@@ -102,7 +103,7 @@ void LiquidPumps::raise_EC(){
 }
 
 void LiquidPumps::check_ph(){
-    float phv = s.Read_PH();
+    float phv = my_sens.get_my_PH();
     if (phv > MAX_PH) { 
         lower_PH();
     }
@@ -112,7 +113,7 @@ void LiquidPumps::check_ph(){
 }
 
 void LiquidPumps::check_ec(){
-    float ecv = s.Read_TDS();
+    float ecv = my_sens.get_my_TDS();
     if (ecv < MIN_EC) { 
         raise_EC();
     }

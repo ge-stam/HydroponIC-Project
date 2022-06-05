@@ -54,7 +54,7 @@ static unsigned long previous_time;
 static unsigned long current_time;
 static Sensors s;
 static WaterPump wp;
-static LiquidPumps lp;
+static LiquidPumps lp(s);
 static Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, LED_RING_PIN, NEO_GRB + NEO_KHZ800);
 
 BlynkTimer timer;
@@ -223,18 +223,18 @@ void LowFreqData()
   lp.check_ph();
   lp.check_ec(); 
 
-  float tds_val = s.Read_TDS();
+  float tds_val = s.get_my_TDS();
   Blynk.virtualWrite(V8, tds_val);
   if(tds_val > MAX_EC || tds_val < MIN_EC){
     Blynk.logEvent("ec_check");
   }
-  float ph_val = s.Read_PH();
+  float ph_val = s.get_my_PH();
   Blynk.virtualWrite(V9, ph_val);
   if(ph_val > MAX_PH || ph_val < MIN_PH) {
     Blynk.logEvent("ph_check");
   }
 }
-
+/*
 void CloseOpenPumps()
 {
   if(lp.get_PH_UP_state()){
@@ -250,7 +250,7 @@ void CloseOpenPumps()
     //Blynk.virtualWrite(V18, "OFF");
   }
 }
-
+*/
 void Check_Led()
 {
   configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
@@ -300,11 +300,9 @@ void setup()
 
   Serial.println(date_buffer);
   // Setup a function to be called every second for Blynk
-  timer.setInterval(10000L, LowFreqData);
-  timer.setInterval(13000L, CloseOpenPumps);
-  //timer.setInterval(1000L, UltraHighFreqData);
-  timer.setInterval(2000L, HighFreqData);
-  timer.setInterval(120000L, Check_Led);
+  timer.setInterval(900000L, LowFreqData); // reads data every 15 minutes
+  timer.setInterval(2000L, HighFreqData);  // reads data every 2 secs
+  timer.setInterval(120000L, Check_Led);   // checks every 2 mins
 }
 
 void loop()

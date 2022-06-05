@@ -1,10 +1,12 @@
 #ifndef LiquidPumps_h
 #define LiquidPumps_h
-    
+
+#include "Sensors.h"
+
 class LiquidPumps{
 
     public: 
-    LiquidPumps();
+    LiquidPumps(Sensors &sens);
     void Init_LiquidPumps();
     int get_PH_UP_state();
     int get_PH_DOWN_state();
@@ -20,6 +22,7 @@ class LiquidPumps{
     void raise_EC();
     void check_ph();
     void check_ec();
+    Sensors my_sens;
 
     private:
     int PH_UP_state = 0;

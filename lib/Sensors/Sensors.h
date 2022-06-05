@@ -22,6 +22,12 @@ class Sensors{
   float Read_PH(); 
   void Read_high_freq_sensors();
   void Read_low_freq_sensors();
+  float get_my_PH();
+  float get_my_TDS();
+
+  private:
+  float myPH = 0.0;
+  float myTDS = 0.0;
   };
 
 #endif
