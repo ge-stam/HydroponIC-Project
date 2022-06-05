@@ -19,6 +19,7 @@
 #define MIN_EC 550
 #define MAX_EC 850
 #define PH_PIN 32
+#define PH_offset 0.30  //deviation compensate
 #define PH_IDEAL 700
 #define PH_ADJ_TIME 1500 //1.5 sec
 #define LED_RING_PIN   22
@@ -27,5 +28,8 @@
 #define LED_START_MIN_TIME  30
 #define LED_STOP_HOUR_TIME  20
 #define LED_STOP_MIN_TIME   30 
+#define PH_samplingInterval 20
+#define PH_printInterval 800
+#define PH_ArrayLenth  40    //times of collection
 
 #endif

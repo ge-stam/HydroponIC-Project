@@ -4,28 +4,64 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <GravityTDS.h>
-#include <DFRobot_PH.h>
 #include "Hydroconf.h"
 
-// store the analog value of tds sensor in the array, read from ADC
-static int analogBuffer[SCOUNT];    
+static int analogBuffer[SCOUNT]; // store the analog value of tds sensor in the array, read from ADC    
 static int analogBufferTemp[SCOUNT];
 static int analogBufferIndex = 0, copyIndex = 0;
 static float averageVoltage = 0, tdsValue = 0, temperature = 25;
 static float voltage;
 static float phValue;
+static int pHArray[PH_ArrayLenth];   //Store the average value of the sensor feedback
+static int pHArrayIndex=0;
 
 static DHT dht(DHTPIN, DHTTYPE);
-// Setup a oneWire instance to communicate with any OneWire devices
-static OneWire oneWire(oneWireBus);
-// Pass our oneWire reference to Dallas Temperature sensor 
-static DallasTemperature DS18B20_sensor(&oneWire); 
+static OneWire oneWire(oneWireBus); // Setup a oneWire instance to communicate with any OneWire devices
+static DallasTemperature DS18B20_sensor(&oneWire); // Pass our oneWire reference to Dallas Temperature sensor  
 static GravityTDS gravityTds;
-static DFRobot_PH ph;
 
+static double avergearray(int* arr, int number){
+  int i;
+  int max,min;
+  double avg;
+  long amount=0;
+  if(number<=0){
+    Serial.println("Error number for the array to avraging!/n");
+    return 0;
+  }
+  if(number<5){   //less than 5, calculated directly statistics
+    for(i=0;i<number;i++){
+      amount+=arr[i];
+    }
+    avg = amount/number;
+    return avg;
+  }else{
+    if(arr[0]<arr[1]){
+      min = arr[0];max=arr[1];
+    }
+    else{
+      min=arr[1];max=arr[0];
+    }
+    for(i=2;i<number;i++){
+      if(arr[i]<min){
+        amount+=min;        //arr<min
+        min=arr[i];
+      }else {
+        if(arr[i]>max){
+          amount+=max;    //arr>max
+          max=arr[i];
+        }else{
+          amount+=arr[i]; //min<=arr<=max
+        }
+      }//if
+    }//for
+    avg = (double)amount/(number-2);
+  }//if
+  return avg;
+}
 
 Sensors::Sensors(){
-  }
+}
 
 void Sensors::Init_DHT(){
   dht.begin();
@@ -52,7 +88,8 @@ void Sensors::Init_TDS(){
 }
 
 void Sensors::Init_PH(){
-  ph.begin();
+  Serial.println("************          INITIALISE PH SENSOR            ************");
+  //ph.begin();
 }
 
 void Sensors::Init_sensors(){
@@ -88,16 +125,26 @@ float Sensors::Read_TDS(){
 }
 
 float Sensors::Read_PH(){
-  /*static unsigned long timepoint = millis();
-  if(millis()-timepoint>1000U){                  //time interval: 1s
-      timepoint = millis();*/
-      temperature = Read_Temp();
-      voltage = analogRead(PH_PIN)/4096.0*3300;  // read the voltage
-      Serial.println(voltage);
-      phValue = ph.readPH(voltage, temperature);  // convert voltage to pH with temperature compensation
-  //}
-  ph.calibration(voltage, temperature);           // calibration process by Serail CMD
-  return phValue;
+  static unsigned long samplingTime = millis();
+  static unsigned long printTime = millis();
+  static float pHValue,voltage;
+  if(millis()-samplingTime > PH_samplingInterval)
+  {
+    pHArray[pHArrayIndex++]=analogRead(PH_PIN);
+    if(pHArrayIndex==PH_ArrayLenth)pHArrayIndex=0;
+    voltage = avergearray(pHArray, PH_ArrayLenth)*3.4/4096;
+    pHValue = 3.5*voltage + PH_offset;
+    samplingTime=millis();
+  }
+  if(millis() - printTime > PH_printInterval)   //Every 800 milliseconds, print a numerical, convert the state of the LED indicator
+  {
+    Serial.print("Voltage:");
+    Serial.print(voltage,2);
+    Serial.print("    pH value: ");
+    Serial.println(pHValue,2);
+    printTime=millis();
+  }
+  return pHValue;
 }
 
 void Sensors::Read_high_freq_sensors(){
@@ -125,7 +172,7 @@ void Sensors::Read_high_freq_sensors(){
 
 void Sensors::Read_low_freq_sensors(){
   float tds_value = Read_TDS();     // Read TDS value
-  float ph_value = Read_PH();
+  float ph_value = Read_PH();       // Read PH Value
 
   Serial.print("TDS Value: ");
   Serial.print(tds_value);
@@ -134,8 +181,4 @@ void Sensors::Read_low_freq_sensors(){
   Serial.print(ph_value,2);
   Serial.println(" ");
   Serial.println("");
-}
-
-void Sensors::Ph_cali(float voltage, float temperatures){
-  ph.calibration(voltage, temperature);
 }

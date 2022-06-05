@@ -22,7 +22,6 @@ class Sensors{
   float Read_PH(); 
   void Read_high_freq_sensors();
   void Read_low_freq_sensors();
-  void Ph_cali(float voltage, float temperature);
   };
 
 #endif
