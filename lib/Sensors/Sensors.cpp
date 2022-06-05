@@ -6,6 +6,9 @@
 #include <GravityTDS.h>
 #include "Hydroconf.h"
 
+/* ===============================================================================================  */
+/*                                VARIABLES & FUNCTIONS DECLARATIONS                                */
+/* ===============================================================================================  */
 static int analogBuffer[SCOUNT]; // store the analog value of tds sensor in the array, read from ADC    
 static int analogBufferTemp[SCOUNT];
 static int analogBufferIndex = 0, copyIndex = 0;
@@ -60,25 +63,40 @@ static double avergearray(int* arr, int number){
   return avg;
 }
 
+/**
+ * @brief Constructor of Sensors
+ */
 Sensors::Sensors(){
 }
 
+/**
+ * @brief Initialise DHT Sensor (Temperature & Humidity)
+ */
 void Sensors::Init_DHT(){
   dht.begin();
   Serial.println("************ INITIALISE TEMPERATURE & HUMIDITY SENSOR ************");
 }
 
+/**
+ * @brief Initilise Light Intensity Sensor
+ */
 void Sensors::Init_Light(){
   pinMode(LightSensorPin, INPUT);
   Serial.println("************    INITIALISE LIGHT INTENSITY SENSOR     ************");
 }
 
+/**
+ * @brief Initialise DS18B20 Sensor (Waterproof Temperature Sensor)
+ */
 void Sensors::Init_DS18B20(){
   // Start the DS18B20 sensor
   DS18B20_sensor.begin();
   Serial.print("************        INITIALISE DS18B20 SENSOR         ************\n");
 }
 
+/**
+ * @brief Initialise TDS Sensor
+ */
 void Sensors::Init_TDS(){
   gravityTds.setPin(TDSPIN);
   gravityTds.setAref(VREF);                //reference voltage on ADC, default 5.0V on Arduino UNO
@@ -87,36 +105,62 @@ void Sensors::Init_TDS(){
   Serial.println("************          INITIALISE TDS SENSOR           ************");
 }
 
+/**
+ * @brief Initialise PH Sensor
+ */
 void Sensors::Init_PH(){
   Serial.println("************          INITIALISE PH SENSOR            ************");
   //ph.begin();
 }
 
+/**
+ * @brief Initialise all Sensors
+ */
 void Sensors::Init_sensors(){
   Init_Light();
   Init_DHT();
   Init_DS18B20();
   Init_TDS();
   Init_PH();
-  }
+}
 
+/**
+ * @brief Read Temperature Sensor (DHT)
+ * @return float
+ */
 float Sensors::Read_Temp(){
   return dht.readTemperature();  // Read temperature as Celsius
 }
 
+/**
+ * @brief Read Humidity Sensor (DHT)
+ * @return float
+ */
 float Sensors::Read_Hum(){
   return dht.readHumidity();        // Read humidity
 }
 
+/**
+ * @brief Read Light Intensity Sensor
+ * @return float
+ */
 float Sensors::Read_Light(){
   return analogRead(LightSensorPin);   // Read light level
 }
 
+/**
+ * @brief Read DS18B20 Sensor
+ * @return float
+ */
 float Sensors::Read_DS18B20(){
   DS18B20_sensor.requestTemperatures(); 
   return DS18B20_sensor.getTempCByIndex(0);
 }
 
+/**
+ * @brief Read TDS Sensor
+ * @return float
+ */
 float Sensors::Read_TDS(){
   gravityTds.setTemperature(Read_Temp()); // set the temperature and execute temperature compensation
   gravityTds.update();                    //sample and calculate 
@@ -125,6 +169,10 @@ float Sensors::Read_TDS(){
   return tdsValue;
 }
 
+/**
+ * @brief Read PH Sensor
+ * @return float
+ */
 float Sensors::Read_PH(){
   static unsigned long samplingTime = millis();
   static unsigned long printTime = millis();
@@ -149,6 +197,10 @@ float Sensors::Read_PH(){
   return pHValue;
 }
 
+/**
+ * @brief Read Temperature, Humidity, Water-Temperature and Light 
+ *        Initensity Sensor
+ */
 void Sensors::Read_high_freq_sensors(){
   float light = Read_Light();       // Read light level
   float humidity = Read_Hum();      // Read humidity
@@ -172,6 +224,9 @@ void Sensors::Read_high_freq_sensors(){
   Serial.println("°C ");
   }
 
+/**
+ * @brief Read TDS and PH Sensor
+ */
 void Sensors::Read_low_freq_sensors(){
   float tds_value = Read_TDS();     // Read TDS value
   float ph_value = Read_PH();       // Read PH Value
@@ -185,10 +240,18 @@ void Sensors::Read_low_freq_sensors(){
   Serial.println("");
 }
 
+/**
+ * @brief Get the value of PH Sensor
+ * @return float
+ */
 float Sensors::get_my_PH(){
   return myPH;
 }
   
+/**
+ * @brief Get the value of TDS Sensor
+ * @return float
+ */
 float Sensors::get_my_TDS(){
   return myTDS;
 }
