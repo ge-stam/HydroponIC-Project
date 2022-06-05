@@ -19,7 +19,7 @@
 #include "WProgram.h"
 #endif
 
-#define ReceivedBufferLength 10  //length of the Serial CMD buffer
+#define ReceivedBufferLengthPH 10  //length of the Serial CMD buffer
 
 class DFRobot_PH
 {
@@ -61,7 +61,7 @@ private:
     float  _voltage;
     float  _temperature;
 
-    char   _cmdReceivedBuffer[ReceivedBufferLength];  //store the Serial CMD
+    char   _cmdReceivedBuffer[ReceivedBufferLengthPH];  //store the Serial CMD
     byte   _cmdReceivedBufferIndex;
 
 private:

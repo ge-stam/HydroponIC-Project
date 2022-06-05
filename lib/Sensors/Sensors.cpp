@@ -88,13 +88,15 @@ float Sensors::Read_TDS(){
 }
 
 float Sensors::Read_PH(){
-  static unsigned long timepoint = millis();
+  /*static unsigned long timepoint = millis();
   if(millis()-timepoint>1000U){                  //time interval: 1s
-      timepoint = millis();
-      voltage = analogRead(PH_PIN)/1024.0*5000;  // read the voltage
-      phValue = ph.readPH(voltage, Read_Temp());  // convert voltage to pH with temperature compensation
-  }
-  ph.calibration(voltage,temperature);           // calibration process by Serail CMD
+      timepoint = millis();*/
+      temperature = Read_Temp();
+      voltage = analogRead(PH_PIN)/4096.0*3300;  // read the voltage
+      Serial.println(voltage);
+      phValue = ph.readPH(voltage, temperature);  // convert voltage to pH with temperature compensation
+  //}
+  ph.calibration(voltage, temperature);           // calibration process by Serail CMD
   return phValue;
 }
 
@@ -129,7 +131,11 @@ void Sensors::Read_low_freq_sensors(){
   Serial.print(tds_value);
   Serial.print("ppm ");
   Serial.print("PH Value: ");
-  Serial.print(ph_value);
-  Serial.println("ppm ");
+  Serial.print(ph_value,2);
+  Serial.println(" ");
   Serial.println("");
+}
+
+void Sensors::Ph_cali(float voltage, float temperatures){
+  ph.calibration(voltage, temperature);
 }

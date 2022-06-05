@@ -38,15 +38,18 @@
 
 char auth[] = BLYNK_AUTH_TOKEN;
 char date_buffer[100];
+char hour_buffer[5];
+char min_buffer[5];
 // Your WiFi credentials.
 // Set password to "" for open networks.
-char ssid[] = "Sensors";
-char pass[] = "sensorslab";
-//char ssid[] = "WIND_2.4G_12CA41";
-//char pass[] = "U4T78YGG";
+//char ssid[] = "Sensors";
+//char pass[] = "sensorslab";
+char ssid[] = "WIND_2.4G_12CA41";
+char pass[] = "U4T78YGG";
 //char ssid[] = "HUAWEI Mate 20 lite";
 //char pass[] = "e6c007a066d2";
 
+static float voltage;
 static unsigned long previous_time;
 static unsigned long current_time;
 static Sensors s;
@@ -60,6 +63,17 @@ const char* ntpServer = "pool.ntp.org";
 const long  gmtOffset_sec = 7200;
 const int   daylightOffset_sec = 3600;
 
+void printLocalDate()
+{
+  struct tm timeinfo;
+  if(!getLocalTime(&timeinfo)){
+    Serial.println("Failed to obtain time");
+    return;
+  }
+  Serial.println(&timeinfo, "%A, %B %d %Y %H:%M:%S");
+  sprintf(date_buffer, "%d-%02d-%02d \n", timeinfo.tm_mday, timeinfo.tm_mon + 1, timeinfo.tm_year + 1900);
+  }
+
 void printLocalTime()
 {
   struct tm timeinfo;
@@ -68,11 +82,11 @@ void printLocalTime()
     return;
   }
   Serial.println(&timeinfo, "%A, %B %d %Y %H:%M:%S");
-  //sprintf(date_buffer, "%d-%02d-%02d %02d:%02d:%02d\n", timeinfo.tm_mday, timeinfo.tm_mon + 1, timeinfo.tm_year + 1900, timeinfo.tm_hour, timeinfo.tm_min, timeinfo.tm_sec);
-  sprintf(date_buffer, "%d-%02d-%02d \n", timeinfo.tm_mday, timeinfo.tm_mon + 1, timeinfo.tm_year + 1900);
-}
-
-
+  sprintf(hour_buffer, "%d \n", timeinfo.tm_hour);
+  //Serial.println(hour_buffer);
+  sprintf(min_buffer, "%d \n", timeinfo.tm_min);
+  }
+/*
 // This function is called every time the Virtual Pin 0 state changes
 BLYNK_WRITE(V0)
 {
@@ -80,7 +94,7 @@ BLYNK_WRITE(V0)
   int value = param.asInt();
   // Update state
   Blynk.virtualWrite(V1, value);
-}
+}*/
 
 // This function is called every time the Virtual Pin 0 state changes
 BLYNK_WRITE(V11)
@@ -237,16 +251,34 @@ void CloseOpenPumps()
   }
 }
 
+void Check_Led()
+{
+  configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
+  printLocalTime();
+  if((atoi(hour_buffer) > LED_START_HOUR_TIME || (atoi(hour_buffer) == LED_START_HOUR_TIME && atoi(min_buffer) >= LED_START_MIN_TIME))
+      && (atoi(hour_buffer) < LED_STOP_HOUR_TIME || (atoi(hour_buffer) == LED_STOP_HOUR_TIME && atoi(min_buffer) <= LED_STOP_MIN_TIME))){
+        for(int i=0;i<NUMPIXELS;i++)
+        {
+          pixels.setPixelColor(i, pixels.Color(160,20,20)); // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255 
+          pixels.show(); // This sends the updated pixel color to the hardware.
+        }
+      }
+      else{
+       for(int i=0;i<NUMPIXELS;i++)
+        {
+          pixels.setPixelColor(i, pixels.Color(0,0,0)); // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255 
+          pixels.show(); // This sends the updated pixel color to the hardware.
+        }
+      }
+}
+
 void setup()
 {
   Serial.begin(115200);
-  /*Initialise Blynk*/
-  Blynk.begin(auth, ssid, pass); 
-  // You can also specify server:
-  //Blynk.begin(auth, ssid, pass, "blynk.cloud", 80);
-  //Blynk.begin(auth, ssid, pass, IPAddress(147,102,21,114), 80);
+  EEPROM.begin(512); // Initialise EEPROM
+  Blynk.begin(auth, ssid, pass); //Initialise Blynk
   
-  // connect to WiFi and get datte and time 
+  // connect to WiFi and get date and time 
   Serial.printf("Connecting to %s ", ssid);
   WiFi.begin(ssid, pass);
   while (WiFi.status() != WL_CONNECTED) {
@@ -256,16 +288,10 @@ void setup()
   Serial.println(" CONNECTED");
   //init and get the time
   configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
-  printLocalTime();
+  printLocalDate();
   
   pixels.begin(); // This initializes the NeoPixel library.
 
-  for(int i=0;i<NUMPIXELS;i++)
-  {
-    // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
-    pixels.setPixelColor(i, pixels.Color(160,20,20)); // Moderately bright green color.
-    pixels.show(); // This sends the updated pixel color to the hardware.
-  }
   /* Initialize sensors and parts */
   s.Init_sensors();
   wp.Init_WaterPump();
@@ -275,13 +301,20 @@ void setup()
   Serial.println(date_buffer);
   // Setup a function to be called every second for Blynk
   timer.setInterval(10000L, LowFreqData);
-  timer.setInterval(11000L, CloseOpenPumps);
+  timer.setInterval(13000L, CloseOpenPumps);
   //timer.setInterval(1000L, UltraHighFreqData);
   timer.setInterval(2000L, HighFreqData);
+  timer.setInterval(120000L, Check_Led);
 }
 
 void loop()
 {
   Blynk.run();
   timer.run();
-}
+  //pixels.show();
+  //s.Ph_cali(analogRead(PH_PIN)/4096.0*5000, s.Read_Temp());
+  //voltage = analogRead(PH_PIN)/4096.0*5000;  // read the voltage
+  //Serial.println(voltage);
+  //phValue = ph.readPH(voltage, Read_Temp());  // convert voltage to pH with temperature compensation
+  //s.Ph_cali(voltage,25.0);           // calibration process by Serail CMD
+  }

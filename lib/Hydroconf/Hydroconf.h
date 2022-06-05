@@ -18,10 +18,14 @@
 #define MAX_PH 6    //MUST BE CHANGED
 #define MIN_EC 550
 #define MAX_EC 850
-#define PH_PIN 34
+#define PH_PIN 32
 #define PH_IDEAL 700
-#define PH_ADJ_TIME 1500 //1 sec
+#define PH_ADJ_TIME 1500 //1.5 sec
 #define LED_RING_PIN   22
-#define NUMPIXELS      50
+#define NUMPIXELS      61
+#define LED_START_HOUR_TIME 6
+#define LED_START_MIN_TIME  30
+#define LED_STOP_HOUR_TIME  20
+#define LED_STOP_MIN_TIME   30 
 
 #endif

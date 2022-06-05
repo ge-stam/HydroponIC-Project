@@ -20,7 +20,7 @@
 #include "DFRobot_PH.h"
 #include <EEPROM.h>
 
-#define EEPROM_write(address, p) {int i = 0; byte *pp = (byte*)&(p);for(; i < sizeof(p); i++) EEPROM.write(address+i, pp[i]);}
+#define EEPROM_write(address, p) {int i = 0; byte *pp = (byte*)&(p);for(; i < sizeof(p); i++) EEPROM.write(address+i, pp[i]); EEPROM.commit();}
 #define EEPROM_read(address, p)  {int i = 0; byte *pp = (byte*)&(p);for(; i < sizeof(p); i++) pp[i]=EEPROM.read(address+i);}
 
 #define PHVALUEADDR 0x00    //the start address of the pH calibration parameters stored in the EEPROM
@@ -95,11 +95,11 @@ boolean DFRobot_PH::cmdSerialDataAvailable()
     while(Serial.available()>0){
         if(millis() - cmdReceivedTimeOut > 500U){
             this->_cmdReceivedBufferIndex = 0;
-            memset(this->_cmdReceivedBuffer,0,(ReceivedBufferLength));
+            memset(this->_cmdReceivedBuffer,0,(ReceivedBufferLengthPH));
         }
         cmdReceivedTimeOut = millis();
         cmdReceivedChar = Serial.read();
-        if (cmdReceivedChar == '\n' || this->_cmdReceivedBufferIndex==ReceivedBufferLength-1){
+        if (cmdReceivedChar == '\n' || this->_cmdReceivedBufferIndex==ReceivedBufferLengthPH-1){
             this->_cmdReceivedBufferIndex = 0;
             strupr(this->_cmdReceivedBuffer);
             return true;
