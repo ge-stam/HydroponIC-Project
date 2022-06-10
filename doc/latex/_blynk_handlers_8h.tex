@@ -1,0 +1,466 @@
+\hypertarget{_blynk_handlers_8h}{}\doxysection{lib/\+Blynk/src/\+Blynk/\+Blynk\+Handlers.h File Reference}
+\label{_blynk_handlers_8h}\index{lib/Blynk/src/Blynk/BlynkHandlers.h@{lib/Blynk/src/Blynk/BlynkHandlers.h}}
+
+
+Handlers for virtual pin operations.  
+
+
+{\ttfamily \#include $<$Blynk/\+Blynk\+Config.\+h$>$}\newline
+{\ttfamily \#include $<$Blynk/\+Blynk\+Param.\+h$>$}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_blynk_req}{Blynk\+Req}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a2074b9a2c1c6a3190319241fd96ebdd5}\label{_blynk_handlers_8h_a2074b9a2c1c6a3190319241fd96ebdd5}} 
+\#define {\bfseries V0}~0
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_ae21a9518b4dd62d2baeab430c89a657a}\label{_blynk_handlers_8h_ae21a9518b4dd62d2baeab430c89a657a}} 
+\#define {\bfseries V1}~1
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a9173468f90b474471bfff59f8487cbc1}\label{_blynk_handlers_8h_a9173468f90b474471bfff59f8487cbc1}} 
+\#define {\bfseries V2}~2
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_ae9d1b8ccb8498c1a9f5de1702017cefc}\label{_blynk_handlers_8h_ae9d1b8ccb8498c1a9f5de1702017cefc}} 
+\#define {\bfseries V3}~3
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_af119c39c6d0d1bc78dc7aeef443e81a9}\label{_blynk_handlers_8h_af119c39c6d0d1bc78dc7aeef443e81a9}} 
+\#define {\bfseries V4}~4
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_af0c0aecd8b9687c5234896f8509eef3f}\label{_blynk_handlers_8h_af0c0aecd8b9687c5234896f8509eef3f}} 
+\#define {\bfseries V5}~5
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_ab5f422186589bf7d0defb0649efbc240}\label{_blynk_handlers_8h_ab5f422186589bf7d0defb0649efbc240}} 
+\#define {\bfseries V6}~6
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a82b67b532b9f80cb66a382596d17d4fa}\label{_blynk_handlers_8h_a82b67b532b9f80cb66a382596d17d4fa}} 
+\#define {\bfseries V7}~7
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_adc1407a2859e63b6b7115fc2dcf5ac98}\label{_blynk_handlers_8h_adc1407a2859e63b6b7115fc2dcf5ac98}} 
+\#define {\bfseries V8}~8
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_afdb5bb692f90f217f3b7562be47d238b}\label{_blynk_handlers_8h_afdb5bb692f90f217f3b7562be47d238b}} 
+\#define {\bfseries V9}~9
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_aba49d4f4d3d87ef469844f4a9713907a}\label{_blynk_handlers_8h_aba49d4f4d3d87ef469844f4a9713907a}} 
+\#define {\bfseries V10}~10
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a87942002cab74af29b13ec07a3b27edf}\label{_blynk_handlers_8h_a87942002cab74af29b13ec07a3b27edf}} 
+\#define {\bfseries V11}~11
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a30a3d62562a3da42fdc0697719aad10f}\label{_blynk_handlers_8h_a30a3d62562a3da42fdc0697719aad10f}} 
+\#define {\bfseries V12}~12
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a0a003d29cd234d27c6861de9f4903338}\label{_blynk_handlers_8h_a0a003d29cd234d27c6861de9f4903338}} 
+\#define {\bfseries V13}~13
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a435bc64873617df94fc530a624f06d5b}\label{_blynk_handlers_8h_a435bc64873617df94fc530a624f06d5b}} 
+\#define {\bfseries V14}~14
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a0ceb11c44798a2023c02dd9a4edb56eb}\label{_blynk_handlers_8h_a0ceb11c44798a2023c02dd9a4edb56eb}} 
+\#define {\bfseries V15}~15
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a4a31744ca44a175db262a088c61b3f7e}\label{_blynk_handlers_8h_a4a31744ca44a175db262a088c61b3f7e}} 
+\#define {\bfseries V16}~16
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a89e5bba78f4a23a1990f8b46ac3bb80a}\label{_blynk_handlers_8h_a89e5bba78f4a23a1990f8b46ac3bb80a}} 
+\#define {\bfseries V17}~17
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_add0375494a1bbd03dc5732befc0715b9}\label{_blynk_handlers_8h_add0375494a1bbd03dc5732befc0715b9}} 
+\#define {\bfseries V18}~18
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a2806e43b27a04f607b0962253df81a6b}\label{_blynk_handlers_8h_a2806e43b27a04f607b0962253df81a6b}} 
+\#define {\bfseries V19}~19
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a0ad11b3aa0fd5c68c97f676094879206}\label{_blynk_handlers_8h_a0ad11b3aa0fd5c68c97f676094879206}} 
+\#define {\bfseries V20}~20
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a5bab15beab8e28bbd9f89c19407c7397}\label{_blynk_handlers_8h_a5bab15beab8e28bbd9f89c19407c7397}} 
+\#define {\bfseries V21}~21
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a767d301ad391daed2e4bab0288565f7d}\label{_blynk_handlers_8h_a767d301ad391daed2e4bab0288565f7d}} 
+\#define {\bfseries V22}~22
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_af55ff50a7f93a881a0877b027ca7fecf}\label{_blynk_handlers_8h_af55ff50a7f93a881a0877b027ca7fecf}} 
+\#define {\bfseries V23}~23
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a73a30141daa058d4f532ade24892cfa0}\label{_blynk_handlers_8h_a73a30141daa058d4f532ade24892cfa0}} 
+\#define {\bfseries V24}~24
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_aad5362191610e6d2c193ae93f479967a}\label{_blynk_handlers_8h_aad5362191610e6d2c193ae93f479967a}} 
+\#define {\bfseries V25}~25
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a6b5f9dbd8c12d62140925f88946afe81}\label{_blynk_handlers_8h_a6b5f9dbd8c12d62140925f88946afe81}} 
+\#define {\bfseries V26}~26
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a87df3b4c8c5fdfbe85c3d560670e65ca}\label{_blynk_handlers_8h_a87df3b4c8c5fdfbe85c3d560670e65ca}} 
+\#define {\bfseries V27}~27
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a0a7c428fcff59d589ca1cfcf7ce394f5}\label{_blynk_handlers_8h_a0a7c428fcff59d589ca1cfcf7ce394f5}} 
+\#define {\bfseries V28}~28
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a81fb4f9f6cbde14f9130ab7c222a2a27}\label{_blynk_handlers_8h_a81fb4f9f6cbde14f9130ab7c222a2a27}} 
+\#define {\bfseries V29}~29
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a6fbc71ef147d3e482acad42d134a4632}\label{_blynk_handlers_8h_a6fbc71ef147d3e482acad42d134a4632}} 
+\#define {\bfseries V30}~30
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a337491b226978447a14dea6d3bcf39e3}\label{_blynk_handlers_8h_a337491b226978447a14dea6d3bcf39e3}} 
+\#define {\bfseries V31}~31
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_afbfd8ab406301bd82080b2605c2079d5}\label{_blynk_handlers_8h_afbfd8ab406301bd82080b2605c2079d5}} 
+\#define {\bfseries BLYNK\+\_\+\+WRITE\+\_\+2}(pin)~    void Blynk\+Widget\+Write \#\# pin (\mbox{\hyperlink{struct_blynk_req}{Blynk\+Req}} BLYNK\+\_\+\+UNUSED \&request, const \mbox{\hyperlink{class_blynk_param}{Blynk\+Param}} BLYNK\+\_\+\+UNUSED \&param)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_aba0d72cc178b9bf320e140370a75b65f}\label{_blynk_handlers_8h_aba0d72cc178b9bf320e140370a75b65f}} 
+\#define {\bfseries BLYNK\+\_\+\+READ\+\_\+2}(pin)~    void Blynk\+Widget\+Read \#\# pin  (\mbox{\hyperlink{struct_blynk_req}{Blynk\+Req}} BLYNK\+\_\+\+UNUSED \&request)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a83062d2971615e566d4aada5642785b2}\label{_blynk_handlers_8h_a83062d2971615e566d4aada5642785b2}} 
+\#define {\bfseries BLYNK\+\_\+\+WRITE\+\_\+\+DEFAULT}()~BLYNK\+\_\+\+WRITE\+\_\+2(Default)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_aa0dc93f2003fa1adc2223fbad8011585}\label{_blynk_handlers_8h_aa0dc93f2003fa1adc2223fbad8011585}} 
+\#define {\bfseries BLYNK\+\_\+\+READ\+\_\+\+DEFAULT}()~BLYNK\+\_\+\+READ\+\_\+2(Default)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_af355d20b9285ce1951d8993d323fce6d}\label{_blynk_handlers_8h_af355d20b9285ce1951d8993d323fce6d}} 
+\#define {\bfseries BLYNK\+\_\+\+WRITE}(pin)~BLYNK\+\_\+\+WRITE\+\_\+2(pin)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_af2077b717b35aa6d61b332e2c63b827c}\label{_blynk_handlers_8h_af2077b717b35aa6d61b332e2c63b827c}} 
+\#define {\bfseries BLYNK\+\_\+\+READ}(pin)~BLYNK\+\_\+\+READ\+\_\+2(pin)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_ae95595e17b0f134b21c73db13666ce54}\label{_blynk_handlers_8h_ae95595e17b0f134b21c73db13666ce54}} 
+\#define {\bfseries BLYNK\+\_\+\+IN\+\_\+2}(pin)~    void Blynk\+Widget\+Write \#\# pin (\mbox{\hyperlink{struct_blynk_req}{Blynk\+Req}} BLYNK\+\_\+\+UNUSED \&request, const \mbox{\hyperlink{class_blynk_param}{Blynk\+Param}} BLYNK\+\_\+\+UNUSED \&get\+Value)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a2ecbffcbf1655351f4163daa84dbd6dd}\label{_blynk_handlers_8h_a2ecbffcbf1655351f4163daa84dbd6dd}} 
+\#define {\bfseries BLYNK\+\_\+\+OUT\+\_\+2}(pin)~    void Blynk\+Widget\+Read \#\# pin  (\mbox{\hyperlink{struct_blynk_req}{Blynk\+Req}} BLYNK\+\_\+\+UNUSED \&request)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a6950165b925fa7f04cecf801462209fd}\label{_blynk_handlers_8h_a6950165b925fa7f04cecf801462209fd}} 
+\#define {\bfseries BLYNK\+\_\+\+INPUT\+\_\+\+DEFAULT}()~BLYNK\+\_\+\+IN\+\_\+2(Default)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_aa503271fe04a5582f486ee87c2b9f26e}\label{_blynk_handlers_8h_aa503271fe04a5582f486ee87c2b9f26e}} 
+\#define {\bfseries BLYNK\+\_\+\+OUTPUT\+\_\+\+DEFAULT}()~BLYNK\+\_\+\+OUT\+\_\+2(Default)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a5d35df55d9aebe513b770e7821a99520}\label{_blynk_handlers_8h_a5d35df55d9aebe513b770e7821a99520}} 
+\#define {\bfseries BLYNK\+\_\+\+INPUT}(pin)~BLYNK\+\_\+\+IN\+\_\+2(pin)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a6fc33472ba058b788eef2d0b0b9d1a63}\label{_blynk_handlers_8h_a6fc33472ba058b788eef2d0b0b9d1a63}} 
+\#define {\bfseries BLYNK\+\_\+\+OUTPUT}(pin)~BLYNK\+\_\+\+OUT\+\_\+2(pin)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a1eca10499834b5c6e2acb601fca72d92}\label{_blynk_handlers_8h_a1eca10499834b5c6e2acb601fca72d92}} 
+\#define {\bfseries BLYNK\+\_\+\+CONNECTED}()~void Blynk\+On\+Connected()
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_ac4bdadb4a792d4ba4be85a76dc116191}\label{_blynk_handlers_8h_ac4bdadb4a792d4ba4be85a76dc116191}} 
+\#define {\bfseries BLYNK\+\_\+\+DISCONNECTED}()~void Blynk\+On\+Disconnected()
+\item 
+\#define \mbox{\hyperlink{_blynk_handlers_8h_a1943f99af8dce6ab6711eaa99e609843}{BLYNK\+\_\+\+VAR\+\_\+\+INT}}(name,  pin)
+\item 
+\#define \mbox{\hyperlink{_blynk_handlers_8h_aa3a0c9972e5779ea9f70e8247321b6c9}{BLYNK\+\_\+\+VAR\+\_\+\+LONG}}(name,  pin)
+\item 
+\#define \mbox{\hyperlink{_blynk_handlers_8h_a841fb7e8eba2e90a1462420fec03f71a}{BLYNK\+\_\+\+VAR\+\_\+\+DOUBLE}}(name,  pin)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a6c8374d35b1064757a0c81e44c4fb27c}\label{_blynk_handlers_8h_a6c8374d35b1064757a0c81e44c4fb27c}} 
+\#define {\bfseries BLYNK\+\_\+\+APP\+\_\+\+CONNECTED}()~BLYNK\+\_\+\+WRITE(Internal\+Pin\+ACON)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_ac0fde3904c4f2d375444674cb9fc66b6}\label{_blynk_handlers_8h_ac0fde3904c4f2d375444674cb9fc66b6}} 
+\#define {\bfseries BLYNK\+\_\+\+APP\+\_\+\+DISCONNECTED}()~BLYNK\+\_\+\+WRITE(Internal\+Pin\+ADIS)
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a69346e89d378e75d53870bce3fd37b11}\label{_blynk_handlers_8h_a69346e89d378e75d53870bce3fd37b11}} 
+typedef void($\ast$ {\bfseries Widget\+Read\+Handler}) (\mbox{\hyperlink{struct_blynk_req}{Blynk\+Req}} BLYNK\+\_\+\+UNUSED \&request)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a963ef17956c13d253249b0c0c629b664}\label{_blynk_handlers_8h_a963ef17956c13d253249b0c0c629b664}} 
+typedef void($\ast$ {\bfseries Widget\+Write\+Handler}) (\mbox{\hyperlink{struct_blynk_req}{Blynk\+Req}} BLYNK\+\_\+\+UNUSED \&request, const \mbox{\hyperlink{class_blynk_param}{Blynk\+Param}} BLYNK\+\_\+\+UNUSED \&param)
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a86965c6e027267ce6482e517fde9e463}\label{_blynk_handlers_8h_a86965c6e027267ce6482e517fde9e463}} 
+Widget\+Read\+Handler {\bfseries Get\+Read\+Handler} (uint8\+\_\+t pin)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a23dd98764733f7be2e70b0f8d722d770}\label{_blynk_handlers_8h_a23dd98764733f7be2e70b0f8d722d770}} 
+Widget\+Write\+Handler {\bfseries Get\+Write\+Handler} (uint8\+\_\+t pin)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a2b91d4d2ddc2e5d56eeb435669b5f523}\label{_blynk_handlers_8h_a2b91d4d2ddc2e5d56eeb435669b5f523}} 
+{\bfseries BLYNK\+\_\+\+READ} ()
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_ac31600ce8a4e1c25c7ab6cdc0b8b1174}\label{_blynk_handlers_8h_ac31600ce8a4e1c25c7ab6cdc0b8b1174}} 
+{\bfseries BLYNK\+\_\+\+WRITE} ()
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a4d356924ea2edf4d4f6ecbccb7f8d45c}\label{_blynk_handlers_8h_a4d356924ea2edf4d4f6ecbccb7f8d45c}} 
+void {\bfseries Blynk\+No\+Op\+Cbk} ()
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a5c61b6669523405adda2d3f7d9432116}\label{_blynk_handlers_8h_a5c61b6669523405adda2d3f7d9432116}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (Internal\+Pin\+ACON)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_abfe92fca813dae8c14455cb7e6751dfe}\label{_blynk_handlers_8h_abfe92fca813dae8c14455cb7e6751dfe}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (Internal\+Pin\+ADIS)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a9c4005be1f8125420e9d81c82f6b89fe}\label{_blynk_handlers_8h_a9c4005be1f8125420e9d81c82f6b89fe}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (Internal\+Pin\+RTC)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_aa75a13a22a2ed881a6816ace77a541fe}\label{_blynk_handlers_8h_aa75a13a22a2ed881a6816ace77a541fe}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (Internal\+Pin\+UTC)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_ab9b3ba90d77d47428c0ad3e4f5de29b9}\label{_blynk_handlers_8h_ab9b3ba90d77d47428c0ad3e4f5de29b9}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (Internal\+Pin\+OTA)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a6b0b7b0318adeb0cae4e128b4d5ca331}\label{_blynk_handlers_8h_a6b0b7b0318adeb0cae4e128b4d5ca331}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (Internal\+Pin\+META)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_ab7652e886ad3f041ab2c516e62793fb1}\label{_blynk_handlers_8h_ab7652e886ad3f041ab2c516e62793fb1}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (Internal\+Pin\+VFS)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a81bbe0090005bd43f14709192134f49e}\label{_blynk_handlers_8h_a81bbe0090005bd43f14709192134f49e}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (Internal\+Pin\+DBG)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a3709d03d2f37dd3f545e09663b8a17a6}\label{_blynk_handlers_8h_a3709d03d2f37dd3f545e09663b8a17a6}} 
+{\bfseries BLYNK\+\_\+\+READ} (0)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a49550eaac240229de08f284fff964fa4}\label{_blynk_handlers_8h_a49550eaac240229de08f284fff964fa4}} 
+{\bfseries BLYNK\+\_\+\+READ} (1)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_ad11151a03aa1737397c3a070b947b2ea}\label{_blynk_handlers_8h_ad11151a03aa1737397c3a070b947b2ea}} 
+{\bfseries BLYNK\+\_\+\+READ} (2)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a54e8fce16abb3c4e0618ebef2d6a19b4}\label{_blynk_handlers_8h_a54e8fce16abb3c4e0618ebef2d6a19b4}} 
+{\bfseries BLYNK\+\_\+\+READ} (3)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a95f4193fcf534c2ce1784392bba92bc2}\label{_blynk_handlers_8h_a95f4193fcf534c2ce1784392bba92bc2}} 
+{\bfseries BLYNK\+\_\+\+READ} (4)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a5e4d5e37ad4699c04d718948daec6471}\label{_blynk_handlers_8h_a5e4d5e37ad4699c04d718948daec6471}} 
+{\bfseries BLYNK\+\_\+\+READ} (5)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a550f73725b90f61e9c6c4278222be4ea}\label{_blynk_handlers_8h_a550f73725b90f61e9c6c4278222be4ea}} 
+{\bfseries BLYNK\+\_\+\+READ} (6)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a16034f63198a66345efad9de3aa0198d}\label{_blynk_handlers_8h_a16034f63198a66345efad9de3aa0198d}} 
+{\bfseries BLYNK\+\_\+\+READ} (7)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_addc4565ba364589d8f2cab6dca93a838}\label{_blynk_handlers_8h_addc4565ba364589d8f2cab6dca93a838}} 
+{\bfseries BLYNK\+\_\+\+READ} (8)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_ad6054df10b1068505947f8b6b4c2da0c}\label{_blynk_handlers_8h_ad6054df10b1068505947f8b6b4c2da0c}} 
+{\bfseries BLYNK\+\_\+\+READ} (9)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a38a364e13062c00414a67faf9ae71e0a}\label{_blynk_handlers_8h_a38a364e13062c00414a67faf9ae71e0a}} 
+{\bfseries BLYNK\+\_\+\+READ} (10)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_aa45f4a7033ae9187debfc3c1ef9cd4e8}\label{_blynk_handlers_8h_aa45f4a7033ae9187debfc3c1ef9cd4e8}} 
+{\bfseries BLYNK\+\_\+\+READ} (11)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_aaa0a1f47bdcc24b5b3aa45edf0e614a1}\label{_blynk_handlers_8h_aaa0a1f47bdcc24b5b3aa45edf0e614a1}} 
+{\bfseries BLYNK\+\_\+\+READ} (12)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_aa6eddc2e02dda4692cdff1c5b0eb3a83}\label{_blynk_handlers_8h_aa6eddc2e02dda4692cdff1c5b0eb3a83}} 
+{\bfseries BLYNK\+\_\+\+READ} (13)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a3eba6e3226ffd06f346064e3133f91f8}\label{_blynk_handlers_8h_a3eba6e3226ffd06f346064e3133f91f8}} 
+{\bfseries BLYNK\+\_\+\+READ} (14)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a9e9607a1aad25010dc2f5d76de72b610}\label{_blynk_handlers_8h_a9e9607a1aad25010dc2f5d76de72b610}} 
+{\bfseries BLYNK\+\_\+\+READ} (15)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_ab61b4517339745a0ab294a282bf6a167}\label{_blynk_handlers_8h_ab61b4517339745a0ab294a282bf6a167}} 
+{\bfseries BLYNK\+\_\+\+READ} (16)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a330ccad431dd7031dede52f9261c5970}\label{_blynk_handlers_8h_a330ccad431dd7031dede52f9261c5970}} 
+{\bfseries BLYNK\+\_\+\+READ} (17)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a86615bfeb82ed02ee7a9251bc92f01f1}\label{_blynk_handlers_8h_a86615bfeb82ed02ee7a9251bc92f01f1}} 
+{\bfseries BLYNK\+\_\+\+READ} (18)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a012435860eac5404afd84ca894aee7eb}\label{_blynk_handlers_8h_a012435860eac5404afd84ca894aee7eb}} 
+{\bfseries BLYNK\+\_\+\+READ} (19)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a381a19a5505865de7dd271100bed8dce}\label{_blynk_handlers_8h_a381a19a5505865de7dd271100bed8dce}} 
+{\bfseries BLYNK\+\_\+\+READ} (20)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a1362be7458adf0099040e3ef0567e555}\label{_blynk_handlers_8h_a1362be7458adf0099040e3ef0567e555}} 
+{\bfseries BLYNK\+\_\+\+READ} (21)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a1c778adebe05fa8493b2724234ce76a8}\label{_blynk_handlers_8h_a1c778adebe05fa8493b2724234ce76a8}} 
+{\bfseries BLYNK\+\_\+\+READ} (22)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a2480848cecccc77ef3798f7edc563f63}\label{_blynk_handlers_8h_a2480848cecccc77ef3798f7edc563f63}} 
+{\bfseries BLYNK\+\_\+\+READ} (23)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_afbce37f70cab54c528bbbd686749fedf}\label{_blynk_handlers_8h_afbce37f70cab54c528bbbd686749fedf}} 
+{\bfseries BLYNK\+\_\+\+READ} (24)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a1d89108e08094f4056a9de1553cdb1a3}\label{_blynk_handlers_8h_a1d89108e08094f4056a9de1553cdb1a3}} 
+{\bfseries BLYNK\+\_\+\+READ} (25)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_ab5c17eddd14849fde61b26072b8283a0}\label{_blynk_handlers_8h_ab5c17eddd14849fde61b26072b8283a0}} 
+{\bfseries BLYNK\+\_\+\+READ} (26)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_ac9b908f451bf02d81cd288e6c6e60397}\label{_blynk_handlers_8h_ac9b908f451bf02d81cd288e6c6e60397}} 
+{\bfseries BLYNK\+\_\+\+READ} (27)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a0cac83e2d08b577a9ee8ee22fb6e4bda}\label{_blynk_handlers_8h_a0cac83e2d08b577a9ee8ee22fb6e4bda}} 
+{\bfseries BLYNK\+\_\+\+READ} (28)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_aec08a26fb146c1ad401e7ed894dd285a}\label{_blynk_handlers_8h_aec08a26fb146c1ad401e7ed894dd285a}} 
+{\bfseries BLYNK\+\_\+\+READ} (29)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a85f9745b36b30010a4c0292804148d54}\label{_blynk_handlers_8h_a85f9745b36b30010a4c0292804148d54}} 
+{\bfseries BLYNK\+\_\+\+READ} (30)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_ad1cb8746894a596c664b1f683d5ffd78}\label{_blynk_handlers_8h_ad1cb8746894a596c664b1f683d5ffd78}} 
+{\bfseries BLYNK\+\_\+\+READ} (31)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_ac103df129a5120e7362e11a669ba0bc4}\label{_blynk_handlers_8h_ac103df129a5120e7362e11a669ba0bc4}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (0)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_ab0dc481c7f4313b7e5e03a267f95ec67}\label{_blynk_handlers_8h_ab0dc481c7f4313b7e5e03a267f95ec67}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (1)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_ad77dbe825ebba532f42f7dac7dfefff1}\label{_blynk_handlers_8h_ad77dbe825ebba532f42f7dac7dfefff1}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (2)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a08dda10430fecd5da500e2494f658f85}\label{_blynk_handlers_8h_a08dda10430fecd5da500e2494f658f85}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (3)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a2620819fa0da932a00b591bc3bc5f09c}\label{_blynk_handlers_8h_a2620819fa0da932a00b591bc3bc5f09c}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (4)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a69f57f9aa9b4ac15fb5974da0bd501d7}\label{_blynk_handlers_8h_a69f57f9aa9b4ac15fb5974da0bd501d7}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (5)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a673825e0c89cf6d64b29da7decdee373}\label{_blynk_handlers_8h_a673825e0c89cf6d64b29da7decdee373}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (6)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a5461fda35c17cd80cd9ab1505c599ba3}\label{_blynk_handlers_8h_a5461fda35c17cd80cd9ab1505c599ba3}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (7)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a5ff663d8618d8fbe0eca7b9992dde98b}\label{_blynk_handlers_8h_a5ff663d8618d8fbe0eca7b9992dde98b}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (8)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a7c21dcd34eff291d8e50822a5e8b6f7b}\label{_blynk_handlers_8h_a7c21dcd34eff291d8e50822a5e8b6f7b}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (9)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_aee635423a7c3dc90480d6c3f9a2d46bc}\label{_blynk_handlers_8h_aee635423a7c3dc90480d6c3f9a2d46bc}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (10)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_acdfa5194ef39994d7b522b37eff4f229}\label{_blynk_handlers_8h_acdfa5194ef39994d7b522b37eff4f229}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (11)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_aba898f083fe86cdd8647c0b0e59b0522}\label{_blynk_handlers_8h_aba898f083fe86cdd8647c0b0e59b0522}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (12)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a2497b2ba3dfea1ef14cbf1a9cc8a1138}\label{_blynk_handlers_8h_a2497b2ba3dfea1ef14cbf1a9cc8a1138}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (13)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_ac6354fc4af08f2f306c45b51c8da9010}\label{_blynk_handlers_8h_ac6354fc4af08f2f306c45b51c8da9010}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (14)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_abb49c57e04c8814d11c0e0a685ddab56}\label{_blynk_handlers_8h_abb49c57e04c8814d11c0e0a685ddab56}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (15)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a01daf05e6f6675b7229bbf3ae686a1e7}\label{_blynk_handlers_8h_a01daf05e6f6675b7229bbf3ae686a1e7}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (16)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a556e5524854967288de7f83b1cc8f444}\label{_blynk_handlers_8h_a556e5524854967288de7f83b1cc8f444}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (17)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a01593fdf56c627b3f3f7516ece133cde}\label{_blynk_handlers_8h_a01593fdf56c627b3f3f7516ece133cde}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (18)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a70f65adc33e8ce61650d2e320228f581}\label{_blynk_handlers_8h_a70f65adc33e8ce61650d2e320228f581}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (19)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a8802f6887dd8a3d45f625332ba78cbef}\label{_blynk_handlers_8h_a8802f6887dd8a3d45f625332ba78cbef}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (20)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_aa814f9e53c6f86d9e159b82605e3b2ab}\label{_blynk_handlers_8h_aa814f9e53c6f86d9e159b82605e3b2ab}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (21)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a795ff4febf42332041f57d281fae344c}\label{_blynk_handlers_8h_a795ff4febf42332041f57d281fae344c}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (22)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a8b260ccff58c269e6144a602519afe32}\label{_blynk_handlers_8h_a8b260ccff58c269e6144a602519afe32}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (23)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_aeae333719cb724defea67c2f232f067a}\label{_blynk_handlers_8h_aeae333719cb724defea67c2f232f067a}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (24)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a49ba6d4165a6bbab4bd314e41a034afd}\label{_blynk_handlers_8h_a49ba6d4165a6bbab4bd314e41a034afd}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (25)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_ac9493a356cf4e44c3bb3f67344eeb01f}\label{_blynk_handlers_8h_ac9493a356cf4e44c3bb3f67344eeb01f}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (26)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a65323212ae71b8945d019ae7aab26f50}\label{_blynk_handlers_8h_a65323212ae71b8945d019ae7aab26f50}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (27)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a38618e4c427d2337a62ff5f52682b11e}\label{_blynk_handlers_8h_a38618e4c427d2337a62ff5f52682b11e}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (28)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a6dd9a4b9fd2836ca54fd61409870fac1}\label{_blynk_handlers_8h_a6dd9a4b9fd2836ca54fd61409870fac1}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (29)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_a7911ead8b764674375eff9223e1da311}\label{_blynk_handlers_8h_a7911ead8b764674375eff9223e1da311}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (30)
+\item 
+\mbox{\Hypertarget{_blynk_handlers_8h_aa0586cd27d620aba59ef4b32dfd3d9e1}\label{_blynk_handlers_8h_aa0586cd27d620aba59ef4b32dfd3d9e1}} 
+{\bfseries BLYNK\+\_\+\+WRITE} (31)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Handlers for virtual pin operations. 
+
+\begin{DoxyAuthor}{Author}
+Volodymyr Shymanskyy @license This project is released under the MIT License (MIT) 
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2015 Volodymyr Shymanskyy 
+\end{DoxyCopyright}
+\begin{DoxyDate}{Date}
+Jan 2015 
+\end{DoxyDate}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{_blynk_handlers_8h_a841fb7e8eba2e90a1462420fec03f71a}\label{_blynk_handlers_8h_a841fb7e8eba2e90a1462420fec03f71a}} 
+\index{BlynkHandlers.h@{BlynkHandlers.h}!BLYNK\_VAR\_DOUBLE@{BLYNK\_VAR\_DOUBLE}}
+\index{BLYNK\_VAR\_DOUBLE@{BLYNK\_VAR\_DOUBLE}!BlynkHandlers.h@{BlynkHandlers.h}}
+\doxysubsubsection{\texorpdfstring{BLYNK\_VAR\_DOUBLE}{BLYNK\_VAR\_DOUBLE}}
+{\footnotesize\ttfamily \#define BLYNK\+\_\+\+VAR\+\_\+\+DOUBLE(\begin{DoxyParamCaption}\item[{}]{name,  }\item[{}]{pin }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \textcolor{keywordtype}{double} name;  \(\backslash\)}
+\DoxyCodeLine{    BLYNK\_WRITE(pin) \{ name = param.asDouble(); \} \(\backslash\)}
+\DoxyCodeLine{    BLYNK\_READ(pin)  \{ Blynk.\mbox{\hyperlink{class_blynk_api_a2d8229be57903f8d1140dbad6dbf6e05}{virtualWrite}}(pin, name); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{_blynk_handlers_8h_a1943f99af8dce6ab6711eaa99e609843}\label{_blynk_handlers_8h_a1943f99af8dce6ab6711eaa99e609843}} 
+\index{BlynkHandlers.h@{BlynkHandlers.h}!BLYNK\_VAR\_INT@{BLYNK\_VAR\_INT}}
+\index{BLYNK\_VAR\_INT@{BLYNK\_VAR\_INT}!BlynkHandlers.h@{BlynkHandlers.h}}
+\doxysubsubsection{\texorpdfstring{BLYNK\_VAR\_INT}{BLYNK\_VAR\_INT}}
+{\footnotesize\ttfamily \#define BLYNK\+\_\+\+VAR\+\_\+\+INT(\begin{DoxyParamCaption}\item[{}]{name,  }\item[{}]{pin }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \textcolor{keywordtype}{int} name;  \(\backslash\)}
+\DoxyCodeLine{    BLYNK\_WRITE(pin) \{ name = param.asInt(); \} \(\backslash\)}
+\DoxyCodeLine{    BLYNK\_READ(pin)  \{ Blynk.\mbox{\hyperlink{class_blynk_api_a2d8229be57903f8d1140dbad6dbf6e05}{virtualWrite}}(pin, name); \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{_blynk_handlers_8h_aa3a0c9972e5779ea9f70e8247321b6c9}\label{_blynk_handlers_8h_aa3a0c9972e5779ea9f70e8247321b6c9}} 
+\index{BlynkHandlers.h@{BlynkHandlers.h}!BLYNK\_VAR\_LONG@{BLYNK\_VAR\_LONG}}
+\index{BLYNK\_VAR\_LONG@{BLYNK\_VAR\_LONG}!BlynkHandlers.h@{BlynkHandlers.h}}
+\doxysubsubsection{\texorpdfstring{BLYNK\_VAR\_LONG}{BLYNK\_VAR\_LONG}}
+{\footnotesize\ttfamily \#define BLYNK\+\_\+\+VAR\+\_\+\+LONG(\begin{DoxyParamCaption}\item[{}]{name,  }\item[{}]{pin }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \textcolor{keywordtype}{long} name;  \(\backslash\)}
+\DoxyCodeLine{    BLYNK\_WRITE(pin) \{ name = param.asLong(); \} \(\backslash\)}
+\DoxyCodeLine{    BLYNK\_READ(pin)  \{ Blynk.\mbox{\hyperlink{class_blynk_api_a2d8229be57903f8d1140dbad6dbf6e05}{virtualWrite}}(pin, name); \}}
+
+\end{DoxyCode}

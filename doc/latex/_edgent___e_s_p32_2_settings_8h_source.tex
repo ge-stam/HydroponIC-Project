@@ -1,0 +1,90 @@
+\hypertarget{_edgent___e_s_p32_2_settings_8h_source}{}\doxysection{Settings.\+h}
+\label{_edgent___e_s_p32_2_settings_8h_source}\index{lib/Blynk/examples/Blynk.Edgent/Edgent\_ESP32/Settings.h@{lib/Blynk/examples/Blynk.Edgent/Edgent\_ESP32/Settings.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{2 \textcolor{comment}{/*}}
+\DoxyCodeLine{3 \textcolor{comment}{ * Board configuration (see examples below).}}
+\DoxyCodeLine{4 \textcolor{comment}{ */}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#if defined(USE\_WROVER\_BOARD)}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{  \#define BOARD\_BUTTON\_PIN            15}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{  \#define BOARD\_BUTTON\_ACTIVE\_LOW     true}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{  \#define BOARD\_LED\_PIN\_R             0}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{  \#define BOARD\_LED\_PIN\_G             2}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{  \#define BOARD\_LED\_PIN\_B             4}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{  \#define BOARD\_LED\_INVERSE           false}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{  \#define BOARD\_LED\_BRIGHTNESS        128}}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#elif defined(USE\_TTGO\_T7)}}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19   \textcolor{comment}{// This board does not have a built-\/in button}}
+\DoxyCodeLine{20   \textcolor{comment}{// Connect a button to gpio0 <> GND}}
+\DoxyCodeLine{21 \textcolor{preprocessor}{  \#define BOARD\_BUTTON\_PIN            0}}
+\DoxyCodeLine{22 \textcolor{preprocessor}{  \#define BOARD\_BUTTON\_ACTIVE\_LOW     true}}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 \textcolor{preprocessor}{  \#define BOARD\_LED\_PIN               19}}
+\DoxyCodeLine{25 \textcolor{preprocessor}{  \#define BOARD\_LED\_INVERSE           false}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{  \#define BOARD\_LED\_BRIGHTNESS        64}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{preprocessor}{  \#warning "{}Custom board configuration is used"{}}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{preprocessor}{  \#define BOARD\_BUTTON\_PIN            0                     }\textcolor{comment}{// Pin where user button is attached}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{  \#define BOARD\_BUTTON\_ACTIVE\_LOW     true                  }\textcolor{comment}{// true if button is "{}active-\/low"{}}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{preprocessor}{  \#define BOARD\_LED\_PIN               4                     }\textcolor{comment}{// Set LED pin -\/ if you have a single-\/color LED attached}}
+\DoxyCodeLine{36   \textcolor{comment}{//\#define BOARD\_LED\_PIN\_R           15                    // Set R,G,B pins -\/ if your LED is PWM RGB}}
+\DoxyCodeLine{37   \textcolor{comment}{//\#define BOARD\_LED\_PIN\_G           12}}
+\DoxyCodeLine{38   \textcolor{comment}{//\#define BOARD\_LED\_PIN\_B           13}}
+\DoxyCodeLine{39   \textcolor{comment}{//\#define BOARD\_LED\_PIN\_WS2812      4                     // Set if your LED is WS2812 RGB}}
+\DoxyCodeLine{40 \textcolor{preprocessor}{  \#define BOARD\_LED\_INVERSE           false                 }\textcolor{comment}{// true if LED is common anode, false if common cathode}}
+\DoxyCodeLine{41 \textcolor{preprocessor}{  \#define BOARD\_LED\_BRIGHTNESS        64                    }\textcolor{comment}{// 0..255 brightness control}}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46 \textcolor{comment}{/*}}
+\DoxyCodeLine{47 \textcolor{comment}{ * Advanced options}}
+\DoxyCodeLine{48 \textcolor{comment}{ */}}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50 \textcolor{preprocessor}{\#define BUTTON\_HOLD\_TIME\_INDICATION   3000}}
+\DoxyCodeLine{51 \textcolor{preprocessor}{\#define BUTTON\_HOLD\_TIME\_ACTION       10000}}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53 \textcolor{preprocessor}{\#define BOARD\_PWM\_MAX                 1023}}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55 \textcolor{preprocessor}{\#define BOARD\_LEDC\_CHANNEL\_1     1}}
+\DoxyCodeLine{56 \textcolor{preprocessor}{\#define BOARD\_LEDC\_CHANNEL\_2     2}}
+\DoxyCodeLine{57 \textcolor{preprocessor}{\#define BOARD\_LEDC\_CHANNEL\_3     3}}
+\DoxyCodeLine{58 \textcolor{preprocessor}{\#define BOARD\_LEDC\_TIMER\_BITS    10}}
+\DoxyCodeLine{59 \textcolor{preprocessor}{\#define BOARD\_LEDC\_BASE\_FREQ     12000}}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61 \textcolor{preprocessor}{\#define CONFIG\_AP\_URL                 "{}blynk.setup"{}}}
+\DoxyCodeLine{62 \textcolor{preprocessor}{\#define CONFIG\_DEFAULT\_SERVER         "{}blynk.cloud"{}}}
+\DoxyCodeLine{63 \textcolor{preprocessor}{\#define CONFIG\_DEFAULT\_PORT           443}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65 \textcolor{preprocessor}{\#define WIFI\_NET\_CONNECT\_TIMEOUT      30000}}
+\DoxyCodeLine{66 \textcolor{preprocessor}{\#define WIFI\_CLOUD\_CONNECT\_TIMEOUT    30000}}
+\DoxyCodeLine{67 \textcolor{preprocessor}{\#define WIFI\_AP\_IP                    IPAddress(192, 168, 4, 1)}}
+\DoxyCodeLine{68 \textcolor{preprocessor}{\#define WIFI\_AP\_Subnet                IPAddress(255, 255, 255, 0)}}
+\DoxyCodeLine{69 \textcolor{comment}{//\#define WIFI\_CAPTIVE\_PORTAL\_ENABLE}}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71 \textcolor{comment}{//\#define USE\_TICKER}}
+\DoxyCodeLine{72 \textcolor{comment}{//\#define USE\_TIMER\_ONE}}
+\DoxyCodeLine{73 \textcolor{comment}{//\#define USE\_TIMER\_THREE}}
+\DoxyCodeLine{74 \textcolor{comment}{//\#define USE\_TIMER\_FIVE}}
+\DoxyCodeLine{75 \textcolor{preprocessor}{\#define USE\_PTHREAD}}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77 \textcolor{preprocessor}{\#define BLYNK\_NO\_DEFAULT\_BANNER}}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79 \textcolor{preprocessor}{\#if defined(APP\_DEBUG)}}
+\DoxyCodeLine{80 \textcolor{preprocessor}{  \#define DEBUG\_PRINT(...) BLYNK\_LOG1(\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{81 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{82 \textcolor{preprocessor}{  \#define DEBUG\_PRINT(...)}}
+\DoxyCodeLine{83 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{84 }
+
+\end{DoxyCode}

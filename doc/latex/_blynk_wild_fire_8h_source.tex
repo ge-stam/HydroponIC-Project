@@ -1,0 +1,200 @@
+\hypertarget{_blynk_wild_fire_8h_source}{}\doxysection{Blynk\+Wild\+Fire.\+h}
+\label{_blynk_wild_fire_8h_source}\index{lib/Blynk/src/Adapters/BlynkWildFire.h@{lib/Blynk/src/Adapters/BlynkWildFire.h}}
+\mbox{\hyperlink{_blynk_wild_fire_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef BlynkWildFire\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define BlynkWildFire\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#ifndef BLYNK\_INFO\_CONNECTION}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#define BLYNK\_INFO\_CONNECTION "{}CC3000"{}}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#define BLYNK\_SEND\_ATOMIC}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_api_arduino_8h}{BlynkApiArduino.h}}>}}
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_protocol_8h}{Blynk/BlynkProtocol.h}}>}}
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#include <IPAddress.h>}}
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#include <WildFire\_CC3000.h>}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#include <utility/netapp.h>}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_transport_wild_fire}{BlynkTransportWildFire}}}
+\DoxyCodeLine{27 \{}
+\DoxyCodeLine{28 \textcolor{keyword}{public}:}
+\DoxyCodeLine{29     \mbox{\hyperlink{class_blynk_transport_wild_fire}{BlynkTransportWildFire}}(WildFire\_CC3000\& cc3000)}
+\DoxyCodeLine{30         : cc3000(cc3000)}
+\DoxyCodeLine{31         , host(NULL)}
+\DoxyCodeLine{32         , addr(0)}
+\DoxyCodeLine{33         , port(0)}
+\DoxyCodeLine{34     \{\}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36     \textcolor{keywordtype}{void} begin(uint32\_t a, uint16\_t p) \{}
+\DoxyCodeLine{37         host = NULL;}
+\DoxyCodeLine{38         port = p;}
+\DoxyCodeLine{39         addr = a;}
+\DoxyCodeLine{40     \}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     \textcolor{keywordtype}{void} begin(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* h, uint16\_t p) \{}
+\DoxyCodeLine{43         host = h;}
+\DoxyCodeLine{44         port = p;}
+\DoxyCodeLine{45     \}}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{keywordtype}{bool} connect() \{}
+\DoxyCodeLine{48         \textcolor{keywordflow}{if} (host) \{}
+\DoxyCodeLine{49             BLYNK\_LOG2(BLYNK\_F(\textcolor{stringliteral}{"{}Looking for "{}}), host);}
+\DoxyCodeLine{50             \textcolor{keywordflow}{while} (addr == 0) \{}
+\DoxyCodeLine{51                 \textcolor{keywordflow}{if} (!cc3000.getHostByName((\textcolor{keywordtype}{char}*)host, \&addr)) \{}
+\DoxyCodeLine{52                     BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}Couldn't locate server"{}}));}
+\DoxyCodeLine{53                     BlynkDelay(500);}
+\DoxyCodeLine{54                 \}}
+\DoxyCodeLine{55             \}}
+\DoxyCodeLine{56         \}}
+\DoxyCodeLine{57         uint8\_t* a = (uint8\_t*)\&addr;}
+\DoxyCodeLine{58         BLYNK\_LOG\_IP\_REV(\textcolor{stringliteral}{"{}Connecting to "{}}, a);}
+\DoxyCodeLine{59         client = cc3000.connectTCP(addr, port);}
+\DoxyCodeLine{60         \textcolor{keywordflow}{return} client.connected();}
+\DoxyCodeLine{61     \}}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63     \textcolor{keywordtype}{void} disconnect() \{ client.close(); \}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     \textcolor{keywordtype}{size\_t} read(\textcolor{keywordtype}{void}* buf, \textcolor{keywordtype}{size\_t} len) \{}
+\DoxyCodeLine{66         \textcolor{keywordtype}{char}* beg = (\textcolor{keywordtype}{char}*)buf;}
+\DoxyCodeLine{67         \textcolor{keywordtype}{char}* end = beg + len;}
+\DoxyCodeLine{68         \textcolor{keywordflow}{while} (beg < end) \{}
+\DoxyCodeLine{69             \textcolor{keywordtype}{int} c = client.read();}
+\DoxyCodeLine{70             \textcolor{keywordflow}{if} (c < 0)}
+\DoxyCodeLine{71                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{72             *beg++ = (char)c;}
+\DoxyCodeLine{73         \}}
+\DoxyCodeLine{74         \textcolor{keywordflow}{return} len;}
+\DoxyCodeLine{75     \}}
+\DoxyCodeLine{76     \textcolor{keywordtype}{size\_t} write(\textcolor{keyword}{const} \textcolor{keywordtype}{void}* buf, \textcolor{keywordtype}{size\_t} len) \{}
+\DoxyCodeLine{77         \textcolor{keywordflow}{return} client.write((\textcolor{keyword}{const} uint8\_t*)buf, len);}
+\DoxyCodeLine{78     \}}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80     \textcolor{keywordtype}{bool} connected() \{ \textcolor{keywordflow}{return} client.connected(); \}}
+\DoxyCodeLine{81     \textcolor{keywordtype}{int} available() \{ \textcolor{keywordflow}{return} client.available(); \}}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83 \textcolor{keyword}{private}:}
+\DoxyCodeLine{84     WildFire\_CC3000\& cc3000;}
+\DoxyCodeLine{85     WildFire\_CC3000\_Client client;}
+\DoxyCodeLine{86     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* host;}
+\DoxyCodeLine{87     uint32\_t    addr;}
+\DoxyCodeLine{88     uint16\_t    port;}
+\DoxyCodeLine{89 \};}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_wild_fire}{BlynkWildFire}}}
+\DoxyCodeLine{92     : \textcolor{keyword}{public} \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol}}<BlynkTransportWildFire>}
+\DoxyCodeLine{93 \{}
+\DoxyCodeLine{94     \textcolor{keyword}{typedef} \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol<BlynkTransportWildFire>}} \mbox{\hyperlink{class_blynk_protocol}{Base}};}
+\DoxyCodeLine{95 \textcolor{keyword}{public}:}
+\DoxyCodeLine{96     \mbox{\hyperlink{class_blynk_wild_fire}{BlynkWildFire}}(WildFire\_CC3000\& cc3000, \mbox{\hyperlink{class_blynk_transport_wild_fire}{BlynkTransportWildFire}}\& transp)}
+\DoxyCodeLine{97         : \mbox{\hyperlink{class_blynk_protocol}{Base}}(transp), cc3000(cc3000)}
+\DoxyCodeLine{98     \{\}}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100     \textcolor{keywordtype}{void} connectWiFi(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* ssid,}
+\DoxyCodeLine{101                      \textcolor{keyword}{const} \textcolor{keywordtype}{char}* pass,}
+\DoxyCodeLine{102                      uint8\_t     secmode)}
+\DoxyCodeLine{103     \{}
+\DoxyCodeLine{104         \textcolor{keywordflow}{if} (!cc3000.begin())}
+\DoxyCodeLine{105         \{}
+\DoxyCodeLine{106             BLYNK\_FATAL(\textcolor{stringliteral}{"{}Couldn't begin()! Check your wiring?"{}});}
+\DoxyCodeLine{107         \}}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109 \textcolor{preprocessor}{\#if !defined(CC3000\_TINY\_DRIVER) \&\& defined(BLYNK\_DEBUG)}}
+\DoxyCodeLine{110         uint8\_t major, minor;}
+\DoxyCodeLine{111         \textcolor{keywordflow}{if}(!cc3000.getFirmwareVersion(\&major, \&minor))}
+\DoxyCodeLine{112         \{}
+\DoxyCodeLine{113             \textcolor{keywordflow}{if}(major != 0x1 || minor < 0x13) \{}
+\DoxyCodeLine{114                 BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}CC3000 upgrade needed?"{}}));}
+\DoxyCodeLine{115             \}}
+\DoxyCodeLine{116         \}}
+\DoxyCodeLine{117 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119         \textcolor{comment}{// Remove socket inactivity timeout}}
+\DoxyCodeLine{120         \textcolor{comment}{/*unsigned long aucDHCP       = 14400;}}
+\DoxyCodeLine{121 \textcolor{comment}{        unsigned long aucARP        = 3600;}}
+\DoxyCodeLine{122 \textcolor{comment}{        unsigned long aucKeepalive  = 30;}}
+\DoxyCodeLine{123 \textcolor{comment}{        unsigned long aucInactivity = 0;}}
+\DoxyCodeLine{124 \textcolor{comment}{        int iRet = netapp\_timeout\_values(\&aucDHCP, \&aucARP, \&aucKeepalive, \&aucInactivity);}}
+\DoxyCodeLine{125 \textcolor{comment}{        if (iRet != 0) \{}}
+\DoxyCodeLine{126 \textcolor{comment}{            BLYNK\_FATAL("{}Cannot set netapp timeout!"{});}}
+\DoxyCodeLine{127 \textcolor{comment}{        \}*/}}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129         \textcolor{comment}{/*if (!cc3000.deleteProfiles())}}
+\DoxyCodeLine{130 \textcolor{comment}{        \{}}
+\DoxyCodeLine{131 \textcolor{comment}{            BLYNK\_FATAL("{}Fail deleting old profiles"{});}}
+\DoxyCodeLine{132 \textcolor{comment}{        \}*/}}
+\DoxyCodeLine{133         BLYNK\_LOG2(BLYNK\_F(\textcolor{stringliteral}{"{}Connecting to "{}}), ssid);}
+\DoxyCodeLine{134         \textcolor{keywordflow}{if} (!cc3000.connectToAP(ssid, pass, secmode))}
+\DoxyCodeLine{135         \{}
+\DoxyCodeLine{136             BLYNK\_FATAL(\textcolor{stringliteral}{"{}Failed to connect to AP"{}});}
+\DoxyCodeLine{137         \}}
+\DoxyCodeLine{138         BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}Getting IP..."{}}));}
+\DoxyCodeLine{139         \textcolor{keywordflow}{while} (!cc3000.checkDHCP())}
+\DoxyCodeLine{140         \{}
+\DoxyCodeLine{141             BlynkDelay(100);}
+\DoxyCodeLine{142         \}}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144         uint32\_t ipAddress, netmask, gateway, dhcpserv, dnsserv;}
+\DoxyCodeLine{145         \textcolor{keywordflow}{if}(!cc3000.getIPAddress(\&ipAddress, \&netmask, \&gateway, \&dhcpserv, \&dnsserv))}
+\DoxyCodeLine{146         \{}
+\DoxyCodeLine{147             BLYNK\_FATAL(\textcolor{stringliteral}{"{}DHCP failed."{}});}
+\DoxyCodeLine{148         \}}
+\DoxyCodeLine{149 \textcolor{preprocessor}{\#ifdef BLYNK\_PRINT}}
+\DoxyCodeLine{150         uint8\_t* addr = (uint8\_t*)\&ipAddress;}
+\DoxyCodeLine{151         BLYNK\_LOG\_IP\_REV(\textcolor{stringliteral}{"{}IP: "{}}, addr);}
+\DoxyCodeLine{152         addr = (uint8\_t*)\&gateway;}
+\DoxyCodeLine{153         BLYNK\_LOG\_IP\_REV(\textcolor{stringliteral}{"{}GW: "{}}, addr);}
+\DoxyCodeLine{154         addr = (uint8\_t*)\&dnsserv;}
+\DoxyCodeLine{155         BLYNK\_LOG\_IP\_REV(\textcolor{stringliteral}{"{}DNS: "{}}, addr);}
+\DoxyCodeLine{156 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{157     \}}
+\DoxyCodeLine{158 }
+\DoxyCodeLine{159     \textcolor{keywordtype}{void} config(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth,}
+\DoxyCodeLine{160                 \textcolor{keyword}{const} \textcolor{keywordtype}{char}* domain = BLYNK\_DEFAULT\_DOMAIN,}
+\DoxyCodeLine{161                 uint16\_t    port   = BLYNK\_DEFAULT\_PORT)}
+\DoxyCodeLine{162     \{}
+\DoxyCodeLine{163         Base::begin(auth);}
+\DoxyCodeLine{164 }
+\DoxyCodeLine{165         this-\/>conn.begin(domain, port);}
+\DoxyCodeLine{166     \}}
+\DoxyCodeLine{167 }
+\DoxyCodeLine{168     \textcolor{keywordtype}{void} config(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth,}
+\DoxyCodeLine{169                 IPAddress   ip,}
+\DoxyCodeLine{170                 uint16\_t    port = BLYNK\_DEFAULT\_PORT)}
+\DoxyCodeLine{171     \{}
+\DoxyCodeLine{172         Base::begin(auth);}
+\DoxyCodeLine{173         this-\/>conn.begin(cc3000.IP2U32(ip[0],ip[1],ip[2],ip[3]), port);}
+\DoxyCodeLine{174     \}}
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176     \textcolor{keywordtype}{void} begin( \textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth,}
+\DoxyCodeLine{177                 \textcolor{keyword}{const} \textcolor{keywordtype}{char}* ssid,}
+\DoxyCodeLine{178                 \textcolor{keyword}{const} \textcolor{keywordtype}{char}* pass,}
+\DoxyCodeLine{179                 uint8\_t     secmode,}
+\DoxyCodeLine{180                 \textcolor{keyword}{const} \textcolor{keywordtype}{char}* domain = BLYNK\_DEFAULT\_DOMAIN,}
+\DoxyCodeLine{181                 uint16\_t    port   = BLYNK\_DEFAULT\_PORT)}
+\DoxyCodeLine{182     \{}
+\DoxyCodeLine{183         connectWiFi(ssid, pass, secmode);}
+\DoxyCodeLine{184         config(auth, domain, port);}
+\DoxyCodeLine{185         \textcolor{keywordflow}{while}(this-\/>connect() != \textcolor{keyword}{true}) \{\}}
+\DoxyCodeLine{186     \}}
+\DoxyCodeLine{187 }
+\DoxyCodeLine{188     \textcolor{keywordtype}{void} begin( \textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth,}
+\DoxyCodeLine{189                 \textcolor{keyword}{const} \textcolor{keywordtype}{char}* ssid,}
+\DoxyCodeLine{190                 \textcolor{keyword}{const} \textcolor{keywordtype}{char}* pass,}
+\DoxyCodeLine{191                 uint8\_t     secmode,}
+\DoxyCodeLine{192                 IPAddress   ip,}
+\DoxyCodeLine{193                 uint16\_t    port   = BLYNK\_DEFAULT\_PORT)}
+\DoxyCodeLine{194     \{}
+\DoxyCodeLine{195         connectWiFi(ssid, pass, secmode);}
+\DoxyCodeLine{196         config(auth, ip, port);}
+\DoxyCodeLine{197         \textcolor{keywordflow}{while}(this-\/>connect() != \textcolor{keyword}{true}) \{\}}
+\DoxyCodeLine{198     \}}
+\DoxyCodeLine{199 \textcolor{keyword}{private}:}
+\DoxyCodeLine{200     WildFire\_CC3000\& cc3000;}
+\DoxyCodeLine{201 \};}
+\DoxyCodeLine{202 }
+\DoxyCodeLine{203 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

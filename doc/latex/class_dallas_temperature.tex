@@ -1,0 +1,158 @@
+\hypertarget{class_dallas_temperature}{}\doxysection{Dallas\+Temperature Class Reference}
+\label{class_dallas_temperature}\index{DallasTemperature@{DallasTemperature}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_aecb8878da411ae1f231541dc5e082278}\label{class_dallas_temperature_aecb8878da411ae1f231541dc5e082278}} 
+{\bfseries Dallas\+Temperature} (One\+Wire $\ast$)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_aab8ab141c382daf05ee6a5867bd28532}\label{class_dallas_temperature_aab8ab141c382daf05ee6a5867bd28532}} 
+{\bfseries Dallas\+Temperature} (One\+Wire $\ast$, uint8\+\_\+t)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a9aba4ab077bddfc1564a30d6b73b3696}\label{class_dallas_temperature_a9aba4ab077bddfc1564a30d6b73b3696}} 
+void {\bfseries set\+One\+Wire} (One\+Wire $\ast$)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_af60436d73898460a088be839dbb2ae37}\label{class_dallas_temperature_af60436d73898460a088be839dbb2ae37}} 
+void {\bfseries set\+Pullup\+Pin} (uint8\+\_\+t)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_aad78931e44ce43c9b9c460dba7c9bbb7}\label{class_dallas_temperature_aad78931e44ce43c9b9c460dba7c9bbb7}} 
+void {\bfseries begin} (void)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a19c3b0d51e395f978e8b9221be7e4d13}\label{class_dallas_temperature_a19c3b0d51e395f978e8b9221be7e4d13}} 
+uint8\+\_\+t {\bfseries get\+Device\+Count} (void)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_aab57a14972f71801d288e631557e6114}\label{class_dallas_temperature_aab57a14972f71801d288e631557e6114}} 
+uint8\+\_\+t {\bfseries get\+DS18\+Count} (void)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_aa23b523df92a5d1f75267624e8ef8913}\label{class_dallas_temperature_aa23b523df92a5d1f75267624e8ef8913}} 
+bool {\bfseries valid\+Address} (const uint8\+\_\+t $\ast$)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_afdc6d28733c661211334f0d9fe97e78f}\label{class_dallas_temperature_afdc6d28733c661211334f0d9fe97e78f}} 
+bool {\bfseries valid\+Family} (const uint8\+\_\+t $\ast$device\+Address)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_ad13010a94439763df97439ae0ffc752d}\label{class_dallas_temperature_ad13010a94439763df97439ae0ffc752d}} 
+bool {\bfseries get\+Address} (uint8\+\_\+t $\ast$, uint8\+\_\+t)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_ab10654911aff48a9cbf1181812cec2bf}\label{class_dallas_temperature_ab10654911aff48a9cbf1181812cec2bf}} 
+bool {\bfseries is\+Connected} (const uint8\+\_\+t $\ast$)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a0d549f2cbad747626fe62d2a2a477356}\label{class_dallas_temperature_a0d549f2cbad747626fe62d2a2a477356}} 
+bool {\bfseries is\+Connected} (const uint8\+\_\+t $\ast$, uint8\+\_\+t $\ast$)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_abff1eb061b9fd7709071c080779e4653}\label{class_dallas_temperature_abff1eb061b9fd7709071c080779e4653}} 
+bool {\bfseries read\+Scratch\+Pad} (const uint8\+\_\+t $\ast$, uint8\+\_\+t $\ast$)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_aa303887dc818729b86badb165a57d117}\label{class_dallas_temperature_aa303887dc818729b86badb165a57d117}} 
+void {\bfseries write\+Scratch\+Pad} (const uint8\+\_\+t $\ast$, const uint8\+\_\+t $\ast$)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_ada859f42ae1f224b47718e3d180e9dfc}\label{class_dallas_temperature_ada859f42ae1f224b47718e3d180e9dfc}} 
+bool {\bfseries read\+Power\+Supply} (const uint8\+\_\+t $\ast$device\+Address=nullptr)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a293a7efb5e6d1303389f601f99e15af0}\label{class_dallas_temperature_a293a7efb5e6d1303389f601f99e15af0}} 
+uint8\+\_\+t {\bfseries get\+Resolution} ()
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a031b9eb21b89f91510e23dddf4726662}\label{class_dallas_temperature_a031b9eb21b89f91510e23dddf4726662}} 
+void {\bfseries set\+Resolution} (uint8\+\_\+t)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a8523d6d8bdf0c717e34d504eb403cd76}\label{class_dallas_temperature_a8523d6d8bdf0c717e34d504eb403cd76}} 
+uint8\+\_\+t {\bfseries get\+Resolution} (const uint8\+\_\+t $\ast$)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_aed0c33459d7625618414929c8054880e}\label{class_dallas_temperature_aed0c33459d7625618414929c8054880e}} 
+bool {\bfseries set\+Resolution} (const uint8\+\_\+t $\ast$, uint8\+\_\+t, bool skip\+Global\+Bit\+Resolution\+Calculation=false)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a6ef004a7878fc748d56b87e183ce3636}\label{class_dallas_temperature_a6ef004a7878fc748d56b87e183ce3636}} 
+void {\bfseries set\+Wait\+For\+Conversion} (bool)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_abef63386e8ca5343de68d02f0055b62f}\label{class_dallas_temperature_abef63386e8ca5343de68d02f0055b62f}} 
+bool {\bfseries get\+Wait\+For\+Conversion} (void)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_ab3bbd86f2d47e131ee2b20937f16a60f}\label{class_dallas_temperature_ab3bbd86f2d47e131ee2b20937f16a60f}} 
+void {\bfseries set\+Check\+For\+Conversion} (bool)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a1c70decd964f38ff204f09420ae357c8}\label{class_dallas_temperature_a1c70decd964f38ff204f09420ae357c8}} 
+bool {\bfseries get\+Check\+For\+Conversion} (void)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a539b1c3cbb756ec0437674a2972d67fb}\label{class_dallas_temperature_a539b1c3cbb756ec0437674a2972d67fb}} 
+void {\bfseries request\+Temperatures} (void)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a558f3e45fa43d36ce7a259f9aa6801e5}\label{class_dallas_temperature_a558f3e45fa43d36ce7a259f9aa6801e5}} 
+bool {\bfseries request\+Temperatures\+By\+Address} (const uint8\+\_\+t $\ast$)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a9159cb7b6639c04718237ec15104e3b4}\label{class_dallas_temperature_a9159cb7b6639c04718237ec15104e3b4}} 
+bool {\bfseries request\+Temperatures\+By\+Index} (uint8\+\_\+t)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_acd4c357adae59414dfc4ee478b4f6e58}\label{class_dallas_temperature_acd4c357adae59414dfc4ee478b4f6e58}} 
+int16\+\_\+t {\bfseries get\+Temp} (const uint8\+\_\+t $\ast$)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a8638a67de4875076aadaac8674cd07f1}\label{class_dallas_temperature_a8638a67de4875076aadaac8674cd07f1}} 
+float {\bfseries get\+TempC} (const uint8\+\_\+t $\ast$)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_abbeeaf9d9595642de755d2644cea6fd7}\label{class_dallas_temperature_abbeeaf9d9595642de755d2644cea6fd7}} 
+float {\bfseries get\+TempF} (const uint8\+\_\+t $\ast$)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a1023a159008353daa01cfed44740a03c}\label{class_dallas_temperature_a1023a159008353daa01cfed44740a03c}} 
+float {\bfseries get\+Temp\+CBy\+Index} (uint8\+\_\+t)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a70e1ad5970ae7ef87e491b1a1a0b28ac}\label{class_dallas_temperature_a70e1ad5970ae7ef87e491b1a1a0b28ac}} 
+float {\bfseries get\+Temp\+FBy\+Index} (uint8\+\_\+t)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a61645c49289207267a5c110638aacfe1}\label{class_dallas_temperature_a61645c49289207267a5c110638aacfe1}} 
+bool {\bfseries is\+Parasite\+Power\+Mode} (void)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_ac828a397ec18610a1834d9c7e5c28ffa}\label{class_dallas_temperature_ac828a397ec18610a1834d9c7e5c28ffa}} 
+bool {\bfseries is\+Conversion\+Complete} (void)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a45de39d97b227720753a463d448d6887}\label{class_dallas_temperature_a45de39d97b227720753a463d448d6887}} 
+int16\+\_\+t {\bfseries millis\+To\+Wait\+For\+Conversion} (uint8\+\_\+t)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_abbba178179577c1232f2be8eecdc705b}\label{class_dallas_temperature_abbba178179577c1232f2be8eecdc705b}} 
+bool {\bfseries save\+Scratch\+Pad\+By\+Index} (uint8\+\_\+t)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a9225e05b1cf344b94fb7bdeecbb31f5d}\label{class_dallas_temperature_a9225e05b1cf344b94fb7bdeecbb31f5d}} 
+bool {\bfseries save\+Scratch\+Pad} (const uint8\+\_\+t $\ast$=nullptr)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a22515f5071470954630eca4da5f6779b}\label{class_dallas_temperature_a22515f5071470954630eca4da5f6779b}} 
+bool {\bfseries recall\+Scratch\+Pad\+By\+Index} (uint8\+\_\+t)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a0c982f0fe2ba8571a62f659c1aefb640}\label{class_dallas_temperature_a0c982f0fe2ba8571a62f659c1aefb640}} 
+bool {\bfseries recall\+Scratch\+Pad} (const uint8\+\_\+t $\ast$=nullptr)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a362d0228f92b6c4b6a356e64680d9c3f}\label{class_dallas_temperature_a362d0228f92b6c4b6a356e64680d9c3f}} 
+void {\bfseries set\+Auto\+Save\+Scratch\+Pad} (bool)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a927362c0dd8da4de20e050011daa2fec}\label{class_dallas_temperature_a927362c0dd8da4de20e050011daa2fec}} 
+bool {\bfseries get\+Auto\+Save\+Scratch\+Pad} (void)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a7b64ff284f85e6fc27a73999b1d6706b}\label{class_dallas_temperature_a7b64ff284f85e6fc27a73999b1d6706b}} 
+void {\bfseries set\+User\+Data} (const uint8\+\_\+t $\ast$, int16\+\_\+t)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_acf4c28048abc1322b0a9eb2139c2c764}\label{class_dallas_temperature_acf4c28048abc1322b0a9eb2139c2c764}} 
+void {\bfseries set\+User\+Data\+By\+Index} (uint8\+\_\+t, int16\+\_\+t)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a8dab72d5c61c9fe45d6f6bdc2d055c25}\label{class_dallas_temperature_a8dab72d5c61c9fe45d6f6bdc2d055c25}} 
+int16\+\_\+t {\bfseries get\+User\+Data} (const uint8\+\_\+t $\ast$)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a5937eedf4f67ebff0953e594863bd8b2}\label{class_dallas_temperature_a5937eedf4f67ebff0953e594863bd8b2}} 
+int16\+\_\+t {\bfseries get\+User\+Data\+By\+Index} (uint8\+\_\+t)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_aa6351f7e32c5de935063a01861ffeb31}\label{class_dallas_temperature_aa6351f7e32c5de935063a01861ffeb31}} 
+static float {\bfseries to\+Fahrenheit} (float)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a65cf5f911159f7ae3cd1e85d30685be2}\label{class_dallas_temperature_a65cf5f911159f7ae3cd1e85d30685be2}} 
+static float {\bfseries to\+Celsius} (float)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_a232217215cb67c1203746d4e60bb468e}\label{class_dallas_temperature_a232217215cb67c1203746d4e60bb468e}} 
+static float {\bfseries raw\+To\+Celsius} (int16\+\_\+t)
+\item 
+\mbox{\Hypertarget{class_dallas_temperature_ad7c9c95c672d376afabe7fb2716718d7}\label{class_dallas_temperature_ad7c9c95c672d376afabe7fb2716718d7}} 
+static float {\bfseries raw\+To\+Fahrenheit} (int16\+\_\+t)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+Dallas\+Temperature/Dallas\+Temperature.\+h\item 
+lib/\+Dallas\+Temperature/Dallas\+Temperature.\+cpp\end{DoxyCompactItemize}

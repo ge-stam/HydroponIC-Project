@@ -1,0 +1,392 @@
+\hypertarget{_blynk_param_8h_source}{}\doxysection{Blynk\+Param.\+h}
+\label{_blynk_param_8h_source}\index{lib/Blynk/src/Blynk/BlynkParam.h@{lib/Blynk/src/Blynk/BlynkParam.h}}
+\mbox{\hyperlink{_blynk_param_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef BlynkParam\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define BlynkParam\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <string.h>}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include <stdlib.h>}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_config_8h}{Blynk/BlynkConfig.h}}>}}
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_debug_8h}{Blynk/BlynkDebug.h}}>}}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#define BLYNK\_PARAM\_KV(k, v) k "{}\(\backslash\)0"{}} v "{}\(\backslash\)0"{}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#define BLYNK\_PARAM\_PLACEHOLDER\_64 "{}PlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholder"{}}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#if !defined(BLYNK\_NO\_FLOAT)}}
+\DoxyCodeLine{23 \textcolor{keyword}{extern} \textcolor{keywordtype}{char}*        dtostrf\_internal(\textcolor{keywordtype}{double} number, \textcolor{keywordtype}{signed} \textcolor{keywordtype}{char} width, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} prec, \textcolor{keywordtype}{char} *s);}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#if !defined(BLYNK\_NO\_LONGLONG)}}
+\DoxyCodeLine{27 \textcolor{keyword}{extern} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long}    atoll\_internal(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *s);}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_param}{BlynkParam}}}
+\DoxyCodeLine{31 \{}
+\DoxyCodeLine{32 \textcolor{keyword}{public}:}
+\DoxyCodeLine{33     \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_param_1_1iterator}{iterator}}}
+\DoxyCodeLine{34     \{}
+\DoxyCodeLine{35     \textcolor{keyword}{public}:}
+\DoxyCodeLine{36         \mbox{\hyperlink{class_blynk_param_1_1iterator}{iterator}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* c, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* l) : ptr(c), limit(l) \{\}}
+\DoxyCodeLine{37         \textcolor{keyword}{static} \mbox{\hyperlink{class_blynk_param_1_1iterator}{iterator}} invalid() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_blynk_param_1_1iterator}{iterator}}(NULL, NULL); \}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39         \textcolor{keyword}{operator} \textcolor{keyword}{const} \textcolor{keywordtype}{char}* () \textcolor{keyword}{const}   \{ \textcolor{keywordflow}{return} asStr(); \}}
+\DoxyCodeLine{40         \textcolor{keyword}{operator} int ()\textcolor{keyword}{ const           }\{ \textcolor{keywordflow}{return} asInt(); \}}
+\DoxyCodeLine{41         \textcolor{keyword}{const} \textcolor{keywordtype}{char}* asStr()\textcolor{keyword}{ const       }\{ \textcolor{keywordflow}{return} ptr; \}}
+\DoxyCodeLine{42         \textcolor{keyword}{const} \textcolor{keywordtype}{char}* asString()\textcolor{keyword}{ const    }\{ \textcolor{keywordflow}{return} ptr; \}}
+\DoxyCodeLine{43         \textcolor{keywordtype}{int}         asInt()\textcolor{keyword}{ const       }\{ \textcolor{keywordflow}{if}(!isValid()) \textcolor{keywordflow}{return} 0; \textcolor{keywordflow}{return} atoi(ptr); \}}
+\DoxyCodeLine{44         \textcolor{keywordtype}{long}        asLong()\textcolor{keyword}{ const      }\{ \textcolor{keywordflow}{if}(!isValid()) \textcolor{keywordflow}{return} 0; \textcolor{keywordflow}{return} atol(ptr); \}}
+\DoxyCodeLine{45 \textcolor{preprocessor}{\#if !defined(BLYNK\_NO\_LONGLONG) \&\& defined(BLYNK\_USE\_INTERNAL\_ATOLL)}}
+\DoxyCodeLine{46         \textcolor{keywordtype}{long} \textcolor{keywordtype}{long}   asLongLong()\textcolor{keyword}{ const  }\{ \textcolor{keywordflow}{return} atoll\_internal(ptr); \}}
+\DoxyCodeLine{47 \textcolor{preprocessor}{\#elif !defined(BLYNK\_NO\_LONGLONG)}}
+\DoxyCodeLine{48         \textcolor{keywordtype}{long} \textcolor{keywordtype}{long}   asLongLong()\textcolor{keyword}{ const  }\{ \textcolor{keywordflow}{return} atoll(ptr); \}}
+\DoxyCodeLine{49 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{50 \textcolor{preprocessor}{\#if !defined(BLYNK\_NO\_FLOAT)}}
+\DoxyCodeLine{51         \textcolor{keywordtype}{double}      asDouble()\textcolor{keyword}{ const    }\{ \textcolor{keywordflow}{if}(!isValid()) \textcolor{keywordflow}{return} 0; \textcolor{keywordflow}{return} atof(ptr); \}}
+\DoxyCodeLine{52         \textcolor{keywordtype}{float}       asFloat()\textcolor{keyword}{ const     }\{ \textcolor{keywordflow}{if}(!isValid()) \textcolor{keywordflow}{return} 0; \textcolor{keywordflow}{return} atof(ptr); \}}
+\DoxyCodeLine{53 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{54         \textcolor{keywordtype}{bool} isValid()\textcolor{keyword}{ const            }\{ \textcolor{keywordflow}{return} ptr != NULL \&\& ptr < limit; \}}
+\DoxyCodeLine{55         \textcolor{keywordtype}{bool} isEmpty()\textcolor{keyword}{ const            }\{ \textcolor{keywordflow}{if}(!isValid()) \textcolor{keywordflow}{return} \textcolor{keyword}{true}; \textcolor{keywordflow}{return} *ptr == \textcolor{charliteral}{'\(\backslash\)0'}; \}}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57         \textcolor{keywordtype}{bool} operator <  (\textcolor{keyword}{const} \mbox{\hyperlink{class_blynk_param_1_1iterator}{iterator}}\& it)\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} ptr < it.ptr; \}}
+\DoxyCodeLine{58         \textcolor{keywordtype}{bool} operator >= (\textcolor{keyword}{const} \mbox{\hyperlink{class_blynk_param_1_1iterator}{iterator}}\& it)\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} ptr >= it.ptr; \}}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60         \mbox{\hyperlink{class_blynk_param_1_1iterator}{iterator}}\& operator ++() \{}
+\DoxyCodeLine{61             \textcolor{keywordflow}{if}(isValid()) \{}
+\DoxyCodeLine{62                 ptr += strlen(ptr) + 1;}
+\DoxyCodeLine{63             \}}
+\DoxyCodeLine{64             \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{65         \}}
+\DoxyCodeLine{66     \textcolor{keyword}{private}:}
+\DoxyCodeLine{67         \textcolor{keyword}{const} \textcolor{keywordtype}{char}* ptr;}
+\DoxyCodeLine{68         \textcolor{keyword}{const} \textcolor{keywordtype}{char}* limit;}
+\DoxyCodeLine{69     \};}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71 \textcolor{keyword}{public}:}
+\DoxyCodeLine{72     \textcolor{keyword}{explicit}}
+\DoxyCodeLine{73     \mbox{\hyperlink{class_blynk_param}{BlynkParam}}(\textcolor{keyword}{const} \textcolor{keywordtype}{void}* addr, \textcolor{keywordtype}{size\_t} length)}
+\DoxyCodeLine{74         : buff((char*)addr), len(length), buff\_size(length)}
+\DoxyCodeLine{75     \{\}}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77     \textcolor{keyword}{explicit}}
+\DoxyCodeLine{78     \mbox{\hyperlink{class_blynk_param}{BlynkParam}}(\textcolor{keywordtype}{void}* addr, \textcolor{keywordtype}{size\_t} length, \textcolor{keywordtype}{size\_t} buffsize)}
+\DoxyCodeLine{79         : buff((char*)addr), len(length), buff\_size(buffsize)}
+\DoxyCodeLine{80     \{\}}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* asStr()\textcolor{keyword}{ const       }\{ \textcolor{keywordflow}{return} buff; \}}
+\DoxyCodeLine{83     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* asString()\textcolor{keyword}{ const    }\{ \textcolor{keywordflow}{return} buff; \}}
+\DoxyCodeLine{84     \textcolor{keywordtype}{int}         asInt()\textcolor{keyword}{ const       }\{ \textcolor{keywordflow}{return} atoi(buff); \}}
+\DoxyCodeLine{85     \textcolor{keywordtype}{long}        asLong()\textcolor{keyword}{ const      }\{ \textcolor{keywordflow}{return} atol(buff); \}}
+\DoxyCodeLine{86 \textcolor{preprocessor}{\#if !defined(BLYNK\_NO\_LONGLONG) \&\& defined(BLYNK\_USE\_INTERNAL\_ATOLL)}}
+\DoxyCodeLine{87     \textcolor{keywordtype}{long} \textcolor{keywordtype}{long}   asLongLong()\textcolor{keyword}{ const  }\{ \textcolor{keywordflow}{return} atoll\_internal(buff); \}}
+\DoxyCodeLine{88 \textcolor{preprocessor}{\#elif !defined(BLYNK\_NO\_LONGLONG)}}
+\DoxyCodeLine{89     \textcolor{keywordtype}{long} \textcolor{keywordtype}{long}   asLongLong()\textcolor{keyword}{ const  }\{ \textcolor{keywordflow}{return} atoll(buff); \}}
+\DoxyCodeLine{90 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{91 \textcolor{preprocessor}{\#if !defined(BLYNK\_NO\_FLOAT)}}
+\DoxyCodeLine{92     \textcolor{keywordtype}{double}      asDouble()\textcolor{keyword}{ const    }\{ \textcolor{keywordflow}{return} atof(buff); \}}
+\DoxyCodeLine{93     \textcolor{keywordtype}{float}       asFloat()\textcolor{keyword}{ const     }\{ \textcolor{keywordflow}{return} atof(buff); \}}
+\DoxyCodeLine{94 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{95     \textcolor{keywordtype}{bool} isEmpty()\textcolor{keyword}{ const            }\{ \textcolor{keywordflow}{return} *buff == \textcolor{charliteral}{'\(\backslash\)0'}; \}}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97     iterator begin()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} iterator(buff, buff+len); \}}
+\DoxyCodeLine{98     iterator end()\textcolor{keyword}{ const   }\{ \textcolor{keywordflow}{return} iterator(buff+len, buff+len); \}}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100     iterator operator[](\textcolor{keywordtype}{int} index) \textcolor{keyword}{const};}
+\DoxyCodeLine{101     iterator operator[](\textcolor{keyword}{const} \textcolor{keywordtype}{char}* key) \textcolor{keyword}{const};}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103     \textcolor{keywordtype}{void}*  getBuffer()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} (\textcolor{keywordtype}{void}*)buff; \}}
+\DoxyCodeLine{104     \textcolor{keywordtype}{size\_t} getLength()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} len; \}}
+\DoxyCodeLine{105     \textcolor{keywordtype}{size\_t} getBuffSize()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} buff\_size; \}}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107     \textcolor{comment}{// Modification}}
+\DoxyCodeLine{108     \textcolor{keywordtype}{void} add(\textcolor{keywordtype}{int} value);}
+\DoxyCodeLine{109     \textcolor{keywordtype}{void} add(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} value);}
+\DoxyCodeLine{110     \textcolor{keywordtype}{void} add(\textcolor{keywordtype}{long} value);}
+\DoxyCodeLine{111     \textcolor{keywordtype}{void} add(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} value);}
+\DoxyCodeLine{112     \textcolor{keywordtype}{void} add(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} value);}
+\DoxyCodeLine{113     \textcolor{keywordtype}{void} add(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} value);}
+\DoxyCodeLine{114 \textcolor{preprocessor}{\#ifndef BLYNK\_NO\_FLOAT}}
+\DoxyCodeLine{115     \textcolor{keywordtype}{void} add(\textcolor{keywordtype}{float} value);}
+\DoxyCodeLine{116     \textcolor{keywordtype}{void} add(\textcolor{keywordtype}{double} value);}
+\DoxyCodeLine{117 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{118     \textcolor{keywordtype}{void} add(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* str);}
+\DoxyCodeLine{119     \textcolor{keywordtype}{void} add(\textcolor{keyword}{const} \textcolor{keywordtype}{void}* b, \textcolor{keywordtype}{size\_t} l);}
+\DoxyCodeLine{120 \textcolor{preprocessor}{\#if defined(ARDUINO) || defined(SPARK) || defined(PARTICLE)}}
+\DoxyCodeLine{121     \textcolor{keywordtype}{void} add(\textcolor{keyword}{const} String\& str);}
+\DoxyCodeLine{122 \textcolor{preprocessor}{\#if defined(BLYNK\_HAS\_PROGMEM)}}
+\DoxyCodeLine{123     \textcolor{keywordtype}{void} add(\textcolor{keyword}{const} \_\_FlashStringHelper* str);}
+\DoxyCodeLine{124 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{125 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127     \textcolor{keyword}{template}<\textcolor{keyword}{typename} T, \textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{128     \textcolor{keywordtype}{void} add\_multi(T last) \{}
+\DoxyCodeLine{129         add(last);}
+\DoxyCodeLine{130     \}}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132     \textcolor{keyword}{template}<\textcolor{keyword}{typename} T, \textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{133     \textcolor{keywordtype}{void} add\_multi(T head, Args... tail) \{}
+\DoxyCodeLine{134         add(head);}
+\DoxyCodeLine{135         add\_multi(tail...);}
+\DoxyCodeLine{136     \}}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138     \textcolor{keyword}{template} <\textcolor{keyword}{typename} TV>}
+\DoxyCodeLine{139     \textcolor{keywordtype}{void} add\_key(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* key, \textcolor{keyword}{const} TV\& val) \{}
+\DoxyCodeLine{140         add(key);}
+\DoxyCodeLine{141         add(val);}
+\DoxyCodeLine{142     \}}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{145     \textcolor{keywordtype}{char}*    buff;}
+\DoxyCodeLine{146     \textcolor{keywordtype}{size\_t}   len;}
+\DoxyCodeLine{147     \textcolor{keywordtype}{size\_t}   buff\_size;}
+\DoxyCodeLine{148 \};}
+\DoxyCodeLine{149 }
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_param_allocated}{BlynkParamAllocated}}}
+\DoxyCodeLine{152     : \textcolor{keyword}{public} \mbox{\hyperlink{class_blynk_param}{BlynkParam}}}
+\DoxyCodeLine{153 \{}
+\DoxyCodeLine{154 \textcolor{keyword}{public}:}
+\DoxyCodeLine{155     \mbox{\hyperlink{class_blynk_param_allocated}{BlynkParamAllocated}}(\textcolor{keywordtype}{size\_t} size)}
+\DoxyCodeLine{156         : \mbox{\hyperlink{class_blynk_param}{BlynkParam}}(malloc(size), 0, size)}
+\DoxyCodeLine{157     \{\}}
+\DoxyCodeLine{158     \mbox{\hyperlink{class_blynk_param_allocated}{\string~BlynkParamAllocated}}() \{}
+\DoxyCodeLine{159         free(buff);}
+\DoxyCodeLine{160     \}}
+\DoxyCodeLine{161 \};}
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163 \textcolor{keyword}{inline}}
+\DoxyCodeLine{164 \mbox{\hyperlink{class_blynk_param_1_1iterator}{BlynkParam::iterator}} BlynkParam::operator[](\textcolor{keywordtype}{int} index)\textcolor{keyword}{ const}}
+\DoxyCodeLine{165 \textcolor{keyword}{}\{}
+\DoxyCodeLine{166     \textcolor{keyword}{const} iterator e = end();}
+\DoxyCodeLine{167     \textcolor{keywordflow}{for} (iterator it = begin(); it < e; ++it) \{}
+\DoxyCodeLine{168         \textcolor{keywordflow}{if} (!index-\/-\/) \{}
+\DoxyCodeLine{169             \textcolor{keywordflow}{return} it;}
+\DoxyCodeLine{170         \}}
+\DoxyCodeLine{171     \}}
+\DoxyCodeLine{172     \textcolor{keywordflow}{return} iterator::invalid();}
+\DoxyCodeLine{173 \}}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175 \textcolor{keyword}{inline}}
+\DoxyCodeLine{176 \mbox{\hyperlink{class_blynk_param_1_1iterator}{BlynkParam::iterator}} BlynkParam::operator[](\textcolor{keyword}{const} \textcolor{keywordtype}{char}* key)\textcolor{keyword}{ const}}
+\DoxyCodeLine{177 \textcolor{keyword}{}\{}
+\DoxyCodeLine{178     \textcolor{keyword}{const} iterator e = end();}
+\DoxyCodeLine{179     \textcolor{keywordflow}{for} (iterator it = begin(); it < e; ++it) \{}
+\DoxyCodeLine{180         \textcolor{keywordflow}{if} (!strcmp(it.asStr(), key)) \{}
+\DoxyCodeLine{181             \textcolor{keywordflow}{return} ++it;}
+\DoxyCodeLine{182         \}}
+\DoxyCodeLine{183         ++it;}
+\DoxyCodeLine{184         \textcolor{keywordflow}{if} (it >= e) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{185     \}}
+\DoxyCodeLine{186     \textcolor{keywordflow}{return} iterator::invalid();}
+\DoxyCodeLine{187 \}}
+\DoxyCodeLine{188 }
+\DoxyCodeLine{189 \textcolor{keyword}{inline}}
+\DoxyCodeLine{190 \textcolor{keywordtype}{void} BlynkParam::add(\textcolor{keyword}{const} \textcolor{keywordtype}{void}* b, \textcolor{keywordtype}{size\_t} l)}
+\DoxyCodeLine{191 \{}
+\DoxyCodeLine{192     \textcolor{keywordflow}{if} (len + l > buff\_size)}
+\DoxyCodeLine{193         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{194     memcpy(buff+len, b, l);}
+\DoxyCodeLine{195     len += l;}
+\DoxyCodeLine{196 \}}
+\DoxyCodeLine{197 }
+\DoxyCodeLine{198 \textcolor{keyword}{inline}}
+\DoxyCodeLine{199 \textcolor{keywordtype}{void} BlynkParam::add(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* str)}
+\DoxyCodeLine{200 \{}
+\DoxyCodeLine{201     \textcolor{keywordflow}{if} (str == NULL) \{}
+\DoxyCodeLine{202         buff[len++] = \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{203         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{204     \}}
+\DoxyCodeLine{205     add(str, strlen(str)+1);}
+\DoxyCodeLine{206 \}}
+\DoxyCodeLine{207 }
+\DoxyCodeLine{208 \textcolor{preprocessor}{\#if defined(ARDUINO) || defined(SPARK) || defined(PARTICLE)}}
+\DoxyCodeLine{209 \textcolor{keyword}{inline}}
+\DoxyCodeLine{210 \textcolor{keywordtype}{void} BlynkParam::add(\textcolor{keyword}{const} String\& str)}
+\DoxyCodeLine{211 \{}
+\DoxyCodeLine{212 \textcolor{preprocessor}{\#if defined(ARDUINO\_AVR\_DIGISPARK) \(\backslash\)}}
+\DoxyCodeLine{213 \textcolor{preprocessor}{    || defined(\_\_ARDUINO\_X86\_\_) \(\backslash\)}}
+\DoxyCodeLine{214 \textcolor{preprocessor}{    || defined(\_\_RFduino\_\_)}}
+\DoxyCodeLine{215 }
+\DoxyCodeLine{216     \textcolor{keywordtype}{size\_t} len = str.length()+1;}
+\DoxyCodeLine{217     \textcolor{keywordtype}{char} buff[len];}
+\DoxyCodeLine{218     \textcolor{keyword}{const\_cast<}String\&\textcolor{keyword}{>}(str).toCharArray(buff, len);}
+\DoxyCodeLine{219     add(buff, len);}
+\DoxyCodeLine{220 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{221     add(str.c\_str());}
+\DoxyCodeLine{222 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{223 \}}
+\DoxyCodeLine{224 }
+\DoxyCodeLine{225 \textcolor{preprocessor}{\#if defined(BLYNK\_HAS\_PROGMEM)}}
+\DoxyCodeLine{226 }
+\DoxyCodeLine{227 \textcolor{keyword}{inline}}
+\DoxyCodeLine{228 \textcolor{keywordtype}{void} BlynkParam::add(\textcolor{keyword}{const} \_\_FlashStringHelper* ifsh)}
+\DoxyCodeLine{229 \{}
+\DoxyCodeLine{230     PGM\_P p = \textcolor{keyword}{reinterpret\_cast<}PGM\_P\textcolor{keyword}{>}(ifsh);}
+\DoxyCodeLine{231     \textcolor{keywordtype}{size\_t} l = strlen\_P(p) + 1;}
+\DoxyCodeLine{232     \textcolor{keywordflow}{if} (len + l > buff\_size)}
+\DoxyCodeLine{233         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{234     memcpy\_P(buff+len, p, l);}
+\DoxyCodeLine{235     len += l;}
+\DoxyCodeLine{236     buff[len] = \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{237 \}}
+\DoxyCodeLine{238 }
+\DoxyCodeLine{239 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{240 }
+\DoxyCodeLine{241 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{242 }
+\DoxyCodeLine{243 \textcolor{preprocessor}{\#if defined(\_\_AVR\_\_) || defined (ARDUINO\_ARCH\_ARC32)}}
+\DoxyCodeLine{244 }
+\DoxyCodeLine{245 \textcolor{preprocessor}{    \#include <stdlib.h>}}
+\DoxyCodeLine{246 }
+\DoxyCodeLine{247     \textcolor{keyword}{inline}}
+\DoxyCodeLine{248     \textcolor{keywordtype}{void} BlynkParam::add(\textcolor{keywordtype}{int} value)}
+\DoxyCodeLine{249     \{}
+\DoxyCodeLine{250         \textcolor{keywordtype}{char} str[2 + 8 * \textcolor{keyword}{sizeof}(value)];}
+\DoxyCodeLine{251         itoa(value, str, 10);}
+\DoxyCodeLine{252         add(str);}
+\DoxyCodeLine{253     \}}
+\DoxyCodeLine{254 }
+\DoxyCodeLine{255     \textcolor{keyword}{inline}}
+\DoxyCodeLine{256     \textcolor{keywordtype}{void} BlynkParam::add(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} value)}
+\DoxyCodeLine{257     \{}
+\DoxyCodeLine{258         \textcolor{keywordtype}{char} str[1 + 8 * \textcolor{keyword}{sizeof}(value)];}
+\DoxyCodeLine{259         utoa(value, str, 10);}
+\DoxyCodeLine{260         add(str);}
+\DoxyCodeLine{261     \}}
+\DoxyCodeLine{262 }
+\DoxyCodeLine{263     \textcolor{keyword}{inline}}
+\DoxyCodeLine{264     \textcolor{keywordtype}{void} BlynkParam::add(\textcolor{keywordtype}{long} value)}
+\DoxyCodeLine{265     \{}
+\DoxyCodeLine{266         \textcolor{keywordtype}{char} str[2 + 8 * \textcolor{keyword}{sizeof}(value)];}
+\DoxyCodeLine{267         ltoa(value, str, 10);}
+\DoxyCodeLine{268         add(str);}
+\DoxyCodeLine{269     \}}
+\DoxyCodeLine{270 }
+\DoxyCodeLine{271     \textcolor{keyword}{inline}}
+\DoxyCodeLine{272     \textcolor{keywordtype}{void} BlynkParam::add(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} value)}
+\DoxyCodeLine{273     \{}
+\DoxyCodeLine{274         \textcolor{keywordtype}{char} str[1 + 8 * \textcolor{keyword}{sizeof}(value)];}
+\DoxyCodeLine{275         ultoa(value, str, 10);}
+\DoxyCodeLine{276         add(str);}
+\DoxyCodeLine{277     \}}
+\DoxyCodeLine{278 }
+\DoxyCodeLine{279     \textcolor{keyword}{inline}}
+\DoxyCodeLine{280     \textcolor{keywordtype}{void} BlynkParam::add(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} value)  \textcolor{comment}{// TODO: this currently adds just a long}}
+\DoxyCodeLine{281     \{}
+\DoxyCodeLine{282         \textcolor{keywordtype}{char} str[2 + 8 * \textcolor{keyword}{sizeof}(value)];}
+\DoxyCodeLine{283         ltoa(value, str, 10);}
+\DoxyCodeLine{284         add(str);}
+\DoxyCodeLine{285     \}}
+\DoxyCodeLine{286 }
+\DoxyCodeLine{287     \textcolor{keyword}{inline}}
+\DoxyCodeLine{288     \textcolor{keywordtype}{void} BlynkParam::add(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} value) \textcolor{comment}{// TODO: this currently adds just a long}}
+\DoxyCodeLine{289     \{}
+\DoxyCodeLine{290         \textcolor{keywordtype}{char} str[1 + 8 * \textcolor{keyword}{sizeof}(value)];}
+\DoxyCodeLine{291         ultoa(value, str, 10);}
+\DoxyCodeLine{292         add(str);}
+\DoxyCodeLine{293     \}}
+\DoxyCodeLine{294 }
+\DoxyCodeLine{295 \textcolor{preprocessor}{\#ifndef BLYNK\_NO\_FLOAT}}
+\DoxyCodeLine{296 }
+\DoxyCodeLine{297     \textcolor{keyword}{inline}}
+\DoxyCodeLine{298     \textcolor{keywordtype}{void} BlynkParam::add(\textcolor{keywordtype}{float} value)}
+\DoxyCodeLine{299     \{}
+\DoxyCodeLine{300         \textcolor{keywordtype}{char} str[33];}
+\DoxyCodeLine{301         dtostrf(value, 5, 3, str);}
+\DoxyCodeLine{302         add(str);}
+\DoxyCodeLine{303     \}}
+\DoxyCodeLine{304 }
+\DoxyCodeLine{305     \textcolor{keyword}{inline}}
+\DoxyCodeLine{306     \textcolor{keywordtype}{void} BlynkParam::add(\textcolor{keywordtype}{double} value)}
+\DoxyCodeLine{307     \{}
+\DoxyCodeLine{308         \textcolor{keywordtype}{char} str[33];}
+\DoxyCodeLine{309         dtostrf(value, 5, 7, str);}
+\DoxyCodeLine{310         add(str);}
+\DoxyCodeLine{311     \}}
+\DoxyCodeLine{312 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{313 }
+\DoxyCodeLine{314 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{315 }
+\DoxyCodeLine{316 \textcolor{preprocessor}{    \#include <stdio.h>}}
+\DoxyCodeLine{317 }
+\DoxyCodeLine{318     \textcolor{keyword}{inline}}
+\DoxyCodeLine{319     \textcolor{keywordtype}{void} BlynkParam::add(\textcolor{keywordtype}{int} value)}
+\DoxyCodeLine{320     \{}
+\DoxyCodeLine{321         len += snprintf(buff+len, buff\_size-\/len, \textcolor{stringliteral}{"{}\%i"{}}, value)+1;}
+\DoxyCodeLine{322     \}}
+\DoxyCodeLine{323 }
+\DoxyCodeLine{324     \textcolor{keyword}{inline}}
+\DoxyCodeLine{325     \textcolor{keywordtype}{void} BlynkParam::add(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} value)}
+\DoxyCodeLine{326     \{}
+\DoxyCodeLine{327         len += snprintf(buff+len, buff\_size-\/len, \textcolor{stringliteral}{"{}\%u"{}}, value)+1;}
+\DoxyCodeLine{328     \}}
+\DoxyCodeLine{329 }
+\DoxyCodeLine{330     \textcolor{keyword}{inline}}
+\DoxyCodeLine{331     \textcolor{keywordtype}{void} BlynkParam::add(\textcolor{keywordtype}{long} value)}
+\DoxyCodeLine{332     \{}
+\DoxyCodeLine{333         len += snprintf(buff+len, buff\_size-\/len, \textcolor{stringliteral}{"{}\%li"{}}, value)+1;}
+\DoxyCodeLine{334     \}}
+\DoxyCodeLine{335 }
+\DoxyCodeLine{336     \textcolor{keyword}{inline}}
+\DoxyCodeLine{337     \textcolor{keywordtype}{void} BlynkParam::add(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} value)}
+\DoxyCodeLine{338     \{}
+\DoxyCodeLine{339         len += snprintf(buff+len, buff\_size-\/len, \textcolor{stringliteral}{"{}\%lu"{}}, value)+1;}
+\DoxyCodeLine{340     \}}
+\DoxyCodeLine{341 }
+\DoxyCodeLine{342     \textcolor{keyword}{inline}}
+\DoxyCodeLine{343     \textcolor{keywordtype}{void} BlynkParam::add(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} value)}
+\DoxyCodeLine{344     \{}
+\DoxyCodeLine{345         len += snprintf(buff+len, buff\_size-\/len, \textcolor{stringliteral}{"{}\%lli"{}}, value)+1;}
+\DoxyCodeLine{346     \}}
+\DoxyCodeLine{347 }
+\DoxyCodeLine{348     \textcolor{keyword}{inline}}
+\DoxyCodeLine{349     \textcolor{keywordtype}{void} BlynkParam::add(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} value)}
+\DoxyCodeLine{350     \{}
+\DoxyCodeLine{351         len += snprintf(buff+len, buff\_size-\/len, \textcolor{stringliteral}{"{}\%llu"{}}, value)+1;}
+\DoxyCodeLine{352     \}}
+\DoxyCodeLine{353 }
+\DoxyCodeLine{354 \textcolor{preprocessor}{\#ifndef BLYNK\_NO\_FLOAT}}
+\DoxyCodeLine{355 }
+\DoxyCodeLine{356 \textcolor{preprocessor}{\#if defined(BLYNK\_USE\_INTERNAL\_DTOSTRF)}}
+\DoxyCodeLine{357 }
+\DoxyCodeLine{358     \textcolor{keyword}{inline}}
+\DoxyCodeLine{359     \textcolor{keywordtype}{void} BlynkParam::add(\textcolor{keywordtype}{float} value)}
+\DoxyCodeLine{360     \{}
+\DoxyCodeLine{361         \textcolor{keywordtype}{char} str[33];}
+\DoxyCodeLine{362         dtostrf\_internal(value, 5, 3, str);}
+\DoxyCodeLine{363         add(str);}
+\DoxyCodeLine{364     \}}
+\DoxyCodeLine{365 }
+\DoxyCodeLine{366     \textcolor{keyword}{inline}}
+\DoxyCodeLine{367     \textcolor{keywordtype}{void} BlynkParam::add(\textcolor{keywordtype}{double} value)}
+\DoxyCodeLine{368     \{}
+\DoxyCodeLine{369         \textcolor{keywordtype}{char} str[33];}
+\DoxyCodeLine{370         dtostrf\_internal(value, 5, 7, str);}
+\DoxyCodeLine{371         add(str);}
+\DoxyCodeLine{372     \}}
+\DoxyCodeLine{373 }
+\DoxyCodeLine{374 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{375 }
+\DoxyCodeLine{376     \textcolor{keyword}{inline}}
+\DoxyCodeLine{377     \textcolor{keywordtype}{void} BlynkParam::add(\textcolor{keywordtype}{float} value)}
+\DoxyCodeLine{378     \{}
+\DoxyCodeLine{379         len += snprintf(buff+len, buff\_size-\/len, \textcolor{stringliteral}{"{}\%2.3f"{}}, value)+1;}
+\DoxyCodeLine{380     \}}
+\DoxyCodeLine{381 }
+\DoxyCodeLine{382     \textcolor{keyword}{inline}}
+\DoxyCodeLine{383     \textcolor{keywordtype}{void} BlynkParam::add(\textcolor{keywordtype}{double} value)}
+\DoxyCodeLine{384     \{}
+\DoxyCodeLine{385         len += snprintf(buff+len, buff\_size-\/len, \textcolor{stringliteral}{"{}\%2.7f"{}}, value)+1;}
+\DoxyCodeLine{386     \}}
+\DoxyCodeLine{387 }
+\DoxyCodeLine{388 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{389 }
+\DoxyCodeLine{390 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{391 }
+\DoxyCodeLine{392 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{393 }
+\DoxyCodeLine{394 }
+\DoxyCodeLine{395 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,34 @@
+\hypertarget{md_lib__dallas_temperature__r_e_a_d_m_e_autotoc_md36}{}\doxysection{Usage}\label{md_lib__dallas_temperature__r_e_a_d_m_e_autotoc_md36}
+This library supports the following devices \+:
+
+
+\begin{DoxyItemize}
+\item DS18\+B20
+\item DS18\+S20 -\/ Please note there appears to be an issue with this series.
+\item DS1822
+\item DS1820
+\item MAX31820
+\end{DoxyItemize}
+
+You will need a pull-\/up resistor of about 5 KOhm between the 1-\/Wire data line and your 5V power. If you are using the DS18\+B20, ground pins 1 and 3. The centre pin is the data line \textquotesingle{}1-\/wire\textquotesingle{}.
+
+In case of temperature conversion problems (result is {\ttfamily -\/85}), strong pull-\/up setup may be necessary. See section {\itshape Powering the DS18\+B20} in \href{https://datasheets.maximintegrated.com/en/ds/DS18B20.pdf}{\texttt{ DS18\+B20 datasheet}} (page 7) and use {\ttfamily \mbox{\hyperlink{class_dallas_temperature}{Dallas\+Temperature(\+One\+Wire$\ast$, uint8\+\_\+t)}}} constructor.
+
+We have included a \char`\"{}\+REQUIRESNEW\char`\"{} and \char`\"{}\+REQUIRESALARMS\char`\"{} definition. If you want to slim down the code feel free to use either of these by including
+
+\begin{DoxyVerb}#define REQUIRESNEW 
+\end{DoxyVerb}
+ or \begin{DoxyVerb}#define REQUIRESALARMS
+\end{DoxyVerb}
+
+
+at the top of \mbox{\hyperlink{_dallas_temperature_8h_source}{Dallas\+Temperature.\+h}}
+
+Finally, please include One\+Wire from Paul Stoffregen in the library manager before you begin.\hypertarget{md_lib__dallas_temperature__r_e_a_d_m_e_autotoc_md37}{}\doxysection{Credits}\label{md_lib__dallas_temperature__r_e_a_d_m_e_autotoc_md37}
+The One\+Wire code has been derived from \href{http://www.arduino.cc/playground/Learning/OneWire}{\texttt{ http\+://www.\+arduino.\+cc/playground/\+Learning/\+One\+Wire}}. Miles Burton \href{mailto:miles@mnetcs.com}{\texttt{ miles@mnetcs.\+com}} originally developed this library. Tim Newsome \href{mailto:nuisance@casualhacker.net}{\texttt{ nuisance@casualhacker.\+net}} added support for multiple sensors on the same bus. Guil Barros \mbox{[}\href{mailto:gfbarros@bappos.com}{\texttt{ gfbarros@bappos.\+com}}\mbox{]} added get\+Temp\+By\+Address (v3.\+5) Note\+: these are implemented as get\+Temp\+C(address) and get\+Temp\+F(address) Rob Tillaart \mbox{[}\href{mailto:rob.tillaart@gmail.com}{\texttt{ rob.\+tillaart@gmail.\+com}}\mbox{]} added async modus (v3.\+7.\+0)\hypertarget{md_lib__dallas_temperature__r_e_a_d_m_e_autotoc_md38}{}\doxysection{Website}\label{md_lib__dallas_temperature__r_e_a_d_m_e_autotoc_md38}
+You can find the latest version of the library at \href{https://www.milesburton.com/Dallas_Temperature_Control_Library}{\texttt{ https\+://www.\+milesburton.\+com/\+Dallas\+\_\+\+Temperature\+\_\+\+Control\+\_\+\+Library}}\hypertarget{md_lib__dallas_temperature__r_e_a_d_m_e_autotoc_md39}{}\doxysection{License}\label{md_lib__dallas_temperature__r_e_a_d_m_e_autotoc_md39}
+This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 2.\+1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License along with this library; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-\/1301 USA 

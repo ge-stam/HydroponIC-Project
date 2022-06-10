@@ -1,0 +1,110 @@
+\hypertarget{_blynk_particle_8h_source}{}\doxysection{Blynk\+Particle.\+h}
+\label{_blynk_particle_8h_source}\index{lib/Blynk/src/BlynkParticle.h@{lib/Blynk/src/BlynkParticle.h}}
+\mbox{\hyperlink{_blynk_particle_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef BlynkParticle\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define BlynkParticle\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_blynk_api_particle_8h}{BlynkApiParticle.h}}"{}}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_blynk_protocol_8h}{Blynk/BlynkProtocol.h}}"{}}}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_transport_particle}{BlynkTransportParticle}}}
+\DoxyCodeLine{18 \{}
+\DoxyCodeLine{19 \textcolor{keyword}{public}:}
+\DoxyCodeLine{20     \mbox{\hyperlink{class_blynk_transport_particle}{BlynkTransportParticle}}()}
+\DoxyCodeLine{21         : domain(NULL), port(0)}
+\DoxyCodeLine{22     \{\}}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24     \textcolor{keywordtype}{void} begin(IPAddress a, uint16\_t p) \{}
+\DoxyCodeLine{25         domain = NULL;}
+\DoxyCodeLine{26         port = p;}
+\DoxyCodeLine{27         addr = a;}
+\DoxyCodeLine{28     \}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30     \textcolor{keywordtype}{void} begin(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* d, uint16\_t p) \{}
+\DoxyCodeLine{31         domain = d;}
+\DoxyCodeLine{32         port = p;}
+\DoxyCodeLine{33     \}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     \textcolor{keywordtype}{bool} connect() \{}
+\DoxyCodeLine{36         \textcolor{keywordflow}{if} (domain) \{}
+\DoxyCodeLine{37             BLYNK\_LOG4(BLYNK\_F(\textcolor{stringliteral}{"{}Connecting to "{}}), domain, \textcolor{charliteral}{':'}, port);}
+\DoxyCodeLine{38             \textcolor{keywordflow}{return} (1 == client.connect(domain, port));}
+\DoxyCodeLine{39         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{40             BLYNK\_LOG\_IP(\textcolor{stringliteral}{"{}Connecting to "{}}, addr);}
+\DoxyCodeLine{41             \textcolor{keywordflow}{return} (1 == client.connect(addr, port));}
+\DoxyCodeLine{42         \}}
+\DoxyCodeLine{43         \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{44     \}}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46     \textcolor{keywordtype}{void} disconnect() \{ client.stop(); \}}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     \textcolor{keywordtype}{size\_t} read(\textcolor{keywordtype}{void}* buf, \textcolor{keywordtype}{size\_t} len) \{}
+\DoxyCodeLine{49         \textcolor{keywordflow}{return} client.readBytes((\textcolor{keywordtype}{char}*)buf, len);}
+\DoxyCodeLine{50     \}}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52     \textcolor{keywordtype}{size\_t} write(\textcolor{keyword}{const} \textcolor{keywordtype}{void}* buf, \textcolor{keywordtype}{size\_t} len) \{}
+\DoxyCodeLine{53         \textcolor{keywordflow}{return} client.write((\textcolor{keyword}{const} uint8\_t*)buf, len);}
+\DoxyCodeLine{54     \}}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56     \textcolor{keywordtype}{void} flush() \{ client.flush(); \}}
+\DoxyCodeLine{57     \textcolor{keywordtype}{bool} connected() \{ \textcolor{keywordflow}{return} client.connected(); \}}
+\DoxyCodeLine{58     \textcolor{keywordtype}{int} available() \{ \textcolor{keywordflow}{return} client.available(); \}}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60 \textcolor{keyword}{private}:}
+\DoxyCodeLine{61     TCPClient   client;}
+\DoxyCodeLine{62     IPAddress   addr;}
+\DoxyCodeLine{63     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* domain;}
+\DoxyCodeLine{64     uint16\_t    port;}
+\DoxyCodeLine{65 \};}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_particle}{BlynkParticle}}}
+\DoxyCodeLine{68     : \textcolor{keyword}{public} \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol}}<BlynkTransportParticle>}
+\DoxyCodeLine{69 \{}
+\DoxyCodeLine{70     \textcolor{keyword}{typedef} \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol<BlynkTransportParticle>}} \mbox{\hyperlink{class_blynk_protocol}{Base}};}
+\DoxyCodeLine{71 \textcolor{keyword}{public}:}
+\DoxyCodeLine{72     \mbox{\hyperlink{class_blynk_particle}{BlynkParticle}}(\mbox{\hyperlink{class_blynk_transport_particle}{BlynkTransportParticle}}\& transp)}
+\DoxyCodeLine{73         : \mbox{\hyperlink{class_blynk_protocol}{Base}}(transp)}
+\DoxyCodeLine{74     \{\}}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76     \textcolor{keywordtype}{void} config(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth,}
+\DoxyCodeLine{77                 \textcolor{keyword}{const} \textcolor{keywordtype}{char}* domain = BLYNK\_DEFAULT\_DOMAIN,}
+\DoxyCodeLine{78                 uint16\_t port      = BLYNK\_DEFAULT\_PORT)}
+\DoxyCodeLine{79     \{}
+\DoxyCodeLine{80         Base::begin(auth);}
+\DoxyCodeLine{81         this-\/>conn.begin(domain, port);}
+\DoxyCodeLine{82     \}}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84     \textcolor{keywordtype}{void} config(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth,}
+\DoxyCodeLine{85                 IPAddress addr,}
+\DoxyCodeLine{86                 uint16\_t port      = BLYNK\_DEFAULT\_PORT)}
+\DoxyCodeLine{87     \{}
+\DoxyCodeLine{88         Base::begin(auth);}
+\DoxyCodeLine{89         this-\/>conn.begin(addr, port);}
+\DoxyCodeLine{90     \}}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92     \textcolor{keywordtype}{void} begin( \textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth,}
+\DoxyCodeLine{93                 \textcolor{keyword}{const} \textcolor{keywordtype}{char}* domain = BLYNK\_DEFAULT\_DOMAIN,}
+\DoxyCodeLine{94                 uint16\_t port      = BLYNK\_DEFAULT\_PORT)}
+\DoxyCodeLine{95     \{}
+\DoxyCodeLine{96         BlynkDelay(3000); \textcolor{comment}{// Give the board time to settle}}
+\DoxyCodeLine{97         config(auth, domain, port);}
+\DoxyCodeLine{98         \textcolor{keywordflow}{while}(this-\/>connect() != \textcolor{keyword}{true}) \{\}}
+\DoxyCodeLine{99     \}}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101     \textcolor{keywordtype}{void} begin( \textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth,}
+\DoxyCodeLine{102                 IPAddress addr,}
+\DoxyCodeLine{103                 uint16\_t port      = BLYNK\_DEFAULT\_PORT)}
+\DoxyCodeLine{104     \{}
+\DoxyCodeLine{105         BlynkDelay(3000); \textcolor{comment}{// Give the board time to settle}}
+\DoxyCodeLine{106         config(auth, addr, port);}
+\DoxyCodeLine{107         \textcolor{keywordflow}{while}(this-\/>connect() != \textcolor{keyword}{true}) \{\}}
+\DoxyCodeLine{108     \}}
+\DoxyCodeLine{109 \textcolor{keyword}{private}:}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111 \};}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

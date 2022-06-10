@@ -1,0 +1,198 @@
+\hypertarget{_blynk_simple_shield_esp8266_8h_source}{}\doxysection{Blynk\+Simple\+Shield\+Esp8266.\+h}
+\label{_blynk_simple_shield_esp8266_8h_source}\index{lib/Blynk/src/BlynkSimpleShieldEsp8266.h@{lib/Blynk/src/BlynkSimpleShieldEsp8266.h}}
+\mbox{\hyperlink{_blynk_simple_shield_esp8266_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef BlynkSimpleShieldEsp8266\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define BlynkSimpleShieldEsp8266\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#ifdef ESP8266}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#error This code is not intended to run on the ESP8266 platform! Please check your Tools-\/>Board setting.}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#ifndef BLYNK\_INFO\_CONNECTION}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#define BLYNK\_INFO\_CONNECTION  "{}ESP8266"{}}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#ifndef BLYNK\_ESP8266\_MUX}}
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#define BLYNK\_ESP8266\_MUX  1}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#define BLYNK\_SEND\_ATOMIC}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#define BLYNK\_SEND\_CHUNK 40}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_api_arduino_8h}{BlynkApiArduino.h}}>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_protocol_8h}{Blynk/BlynkProtocol.h}}>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_fifo_8h}{utility/BlynkFifo.h}}>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <ESP8266\_Lib.h>}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_transport_shield_esp8266}{BlynkTransportShieldEsp8266}}}
+\DoxyCodeLine{35 \{}
+\DoxyCodeLine{36     \textcolor{keyword}{static} \textcolor{keywordtype}{void} onData(uint8\_t mux\_id, uint32\_t len, \textcolor{keywordtype}{void}* ptr) \{}
+\DoxyCodeLine{37         ((\mbox{\hyperlink{class_blynk_transport_shield_esp8266}{BlynkTransportShieldEsp8266}}*)ptr)-\/>onData(mux\_id, len);}
+\DoxyCodeLine{38     \}}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \textcolor{keywordtype}{void} onData(uint8\_t mux\_id, int32\_t len) \{}
+\DoxyCodeLine{41         \textcolor{keywordflow}{if} (mux\_id != BLYNK\_ESP8266\_MUX) \{}
+\DoxyCodeLine{42             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{43         \}}
+\DoxyCodeLine{44         \textcolor{comment}{//BLYNK\_LOG4("{}Got: "{}, len, "{}, Free: "{}, buffer.free());}}
+\DoxyCodeLine{45         \textcolor{keywordflow}{if} (buffer.free() < len) \{}
+\DoxyCodeLine{46           BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}Buffer overflow"{}}));}
+\DoxyCodeLine{47           \textcolor{keywordflow}{return};}
+\DoxyCodeLine{48         \}}
+\DoxyCodeLine{49         \textcolor{keywordflow}{while} (len) \{}
+\DoxyCodeLine{50             \textcolor{keywordflow}{if} (client-\/>getUart()-\/>available()) \{}
+\DoxyCodeLine{51                 uint8\_t b = client-\/>getUart()-\/>read();}
+\DoxyCodeLine{52                 buffer.put(b);}
+\DoxyCodeLine{53                 len-\/-\/;}
+\DoxyCodeLine{54             \}}
+\DoxyCodeLine{55         \}}
+\DoxyCodeLine{56     \}}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58 \textcolor{keyword}{public}:}
+\DoxyCodeLine{59     \mbox{\hyperlink{class_blynk_transport_shield_esp8266}{BlynkTransportShieldEsp8266}}()}
+\DoxyCodeLine{60         : client(NULL)}
+\DoxyCodeLine{61         , status(\textcolor{keyword}{false})}
+\DoxyCodeLine{62         , domain(NULL)}
+\DoxyCodeLine{63         , port(0)}
+\DoxyCodeLine{64     \{\}}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66     \textcolor{keywordtype}{void} setEsp8266(ESP8266* esp8266) \{}
+\DoxyCodeLine{67         client = esp8266;}
+\DoxyCodeLine{68         client-\/>setOnData(onData, \textcolor{keyword}{this});}
+\DoxyCodeLine{69     \}}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71     \textcolor{comment}{//TODO: IPAddress}}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73     \textcolor{keywordtype}{void} begin(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* d,  uint16\_t p) \{}
+\DoxyCodeLine{74         domain = d;}
+\DoxyCodeLine{75         port = p;}
+\DoxyCodeLine{76     \}}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78     \textcolor{keywordtype}{bool} connect() \{}
+\DoxyCodeLine{79         \textcolor{keywordflow}{if} (!domain || !port)}
+\DoxyCodeLine{80             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{81         status = client-\/>createTCP(BLYNK\_ESP8266\_MUX, domain, port);}
+\DoxyCodeLine{82         \textcolor{keywordflow}{return} status;}
+\DoxyCodeLine{83     \}}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85     \textcolor{keywordtype}{void} disconnect() \{}
+\DoxyCodeLine{86         status = \textcolor{keyword}{false};}
+\DoxyCodeLine{87         buffer.clear();}
+\DoxyCodeLine{88         client-\/>releaseTCP(BLYNK\_ESP8266\_MUX);}
+\DoxyCodeLine{89     \}}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91     \textcolor{keywordtype}{size\_t} read(\textcolor{keywordtype}{void}* buf, \textcolor{keywordtype}{size\_t} len) \{}
+\DoxyCodeLine{92         millis\_time\_t start = BlynkMillis();}
+\DoxyCodeLine{93         \textcolor{comment}{//BLYNK\_LOG4("{}Waiting: "{}, len, "{} Buffer: "{}, buffer.size());}}
+\DoxyCodeLine{94         \textcolor{keywordflow}{while} ((buffer.size() < len) \&\& (BlynkMillis() -\/ start < 1500)) \{}
+\DoxyCodeLine{95             client-\/>run();}
+\DoxyCodeLine{96         \}}
+\DoxyCodeLine{97         \textcolor{keywordflow}{return} buffer.get((uint8\_t*)buf, len);}
+\DoxyCodeLine{98     \}}
+\DoxyCodeLine{99     \textcolor{keywordtype}{size\_t} write(\textcolor{keyword}{const} \textcolor{keywordtype}{void}* buf, \textcolor{keywordtype}{size\_t} len) \{}
+\DoxyCodeLine{100         \textcolor{keywordflow}{if} (client-\/>send(BLYNK\_ESP8266\_MUX, (\textcolor{keyword}{const} uint8\_t*)buf, len)) \{}
+\DoxyCodeLine{101             \textcolor{keywordflow}{return} len;}
+\DoxyCodeLine{102         \}}
+\DoxyCodeLine{103         \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{104     \}}
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106     \textcolor{keywordtype}{bool} connected() \{ \textcolor{keywordflow}{return} status; \}}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108     \textcolor{keywordtype}{int} available() \{}
+\DoxyCodeLine{109         client-\/>run();}
+\DoxyCodeLine{110         \textcolor{comment}{//BLYNK\_LOG2("{}Still: "{}, buffer.size());}}
+\DoxyCodeLine{111         \textcolor{keywordflow}{return} buffer.size();}
+\DoxyCodeLine{112     \}}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114 \textcolor{keyword}{private}:}
+\DoxyCodeLine{115     ESP8266* client;}
+\DoxyCodeLine{116     \textcolor{keywordtype}{bool} status;}
+\DoxyCodeLine{117     \mbox{\hyperlink{class_blynk_fifo}{BlynkFifo<uint8\_t,256>}} buffer;}
+\DoxyCodeLine{118     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* domain;}
+\DoxyCodeLine{119     uint16\_t    port;}
+\DoxyCodeLine{120 \};}
+\DoxyCodeLine{121 }
+\DoxyCodeLine{122 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_wifi}{BlynkWifi}}}
+\DoxyCodeLine{123     : \textcolor{keyword}{public} \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol}}<BlynkTransportShieldEsp8266>}
+\DoxyCodeLine{124 \{}
+\DoxyCodeLine{125     \textcolor{keyword}{typedef} \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol<BlynkTransportShieldEsp8266>}} Base;}
+\DoxyCodeLine{126 \textcolor{keyword}{public}:}
+\DoxyCodeLine{127     \mbox{\hyperlink{class_blynk_wifi}{BlynkWifi}}(\mbox{\hyperlink{class_blynk_transport_shield_esp8266}{BlynkTransportShieldEsp8266}}\& transp)}
+\DoxyCodeLine{128         : Base(transp)}
+\DoxyCodeLine{129         , wifi(NULL)}
+\DoxyCodeLine{130     \{\}}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132     \textcolor{keywordtype}{bool} connectWiFi(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* ssid, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* pass)}
+\DoxyCodeLine{133     \{}
+\DoxyCodeLine{134         BlynkDelay(500);}
+\DoxyCodeLine{135         BLYNK\_LOG2(BLYNK\_F(\textcolor{stringliteral}{"{}Connecting to "{}}), ssid);}
+\DoxyCodeLine{136         \textcolor{comment}{/*if (!wifi-\/>restart()) \{}}
+\DoxyCodeLine{137 \textcolor{comment}{            BLYNK\_LOG1(BLYNK\_F("{}Failed to restart"{}));}}
+\DoxyCodeLine{138 \textcolor{comment}{            return false;}}
+\DoxyCodeLine{139 \textcolor{comment}{        \}*/}}
+\DoxyCodeLine{140         \textcolor{keywordflow}{if} (!wifi-\/>kick()) \{}
+\DoxyCodeLine{141              BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}ESP is not responding"{}}));}
+\DoxyCodeLine{142              \textcolor{comment}{//TODO: BLYNK\_LOG\_TROUBLE(BLYNK\_F("{}esp8266-\/not-\/responding"{}));}}
+\DoxyCodeLine{143              \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{144         \}}
+\DoxyCodeLine{145         \textcolor{keywordflow}{if} (!wifi-\/>setEcho(0)) \{}
+\DoxyCodeLine{146             BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}Failed to disable Echo"{}}));}
+\DoxyCodeLine{147             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{148         \}}
+\DoxyCodeLine{149         String ver = wifi-\/>ESP8266::getVersion();}
+\DoxyCodeLine{150         BLYNK\_LOG1(ver);}
+\DoxyCodeLine{151         \textcolor{keywordflow}{if} (!wifi-\/>enableMUX()) \{}
+\DoxyCodeLine{152             BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}Failed to enable MUX"{}}));}
+\DoxyCodeLine{153         \}}
+\DoxyCodeLine{154         \textcolor{keywordflow}{if} (!wifi-\/>setOprToStation()) \{}
+\DoxyCodeLine{155             BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}Failed to set STA mode"{}}));}
+\DoxyCodeLine{156             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{157         \}}
+\DoxyCodeLine{158         \textcolor{keywordflow}{if} (wifi-\/>joinAP(ssid, pass)) \{}
+\DoxyCodeLine{159             String my\_ip = wifi-\/>getLocalIP();}
+\DoxyCodeLine{160             BLYNK\_LOG1(my\_ip);}
+\DoxyCodeLine{161         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{162             BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}Failed to connect WiFi"{}}));}
+\DoxyCodeLine{163             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{164         \}}
+\DoxyCodeLine{165         BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}Connected to WiFi"{}}));}
+\DoxyCodeLine{166         \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{167     \}}
+\DoxyCodeLine{168 }
+\DoxyCodeLine{169     \textcolor{keywordtype}{void} config(ESP8266\&    esp8266,}
+\DoxyCodeLine{170                 \textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth,}
+\DoxyCodeLine{171                 \textcolor{keyword}{const} \textcolor{keywordtype}{char}* domain = BLYNK\_DEFAULT\_DOMAIN,}
+\DoxyCodeLine{172                 uint16\_t    port   = BLYNK\_DEFAULT\_PORT)}
+\DoxyCodeLine{173     \{}
+\DoxyCodeLine{174         Base::begin(auth);}
+\DoxyCodeLine{175         wifi = \&esp8266;}
+\DoxyCodeLine{176         this-\/>conn.setEsp8266(wifi);}
+\DoxyCodeLine{177         this-\/>conn.begin(domain, port);}
+\DoxyCodeLine{178     \}}
+\DoxyCodeLine{179 }
+\DoxyCodeLine{180     \textcolor{keywordtype}{void} begin(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth,}
+\DoxyCodeLine{181                ESP8266\&    esp8266,}
+\DoxyCodeLine{182                \textcolor{keyword}{const} \textcolor{keywordtype}{char}* ssid,}
+\DoxyCodeLine{183                \textcolor{keyword}{const} \textcolor{keywordtype}{char}* pass,}
+\DoxyCodeLine{184                \textcolor{keyword}{const} \textcolor{keywordtype}{char}* domain = BLYNK\_DEFAULT\_DOMAIN,}
+\DoxyCodeLine{185                uint16\_t    port   = BLYNK\_DEFAULT\_PORT)}
+\DoxyCodeLine{186     \{}
+\DoxyCodeLine{187         config(esp8266, auth, domain, port);}
+\DoxyCodeLine{188         connectWiFi(ssid, pass);}
+\DoxyCodeLine{189         \textcolor{keywordflow}{while}(this-\/>connect() != \textcolor{keyword}{true}) \{\}}
+\DoxyCodeLine{190     \}}
+\DoxyCodeLine{191 }
+\DoxyCodeLine{192 \textcolor{keyword}{private}:}
+\DoxyCodeLine{193     ESP8266* wifi;}
+\DoxyCodeLine{194 \};}
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196 \textcolor{keyword}{static} \mbox{\hyperlink{class_blynk_transport_shield_esp8266}{BlynkTransportShieldEsp8266}} \_blynkTransport;}
+\DoxyCodeLine{197 \mbox{\hyperlink{class_blynk_wifi}{BlynkWifi}} Blynk(\_blynkTransport);}
+\DoxyCodeLine{198 }
+\DoxyCodeLine{199 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_widgets_8h}{BlynkWidgets.h}}>}}
+\DoxyCodeLine{200 }
+\DoxyCodeLine{201 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

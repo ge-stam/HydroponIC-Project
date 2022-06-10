@@ -1,0 +1,43 @@
+\hypertarget{_blynk_templates_8h_source}{}\doxysection{Blynk\+Templates.\+h}
+\label{_blynk_templates_8h_source}\index{lib/Blynk/src/Blynk/BlynkTemplates.h@{lib/Blynk/src/Blynk/BlynkTemplates.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_stack_only}{BlynkStackOnly}}}
+\DoxyCodeLine{2 \{}
+\DoxyCodeLine{3 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{4   \mbox{\hyperlink{class_blynk_stack_only}{BlynkStackOnly}}() \{\}}
+\DoxyCodeLine{5   \mbox{\hyperlink{class_blynk_stack_only}{\string~BlynkStackOnly}}() \{\}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{keyword}{private}:}
+\DoxyCodeLine{9   \textcolor{keywordtype}{void}* \textcolor{keyword}{operator} \textcolor{keyword}{new}(\textcolor{keywordtype}{size\_t} size);}
+\DoxyCodeLine{11   \textcolor{keywordtype}{void} \textcolor{keyword}{operator} \textcolor{keyword}{delete}(\textcolor{keywordtype}{void} *p);}
+\DoxyCodeLine{12 \};}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_non_copyable}{BlynkNonCopyable}}}
+\DoxyCodeLine{15 \{}
+\DoxyCodeLine{16 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{17   \mbox{\hyperlink{class_blynk_non_copyable}{BlynkNonCopyable}}()\{\}}
+\DoxyCodeLine{18   \mbox{\hyperlink{class_blynk_non_copyable}{\string~BlynkNonCopyable}}()\{\}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20 \textcolor{keyword}{private}:}
+\DoxyCodeLine{22   \mbox{\hyperlink{class_blynk_non_copyable}{BlynkNonCopyable}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_blynk_non_copyable}{BlynkNonCopyable}}\&);}
+\DoxyCodeLine{24   \mbox{\hyperlink{class_blynk_non_copyable}{BlynkNonCopyable}}\& operator=(\textcolor{keyword}{const} \mbox{\hyperlink{class_blynk_non_copyable}{BlynkNonCopyable}}\&);}
+\DoxyCodeLine{25 \};}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{28 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_singleton}{BlynkSingleton}}}
+\DoxyCodeLine{29   : \textcolor{keyword}{public} \mbox{\hyperlink{class_blynk_non_copyable}{BlynkNonCopyable}}}
+\DoxyCodeLine{30 \{}
+\DoxyCodeLine{31 \textcolor{keyword}{public}:}
+\DoxyCodeLine{38   \textcolor{keyword}{static} T* \mbox{\hyperlink{class_blynk_singleton_ac4da9d4c320462aac42eecd0c846ead2}{instance}}()}
+\DoxyCodeLine{39   \{}
+\DoxyCodeLine{40     \textcolor{keyword}{static} T \mbox{\hyperlink{class_blynk_singleton_ac4da9d4c320462aac42eecd0c846ead2}{instance}};}
+\DoxyCodeLine{41     \textcolor{keywordflow}{return} \&\mbox{\hyperlink{class_blynk_singleton_ac4da9d4c320462aac42eecd0c846ead2}{instance}};}
+\DoxyCodeLine{42   \}}
+\DoxyCodeLine{43 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{44   \mbox{\hyperlink{class_blynk_singleton}{BlynkSingleton}}() \{\}}
+\DoxyCodeLine{45   \mbox{\hyperlink{class_blynk_singleton}{\string~BlynkSingleton}}() \{\}}
+\DoxyCodeLine{46 \};}
+\DoxyCodeLine{47 }
+
+\end{DoxyCode}

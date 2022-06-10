@@ -1,0 +1,302 @@
+\hypertarget{_blynk_debug_8h_source}{}\doxysection{Blynk\+Debug.\+h}
+\label{_blynk_debug_8h_source}\index{lib/Blynk/src/Blynk/BlynkDebug.h@{lib/Blynk/src/Blynk/BlynkDebug.h}}
+\mbox{\hyperlink{_blynk_debug_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef BlynkDebug\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define BlynkDebug\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_config_8h}{Blynk/BlynkConfig.h}}>}}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#include <stddef.h>}}
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#ifdef ESP8266}}
+\DoxyCodeLine{18     \textcolor{keyword}{extern} \textcolor{stringliteral}{"{}C"{}} \{}
+\DoxyCodeLine{19 \textcolor{preprocessor}{    \#include "{}ets\_sys.h"{}}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{    \#include "{}os\_type.h"{}}}
+\DoxyCodeLine{21 \textcolor{preprocessor}{    \#include "{}mem.h"{}}}
+\DoxyCodeLine{22     \}}
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{    \#include <inttypes.h>}}
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#if defined(ARDUINO\_ARCH\_ARC32)}}
+\DoxyCodeLine{28     \textcolor{keyword}{typedef} uint64\_t millis\_time\_t;}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{30     \textcolor{keyword}{typedef} uint32\_t millis\_time\_t;}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{keywordtype}{void}            BlynkDelay(millis\_time\_t ms);}
+\DoxyCodeLine{34 millis\_time\_t   BlynkMillis();}
+\DoxyCodeLine{35 \textcolor{keywordtype}{size\_t}          BlynkFreeRam();}
+\DoxyCodeLine{36 \textcolor{keywordtype}{void}            BlynkReset() BLYNK\_NORETURN;}
+\DoxyCodeLine{37 \textcolor{keywordtype}{void}            BlynkFatal() BLYNK\_NORETURN;}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40 \textcolor{preprocessor}{\#if defined(SPARK) || defined(PARTICLE)}}
+\DoxyCodeLine{41 \textcolor{preprocessor}{    \#include "{}application.h"{}}}
+\DoxyCodeLine{42 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44 \textcolor{preprocessor}{\#if defined(ARDUINO)}}
+\DoxyCodeLine{45 \textcolor{preprocessor}{    \#if ARDUINO >= 100}}
+\DoxyCodeLine{46 \textcolor{preprocessor}{        \#include <Arduino.h>}}
+\DoxyCodeLine{47 \textcolor{preprocessor}{    \#else}}
+\DoxyCodeLine{48 \textcolor{preprocessor}{        \#include <WProgram.h>}}
+\DoxyCodeLine{49 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{50 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52 \textcolor{preprocessor}{\#if defined(LINUX)}}
+\DoxyCodeLine{53 \textcolor{preprocessor}{    \#if defined(RASPBERRY)}}
+\DoxyCodeLine{54 \textcolor{preprocessor}{        \#include <wiringPi.h>}}
+\DoxyCodeLine{55 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{56 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58 \textcolor{preprocessor}{\#if !defined(BLYNK\_RUN\_YIELD)}}
+\DoxyCodeLine{59 \textcolor{preprocessor}{    \#if defined(BLYNK\_NO\_YIELD)}}
+\DoxyCodeLine{60 \textcolor{preprocessor}{        \#define BLYNK\_RUN\_YIELD() \{\}}}
+\DoxyCodeLine{61 \textcolor{preprocessor}{    \#elif defined(SPARK) || defined(PARTICLE)}}
+\DoxyCodeLine{62 \textcolor{preprocessor}{        \#define BLYNK\_RUN\_YIELD() \{ Particle.process(); \}}}
+\DoxyCodeLine{63 \textcolor{preprocessor}{    \#elif !defined(ARDUINO) || (ARDUINO < 151)}}
+\DoxyCodeLine{64 \textcolor{preprocessor}{        \#define BLYNK\_RUN\_YIELD() \{\}}}
+\DoxyCodeLine{65 \textcolor{preprocessor}{    \#else}}
+\DoxyCodeLine{66 \textcolor{preprocessor}{        \#define BLYNK\_RUN\_YIELD() \{ BlynkDelay(0); \}}}
+\DoxyCodeLine{67 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{68 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70 \textcolor{preprocessor}{\#if defined(\_\_AVR\_\_)}}
+\DoxyCodeLine{71 \textcolor{preprocessor}{    \#include <avr/pgmspace.h>}}
+\DoxyCodeLine{72 \textcolor{preprocessor}{    \#define BLYNK\_HAS\_PROGMEM}}
+\DoxyCodeLine{73 \textcolor{preprocessor}{    \#define BLYNK\_PROGMEM PROGMEM}}
+\DoxyCodeLine{74 \textcolor{preprocessor}{    \#define BLYNK\_F(s) F(s)}}
+\DoxyCodeLine{75 \textcolor{preprocessor}{    \#define BLYNK\_PSTR(s) PSTR(s)}}
+\DoxyCodeLine{76 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{77 \textcolor{preprocessor}{    \#define BLYNK\_PROGMEM}}
+\DoxyCodeLine{78 \textcolor{preprocessor}{    \#define BLYNK\_F(s) s}}
+\DoxyCodeLine{79 \textcolor{preprocessor}{    \#define BLYNK\_PSTR(s) s}}
+\DoxyCodeLine{80 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82 \textcolor{preprocessor}{\#ifdef ARDUINO\_AVR\_DIGISPARK}}
+\DoxyCodeLine{83     \textcolor{keyword}{typedef} fstr\_t \_\_FlashStringHelper;}
+\DoxyCodeLine{84 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86 \textcolor{preprocessor}{\#if defined(BLYNK\_DEBUG\_ALL) \&\& !(\_\_cplusplus >= 201103L || defined(\_\_GXX\_EXPERIMENTAL\_CXX0X\_\_))}}
+\DoxyCodeLine{87 \textcolor{preprocessor}{    \#warning "{}Compiler features not enabled -\/> please contact yor board vendor to enable c++0x"{}}}
+\DoxyCodeLine{88 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90 \textcolor{comment}{// Diagnostic defines}}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92 \textcolor{preprocessor}{\#define BLYNK\_FATAL(msg)     \{ BLYNK\_LOG1(msg); BlynkFatal(); \}}}
+\DoxyCodeLine{93 \textcolor{preprocessor}{\#define BLYNK\_LOG\_RAM()      \{ BLYNK\_LOG2(BLYNK\_F("{}Free RAM: "{}}), BlynkFreeRam()); \}}
+\DoxyCodeLine{94 \textcolor{preprocessor}{\#define BLYNK\_LOG\_FN()       BLYNK\_LOG3(BLYNK\_F(\_\_FUNCTION\_\_), '@', \_\_LINE\_\_);}}
+\DoxyCodeLine{95 \textcolor{preprocessor}{\#define BLYNK\_LOG\_TROUBLE(t) BLYNK\_LOG2(BLYNK\_F("{}Trouble detected: http://docs.blynk.cc/\#troubleshooting-\/"{}}), t)}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97 \textcolor{preprocessor}{\#ifndef BLYNK\_PRINT}}
+\DoxyCodeLine{98 \textcolor{preprocessor}{\#undef BLYNK\_DEBUG}}
+\DoxyCodeLine{99 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101 \textcolor{preprocessor}{\#ifdef BLYNK\_DEBUG\_ALL}}
+\DoxyCodeLine{102 \textcolor{preprocessor}{\#define BLYNK\_DEBUG}}
+\DoxyCodeLine{103 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{104 }
+\DoxyCodeLine{105 \textcolor{preprocessor}{\#ifdef BLYNK\_PRINT}}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107 \textcolor{preprocessor}{    \#if defined(ARDUINO) || defined(SPARK) || defined(PARTICLE)}}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109 \textcolor{preprocessor}{\#if defined(ARDUINO\_ARCH\_ARC32)}}
+\DoxyCodeLine{110         \textcolor{comment}{// This will cause error -\/ on purpose}}
+\DoxyCodeLine{111 \textcolor{preprocessor}{        \#define BLYNK\_LOG(msg, ...)  BLYNK\_LOG\_UNAVAILABLE(msg, \#\#\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{112 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{113 \textcolor{preprocessor}{        \#define BLYNK\_LOG(msg, ...)  blynk\_dbg\_print(BLYNK\_PSTR(msg), \#\#\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{114 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116 \textcolor{preprocessor}{        \#define BLYNK\_LOG1(p1)            \{ BLYNK\_LOG\_TIME(); BLYNK\_PRINT.println(p1); \}}}
+\DoxyCodeLine{117 \textcolor{preprocessor}{        \#define BLYNK\_LOG2(p1,p2)         \{ BLYNK\_LOG\_TIME(); BLYNK\_PRINT.print(p1); BLYNK\_PRINT.println(p2); \}}}
+\DoxyCodeLine{118 \textcolor{preprocessor}{        \#define BLYNK\_LOG3(p1,p2,p3)      \{ BLYNK\_LOG\_TIME(); BLYNK\_PRINT.print(p1); BLYNK\_PRINT.print(p2); BLYNK\_PRINT.println(p3); \}}}
+\DoxyCodeLine{119 \textcolor{preprocessor}{        \#define BLYNK\_LOG4(p1,p2,p3,p4)   \{ BLYNK\_LOG\_TIME(); BLYNK\_PRINT.print(p1); BLYNK\_PRINT.print(p2); BLYNK\_PRINT.print(p3); BLYNK\_PRINT.println(p4); \}}}
+\DoxyCodeLine{120 \textcolor{preprocessor}{        \#define BLYNK\_LOG6(p1,p2,p3,p4,p5,p6) \{ BLYNK\_LOG\_TIME(); BLYNK\_PRINT.print(p1); BLYNK\_PRINT.print(p2); BLYNK\_PRINT.print(p3); BLYNK\_PRINT.print(p4); BLYNK\_PRINT.print(p5); BLYNK\_PRINT.println(p6); \}}}
+\DoxyCodeLine{121 \textcolor{preprocessor}{        \#define BLYNK\_LOG\_IP(msg, ip)     \{ BLYNK\_LOG\_TIME(); BLYNK\_PRINT.print(BLYNK\_F(msg)); \(\backslash\)}}
+\DoxyCodeLine{122 \textcolor{preprocessor}{                                            BLYNK\_PRINT.print(ip[0]); BLYNK\_PRINT.print('.');  \(\backslash\)}}
+\DoxyCodeLine{123 \textcolor{preprocessor}{                                            BLYNK\_PRINT.print(ip[1]); BLYNK\_PRINT.print('.');  \(\backslash\)}}
+\DoxyCodeLine{124 \textcolor{preprocessor}{                                            BLYNK\_PRINT.print(ip[2]); BLYNK\_PRINT.print('.');  \(\backslash\)}}
+\DoxyCodeLine{125 \textcolor{preprocessor}{                                            BLYNK\_PRINT.println(ip[3]); \}}}
+\DoxyCodeLine{126 \textcolor{preprocessor}{        \#define BLYNK\_LOG\_IP\_REV(msg, ip) \{ BLYNK\_LOG\_TIME(); BLYNK\_PRINT.print(BLYNK\_F(msg)); \(\backslash\)}}
+\DoxyCodeLine{127 \textcolor{preprocessor}{                                            BLYNK\_PRINT.print(ip[3]); BLYNK\_PRINT.print('.');  \(\backslash\)}}
+\DoxyCodeLine{128 \textcolor{preprocessor}{                                            BLYNK\_PRINT.print(ip[2]); BLYNK\_PRINT.print('.');  \(\backslash\)}}
+\DoxyCodeLine{129 \textcolor{preprocessor}{                                            BLYNK\_PRINT.print(ip[1]); BLYNK\_PRINT.print('.');  \(\backslash\)}}
+\DoxyCodeLine{130 \textcolor{preprocessor}{                                            BLYNK\_PRINT.println(ip[0]); \}}}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132         \textcolor{keyword}{static}}
+\DoxyCodeLine{133         \textcolor{keywordtype}{void} BLYNK\_LOG\_TIME() \{}
+\DoxyCodeLine{134             BLYNK\_PRINT.print(\textcolor{charliteral}{'['});}
+\DoxyCodeLine{135             BLYNK\_PRINT.print(BlynkMillis());}
+\DoxyCodeLine{136             BLYNK\_PRINT.print(BLYNK\_F(\textcolor{stringliteral}{"{}] "{}}));}
+\DoxyCodeLine{137         \}}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139 \textcolor{preprocessor}{\#ifdef BLYNK\_DEBUG}}
+\DoxyCodeLine{140 \textcolor{preprocessor}{        \#include <ctype.h>}}
+\DoxyCodeLine{141 \textcolor{preprocessor}{        \#define BLYNK\_DBG\_BREAK()    \{ for(;;); \}}}
+\DoxyCodeLine{142 \textcolor{preprocessor}{        \#define BLYNK\_ASSERT(expr)   \{ if(!(expr)) \{ BLYNK\_LOG2(BLYNK\_F("{}Assertion failed: "{}}), BLYNK\_F(\#expr)); BLYNK\_DBG\_BREAK() \} \}}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144         \textcolor{keyword}{static}}
+\DoxyCodeLine{145         \textcolor{keywordtype}{void} BLYNK\_DBG\_DUMP(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* msg, \textcolor{keyword}{const} \textcolor{keywordtype}{void}* addr, \textcolor{keywordtype}{size\_t} len) \{}
+\DoxyCodeLine{146             \textcolor{keywordflow}{if} (len) \{}
+\DoxyCodeLine{147                 BLYNK\_LOG\_TIME();}
+\DoxyCodeLine{148                 BLYNK\_PRINT.print(msg);}
+\DoxyCodeLine{149                 \textcolor{keywordtype}{int} l2 = len;}
+\DoxyCodeLine{150                 \textcolor{keyword}{const} uint8\_t* octets = (\textcolor{keyword}{const} uint8\_t*)addr;}
+\DoxyCodeLine{151                 \textcolor{keywordtype}{bool} prev\_print = \textcolor{keyword}{true};}
+\DoxyCodeLine{152                 \textcolor{keywordflow}{while} (l2-\/-\/) \{}
+\DoxyCodeLine{153                     \textcolor{keyword}{const} uint8\_t c = *octets++ \& 0xFF;}
+\DoxyCodeLine{154                     \textcolor{keywordflow}{if} (c >= 32 \&\& c < 127) \{}
+\DoxyCodeLine{155                         \textcolor{keywordflow}{if} (!prev\_print) \{ BLYNK\_PRINT.print(\textcolor{charliteral}{']'}); \}}
+\DoxyCodeLine{156                         BLYNK\_PRINT.print((\textcolor{keywordtype}{char})c);}
+\DoxyCodeLine{157                         prev\_print = \textcolor{keyword}{true};}
+\DoxyCodeLine{158                     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{159                         BLYNK\_PRINT.print(prev\_print?\textcolor{charliteral}{'['}:\textcolor{charliteral}{'|'});}
+\DoxyCodeLine{160                         \textcolor{keywordflow}{if} (c < 0x10) \{ BLYNK\_PRINT.print(\textcolor{charliteral}{'0'}); \}}
+\DoxyCodeLine{161                         BLYNK\_PRINT.print(c, HEX);}
+\DoxyCodeLine{162                         prev\_print = \textcolor{keyword}{false};}
+\DoxyCodeLine{163                     \}}
+\DoxyCodeLine{164                 \}}
+\DoxyCodeLine{165                 \textcolor{keywordflow}{if} (!prev\_print) \{}
+\DoxyCodeLine{166                     BLYNK\_PRINT.print(\textcolor{charliteral}{']'});}
+\DoxyCodeLine{167                 \}}
+\DoxyCodeLine{168                 BLYNK\_PRINT.println();}
+\DoxyCodeLine{169             \}}
+\DoxyCodeLine{170         \}}
+\DoxyCodeLine{171 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{172 }
+\DoxyCodeLine{173 \textcolor{preprocessor}{        \#if !defined(ARDUINO\_ARCH\_ARC32)}}
+\DoxyCodeLine{174 \textcolor{preprocessor}{        \#include <stdio.h>}}
+\DoxyCodeLine{175 \textcolor{preprocessor}{        \#include <stdarg.h>}}
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177         BLYNK\_UNUSED}
+\DoxyCodeLine{178         \textcolor{keywordtype}{void} blynk\_dbg\_print(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* BLYNK\_PROGMEM fmt, ...)}
+\DoxyCodeLine{179         \{}
+\DoxyCodeLine{180             va\_list ap;}
+\DoxyCodeLine{181             va\_start(ap, fmt);}
+\DoxyCodeLine{182             \textcolor{keywordtype}{char} buff[128];}
+\DoxyCodeLine{183             BLYNK\_PRINT.print(\textcolor{charliteral}{'['});}
+\DoxyCodeLine{184             BLYNK\_PRINT.print(BlynkMillis());}
+\DoxyCodeLine{185             BLYNK\_PRINT.print(BLYNK\_F(\textcolor{stringliteral}{"{}] "{}}));}
+\DoxyCodeLine{186 \textcolor{preprocessor}{\#if defined(\_\_AVR\_\_)}}
+\DoxyCodeLine{187             vsnprintf\_P(buff, \textcolor{keyword}{sizeof}(buff), fmt, ap);}
+\DoxyCodeLine{188 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{189             vsnprintf(buff, \textcolor{keyword}{sizeof}(buff), fmt, ap);}
+\DoxyCodeLine{190 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{191             BLYNK\_PRINT.println(buff);}
+\DoxyCodeLine{192             va\_end(ap);}
+\DoxyCodeLine{193         \}}
+\DoxyCodeLine{194 \textcolor{preprocessor}{        \#endif }\textcolor{comment}{// ARDUINO\_ARCH\_ARC32}}
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196 \textcolor{preprocessor}{    \#elif defined(\_\_MBED\_\_)}}
+\DoxyCodeLine{197 }
+\DoxyCodeLine{198 \textcolor{preprocessor}{        \#define BLYNK\_LOG(msg, ...)       \{ BLYNK\_PRINT.printf("{}[\%ld] "{}} msg BLYNK\_NEWLINE, BlynkMillis(), \#\#\_\_VA\_ARGS\_\_); \}}
+\DoxyCodeLine{199 \textcolor{preprocessor}{        \#define BLYNK\_LOG1(p1)            \{ BLYNK\_LOG(p1);\}}}
+\DoxyCodeLine{200 \textcolor{preprocessor}{        \#define BLYNK\_LOG2(p1,p2)         \{ BLYNK\_LOG(p1,p2);\}}}
+\DoxyCodeLine{201 \textcolor{preprocessor}{        \#define BLYNK\_LOG3(p1,p2,p3)      \{ BLYNK\_LOG(p1,p2,p3);\}}}
+\DoxyCodeLine{202 \textcolor{preprocessor}{        \#define BLYNK\_LOG4(p1,p2,p3,p4)   \{ BLYNK\_LOG(p1,p2,p3,p4);\}}}
+\DoxyCodeLine{203 \textcolor{preprocessor}{        \#define BLYNK\_LOG6(p1,p2,p3,p4,p5,p6)   \{ BLYNK\_LOG(p1,p2,p3,p4,p5,p6);\}}}
+\DoxyCodeLine{204 }
+\DoxyCodeLine{205 \textcolor{preprocessor}{        \#define BLYNK\_LOG\_TIME() BLYNK\_PRINT.printf("{}[\%ld]"{}}, BlynkMillis());}
+\DoxyCodeLine{206 }
+\DoxyCodeLine{207 \textcolor{preprocessor}{\#ifdef BLYNK\_DEBUG}}
+\DoxyCodeLine{208 \textcolor{preprocessor}{        \#define BLYNK\_DBG\_BREAK()    raise(SIGTRAP);}}
+\DoxyCodeLine{209 \textcolor{preprocessor}{        \#define BLYNK\_ASSERT(expr)   assert(expr)}}
+\DoxyCodeLine{210 }
+\DoxyCodeLine{211         \textcolor{keyword}{static}}
+\DoxyCodeLine{212         \textcolor{keywordtype}{void} BLYNK\_DBG\_DUMP(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* msg, \textcolor{keyword}{const} \textcolor{keywordtype}{void}* addr, \textcolor{keywordtype}{size\_t} len) \{}
+\DoxyCodeLine{213             BLYNK\_LOG\_TIME();}
+\DoxyCodeLine{214             BLYNK\_PRINT.printf(msg);}
+\DoxyCodeLine{215             \textcolor{keywordtype}{int} l2 = len;}
+\DoxyCodeLine{216             \textcolor{keyword}{const} uint8\_t* octets = (\textcolor{keyword}{const} uint8\_t*)addr;}
+\DoxyCodeLine{217             \textcolor{keywordtype}{bool} prev\_print = \textcolor{keyword}{true};}
+\DoxyCodeLine{218             \textcolor{keywordflow}{while} (l2-\/-\/) \{}
+\DoxyCodeLine{219                 \textcolor{keyword}{const} uint8\_t c = *octets++ \& 0xFF;}
+\DoxyCodeLine{220                 \textcolor{keywordflow}{if} (c >= 32 \&\& c < 127) \{}
+\DoxyCodeLine{221                     \textcolor{keywordflow}{if} (!prev\_print) \{ BLYNK\_PRINT.putc(\textcolor{charliteral}{']'}); \}}
+\DoxyCodeLine{222                     BLYNK\_PRINT.putc((\textcolor{keywordtype}{char})c);}
+\DoxyCodeLine{223                     prev\_print = \textcolor{keyword}{true};}
+\DoxyCodeLine{224                 \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{225                     BLYNK\_PRINT.putc(prev\_print?\textcolor{charliteral}{'['}:\textcolor{charliteral}{'|'});}
+\DoxyCodeLine{226                     BLYNK\_PRINT.printf(\textcolor{stringliteral}{"{}\%02x"{}}, c);}
+\DoxyCodeLine{227                     prev\_print = \textcolor{keyword}{false};}
+\DoxyCodeLine{228                 \}}
+\DoxyCodeLine{229             \}}
+\DoxyCodeLine{230             BLYNK\_PRINT.printf(\textcolor{stringliteral}{"{}\%s"{}} BLYNK\_NEWLINE, prev\_print?\textcolor{stringliteral}{"{}"{}}:\textcolor{stringliteral}{"{}]"{}});}
+\DoxyCodeLine{231         \}}
+\DoxyCodeLine{232 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{233 }
+\DoxyCodeLine{234 \textcolor{preprocessor}{    \#elif defined(LINUX)}}
+\DoxyCodeLine{235 }
+\DoxyCodeLine{236 \textcolor{preprocessor}{        \#include <assert.h>}}
+\DoxyCodeLine{237 \textcolor{preprocessor}{        \#include <stdio.h>}}
+\DoxyCodeLine{238 \textcolor{preprocessor}{        \#include <string.h>}}
+\DoxyCodeLine{239 \textcolor{preprocessor}{        \#include <errno.h>}}
+\DoxyCodeLine{240 \textcolor{preprocessor}{        \#include <signal.h>}}
+\DoxyCodeLine{241 }
+\DoxyCodeLine{242 \textcolor{preprocessor}{        \#include <iostream>}}
+\DoxyCodeLine{243         \textcolor{keyword}{using namespace }std;}
+\DoxyCodeLine{244 \textcolor{preprocessor}{        \#define BLYNK\_LOG(msg, ...)       \{ fprintf(BLYNK\_PRINT, "{}[\%ld] "{}} msg BLYNK\_NEWLINE, BlynkMillis(), \#\#\_\_VA\_ARGS\_\_); \}}
+\DoxyCodeLine{245 \textcolor{preprocessor}{        \#define BLYNK\_LOG1(p1)            \{ BLYNK\_LOG\_TIME(); cout << p1 << endl; \}}}
+\DoxyCodeLine{246 \textcolor{preprocessor}{        \#define BLYNK\_LOG2(p1,p2)         \{ BLYNK\_LOG\_TIME(); cout << p1 << p2 << endl; \}}}
+\DoxyCodeLine{247 \textcolor{preprocessor}{        \#define BLYNK\_LOG3(p1,p2,p3)      \{ BLYNK\_LOG\_TIME(); cout << p1 << p2 << p3 << endl; \}}}
+\DoxyCodeLine{248 \textcolor{preprocessor}{        \#define BLYNK\_LOG4(p1,p2,p3,p4)   \{ BLYNK\_LOG\_TIME(); cout << p1 << p2 << p3 << p4 << endl; \}}}
+\DoxyCodeLine{249 \textcolor{preprocessor}{        \#define BLYNK\_LOG6(p1,p2,p3,p4,p5,p6)   \{ BLYNK\_LOG\_TIME(); cout << p1 << p2 << p3 << p4 << p5 << p6 << endl; \}}}
+\DoxyCodeLine{250 }
+\DoxyCodeLine{251 \textcolor{preprocessor}{        \#define BLYNK\_LOG\_TIME() cout << '[' << BlynkMillis() << "{}] "{}};}
+\DoxyCodeLine{252 }
+\DoxyCodeLine{253 \textcolor{preprocessor}{\#ifdef BLYNK\_DEBUG}}
+\DoxyCodeLine{254 \textcolor{preprocessor}{        \#define BLYNK\_DBG\_BREAK()    raise(SIGTRAP);}}
+\DoxyCodeLine{255 \textcolor{preprocessor}{        \#define BLYNK\_ASSERT(expr)   assert(expr)}}
+\DoxyCodeLine{256 }
+\DoxyCodeLine{257         \textcolor{keyword}{static}}
+\DoxyCodeLine{258         \textcolor{keywordtype}{void} BLYNK\_DBG\_DUMP(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* msg, \textcolor{keyword}{const} \textcolor{keywordtype}{void}* addr, \textcolor{keywordtype}{size\_t} len) \{}
+\DoxyCodeLine{259             BLYNK\_LOG\_TIME();}
+\DoxyCodeLine{260             fprintf(BLYNK\_PRINT, \textcolor{stringliteral}{"{}\%s"{}}, msg);}
+\DoxyCodeLine{261             \textcolor{keywordtype}{int} l2 = len;}
+\DoxyCodeLine{262             \textcolor{keyword}{const} uint8\_t* octets = (\textcolor{keyword}{const} uint8\_t*)addr;}
+\DoxyCodeLine{263             \textcolor{keywordtype}{bool} prev\_print = \textcolor{keyword}{true};}
+\DoxyCodeLine{264             \textcolor{keywordflow}{while} (l2-\/-\/) \{}
+\DoxyCodeLine{265                 \textcolor{keyword}{const} uint8\_t c = *octets++ \& 0xFF;}
+\DoxyCodeLine{266                 \textcolor{keywordflow}{if} (c >= 32 \&\& c < 127) \{}
+\DoxyCodeLine{267                     \textcolor{keywordflow}{if} (!prev\_print) \{ fputc(\textcolor{charliteral}{']'}, BLYNK\_PRINT); \}}
+\DoxyCodeLine{268                     fputc((\textcolor{keywordtype}{char})c, BLYNK\_PRINT);}
+\DoxyCodeLine{269                     prev\_print = \textcolor{keyword}{true};}
+\DoxyCodeLine{270                 \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{271                     fputc(prev\_print?\textcolor{charliteral}{'['}:\textcolor{charliteral}{'|'}, BLYNK\_PRINT);}
+\DoxyCodeLine{272                     fprintf(BLYNK\_PRINT, \textcolor{stringliteral}{"{}\%02x"{}}, c);}
+\DoxyCodeLine{273                     prev\_print = \textcolor{keyword}{false};}
+\DoxyCodeLine{274                 \}}
+\DoxyCodeLine{275             \}}
+\DoxyCodeLine{276             fprintf(BLYNK\_PRINT, \textcolor{stringliteral}{"{}\%s"{}} BLYNK\_NEWLINE, prev\_print?\textcolor{stringliteral}{"{}"{}}:\textcolor{stringliteral}{"{}]"{}});}
+\DoxyCodeLine{277         \}}
+\DoxyCodeLine{278 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{279 }
+\DoxyCodeLine{280 \textcolor{preprocessor}{    \#else}}
+\DoxyCodeLine{281 }
+\DoxyCodeLine{282 \textcolor{preprocessor}{        \#warning "{}Cannot detect platform"{}}}
+\DoxyCodeLine{283 }
+\DoxyCodeLine{284 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{285 }
+\DoxyCodeLine{286 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{287 }
+\DoxyCodeLine{288 \textcolor{preprocessor}{\#ifndef BLYNK\_LOG}}
+\DoxyCodeLine{289 \textcolor{preprocessor}{    \#define BLYNK\_LOG(...)}}
+\DoxyCodeLine{290 \textcolor{preprocessor}{    \#define BLYNK\_LOG1(p1)}}
+\DoxyCodeLine{291 \textcolor{preprocessor}{    \#define BLYNK\_LOG2(p1,p2)}}
+\DoxyCodeLine{292 \textcolor{preprocessor}{    \#define BLYNK\_LOG3(p1,p2,p3)}}
+\DoxyCodeLine{293 \textcolor{preprocessor}{    \#define BLYNK\_LOG4(p1,p2,p3,p4)}}
+\DoxyCodeLine{294 \textcolor{preprocessor}{    \#define BLYNK\_LOG6(p1,p2,p3,p4,p5,p6)}}
+\DoxyCodeLine{295 \textcolor{preprocessor}{    \#define BLYNK\_LOG\_IP(msg, ip)}}
+\DoxyCodeLine{296 \textcolor{preprocessor}{    \#define BLYNK\_LOG\_IP\_REV(msg, ip)}}
+\DoxyCodeLine{297 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{298 }
+\DoxyCodeLine{299 \textcolor{preprocessor}{\#ifndef BLYNK\_DBG\_BREAK}}
+\DoxyCodeLine{300 \textcolor{preprocessor}{    \#define BLYNK\_DBG\_BREAK()}}
+\DoxyCodeLine{301 \textcolor{preprocessor}{    \#define BLYNK\_ASSERT(expr)}}
+\DoxyCodeLine{302 \textcolor{preprocessor}{    \#define BLYNK\_DBG\_DUMP(msg, addr, len)}}
+\DoxyCodeLine{303 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{304 }
+\DoxyCodeLine{305 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

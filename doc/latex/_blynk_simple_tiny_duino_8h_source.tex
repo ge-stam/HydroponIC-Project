@@ -1,0 +1,31 @@
+\hypertarget{_blynk_simple_tiny_duino_8h_source}{}\doxysection{Blynk\+Simple\+Tiny\+Duino.\+h}
+\label{_blynk_simple_tiny_duino_8h_source}\index{lib/Blynk/src/BlynkSimpleTinyDuino.h@{lib/Blynk/src/BlynkSimpleTinyDuino.h}}
+\mbox{\hyperlink{_blynk_simple_tiny_duino_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#ifndef BlynkSimpleTinyDuino\_h}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#define BlynkSimpleTinyDuino\_h}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#ifndef BLYNK\_INFO\_DEVICE}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#define BLYNK\_INFO\_DEVICE  "{}TinyDuino"{}}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_c_c3000_8h}{Adapters/BlynkCC3000.h}}>}}
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#include <Adafruit\_CC3000.h>}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20 \textcolor{comment}{// Pin definitions for the TinyCircuits WiFi TinyShield}}
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#define ADAFRUIT\_CC3000\_IRQ  2}}
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#define ADAFRUIT\_CC3000\_VBAT A3}}
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#define ADAFRUIT\_CC3000\_CS   8}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{comment}{// Use hardware SPI for the remaining pins (on an UNO, SCK = 13, MISO = 12, and MOSI = 11)}}
+\DoxyCodeLine{26 Adafruit\_CC3000 cc3000 = Adafruit\_CC3000(ADAFRUIT\_CC3000\_CS, ADAFRUIT\_CC3000\_IRQ, ADAFRUIT\_CC3000\_VBAT, SPI\_CLOCK\_DIVIDER);}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{static} \mbox{\hyperlink{class_blynk_transport_c_c3000}{BlynkTransportCC3000}} \_blynkTransport(cc3000);}
+\DoxyCodeLine{29 \mbox{\hyperlink{class_blynk_c_c3000}{BlynkCC3000}} Blynk(cc3000, \_blynkTransport);}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_widgets_8h}{BlynkWidgets.h}}>}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

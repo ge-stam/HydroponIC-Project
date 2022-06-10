@@ -1,0 +1,282 @@
+\hypertarget{_blynk_simple_red_bear___duo___b_l_e_8h_source}{}\doxysection{Blynk\+Simple\+Red\+Bear\+\_\+\+Duo\+\_\+\+BLE.\+h}
+\label{_blynk_simple_red_bear___duo___b_l_e_8h_source}\index{lib/Blynk/src/BlynkSimpleRedBear\_Duo\_BLE.h@{lib/Blynk/src/BlynkSimpleRedBear\_Duo\_BLE.h}}
+\mbox{\hyperlink{_blynk_simple_red_bear___duo___b_l_e_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef BlynkSimpleRedBear\_Duo\_BLE\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define BlynkSimpleRedBear\_Duo\_BLE\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#ifndef BLYNK\_INFO\_CONNECTION}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#define BLYNK\_INFO\_CONNECTION "{}RB\_Duo\_BLE"{}}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#define BLYNK\_SEND\_ATOMIC}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#define BLYNK\_SEND\_CHUNK 20}}
+\DoxyCodeLine{20 \textcolor{comment}{//\#define BLYNK\_SEND\_THROTTLE 20}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_api_arduino_8h}{BlynkApiArduino.h}}>}}
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_protocol_8h}{Blynk/BlynkProtocol.h}}>}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_fifo_8h}{utility/BlynkFifo.h}}>}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{comment}{/*}}
+\DoxyCodeLine{28 \textcolor{comment}{ * BLE peripheral preferred connection parameters:}}
+\DoxyCodeLine{29 \textcolor{comment}{ *     -\/ Minimum connection interval = MIN\_CONN\_INTERVAL * 1.25 ms, where MIN\_CONN\_INTERVAL ranges from 0x0006 to 0x0C80}}
+\DoxyCodeLine{30 \textcolor{comment}{ *     -\/ Maximum connection interval = MAX\_CONN\_INTERVAL * 1.25 ms,  where MAX\_CONN\_INTERVAL ranges from 0x0006 to 0x0C80}}
+\DoxyCodeLine{31 \textcolor{comment}{ *     -\/ The SLAVE\_LATENCY ranges from 0x0000 to 0x03E8}}
+\DoxyCodeLine{32 \textcolor{comment}{ *     -\/ Connection supervision timeout = CONN\_SUPERVISION\_TIMEOUT * 10 ms, where CONN\_SUPERVISION\_TIMEOUT ranges from 0x000A to 0x0C80}}
+\DoxyCodeLine{33 \textcolor{comment}{ */}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#define MIN\_CONN\_INTERVAL          0x0028 }\textcolor{comment}{// 50ms.}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#define MAX\_CONN\_INTERVAL          0x0190 }\textcolor{comment}{// 500ms.}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#define SLAVE\_LATENCY              0x0000 }\textcolor{comment}{// No slave latency.}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#define CONN\_SUPERVISION\_TIMEOUT   0x03E8 }\textcolor{comment}{// 10s.}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 \textcolor{comment}{// Learn about appearance: http://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.gap.appearance.xml}}
+\DoxyCodeLine{40 \textcolor{preprocessor}{\#define BLE\_PERIPHERAL\_APPEARANCE  BLE\_APPEARANCE\_UNKNOWN}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42 \textcolor{preprocessor}{\#define BLE\_DEVICE\_NAME            "{}Blynk"{}}}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44 \textcolor{preprocessor}{\#define CHARACTERISTIC1\_MAX\_LEN    20}}
+\DoxyCodeLine{45 \textcolor{preprocessor}{\#define CHARACTERISTIC2\_MAX\_LEN    20}}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47 \textcolor{comment}{/******************************************************}}
+\DoxyCodeLine{48 \textcolor{comment}{ *               Variable Definitions}}
+\DoxyCodeLine{49 \textcolor{comment}{ ******************************************************/}}
+\DoxyCodeLine{50 \textcolor{keyword}{static} uint8\_t service1\_uuid[16]    = \{ 0x71,0x3d,0x00,0x00,0x50,0x3e,0x4c,0x75,0xba,0x94,0x31,0x48,0xf1,0x8d,0x94,0x1e \};}
+\DoxyCodeLine{51 \textcolor{keyword}{static} uint8\_t service1\_tx\_uuid[16] = \{ 0x71,0x3d,0x00,0x03,0x50,0x3e,0x4c,0x75,0xba,0x94,0x31,0x48,0xf1,0x8d,0x94,0x1e \};}
+\DoxyCodeLine{52 \textcolor{keyword}{static} uint8\_t service1\_rx\_uuid[16] = \{ 0x71,0x3d,0x00,0x02,0x50,0x3e,0x4c,0x75,0xba,0x94,0x31,0x48,0xf1,0x8d,0x94,0x1e \};}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54 \textcolor{comment}{// GAP and GATT characteristics value}}
+\DoxyCodeLine{55 \textcolor{keyword}{static} uint8\_t  appearance[2] = \{}
+\DoxyCodeLine{56   LOW\_BYTE(BLE\_PERIPHERAL\_APPEARANCE),}
+\DoxyCodeLine{57   HIGH\_BYTE(BLE\_PERIPHERAL\_APPEARANCE)}
+\DoxyCodeLine{58 \};}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60 \textcolor{keyword}{static} uint8\_t  change[4] = \{}
+\DoxyCodeLine{61   0x00, 0x00, 0xFF, 0xFF}
+\DoxyCodeLine{62 \};}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64 \textcolor{keyword}{static} uint8\_t  conn\_param[8] = \{}
+\DoxyCodeLine{65   LOW\_BYTE(MIN\_CONN\_INTERVAL), HIGH\_BYTE(MIN\_CONN\_INTERVAL),}
+\DoxyCodeLine{66   LOW\_BYTE(MAX\_CONN\_INTERVAL), HIGH\_BYTE(MAX\_CONN\_INTERVAL),}
+\DoxyCodeLine{67   LOW\_BYTE(SLAVE\_LATENCY), HIGH\_BYTE(SLAVE\_LATENCY),}
+\DoxyCodeLine{68   LOW\_BYTE(CONN\_SUPERVISION\_TIMEOUT), HIGH\_BYTE(CONN\_SUPERVISION\_TIMEOUT)}
+\DoxyCodeLine{69 \};}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71 \textcolor{comment}{/*}}
+\DoxyCodeLine{72 \textcolor{comment}{ * BLE peripheral advertising parameters:}}
+\DoxyCodeLine{73 \textcolor{comment}{ *     -\/ advertising\_interval\_min: [0x0020, 0x4000], default: 0x0800, unit: 0.625 msec}}
+\DoxyCodeLine{74 \textcolor{comment}{ *     -\/ advertising\_interval\_max: [0x0020, 0x4000], default: 0x0800, unit: 0.625 msec}}
+\DoxyCodeLine{75 \textcolor{comment}{ *     -\/ advertising\_type:}}
+\DoxyCodeLine{76 \textcolor{comment}{ *           BLE\_GAP\_ADV\_TYPE\_ADV\_IND}}
+\DoxyCodeLine{77 \textcolor{comment}{ *           BLE\_GAP\_ADV\_TYPE\_ADV\_DIRECT\_IND}}
+\DoxyCodeLine{78 \textcolor{comment}{ *           BLE\_GAP\_ADV\_TYPE\_ADV\_SCAN\_IND}}
+\DoxyCodeLine{79 \textcolor{comment}{ *           BLE\_GAP\_ADV\_TYPE\_ADV\_NONCONN\_IND}}
+\DoxyCodeLine{80 \textcolor{comment}{ *     -\/ own\_address\_type:}}
+\DoxyCodeLine{81 \textcolor{comment}{ *           BLE\_GAP\_ADDR\_TYPE\_PUBLIC}}
+\DoxyCodeLine{82 \textcolor{comment}{ *           BLE\_GAP\_ADDR\_TYPE\_RANDOM}}
+\DoxyCodeLine{83 \textcolor{comment}{ *     -\/ advertising\_channel\_map:}}
+\DoxyCodeLine{84 \textcolor{comment}{ *           BLE\_GAP\_ADV\_CHANNEL\_MAP\_37}}
+\DoxyCodeLine{85 \textcolor{comment}{ *           BLE\_GAP\_ADV\_CHANNEL\_MAP\_38}}
+\DoxyCodeLine{86 \textcolor{comment}{ *           BLE\_GAP\_ADV\_CHANNEL\_MAP\_39}}
+\DoxyCodeLine{87 \textcolor{comment}{ *           BLE\_GAP\_ADV\_CHANNEL\_MAP\_ALL}}
+\DoxyCodeLine{88 \textcolor{comment}{ *     -\/ filter policies:}}
+\DoxyCodeLine{89 \textcolor{comment}{ *           BLE\_GAP\_ADV\_FP\_ANY}}
+\DoxyCodeLine{90 \textcolor{comment}{ *           BLE\_GAP\_ADV\_FP\_FILTER\_SCANREQ}}
+\DoxyCodeLine{91 \textcolor{comment}{ *           BLE\_GAP\_ADV\_FP\_FILTER\_CONNREQ}}
+\DoxyCodeLine{92 \textcolor{comment}{ *           BLE\_GAP\_ADV\_FP\_FILTER\_BOTH}}
+\DoxyCodeLine{93 \textcolor{comment}{ *}}
+\DoxyCodeLine{94 \textcolor{comment}{ * Note:  If the advertising\_type is set to BLE\_GAP\_ADV\_TYPE\_ADV\_SCAN\_IND or BLE\_GAP\_ADV\_TYPE\_ADV\_NONCONN\_IND,}}
+\DoxyCodeLine{95 \textcolor{comment}{ *        the advertising\_interval\_min and advertising\_interval\_max should not be set to less than 0x00A0.}}
+\DoxyCodeLine{96 \textcolor{comment}{ */}}
+\DoxyCodeLine{97 \textcolor{keyword}{static} advParams\_t adv\_params = \{}
+\DoxyCodeLine{98   .adv\_int\_min   = 0x0030,}
+\DoxyCodeLine{99   .adv\_int\_max   = 0x0030,}
+\DoxyCodeLine{100   .adv\_type      = BLE\_GAP\_ADV\_TYPE\_ADV\_IND,}
+\DoxyCodeLine{101   .dir\_addr\_type = BLE\_GAP\_ADDR\_TYPE\_PUBLIC,}
+\DoxyCodeLine{102   .dir\_addr      = \{0,0,0,0,0,0\},}
+\DoxyCodeLine{103   .channel\_map   = BLE\_GAP\_ADV\_CHANNEL\_MAP\_ALL,}
+\DoxyCodeLine{104   .filter\_policy = BLE\_GAP\_ADV\_FP\_ANY}
+\DoxyCodeLine{105 \};}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107 \textcolor{keyword}{static} uint8\_t adv\_data[] = \{}
+\DoxyCodeLine{108   0x02,}
+\DoxyCodeLine{109   BLE\_GAP\_AD\_TYPE\_FLAGS,}
+\DoxyCodeLine{110   BLE\_GAP\_ADV\_FLAGS\_LE\_ONLY\_GENERAL\_DISC\_MODE,}
+\DoxyCodeLine{111 }
+\DoxyCodeLine{112   0x08,}
+\DoxyCodeLine{113   BLE\_GAP\_AD\_TYPE\_SHORT\_LOCAL\_NAME,}
+\DoxyCodeLine{114   \textcolor{charliteral}{'B'},\textcolor{charliteral}{'i'},\textcolor{charliteral}{'s'},\textcolor{charliteral}{'c'},\textcolor{charliteral}{'u'},\textcolor{charliteral}{'i'},\textcolor{charliteral}{'t'},}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116   0x11,}
+\DoxyCodeLine{117   BLE\_GAP\_AD\_TYPE\_128BIT\_SERVICE\_UUID\_COMPLETE,}
+\DoxyCodeLine{118   0x1e,0x94,0x8d,0xf1,0x48,0x31,0x94,0xba,0x75,0x4c,0x3e,0x50,0x00,0x00,0x3d,0x71}
+\DoxyCodeLine{119 \};}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121 \textcolor{keyword}{static} uint16\_t character1\_handle = 0x0000;}
+\DoxyCodeLine{122 \textcolor{keyword}{static} uint16\_t character2\_handle = 0x0000;}
+\DoxyCodeLine{123 \textcolor{keyword}{static} uint16\_t character3\_handle = 0x0000;}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125 \textcolor{keyword}{static} uint8\_t characteristic1\_data[CHARACTERISTIC1\_MAX\_LEN] = \{ 0x01 \};}
+\DoxyCodeLine{126 \textcolor{keyword}{static} uint8\_t characteristic2\_data[CHARACTERISTIC2\_MAX\_LEN] = \{ 0x00 \};}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_transport_red_bear_duo_b_l_e}{BlynkTransportRedBearDuoBLE}}}
+\DoxyCodeLine{130 \{}
+\DoxyCodeLine{131 \textcolor{keyword}{public}:}
+\DoxyCodeLine{132     \mbox{\hyperlink{class_blynk_transport_red_bear_duo_b_l_e}{BlynkTransportRedBearDuoBLE}}()}
+\DoxyCodeLine{133         : mConn (\textcolor{keyword}{false})}
+\DoxyCodeLine{134     \{\}}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136     \textcolor{comment}{// IP redirect not available}}
+\DoxyCodeLine{137     \textcolor{keywordtype}{void} begin(\textcolor{keywordtype}{char} BLYNK\_UNUSED *h, uint16\_t BLYNK\_UNUSED p) \{\}}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139     \textcolor{keywordtype}{void} begin() \{}
+\DoxyCodeLine{140         instance = \textcolor{keyword}{this};}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142 }
+\DoxyCodeLine{143         \textcolor{comment}{//ble.debugLogger(true);}}
+\DoxyCodeLine{144         \textcolor{comment}{// Initialize ble\_stack.}}
+\DoxyCodeLine{145         ble.init();}
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147         \textcolor{comment}{// Register BLE callback functions}}
+\DoxyCodeLine{148         ble.onConnectedCallback(deviceConnectedCallback);}
+\DoxyCodeLine{149         ble.onDisconnectedCallback(deviceDisconnectedCallback);}
+\DoxyCodeLine{150         ble.onDataWriteCallback(gattWriteCallback);}
+\DoxyCodeLine{151 }
+\DoxyCodeLine{152         \textcolor{comment}{// Add GAP service and characteristics}}
+\DoxyCodeLine{153         ble.addService(BLE\_UUID\_GAP);}
+\DoxyCodeLine{154         ble.addCharacteristic(BLE\_UUID\_GAP\_CHARACTERISTIC\_DEVICE\_NAME, ATT\_PROPERTY\_READ|ATT\_PROPERTY\_WRITE, (uint8\_t*)BLE\_DEVICE\_NAME, \textcolor{keyword}{sizeof}(BLE\_DEVICE\_NAME));}
+\DoxyCodeLine{155         ble.addCharacteristic(BLE\_UUID\_GAP\_CHARACTERISTIC\_APPEARANCE, ATT\_PROPERTY\_READ, appearance, \textcolor{keyword}{sizeof}(appearance));}
+\DoxyCodeLine{156         ble.addCharacteristic(BLE\_UUID\_GAP\_CHARACTERISTIC\_PPCP, ATT\_PROPERTY\_READ, conn\_param, \textcolor{keyword}{sizeof}(conn\_param));}
+\DoxyCodeLine{157 }
+\DoxyCodeLine{158         \textcolor{comment}{// Add GATT service and characteristics}}
+\DoxyCodeLine{159         ble.addService(BLE\_UUID\_GATT);}
+\DoxyCodeLine{160         ble.addCharacteristic(BLE\_UUID\_GATT\_CHARACTERISTIC\_SERVICE\_CHANGED, ATT\_PROPERTY\_INDICATE, change, \textcolor{keyword}{sizeof}(change));}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162         \textcolor{comment}{// Add user defined service and characteristics}}
+\DoxyCodeLine{163         ble.addService(service1\_uuid);}
+\DoxyCodeLine{164         character1\_handle = ble.addCharacteristicDynamic(service1\_tx\_uuid, ATT\_PROPERTY\_WRITE|ATT\_PROPERTY\_WRITE\_WITHOUT\_RESPONSE, characteristic1\_data, CHARACTERISTIC1\_MAX\_LEN);}
+\DoxyCodeLine{165         character2\_handle = ble.addCharacteristicDynamic(service1\_rx\_uuid, ATT\_PROPERTY\_NOTIFY, characteristic2\_data, CHARACTERISTIC2\_MAX\_LEN);}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{167         \textcolor{comment}{// Set BLE advertising parameters}}
+\DoxyCodeLine{168         ble.setAdvertisementParams(\&adv\_params);}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170         \textcolor{comment}{// // Set BLE advertising data}}
+\DoxyCodeLine{171         ble.setAdvertisementData(\textcolor{keyword}{sizeof}(adv\_data), adv\_data);}
+\DoxyCodeLine{172 }
+\DoxyCodeLine{173         \textcolor{comment}{// BLE peripheral starts advertising now.}}
+\DoxyCodeLine{174         ble.startAdvertising();}
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176     \}}
+\DoxyCodeLine{177 }
+\DoxyCodeLine{178     \textcolor{keywordtype}{bool} connect() \{}
+\DoxyCodeLine{179         mBuffRX.clear();}
+\DoxyCodeLine{180         \textcolor{keywordflow}{return} mConn = \textcolor{keyword}{true};}
+\DoxyCodeLine{181     \}}
+\DoxyCodeLine{182 }
+\DoxyCodeLine{183     \textcolor{keywordtype}{void} disconnect() \{}
+\DoxyCodeLine{184         mConn = \textcolor{keyword}{false};}
+\DoxyCodeLine{185     \}}
+\DoxyCodeLine{186 }
+\DoxyCodeLine{187     \textcolor{keywordtype}{bool} connected() \{}
+\DoxyCodeLine{188         \textcolor{keywordflow}{return} mConn;}
+\DoxyCodeLine{189     \}}
+\DoxyCodeLine{190 }
+\DoxyCodeLine{191     \textcolor{keywordtype}{size\_t} read(\textcolor{keywordtype}{void}* buf, \textcolor{keywordtype}{size\_t} len) \{}
+\DoxyCodeLine{192         millis\_time\_t start = BlynkMillis();}
+\DoxyCodeLine{193         \textcolor{keywordflow}{while} (BlynkMillis() -\/ start < BLYNK\_TIMEOUT\_MS) \{}
+\DoxyCodeLine{194             \textcolor{keywordflow}{if} (available() < len) \{}
+\DoxyCodeLine{195                 BlynkDelay(1);}
+\DoxyCodeLine{196                 \textcolor{comment}{//blePeripheral-\/>poll();}}
+\DoxyCodeLine{197             \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{198                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{199             \}}
+\DoxyCodeLine{200         \}}
+\DoxyCodeLine{201         noInterrupts();}
+\DoxyCodeLine{202         \textcolor{keywordtype}{size\_t} res = mBuffRX.get((uint8\_t*)buf, len);}
+\DoxyCodeLine{203         interrupts();}
+\DoxyCodeLine{204         \textcolor{keywordflow}{return} res;}
+\DoxyCodeLine{205     \}}
+\DoxyCodeLine{206 }
+\DoxyCodeLine{207     \textcolor{keywordtype}{size\_t} write(\textcolor{keyword}{const} \textcolor{keywordtype}{void}* buf, \textcolor{keywordtype}{size\_t} len) \{}
+\DoxyCodeLine{208         ble.sendNotify(character2\_handle, (uint8\_t*)buf, len);}
+\DoxyCodeLine{209         \textcolor{keywordflow}{return} len;}
+\DoxyCodeLine{210     \}}
+\DoxyCodeLine{211 }
+\DoxyCodeLine{212     \textcolor{keywordtype}{size\_t} available() \{}
+\DoxyCodeLine{213         noInterrupts();}
+\DoxyCodeLine{214         \textcolor{keywordtype}{size\_t} rxSize = mBuffRX.size();}
+\DoxyCodeLine{215         interrupts();}
+\DoxyCodeLine{216         \textcolor{keywordflow}{return} rxSize;}
+\DoxyCodeLine{217     \}}
+\DoxyCodeLine{218 }
+\DoxyCodeLine{219 \textcolor{keyword}{private}:}
+\DoxyCodeLine{220     \textcolor{keyword}{static} \mbox{\hyperlink{class_blynk_transport_red_bear_duo_b_l_e}{BlynkTransportRedBearDuoBLE}}* instance;}
+\DoxyCodeLine{221 }
+\DoxyCodeLine{222     \textcolor{keyword}{static}}
+\DoxyCodeLine{223     \textcolor{keywordtype}{int} gattWriteCallback(uint16\_t value\_handle, uint8\_t* data, uint16\_t len) \{}
+\DoxyCodeLine{224         \textcolor{keywordflow}{if} (!instance)}
+\DoxyCodeLine{225             \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{226         noInterrupts();}
+\DoxyCodeLine{227         \textcolor{comment}{//BLYNK\_DBG\_DUMP("{}>> "{}, data, len);}}
+\DoxyCodeLine{228         instance-\/>mBuffRX.put(data, len);}
+\DoxyCodeLine{229         interrupts();}
+\DoxyCodeLine{230         \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{231     \}}
+\DoxyCodeLine{232 }
+\DoxyCodeLine{233     \textcolor{keyword}{static}}
+\DoxyCodeLine{234     \textcolor{keywordtype}{void} deviceConnectedCallback(BLEStatus\_t status, uint16\_t handle);}
+\DoxyCodeLine{235 }
+\DoxyCodeLine{236     \textcolor{keyword}{static}}
+\DoxyCodeLine{237     \textcolor{keywordtype}{void} deviceDisconnectedCallback(uint16\_t handle);}
+\DoxyCodeLine{238 }
+\DoxyCodeLine{239 \textcolor{keyword}{private}:}
+\DoxyCodeLine{240     \textcolor{keywordtype}{bool} mConn;}
+\DoxyCodeLine{241 }
+\DoxyCodeLine{242     \mbox{\hyperlink{class_blynk_fifo}{BlynkFifo<uint8\_t, BLYNK\_MAX\_READBYTES*2>}} mBuffRX;}
+\DoxyCodeLine{243 \};}
+\DoxyCodeLine{244 }
+\DoxyCodeLine{245 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_red_bear_duo_b_l_e}{BlynkRedBearDuoBLE}}}
+\DoxyCodeLine{246     : \textcolor{keyword}{public} \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol}}<BlynkTransportRedBearDuoBLE>}
+\DoxyCodeLine{247 \{}
+\DoxyCodeLine{248     \textcolor{keyword}{typedef} \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol<BlynkTransportRedBearDuoBLE>}} \mbox{\hyperlink{class_blynk_protocol}{Base}};}
+\DoxyCodeLine{249 \textcolor{keyword}{public}:}
+\DoxyCodeLine{250     \mbox{\hyperlink{class_blynk_red_bear_duo_b_l_e}{BlynkRedBearDuoBLE}}(\mbox{\hyperlink{class_blynk_transport_red_bear_duo_b_l_e}{BlynkTransportRedBearDuoBLE}}\& transp)}
+\DoxyCodeLine{251         : \mbox{\hyperlink{class_blynk_protocol}{Base}}(transp)}
+\DoxyCodeLine{252     \{\}}
+\DoxyCodeLine{253 }
+\DoxyCodeLine{254     \textcolor{keywordtype}{void} begin(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth)}
+\DoxyCodeLine{255     \{}
+\DoxyCodeLine{256         Base::begin(auth);}
+\DoxyCodeLine{257         state = DISCONNECTED;}
+\DoxyCodeLine{258         conn.begin();}
+\DoxyCodeLine{259     \}}
+\DoxyCodeLine{260 \};}
+\DoxyCodeLine{261 }
+\DoxyCodeLine{262 \mbox{\hyperlink{class_blynk_transport_red_bear_duo_b_l_e}{BlynkTransportRedBearDuoBLE}}* BlynkTransportRedBearDuoBLE::instance = NULL;}
+\DoxyCodeLine{263 }
+\DoxyCodeLine{264 \textcolor{keyword}{static} \mbox{\hyperlink{class_blynk_transport_red_bear_duo_b_l_e}{BlynkTransportRedBearDuoBLE}} \_blynkTransport;}
+\DoxyCodeLine{265 \mbox{\hyperlink{class_blynk_red_bear_duo_b_l_e}{BlynkRedBearDuoBLE}} Blynk(\_blynkTransport);}
+\DoxyCodeLine{266 }
+\DoxyCodeLine{267 \textcolor{keywordtype}{void} BlynkTransportRedBearDuoBLE::deviceConnectedCallback(BLEStatus\_t status, uint16\_t handle) \{}
+\DoxyCodeLine{268   \textcolor{keywordflow}{switch} (status) \{}
+\DoxyCodeLine{269   \textcolor{keywordflow}{case} BLE\_STATUS\_OK:}
+\DoxyCodeLine{270     BLYNK\_LOG1(\textcolor{stringliteral}{"{}Device connected"{}});}
+\DoxyCodeLine{271     Blynk.startSession();}
+\DoxyCodeLine{272     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{273   \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{274     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{275   \}}
+\DoxyCodeLine{276 \}}
+\DoxyCodeLine{277 }
+\DoxyCodeLine{278 \textcolor{keywordtype}{void} BlynkTransportRedBearDuoBLE::deviceDisconnectedCallback(uint16\_t handle)\{}
+\DoxyCodeLine{279     BLYNK\_LOG1(\textcolor{stringliteral}{"{}Device disconnected"{}});}
+\DoxyCodeLine{280     Blynk.disconnect();}
+\DoxyCodeLine{281 \}}
+\DoxyCodeLine{282 }
+\DoxyCodeLine{283 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_widgets_8h}{BlynkWidgets.h}}>}}
+\DoxyCodeLine{284 }
+\DoxyCodeLine{285 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

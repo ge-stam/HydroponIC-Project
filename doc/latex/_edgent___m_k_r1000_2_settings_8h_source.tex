@@ -1,0 +1,57 @@
+\hypertarget{_edgent___m_k_r1000_2_settings_8h_source}{}\doxysection{Settings.\+h}
+\label{_edgent___m_k_r1000_2_settings_8h_source}\index{lib/Blynk/examples/Blynk.Edgent/Edgent\_MKR1000/Settings.h@{lib/Blynk/examples/Blynk.Edgent/Edgent\_MKR1000/Settings.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{2 \textcolor{comment}{/*}}
+\DoxyCodeLine{3 \textcolor{comment}{ * Board configuration (see examples below).}}
+\DoxyCodeLine{4 \textcolor{comment}{ */}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6   \textcolor{comment}{// Example configuration for MKR1000 Board}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{  \#define BOARD\_BUTTON\_PIN            0                     }\textcolor{comment}{// Pin where user button is attached}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{  \#define BOARD\_BUTTON\_ACTIVE\_LOW     true                  }\textcolor{comment}{// true if button is "{}active-\/low"{}}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{preprocessor}{  \#define BOARD\_LED\_PIN               6                     }\textcolor{comment}{// Set LED pin -\/ if you have a single-\/color LED attached}}
+\DoxyCodeLine{11   \textcolor{comment}{//\#define BOARD\_LED\_PIN\_R           15                    // Set R,G,B pins -\/ if your LED is PWM RGB}}
+\DoxyCodeLine{12   \textcolor{comment}{//\#define BOARD\_LED\_PIN\_G           12}}
+\DoxyCodeLine{13   \textcolor{comment}{//\#define BOARD\_LED\_PIN\_B           13}}
+\DoxyCodeLine{14   \textcolor{comment}{//\#define BOARD\_LED\_PIN\_WS2812      4                     // Set if your LED is WS2812 RGB}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{  \#define BOARD\_LED\_INVERSE           false                 }\textcolor{comment}{// true if LED is common anode, false if common cathode}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{  \#define BOARD\_LED\_BRIGHTNESS        255                   }\textcolor{comment}{// 0..255 brightness control}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19 \textcolor{comment}{/*}}
+\DoxyCodeLine{20 \textcolor{comment}{ * Advanced options}}
+\DoxyCodeLine{21 \textcolor{comment}{ */}}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#define BUTTON\_HOLD\_TIME\_INDICATION   3000}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#define BUTTON\_HOLD\_TIME\_ACTION       10000}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#define BOARD\_PWM\_MAX                 255}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#define CONFIG\_AP\_URL                 "{}blynk.setup"{}}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#define CONFIG\_DEFAULT\_SERVER         "{}blynk.cloud"{}}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#define CONFIG\_DEFAULT\_PORT           443}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#define WIFI\_NET\_CONNECT\_TIMEOUT      30000}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#define WIFI\_CLOUD\_CONNECT\_TIMEOUT    60000}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#define WIFI\_AP\_IP                    IPAddress(192, 168, 4, 1)}}
+\DoxyCodeLine{35 \textcolor{comment}{//\#define WIFI\_AP\_Subnet              IPAddress(255, 255, 255, 0)}}
+\DoxyCodeLine{36 \textcolor{comment}{//\#define WIFI\_CAPTIVE\_PORTAL\_ENABLE}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 \textcolor{comment}{//\#define USE\_TICKER}}
+\DoxyCodeLine{39 \textcolor{comment}{//\#define USE\_TIMER\_ONE}}
+\DoxyCodeLine{40 \textcolor{comment}{//\#define USE\_TIMER\_THREE}}
+\DoxyCodeLine{41 \textcolor{preprocessor}{\#define USE\_TIMER\_FIVE}}
+\DoxyCodeLine{42 \textcolor{comment}{//\#define USE\_PTHREAD}}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44 \textcolor{preprocessor}{\#define BLYNK\_NO\_DEFAULT\_BANNER}}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46 \textcolor{preprocessor}{\#if defined(APP\_DEBUG)}}
+\DoxyCodeLine{47 \textcolor{preprocessor}{  \#define DEBUG\_PRINT(...) BLYNK\_LOG1(\_\_VA\_ARGS\_\_)}}
+\DoxyCodeLine{48 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{49 \textcolor{preprocessor}{  \#define DEBUG\_PRINT(...)}}
+\DoxyCodeLine{50 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{51 }
+
+\end{DoxyCode}

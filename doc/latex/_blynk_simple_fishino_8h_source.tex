@@ -1,0 +1,112 @@
+\hypertarget{_blynk_simple_fishino_8h_source}{}\doxysection{Blynk\+Simple\+Fishino.\+h}
+\label{_blynk_simple_fishino_8h_source}\index{lib/Blynk/src/BlynkSimpleFishino.h@{lib/Blynk/src/BlynkSimpleFishino.h}}
+\mbox{\hyperlink{_blynk_simple_fishino_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef BlynkSimpleFishino\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define BlynkSimpleFishino\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#ifndef BLYNK\_INFO\_CONNECTION}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#define BLYNK\_INFO\_CONNECTION "{}Fishino"{}}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#ifdef ESP8266}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#error This code is not intended to run on the ESP8266 platform! Please check your Tools-\/>Board setting.}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_api_arduino_8h}{BlynkApiArduino.h}}>}}
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_protocol_8h}{Blynk/BlynkProtocol.h}}>}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#include <Adapters/BlynkArduinoClient.h>}}
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#include <Fishino.h>}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_fishino}{BlynkFishino}}}
+\DoxyCodeLine{28     : \textcolor{keyword}{public} \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol}}<BlynkArduinoClient>}
+\DoxyCodeLine{29 \{}
+\DoxyCodeLine{30     \textcolor{keyword}{typedef} \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol<BlynkArduinoClient>}} \mbox{\hyperlink{class_blynk_protocol}{Base}};}
+\DoxyCodeLine{31 \textcolor{keyword}{public}:}
+\DoxyCodeLine{32     \mbox{\hyperlink{class_blynk_fishino}{BlynkFishino}}(\mbox{\hyperlink{class_blynk_arduino_client_gen}{BlynkArduinoClient}}\& transp)}
+\DoxyCodeLine{33         : \mbox{\hyperlink{class_blynk_protocol}{Base}}(transp)}
+\DoxyCodeLine{34     \{\}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36     \textcolor{keywordtype}{void} connectWiFi(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* ssid, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* pass)}
+\DoxyCodeLine{37     \{}
+\DoxyCodeLine{38         BLYNK\_LOG2(BLYNK\_F(\textcolor{stringliteral}{"{}Connecting to "{}}), ssid);}
+\DoxyCodeLine{39         SPI.begin();}
+\DoxyCodeLine{40         SPI.setClockDivider(SPI\_CLOCK\_DIV2);}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42         \textcolor{keywordflow}{while}(!Fishino.reset()) \{}
+\DoxyCodeLine{43             BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}Fishino RESET FAILED"{}}));}
+\DoxyCodeLine{44         \}}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46         Fishino.setMode(STATION\_MODE);}
+\DoxyCodeLine{47         \textcolor{keywordflow}{if} (pass \&\& strlen(pass)) \{}
+\DoxyCodeLine{48             \textcolor{keywordflow}{while} (!Fishino.begin(ssid, pass)) \{}
+\DoxyCodeLine{49                 BlynkDelay(500);}
+\DoxyCodeLine{50             \}}
+\DoxyCodeLine{51         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{52             \textcolor{keywordflow}{while} (!Fishino.begin(ssid)) \{}
+\DoxyCodeLine{53                 BlynkDelay(500);}
+\DoxyCodeLine{54             \}}
+\DoxyCodeLine{55         \}}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57         BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}Connected to WiFi"{}}));}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59         Fishino.staStartDHCP();}
+\DoxyCodeLine{60         \textcolor{keywordflow}{while}(Fishino.status() != STATION\_GOT\_IP)}
+\DoxyCodeLine{61         \{}
+\DoxyCodeLine{62             BlynkDelay(500);}
+\DoxyCodeLine{63         \}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65         IPAddress myip = Fishino.localIP();}
+\DoxyCodeLine{66         BLYNK\_LOG\_IP(\textcolor{stringliteral}{"{}IP: "{}}, myip);}
+\DoxyCodeLine{67     \}}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69     \textcolor{keywordtype}{void} config(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth,}
+\DoxyCodeLine{70                 \textcolor{keyword}{const} \textcolor{keywordtype}{char}* domain = BLYNK\_DEFAULT\_DOMAIN,}
+\DoxyCodeLine{71                 uint16\_t    port   = BLYNK\_DEFAULT\_PORT)}
+\DoxyCodeLine{72     \{}
+\DoxyCodeLine{73         Base::begin(auth);}
+\DoxyCodeLine{74         this-\/>conn.begin(domain, port);}
+\DoxyCodeLine{75     \}}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77     \textcolor{keywordtype}{void} config(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth,}
+\DoxyCodeLine{78                 IPAddress   ip,}
+\DoxyCodeLine{79                 uint16\_t    port = BLYNK\_DEFAULT\_PORT)}
+\DoxyCodeLine{80     \{}
+\DoxyCodeLine{81         Base::begin(auth);}
+\DoxyCodeLine{82         this-\/>conn.begin(ip, port);}
+\DoxyCodeLine{83     \}}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85     \textcolor{keywordtype}{void} begin(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth,}
+\DoxyCodeLine{86                \textcolor{keyword}{const} \textcolor{keywordtype}{char}* ssid,}
+\DoxyCodeLine{87                \textcolor{keyword}{const} \textcolor{keywordtype}{char}* pass,}
+\DoxyCodeLine{88                \textcolor{keyword}{const} \textcolor{keywordtype}{char}* domain = BLYNK\_DEFAULT\_DOMAIN,}
+\DoxyCodeLine{89                uint16\_t    port   = BLYNK\_DEFAULT\_PORT)}
+\DoxyCodeLine{90     \{}
+\DoxyCodeLine{91         connectWiFi(ssid, pass);}
+\DoxyCodeLine{92         config(auth, domain, port);}
+\DoxyCodeLine{93         \textcolor{keywordflow}{while}(this-\/>connect() != \textcolor{keyword}{true}) \{\}}
+\DoxyCodeLine{94     \}}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96     \textcolor{keywordtype}{void} begin(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth,}
+\DoxyCodeLine{97                \textcolor{keyword}{const} \textcolor{keywordtype}{char}* ssid,}
+\DoxyCodeLine{98                \textcolor{keyword}{const} \textcolor{keywordtype}{char}* pass,}
+\DoxyCodeLine{99                IPAddress   ip,}
+\DoxyCodeLine{100                uint16\_t    port   = BLYNK\_DEFAULT\_PORT)}
+\DoxyCodeLine{101     \{}
+\DoxyCodeLine{102         connectWiFi(ssid, pass);}
+\DoxyCodeLine{103         config(auth, ip, port);}
+\DoxyCodeLine{104         \textcolor{keywordflow}{while}(this-\/>connect() != \textcolor{keyword}{true}) \{\}}
+\DoxyCodeLine{105     \}}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107 \};}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109 \textcolor{keyword}{static} FishinoClient \_blynkFishinoClient;}
+\DoxyCodeLine{110 \textcolor{keyword}{static} \mbox{\hyperlink{class_blynk_arduino_client_gen}{BlynkArduinoClient}} \_blynkTransport(\_blynkFishinoClient);}
+\DoxyCodeLine{111 \mbox{\hyperlink{class_blynk_fishino}{BlynkFishino}} Blynk(\_blynkTransport);}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_widgets_8h}{BlynkWidgets.h}}>}}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

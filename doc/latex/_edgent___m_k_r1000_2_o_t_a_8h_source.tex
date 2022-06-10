@@ -1,0 +1,203 @@
+\hypertarget{_edgent___m_k_r1000_2_o_t_a_8h_source}{}\doxysection{OTA.\+h}
+\label{_edgent___m_k_r1000_2_o_t_a_8h_source}\index{lib/Blynk/examples/Blynk.Edgent/Edgent\_MKR1000/OTA.h@{lib/Blynk/examples/Blynk.Edgent/Edgent\_MKR1000/OTA.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define OTA\_FATAL(...) \{ BLYNK\_LOG1(\_\_VA\_ARGS\_\_); delay(1000); restartMCU(); \}}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#define USE\_SSL}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 String overTheAirURL;}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{keyword}{extern} BlynkTimer edgentTimer;}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 BLYNK\_WRITE(InternalPinOTA) \{}
+\DoxyCodeLine{11   overTheAirURL = param.asString();}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13   overTheAirURL.replace(\textcolor{stringliteral}{"{}http://"{}}, \textcolor{stringliteral}{"{}https://"{}});}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15   edgentTimer.setTimeout(2000L, []()\{}
+\DoxyCodeLine{16     \textcolor{comment}{// Start OTA}}
+\DoxyCodeLine{17     Blynk.logEvent(\textcolor{stringliteral}{"{}sys\_ota"{}}, \textcolor{stringliteral}{"{}OTA started"{}});}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19     \textcolor{comment}{// Disconnect, not to interfere with OTA process}}
+\DoxyCodeLine{20     Blynk.disconnect();}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22     BlynkState::set(MODE\_OTA\_UPGRADE);}
+\DoxyCodeLine{23   \});}
+\DoxyCodeLine{24 \}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <ArduinoOTA.h>} \textcolor{comment}{// only for InternalStorage}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#if defined(USE\_SSL)}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 WiFiClient* connectSSL(\textcolor{keyword}{const} String\& host, \textcolor{keyword}{const} \textcolor{keywordtype}{int} port)}
+\DoxyCodeLine{31 \{}
+\DoxyCodeLine{32   \textcolor{comment}{// Reuse Client}}
+\DoxyCodeLine{33   WiFiSSLClient* clientSSL = \&\_blynkWifiClient;}
+\DoxyCodeLine{34   \textcolor{comment}{//WiFiSSLClient* clientSSL = new WiFiSSLClient();}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36   \textcolor{keywordflow}{if} (!clientSSL-\/>connect(host.c\_str(), port)) \{}
+\DoxyCodeLine{37     OTA\_FATAL(F(\textcolor{stringliteral}{"{}Connection failed"{}}));}
+\DoxyCodeLine{38   \}}
+\DoxyCodeLine{39   \textcolor{keywordflow}{return} clientSSL;}
+\DoxyCodeLine{40 \}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44 WiFiClient* connectTCP(\textcolor{keyword}{const} String\& host, \textcolor{keyword}{const} \textcolor{keywordtype}{int} port)}
+\DoxyCodeLine{45 \{}
+\DoxyCodeLine{46   WiFiClient* clientTCP = \textcolor{keyword}{new} WiFiClient();}
+\DoxyCodeLine{47   \textcolor{keywordflow}{if} (!clientTCP-\/>connect(host.c\_str(), port)) \{}
+\DoxyCodeLine{48     OTA\_FATAL(F(\textcolor{stringliteral}{"{}Client not connected"{}}));}
+\DoxyCodeLine{49   \}}
+\DoxyCodeLine{50   \textcolor{keywordflow}{return} clientTCP;}
+\DoxyCodeLine{51 \}}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53 \textcolor{keywordtype}{bool} parseURL(String url, String\& protocol, String\& host, \textcolor{keywordtype}{int}\& port, String\& uri)}
+\DoxyCodeLine{54 \{}
+\DoxyCodeLine{55   \textcolor{keywordtype}{int} index = url.indexOf(\textcolor{charliteral}{':'});}
+\DoxyCodeLine{56   \textcolor{keywordflow}{if}(index < 0) \{}
+\DoxyCodeLine{57     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{58   \}}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60   protocol = url.substring(0, index);}
+\DoxyCodeLine{61   url.remove(0, (index + 3)); \textcolor{comment}{// remove protocol part}}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63   index = url.indexOf(\textcolor{charliteral}{'/'});}
+\DoxyCodeLine{64   String server = url.substring(0, index);}
+\DoxyCodeLine{65   url.remove(0, index);       \textcolor{comment}{// remove server part}}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67   index = server.indexOf(\textcolor{charliteral}{':'});}
+\DoxyCodeLine{68   \textcolor{keywordflow}{if}(index >= 0) \{}
+\DoxyCodeLine{69     host = server.substring(0, index);          \textcolor{comment}{// hostname}}
+\DoxyCodeLine{70     port = server.substring(index + 1).toInt(); \textcolor{comment}{// port}}
+\DoxyCodeLine{71   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{72     host = server;}
+\DoxyCodeLine{73     \textcolor{keywordflow}{if} (protocol == \textcolor{stringliteral}{"{}http"{}}) \{}
+\DoxyCodeLine{74       port = 80;}
+\DoxyCodeLine{75     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (protocol == \textcolor{stringliteral}{"{}https"{}}) \{}
+\DoxyCodeLine{76       port = 443;}
+\DoxyCodeLine{77     \}}
+\DoxyCodeLine{78   \}}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80   \textcolor{keywordflow}{if} (url.length()) \{}
+\DoxyCodeLine{81     uri = url;}
+\DoxyCodeLine{82   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{83     uri = \textcolor{stringliteral}{"{}/"{}};}
+\DoxyCodeLine{84   \}}
+\DoxyCodeLine{85   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{86 \}}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88 \textcolor{keywordtype}{void} enterOTA() \{}
+\DoxyCodeLine{89   BlynkState::set(MODE\_OTA\_UPGRADE);}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91   \textcolor{comment}{// Disconnect, not to interfere with OTA process}}
+\DoxyCodeLine{92   Blynk.disconnect();}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94   String protocol, host, url;}
+\DoxyCodeLine{95   \textcolor{keywordtype}{int} port;}
+\DoxyCodeLine{96   }
+\DoxyCodeLine{97   \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(String(\textcolor{stringliteral}{"{}OTA: "{}}) + overTheAirURL);}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99   \textcolor{keywordflow}{if} (!parseURL(overTheAirURL, protocol, host, port, url)) \{}
+\DoxyCodeLine{100     OTA\_FATAL(F(\textcolor{stringliteral}{"{}Cannot parse URL"{}}));}
+\DoxyCodeLine{101   \}}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103   \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(String(\textcolor{stringliteral}{"{}Connecting to "{}}) + host + \textcolor{stringliteral}{"{}:"{}} + port);}
+\DoxyCodeLine{104 }
+\DoxyCodeLine{105   Client* client = NULL;}
+\DoxyCodeLine{106   \textcolor{keywordflow}{if} (protocol == \textcolor{stringliteral}{"{}http"{}}) \{}
+\DoxyCodeLine{107     client = connectTCP(host, port);}
+\DoxyCodeLine{108 \textcolor{preprocessor}{\#ifdef USE\_SSL}}
+\DoxyCodeLine{109   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (protocol == \textcolor{stringliteral}{"{}https"{}}) \{}
+\DoxyCodeLine{110     client = connectSSL(host, port);}
+\DoxyCodeLine{111 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{112   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{113     OTA\_FATAL(String(\textcolor{stringliteral}{"{}Unsupported protocol: "{}}) + protocol);}
+\DoxyCodeLine{114   \}}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116   client-\/>print(String(\textcolor{stringliteral}{"{}GET "{}}) + url + \textcolor{stringliteral}{"{} HTTP/1.0\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{117                + \textcolor{stringliteral}{"{}Host: "{}} + host + \textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{118                + \textcolor{stringliteral}{"{}Connection: keep-\/alive\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{119                + \textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n"{}});}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121   uint32\_t timeout = millis();}
+\DoxyCodeLine{122   \textcolor{keywordflow}{while} (client-\/>connected() \&\& !client-\/>available()) \{}
+\DoxyCodeLine{123     \textcolor{keywordflow}{if} (millis() -\/ timeout > 10000L) \{}
+\DoxyCodeLine{124       OTA\_FATAL(\textcolor{stringliteral}{"{}Response timeout"{}});}
+\DoxyCodeLine{125     \}}
+\DoxyCodeLine{126     delay(10);}
+\DoxyCodeLine{127   \}}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129   \textcolor{comment}{// Collect headers}}
+\DoxyCodeLine{130   String md5;}
+\DoxyCodeLine{131   \textcolor{keywordtype}{int} contentLength = 0;}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133   \textcolor{keywordflow}{while} (client-\/>available()) \{}
+\DoxyCodeLine{134     String line = client-\/>readStringUntil(\textcolor{charliteral}{'\(\backslash\)n'});}
+\DoxyCodeLine{135     line.trim();}
+\DoxyCodeLine{136     \textcolor{comment}{//DEBUG\_PRINT(line);    // Uncomment this to show response headers}}
+\DoxyCodeLine{137     line.toLowerCase();}
+\DoxyCodeLine{138     \textcolor{keywordflow}{if} (line.startsWith(\textcolor{stringliteral}{"{}content-\/length:"{}})) \{}
+\DoxyCodeLine{139       contentLength = line.substring(line.lastIndexOf(\textcolor{charliteral}{':'}) + 1).toInt();}
+\DoxyCodeLine{140     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (line.startsWith(\textcolor{stringliteral}{"{}x-\/md5:"{}})) \{}
+\DoxyCodeLine{141       md5 = line.substring(line.lastIndexOf(\textcolor{charliteral}{':'}) + 1);}
+\DoxyCodeLine{142     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (line.length() == 0) \{}
+\DoxyCodeLine{143       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{144     \}}
+\DoxyCodeLine{145     delay(10);}
+\DoxyCodeLine{146   \}}
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148   \textcolor{keywordflow}{if} (contentLength <= 0) \{}
+\DoxyCodeLine{149     OTA\_FATAL(\textcolor{stringliteral}{"{}Content-\/Length not defined"{}});}
+\DoxyCodeLine{150   \}}
+\DoxyCodeLine{151 }
+\DoxyCodeLine{152   \textcolor{keywordflow}{if} (!InternalStorage.open(contentLength)) \{}
+\DoxyCodeLine{153     client-\/>stop();}
+\DoxyCodeLine{154     OTA\_FATAL(\textcolor{stringliteral}{"{}OTA begin failed"{}});}
+\DoxyCodeLine{155   \}}
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157   \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}Flashing..."{}});}
+\DoxyCodeLine{158 }
+\DoxyCodeLine{159   \textcolor{keywordtype}{int} written = 0;}
+\DoxyCodeLine{160   \textcolor{keywordtype}{int} prevProgress = 0;}
+\DoxyCodeLine{161   uint8\_t buff[256];}
+\DoxyCodeLine{162   \textcolor{keywordflow}{while} (client-\/>connected() \&\& written < contentLength) \{}
+\DoxyCodeLine{163     delay(10);}
+\DoxyCodeLine{164     timeout = millis();}
+\DoxyCodeLine{165     \textcolor{keywordflow}{while} (client-\/>connected() \&\& !client-\/>available()) \{}
+\DoxyCodeLine{166       delay(1);}
+\DoxyCodeLine{167       \textcolor{keywordflow}{if} (millis() -\/ timeout > 10000L) \{}
+\DoxyCodeLine{168         OTA\_FATAL(\textcolor{stringliteral}{"{}Timeout"{}});}
+\DoxyCodeLine{169       \}}
+\DoxyCodeLine{170     \}}
+\DoxyCodeLine{171 }
+\DoxyCodeLine{172     \textcolor{keywordtype}{int} len = client-\/>read(buff, \textcolor{keyword}{sizeof}(buff));}
+\DoxyCodeLine{173     \textcolor{keywordflow}{if} (len <= 0) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i<len; i++) \{}
+\DoxyCodeLine{176       InternalStorage.write(buff[i]);}
+\DoxyCodeLine{177     \}}
+\DoxyCodeLine{178     written += len;}
+\DoxyCodeLine{179 }
+\DoxyCodeLine{180     \textcolor{keyword}{const} \textcolor{keywordtype}{int} progress = (written*100)/contentLength;}
+\DoxyCodeLine{181     \textcolor{keywordflow}{if} (progress -\/ prevProgress >= 10 || progress == 100) \{}
+\DoxyCodeLine{182       BLYNK\_PRINT.print(String(\textcolor{stringliteral}{"{}\(\backslash\)r "{}}) + progress + \textcolor{stringliteral}{"{}\%"{}});}
+\DoxyCodeLine{183       prevProgress = progress;}
+\DoxyCodeLine{184     \}}
+\DoxyCodeLine{185   \}}
+\DoxyCodeLine{186   BLYNK\_PRINT.println();}
+\DoxyCodeLine{187   client-\/>stop();}
+\DoxyCodeLine{188   InternalStorage.close();}
+\DoxyCodeLine{189 }
+\DoxyCodeLine{190   \textcolor{keywordflow}{if} (written != contentLength) \{}
+\DoxyCodeLine{191     OTA\_FATAL(String(\textcolor{stringliteral}{"{}Write failed. Written "{}}) + written + \textcolor{stringliteral}{"{} / "{}} + contentLength + \textcolor{stringliteral}{"{} bytes"{}});}
+\DoxyCodeLine{192   \}}
+\DoxyCodeLine{193 }
+\DoxyCodeLine{194   \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}=== Update successfully completed. Rebooting."{}});}
+\DoxyCodeLine{195   InternalStorage.apply();}
+\DoxyCodeLine{196 \}}
+\DoxyCodeLine{197 }
+
+\end{DoxyCode}

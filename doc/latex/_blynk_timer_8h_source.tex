@@ -1,0 +1,161 @@
+\hypertarget{_blynk_timer_8h_source}{}\doxysection{Blynk\+Timer.\+h}
+\label{_blynk_timer_8h_source}\index{lib/Blynk/src/Blynk/BlynkTimer.h@{lib/Blynk/src/Blynk/BlynkTimer.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ * SimpleTimer.h}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ * SimpleTimer -\/ A timer library for Arduino.}}
+\DoxyCodeLine{5 \textcolor{comment}{ * Author: mromani@ottotecnica.com}}
+\DoxyCodeLine{6 \textcolor{comment}{ * Copyright (c) 2010 OTTOTECNICA Italy}}
+\DoxyCodeLine{7 \textcolor{comment}{ *}}
+\DoxyCodeLine{8 \textcolor{comment}{ * Modifications by Bill Knight <billk@rosw.com> 18March2017}}
+\DoxyCodeLine{9 \textcolor{comment}{ *}}
+\DoxyCodeLine{10 \textcolor{comment}{ * This library is free software; you can redistribute it}}
+\DoxyCodeLine{11 \textcolor{comment}{ * and/or modify it under the terms of the GNU Lesser}}
+\DoxyCodeLine{12 \textcolor{comment}{ * General Public License as published by the Free Software}}
+\DoxyCodeLine{13 \textcolor{comment}{ * Foundation; either version 2.1 of the License, or (at}}
+\DoxyCodeLine{14 \textcolor{comment}{ * your option) any later version.}}
+\DoxyCodeLine{15 \textcolor{comment}{ *}}
+\DoxyCodeLine{16 \textcolor{comment}{ * This library is distributed in the hope that it will}}
+\DoxyCodeLine{17 \textcolor{comment}{ * be useful, but WITHOUT ANY WARRANTY; without even the}}
+\DoxyCodeLine{18 \textcolor{comment}{ * implied warranty of MERCHANTABILITY or FITNESS FOR A}}
+\DoxyCodeLine{19 \textcolor{comment}{ * PARTICULAR PURPOSE.  See the GNU Lesser General Public}}
+\DoxyCodeLine{20 \textcolor{comment}{ * License for more details.}}
+\DoxyCodeLine{21 \textcolor{comment}{ *}}
+\DoxyCodeLine{22 \textcolor{comment}{ * You should have received a copy of the GNU Lesser}}
+\DoxyCodeLine{23 \textcolor{comment}{ * General Public License along with this library; if not,}}
+\DoxyCodeLine{24 \textcolor{comment}{ * write to the Free Software Foundation, Inc.,}}
+\DoxyCodeLine{25 \textcolor{comment}{ * 51 Franklin St, Fifth Floor, Boston, MA 02110-\/1301 USA}}
+\DoxyCodeLine{26 \textcolor{comment}{ *}}
+\DoxyCodeLine{27 \textcolor{comment}{ */}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#ifndef BLYNKTIMER\_H}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#define BLYNKTIMER\_H}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_debug_8h}{Blynk/BlynkDebug.h}}>}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{comment}{// Replace SimpleTimer}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#define SIMPLETIMER\_H}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#define SimpleTimer BlynkTimer}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 \textcolor{keyword}{typedef} void (*timer\_callback)(void);}
+\DoxyCodeLine{39 \textcolor{keyword}{typedef} void (*timer\_callback\_p)(\textcolor{keywordtype}{void} *);}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41 \textcolor{keyword}{class }\mbox{\hyperlink{class_simple_timer}{SimpleTimer}} \{}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43 \textcolor{keyword}{public}:}
+\DoxyCodeLine{44     \textcolor{comment}{// maximum number of timers}}
+\DoxyCodeLine{45     \textcolor{keyword}{const} \textcolor{keyword}{static} \textcolor{keywordtype}{int} MAX\_TIMERS = 16;}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{comment}{// setTimer() constants}}
+\DoxyCodeLine{48     \textcolor{keyword}{const} \textcolor{keyword}{static} \textcolor{keywordtype}{int} RUN\_FOREVER = 0;}
+\DoxyCodeLine{49     \textcolor{keyword}{const} \textcolor{keyword}{static} \textcolor{keywordtype}{int} RUN\_ONCE = 1;}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     \textcolor{comment}{// constructor}}
+\DoxyCodeLine{52     \mbox{\hyperlink{class_simple_timer}{SimpleTimer}}();}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54     \textcolor{keywordtype}{void} init();}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56     \textcolor{comment}{// this function must be called inside loop()}}
+\DoxyCodeLine{57     \textcolor{keywordtype}{void} run();}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59     \textcolor{comment}{// Timer will call function 'f' every 'd' milliseconds forever}}
+\DoxyCodeLine{60     \textcolor{comment}{// returns the timer number (numTimer) on success or}}
+\DoxyCodeLine{61     \textcolor{comment}{// -\/1 on failure (f == NULL) or no free timers}}
+\DoxyCodeLine{62     \textcolor{keywordtype}{int} setInterval(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} d, timer\_callback f);}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64     \textcolor{comment}{// Timer will call function 'f' with parameter 'p' every 'd' milliseconds forever}}
+\DoxyCodeLine{65     \textcolor{comment}{// returns the timer number (numTimer) on success or}}
+\DoxyCodeLine{66     \textcolor{comment}{// -\/1 on failure (f == NULL) or no free timers}}
+\DoxyCodeLine{67     \textcolor{keywordtype}{int} setInterval(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} d, timer\_callback\_p f, \textcolor{keywordtype}{void}* p);}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69     \textcolor{comment}{// Timer will call function 'f' after 'd' milliseconds one time}}
+\DoxyCodeLine{70     \textcolor{comment}{// returns the timer number (numTimer) on success or}}
+\DoxyCodeLine{71     \textcolor{comment}{// -\/1 on failure (f == NULL) or no free timers}}
+\DoxyCodeLine{72     \textcolor{keywordtype}{int} setTimeout(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} d, timer\_callback f);}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74     \textcolor{comment}{// Timer will call function 'f' with parameter 'p' after 'd' milliseconds one time}}
+\DoxyCodeLine{75     \textcolor{comment}{// returns the timer number (numTimer) on success or}}
+\DoxyCodeLine{76     \textcolor{comment}{// -\/1 on failure (f == NULL) or no free timers}}
+\DoxyCodeLine{77     \textcolor{keywordtype}{int} setTimeout(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} d, timer\_callback\_p f, \textcolor{keywordtype}{void}* p);}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79     \textcolor{comment}{// Timer will call function 'f' every 'd' milliseconds 'n' times}}
+\DoxyCodeLine{80     \textcolor{comment}{// returns the timer number (numTimer) on success or}}
+\DoxyCodeLine{81     \textcolor{comment}{// -\/1 on failure (f == NULL) or no free timers}}
+\DoxyCodeLine{82     \textcolor{keywordtype}{int} setTimer(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} d, timer\_callback f, \textcolor{keywordtype}{unsigned} n);}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84     \textcolor{comment}{// Timer will call function 'f' with parameter 'p' every 'd' milliseconds 'n' times}}
+\DoxyCodeLine{85     \textcolor{comment}{// returns the timer number (numTimer) on success or}}
+\DoxyCodeLine{86     \textcolor{comment}{// -\/1 on failure (f == NULL) or no free timers}}
+\DoxyCodeLine{87     \textcolor{keywordtype}{int} setTimer(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} d, timer\_callback\_p f, \textcolor{keywordtype}{void}* p, \textcolor{keywordtype}{unsigned} n);}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89     \textcolor{comment}{// updates interval of the specified timer}}
+\DoxyCodeLine{90     \textcolor{keywordtype}{bool} changeInterval(\textcolor{keywordtype}{unsigned} numTimer, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} d);}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92     \textcolor{comment}{// destroy the specified timer}}
+\DoxyCodeLine{93     \textcolor{keywordtype}{void} deleteTimer(\textcolor{keywordtype}{unsigned} numTimer);}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95     \textcolor{comment}{// restart the specified timer}}
+\DoxyCodeLine{96     \textcolor{keywordtype}{void} restartTimer(\textcolor{keywordtype}{unsigned} numTimer);}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98     \textcolor{comment}{// returns true if the specified timer is enabled}}
+\DoxyCodeLine{99     \textcolor{keywordtype}{bool} isEnabled(\textcolor{keywordtype}{unsigned} numTimer);}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101     \textcolor{comment}{// enables the specified timer}}
+\DoxyCodeLine{102     \textcolor{keywordtype}{void} enable(\textcolor{keywordtype}{unsigned} numTimer);}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104     \textcolor{comment}{// disables the specified timer}}
+\DoxyCodeLine{105     \textcolor{keywordtype}{void} disable(\textcolor{keywordtype}{unsigned} numTimer);}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107     \textcolor{comment}{// enables all timers}}
+\DoxyCodeLine{108     \textcolor{keywordtype}{void} enableAll();}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110     \textcolor{comment}{// disables all timers}}
+\DoxyCodeLine{111     \textcolor{keywordtype}{void} disableAll();}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113     \textcolor{comment}{// enables the specified timer if it's currently disabled,}}
+\DoxyCodeLine{114     \textcolor{comment}{// and vice-\/versa}}
+\DoxyCodeLine{115     \textcolor{keywordtype}{void} toggle(\textcolor{keywordtype}{unsigned} numTimer);}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117     \textcolor{comment}{// returns the number of used timers}}
+\DoxyCodeLine{118     \textcolor{keywordtype}{unsigned} getNumTimers();}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120     \textcolor{comment}{// returns the number of available timers}}
+\DoxyCodeLine{121     \textcolor{keywordtype}{unsigned} getNumAvailableTimers() \{ \textcolor{keywordflow}{return} MAX\_TIMERS -\/ numTimers; \};}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123 \textcolor{keyword}{private}:}
+\DoxyCodeLine{124     \textcolor{comment}{// deferred call constants}}
+\DoxyCodeLine{125     \textcolor{keyword}{const} \textcolor{keyword}{static} \textcolor{keywordtype}{int} DEFCALL\_DONTRUN = 0;       \textcolor{comment}{// don't call the callback function}}
+\DoxyCodeLine{126     \textcolor{keyword}{const} \textcolor{keyword}{static} \textcolor{keywordtype}{int} DEFCALL\_RUNONLY = 1;       \textcolor{comment}{// call the callback function but don't delete the timer}}
+\DoxyCodeLine{127     \textcolor{keyword}{const} \textcolor{keyword}{static} \textcolor{keywordtype}{int} DEFCALL\_RUNANDDEL = 2;     \textcolor{comment}{// call the callback function and delete the timer}}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129     \textcolor{comment}{// low level function to initialize and enable a new timer}}
+\DoxyCodeLine{130     \textcolor{comment}{// returns the timer number (numTimer) on success or}}
+\DoxyCodeLine{131     \textcolor{comment}{// -\/1 on failure (f == NULL) or no free timers}}
+\DoxyCodeLine{132     \textcolor{keywordtype}{int} setupTimer(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} d, \textcolor{keywordtype}{void}* f, \textcolor{keywordtype}{void}* p, \textcolor{keywordtype}{bool} h, \textcolor{keywordtype}{unsigned} n);}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134     \textcolor{comment}{// find the first available slot}}
+\DoxyCodeLine{135     \textcolor{keywordtype}{int} findFirstFreeSlot();}
+\DoxyCodeLine{136 }
+\DoxyCodeLine{137     \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{138       \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} prev\_millis;        \textcolor{comment}{// value returned by the millis() function in the previous run() call}}
+\DoxyCodeLine{139       \textcolor{keywordtype}{void}* callback;                   \textcolor{comment}{// pointer to the callback function}}
+\DoxyCodeLine{140       \textcolor{keywordtype}{void}* param;                      \textcolor{comment}{// function parameter}}
+\DoxyCodeLine{141       \textcolor{keywordtype}{bool} hasParam;                 \textcolor{comment}{// true if callback takes a parameter}}
+\DoxyCodeLine{142       \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} delay;              \textcolor{comment}{// delay value}}
+\DoxyCodeLine{143       \textcolor{keywordtype}{unsigned} maxNumRuns;              \textcolor{comment}{// number of runs to be executed}}
+\DoxyCodeLine{144       \textcolor{keywordtype}{unsigned} numRuns;                 \textcolor{comment}{// number of executed runs}}
+\DoxyCodeLine{145       \textcolor{keywordtype}{bool} enabled;                  \textcolor{comment}{// true if enabled}}
+\DoxyCodeLine{146       \textcolor{keywordtype}{unsigned} toBeCalled;              \textcolor{comment}{// deferred function call (sort of) -\/ N.B.: only used in run()}}
+\DoxyCodeLine{147     \} timer\_t;}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149     timer\_t timer[MAX\_TIMERS];}
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151     \textcolor{comment}{// actual number of timers in use (-\/1 means uninitialized)}}
+\DoxyCodeLine{152     \textcolor{keywordtype}{int} numTimers;}
+\DoxyCodeLine{153 \};}
+\DoxyCodeLine{154 }
+\DoxyCodeLine{155 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

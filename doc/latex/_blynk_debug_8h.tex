@@ -1,0 +1,108 @@
+\hypertarget{_blynk_debug_8h}{}\doxysection{lib/\+Blynk/src/\+Blynk/\+Blynk\+Debug.h File Reference}
+\label{_blynk_debug_8h}\index{lib/Blynk/src/Blynk/BlynkDebug.h@{lib/Blynk/src/Blynk/BlynkDebug.h}}
+
+
+Debug utilities.  
+
+
+{\ttfamily \#include $<$Blynk/\+Blynk\+Config.\+h$>$}\newline
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$inttypes.\+h$>$}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_blynk_debug_8h_a8babb94c28017dcf13da052cbdb801d2}\label{_blynk_debug_8h_a8babb94c28017dcf13da052cbdb801d2}} 
+\#define {\bfseries BLYNK\+\_\+\+RUN\+\_\+\+YIELD}()~\{\}
+\item 
+\mbox{\Hypertarget{_blynk_debug_8h_acf36d6407dc7449c5111c521f2409512}\label{_blynk_debug_8h_acf36d6407dc7449c5111c521f2409512}} 
+\#define {\bfseries BLYNK\+\_\+\+PROGMEM}
+\item 
+\mbox{\Hypertarget{_blynk_debug_8h_acb2f3cb0d54941d906b2f57772c79204}\label{_blynk_debug_8h_acb2f3cb0d54941d906b2f57772c79204}} 
+\#define {\bfseries BLYNK\+\_\+F}(s)~s
+\item 
+\mbox{\Hypertarget{_blynk_debug_8h_a60cd3a4fadcce29685e11ebefb963ec3}\label{_blynk_debug_8h_a60cd3a4fadcce29685e11ebefb963ec3}} 
+\#define {\bfseries BLYNK\+\_\+\+PSTR}(s)~s
+\item 
+\mbox{\Hypertarget{_blynk_debug_8h_afba7d136cfe3b571791df5c79c3d3b09}\label{_blynk_debug_8h_afba7d136cfe3b571791df5c79c3d3b09}} 
+\#define {\bfseries BLYNK\+\_\+\+FATAL}(msg)~\{ BLYNK\+\_\+\+LOG1(msg); Blynk\+Fatal(); \}
+\item 
+\mbox{\Hypertarget{_blynk_debug_8h_ae2b9f74e452d0e29d9932a75c0a56cb6}\label{_blynk_debug_8h_ae2b9f74e452d0e29d9932a75c0a56cb6}} 
+\#define {\bfseries BLYNK\+\_\+\+LOG\+\_\+\+RAM}()~\{ BLYNK\+\_\+\+LOG2(BLYNK\+\_\+F(\char`\"{}Free RAM\+: \char`\"{}), Blynk\+Free\+Ram()); \}
+\item 
+\mbox{\Hypertarget{_blynk_debug_8h_a184611894dedd9dfe9728a5463ccc80f}\label{_blynk_debug_8h_a184611894dedd9dfe9728a5463ccc80f}} 
+\#define {\bfseries BLYNK\+\_\+\+LOG\+\_\+\+FN}()~BLYNK\+\_\+\+LOG3(BLYNK\+\_\+F(\+\_\+\+\_\+\+FUNCTION\+\_\+\+\_\+), \textquotesingle{}@\textquotesingle{}, \+\_\+\+\_\+\+LINE\+\_\+\+\_\+);
+\item 
+\mbox{\Hypertarget{_blynk_debug_8h_a0dd1f482f4697940efa97635db11d95c}\label{_blynk_debug_8h_a0dd1f482f4697940efa97635db11d95c}} 
+\#define {\bfseries BLYNK\+\_\+\+LOG\+\_\+\+TROUBLE}(t)~BLYNK\+\_\+\+LOG2(BLYNK\+\_\+F(\char`\"{}Trouble detected\+: http\+://docs.\+blynk.\+cc/\#troubleshooting-\/\char`\"{}), t)
+\item 
+\mbox{\Hypertarget{_blynk_debug_8h_a27e9cf0df16e71bfaedb8ba982684d12}\label{_blynk_debug_8h_a27e9cf0df16e71bfaedb8ba982684d12}} 
+\#define {\bfseries BLYNK\+\_\+\+LOG}(...)
+\item 
+\mbox{\Hypertarget{_blynk_debug_8h_a3409a0955a1db1e2ba300508a7c43294}\label{_blynk_debug_8h_a3409a0955a1db1e2ba300508a7c43294}} 
+\#define {\bfseries BLYNK\+\_\+\+LOG1}(p1)
+\item 
+\mbox{\Hypertarget{_blynk_debug_8h_aba506ccbf2d976dd33dab5cf25715569}\label{_blynk_debug_8h_aba506ccbf2d976dd33dab5cf25715569}} 
+\#define {\bfseries BLYNK\+\_\+\+LOG2}(p1,  p2)
+\item 
+\mbox{\Hypertarget{_blynk_debug_8h_afc5a8c2689928167ee0bbb5af331e1ba}\label{_blynk_debug_8h_afc5a8c2689928167ee0bbb5af331e1ba}} 
+\#define {\bfseries BLYNK\+\_\+\+LOG3}(p1,  p2,  p3)
+\item 
+\mbox{\Hypertarget{_blynk_debug_8h_afac1d4776c412afa5a3c4ab5c3597a16}\label{_blynk_debug_8h_afac1d4776c412afa5a3c4ab5c3597a16}} 
+\#define {\bfseries BLYNK\+\_\+\+LOG4}(p1,  p2,  p3,  p4)
+\item 
+\mbox{\Hypertarget{_blynk_debug_8h_a2d259e16629643ecc9ed949ab455c89d}\label{_blynk_debug_8h_a2d259e16629643ecc9ed949ab455c89d}} 
+\#define {\bfseries BLYNK\+\_\+\+LOG6}(p1,  p2,  p3,  p4,  p5,  p6)
+\item 
+\mbox{\Hypertarget{_blynk_debug_8h_a545b184ec42a1374c844e6337f265320}\label{_blynk_debug_8h_a545b184ec42a1374c844e6337f265320}} 
+\#define {\bfseries BLYNK\+\_\+\+LOG\+\_\+\+IP}(msg,  ip)
+\item 
+\mbox{\Hypertarget{_blynk_debug_8h_a3d1fcfbe40e4ababd09ca85a731399c2}\label{_blynk_debug_8h_a3d1fcfbe40e4ababd09ca85a731399c2}} 
+\#define {\bfseries BLYNK\+\_\+\+LOG\+\_\+\+IP\+\_\+\+REV}(msg,  ip)
+\item 
+\mbox{\Hypertarget{_blynk_debug_8h_acd116ab843f466222785c19fcef8ebab}\label{_blynk_debug_8h_acd116ab843f466222785c19fcef8ebab}} 
+\#define {\bfseries BLYNK\+\_\+\+DBG\+\_\+\+BREAK}()
+\item 
+\mbox{\Hypertarget{_blynk_debug_8h_a95e79701e035a286563b75cdef558c94}\label{_blynk_debug_8h_a95e79701e035a286563b75cdef558c94}} 
+\#define {\bfseries BLYNK\+\_\+\+ASSERT}(expr)
+\item 
+\mbox{\Hypertarget{_blynk_debug_8h_a3a633e6ac55a282bc0848aa4ab00c8e2}\label{_blynk_debug_8h_a3a633e6ac55a282bc0848aa4ab00c8e2}} 
+\#define {\bfseries BLYNK\+\_\+\+DBG\+\_\+\+DUMP}(msg,  addr,  len)
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_blynk_debug_8h_a69332d899d3b9f82e23ce0475a6a04f2}\label{_blynk_debug_8h_a69332d899d3b9f82e23ce0475a6a04f2}} 
+typedef uint32\+\_\+t {\bfseries millis\+\_\+time\+\_\+t}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_blynk_debug_8h_ab4e396cd0a72798157db7cce5ae3fd7c}\label{_blynk_debug_8h_ab4e396cd0a72798157db7cce5ae3fd7c}} 
+void {\bfseries Blynk\+Delay} (millis\+\_\+time\+\_\+t ms)
+\item 
+\mbox{\Hypertarget{_blynk_debug_8h_a1b5b0be06271115cf4d6ad6ea9cb9fb5}\label{_blynk_debug_8h_a1b5b0be06271115cf4d6ad6ea9cb9fb5}} 
+millis\+\_\+time\+\_\+t {\bfseries Blynk\+Millis} ()
+\item 
+\mbox{\Hypertarget{_blynk_debug_8h_abb910e440d0a14f93a9e9bddb2648a39}\label{_blynk_debug_8h_abb910e440d0a14f93a9e9bddb2648a39}} 
+size\+\_\+t {\bfseries Blynk\+Free\+Ram} ()
+\item 
+\mbox{\Hypertarget{_blynk_debug_8h_ad15cc124d750bde694a5e5028d2253c3}\label{_blynk_debug_8h_ad15cc124d750bde694a5e5028d2253c3}} 
+void {\bfseries Blynk\+Reset} () BLYNK\+\_\+\+NORETURN
+\item 
+\mbox{\Hypertarget{_blynk_debug_8h_a08077a8ec8c0200032456c0a61d1b7c1}\label{_blynk_debug_8h_a08077a8ec8c0200032456c0a61d1b7c1}} 
+void {\bfseries Blynk\+Fatal} () BLYNK\+\_\+\+NORETURN
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Debug utilities. 
+
+\begin{DoxyAuthor}{Author}
+Volodymyr Shymanskyy @license This project is released under the MIT License (MIT) 
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2015 Volodymyr Shymanskyy 
+\end{DoxyCopyright}
+\begin{DoxyDate}{Date}
+Jan 2015 
+\end{DoxyDate}

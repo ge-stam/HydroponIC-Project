@@ -1,0 +1,80 @@
+\hypertarget{class_simple_timer}{}\doxysection{Simple\+Timer Class Reference}
+\label{class_simple_timer}\index{SimpleTimer@{SimpleTimer}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_simple_timer_a02fd73d861ef2e4aabb38c0c9ff82947}\label{class_simple_timer_a02fd73d861ef2e4aabb38c0c9ff82947}} 
+void {\bfseries init} ()
+\item 
+\mbox{\Hypertarget{class_simple_timer_a13a43e6d814de94978c515cb084873b1}\label{class_simple_timer_a13a43e6d814de94978c515cb084873b1}} 
+void {\bfseries run} ()
+\item 
+\mbox{\Hypertarget{class_simple_timer_a29f17661900701ce7e319143da2c05a0}\label{class_simple_timer_a29f17661900701ce7e319143da2c05a0}} 
+int {\bfseries set\+Interval} (unsigned long d, timer\+\_\+callback f)
+\item 
+\mbox{\Hypertarget{class_simple_timer_ad9649446a6560d299aa231727f6ad211}\label{class_simple_timer_ad9649446a6560d299aa231727f6ad211}} 
+int {\bfseries set\+Interval} (unsigned long d, timer\+\_\+callback\+\_\+p f, void $\ast$p)
+\item 
+\mbox{\Hypertarget{class_simple_timer_acd25df345c4bc9788527095d586152a2}\label{class_simple_timer_acd25df345c4bc9788527095d586152a2}} 
+int {\bfseries set\+Timeout} (unsigned long d, timer\+\_\+callback f)
+\item 
+\mbox{\Hypertarget{class_simple_timer_aac248b57d28a8b81c8224ea588f96573}\label{class_simple_timer_aac248b57d28a8b81c8224ea588f96573}} 
+int {\bfseries set\+Timeout} (unsigned long d, timer\+\_\+callback\+\_\+p f, void $\ast$p)
+\item 
+\mbox{\Hypertarget{class_simple_timer_a43aba40b613104a13839f0fafd7467d1}\label{class_simple_timer_a43aba40b613104a13839f0fafd7467d1}} 
+int {\bfseries set\+Timer} (unsigned long d, timer\+\_\+callback f, unsigned n)
+\item 
+\mbox{\Hypertarget{class_simple_timer_a74d813385bc6b9be28b2042a444b08df}\label{class_simple_timer_a74d813385bc6b9be28b2042a444b08df}} 
+int {\bfseries set\+Timer} (unsigned long d, timer\+\_\+callback\+\_\+p f, void $\ast$p, unsigned n)
+\item 
+\mbox{\Hypertarget{class_simple_timer_aef73462cb71b101ad215154fa9ae98c0}\label{class_simple_timer_aef73462cb71b101ad215154fa9ae98c0}} 
+bool {\bfseries change\+Interval} (unsigned num\+Timer, unsigned long d)
+\item 
+\mbox{\Hypertarget{class_simple_timer_a2971db9d6dc46a1d251c2508e6be5e46}\label{class_simple_timer_a2971db9d6dc46a1d251c2508e6be5e46}} 
+void {\bfseries delete\+Timer} (unsigned num\+Timer)
+\item 
+\mbox{\Hypertarget{class_simple_timer_af82b49a81f6a33b776a22b2f5dd53574}\label{class_simple_timer_af82b49a81f6a33b776a22b2f5dd53574}} 
+void {\bfseries restart\+Timer} (unsigned num\+Timer)
+\item 
+\mbox{\Hypertarget{class_simple_timer_ada6219f55b8ee35f2149d680c203fa39}\label{class_simple_timer_ada6219f55b8ee35f2149d680c203fa39}} 
+bool {\bfseries is\+Enabled} (unsigned num\+Timer)
+\item 
+\mbox{\Hypertarget{class_simple_timer_a71447202ca889f180b6b6de95d99ebf5}\label{class_simple_timer_a71447202ca889f180b6b6de95d99ebf5}} 
+void {\bfseries enable} (unsigned num\+Timer)
+\item 
+\mbox{\Hypertarget{class_simple_timer_afe60a336acb33ea8493dd684d0b865df}\label{class_simple_timer_afe60a336acb33ea8493dd684d0b865df}} 
+void {\bfseries disable} (unsigned num\+Timer)
+\item 
+\mbox{\Hypertarget{class_simple_timer_ae076f3f35c07044ed812b78871741c15}\label{class_simple_timer_ae076f3f35c07044ed812b78871741c15}} 
+void {\bfseries enable\+All} ()
+\item 
+\mbox{\Hypertarget{class_simple_timer_a238885c747f586049b766fa4fcd5ec12}\label{class_simple_timer_a238885c747f586049b766fa4fcd5ec12}} 
+void {\bfseries disable\+All} ()
+\item 
+\mbox{\Hypertarget{class_simple_timer_a2bdfd461b21b2f79f2d11e54f37d3ce9}\label{class_simple_timer_a2bdfd461b21b2f79f2d11e54f37d3ce9}} 
+void {\bfseries toggle} (unsigned num\+Timer)
+\item 
+\mbox{\Hypertarget{class_simple_timer_a990644fda62c0c6bbacedc605d4cd513}\label{class_simple_timer_a990644fda62c0c6bbacedc605d4cd513}} 
+unsigned {\bfseries get\+Num\+Timers} ()
+\item 
+\mbox{\Hypertarget{class_simple_timer_a8e8a3b7f3d6760266035a56e2c154272}\label{class_simple_timer_a8e8a3b7f3d6760266035a56e2c154272}} 
+unsigned {\bfseries get\+Num\+Available\+Timers} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_simple_timer_aff946cf1c41c97b8c818ed4a53e43f23}\label{class_simple_timer_aff946cf1c41c97b8c818ed4a53e43f23}} 
+static const int {\bfseries MAX\+\_\+\+TIMERS} = 16
+\item 
+\mbox{\Hypertarget{class_simple_timer_aa5a2fcc2d63363d8daa59d27ac6eb8ba}\label{class_simple_timer_aa5a2fcc2d63363d8daa59d27ac6eb8ba}} 
+static const int {\bfseries RUN\+\_\+\+FOREVER} = 0
+\item 
+\mbox{\Hypertarget{class_simple_timer_a8be165509fab291a593ce14639e0512d}\label{class_simple_timer_a8be165509fab291a593ce14639e0512d}} 
+static const int {\bfseries RUN\+\_\+\+ONCE} = 1
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+Blynk/src/\+Blynk/Blynk\+Timer.\+h\item 
+lib/\+Blynk/src/utility/Blynk\+Timer.\+cpp\end{DoxyCompactItemize}

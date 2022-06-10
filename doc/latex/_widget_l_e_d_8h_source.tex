@@ -1,0 +1,43 @@
+\hypertarget{_widget_l_e_d_8h_source}{}\doxysection{Widget\+LED.\+h}
+\label{_widget_l_e_d_8h_source}\index{lib/Blynk/src/WidgetLED.h@{lib/Blynk/src/WidgetLED.h}}
+\mbox{\hyperlink{_widget_l_e_d_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#ifndef WidgetLED\_h}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#define WidgetLED\_h}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_widget_base_8h}{Blynk/BlynkWidgetBase.h}}>}}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15 \textcolor{keyword}{class }\mbox{\hyperlink{class_widget_l_e_d}{WidgetLED}}}
+\DoxyCodeLine{16     : \textcolor{keyword}{public} \mbox{\hyperlink{class_blynk_widget_base}{BlynkWidgetBase}}}
+\DoxyCodeLine{17 \{}
+\DoxyCodeLine{18 \textcolor{keyword}{public}:}
+\DoxyCodeLine{19     \mbox{\hyperlink{class_widget_l_e_d}{WidgetLED}}(uint8\_t vPin)}
+\DoxyCodeLine{20         : \mbox{\hyperlink{class_blynk_widget_base}{BlynkWidgetBase}}(vPin)}
+\DoxyCodeLine{21         , mValue(0)}
+\DoxyCodeLine{22     \{\}}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24     uint8\_t getValue()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{25         \textcolor{keywordflow}{return} mValue;}
+\DoxyCodeLine{26     \}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28     \textcolor{keywordtype}{void} setValue(uint8\_t value) \{}
+\DoxyCodeLine{29         mValue = value;}
+\DoxyCodeLine{30         Blynk.\mbox{\hyperlink{class_blynk_api_a2d8229be57903f8d1140dbad6dbf6e05}{virtualWrite}}(mPin, value);}
+\DoxyCodeLine{31     \}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33     \textcolor{keywordtype}{void} on() \{}
+\DoxyCodeLine{34         setValue(255);}
+\DoxyCodeLine{35     \}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37     \textcolor{keywordtype}{void} off() \{}
+\DoxyCodeLine{38         setValue(0);}
+\DoxyCodeLine{39     \}}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41 \textcolor{keyword}{private}:}
+\DoxyCodeLine{42     uint8\_t mValue;}
+\DoxyCodeLine{43 \};}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

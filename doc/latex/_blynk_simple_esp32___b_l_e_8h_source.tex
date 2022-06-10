@@ -1,0 +1,194 @@
+\hypertarget{_blynk_simple_esp32___b_l_e_8h_source}{}\doxysection{Blynk\+Simple\+Esp32\+\_\+\+BLE.\+h}
+\label{_blynk_simple_esp32___b_l_e_8h_source}\index{lib/Blynk/src/BlynkSimpleEsp32\_BLE.h@{lib/Blynk/src/BlynkSimpleEsp32\_BLE.h}}
+\mbox{\hyperlink{_blynk_simple_esp32___b_l_e_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef BlynkSimpleEsp32\_BLE\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define BlynkSimpleEsp32\_BLE\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#ifndef BLYNK\_INFO\_CONNECTION}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#define BLYNK\_INFO\_CONNECTION "{}Esp32\_BLE"{}}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#define BLYNK\_SEND\_ATOMIC}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#define BLYNK\_SEND\_CHUNK 20}}
+\DoxyCodeLine{20 \textcolor{comment}{//\#define BLYNK\_SEND\_THROTTLE 20}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_api_arduino_8h}{BlynkApiArduino.h}}>}}
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_protocol_8h}{Blynk/BlynkProtocol.h}}>}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_fifo_8h}{utility/BlynkFifo.h}}>}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <BLEDevice.h>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <BLEServer.h>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#include <BLEUtils.h>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include <BLE2902.h>}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#define SERVICE\_UUID           "{}713D0000-\/503E-\/4C75-\/BA94-\/3148F18D941E"{}}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#define CHARACTERISTIC\_UUID\_RX "{}713D0003-\/503E-\/4C75-\/BA94-\/3148F18D941E"{}}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#define CHARACTERISTIC\_UUID\_TX "{}713D0002-\/503E-\/4C75-\/BA94-\/3148F18D941E"{}}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_transport_esp32___b_l_e}{BlynkTransportEsp32\_BLE}} :}
+\DoxyCodeLine{36     \textcolor{keyword}{public} BLEServerCallbacks,}
+\DoxyCodeLine{37     \textcolor{keyword}{public} BLECharacteristicCallbacks}
+\DoxyCodeLine{38 \{}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40 \textcolor{keyword}{public}:}
+\DoxyCodeLine{41     \mbox{\hyperlink{class_blynk_transport_esp32___b_l_e}{BlynkTransportEsp32\_BLE}}()}
+\DoxyCodeLine{42         : mConn (\textcolor{keyword}{false})}
+\DoxyCodeLine{43         , mName (\textcolor{stringliteral}{"{}Blynk"{}})}
+\DoxyCodeLine{44     \{\}}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46     \textcolor{keywordtype}{void} setDeviceName(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* name) \{}
+\DoxyCodeLine{47         mName = name;}
+\DoxyCodeLine{48     \}}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50     \textcolor{comment}{// IP redirect not available}}
+\DoxyCodeLine{51     \textcolor{keywordtype}{void} begin(\textcolor{keywordtype}{char} BLYNK\_UNUSED *h, uint16\_t BLYNK\_UNUSED p) \{\}}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53     \textcolor{keywordtype}{void} begin() \{}
+\DoxyCodeLine{54         \textcolor{comment}{// Create the BLE Device}}
+\DoxyCodeLine{55         BLEDevice::init(mName);}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57         \textcolor{comment}{// Create the BLE Server}}
+\DoxyCodeLine{58         pServer = BLEDevice::createServer();}
+\DoxyCodeLine{59         pServer-\/>setCallbacks(\textcolor{keyword}{this});}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61         \textcolor{comment}{// Create the BLE Service}}
+\DoxyCodeLine{62         pService = pServer-\/>createService(SERVICE\_UUID);}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64         \textcolor{comment}{// Create a BLE Characteristic}}
+\DoxyCodeLine{65         pCharacteristicTX = pService-\/>createCharacteristic(}
+\DoxyCodeLine{66                             CHARACTERISTIC\_UUID\_TX,}
+\DoxyCodeLine{67                             BLECharacteristic::PROPERTY\_NOTIFY}
+\DoxyCodeLine{68                           );}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70         pCharacteristicTX-\/>addDescriptor(\textcolor{keyword}{new} BLE2902());}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72         pCharacteristicRX = pService-\/>createCharacteristic(}
+\DoxyCodeLine{73                                               CHARACTERISTIC\_UUID\_RX,}
+\DoxyCodeLine{74                                               BLECharacteristic::PROPERTY\_WRITE}
+\DoxyCodeLine{75                                             );}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77         pCharacteristicRX-\/>setCallbacks(\textcolor{keyword}{this});}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79         \textcolor{comment}{// Start the service}}
+\DoxyCodeLine{80         pService-\/>start();}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82         \textcolor{comment}{// Start advertising}}
+\DoxyCodeLine{83         pServer-\/>getAdvertising()-\/>addServiceUUID(pService-\/>getUUID());}
+\DoxyCodeLine{84         pServer-\/>getAdvertising()-\/>start();}
+\DoxyCodeLine{85     \}}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87     \textcolor{keywordtype}{bool} connect() \{}
+\DoxyCodeLine{88         mBuffRX.clear();}
+\DoxyCodeLine{89         \textcolor{keywordflow}{return} mConn = \textcolor{keyword}{true};}
+\DoxyCodeLine{90     \}}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92     \textcolor{keywordtype}{void} disconnect() \{}
+\DoxyCodeLine{93         mConn = \textcolor{keyword}{false};}
+\DoxyCodeLine{94     \}}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96     \textcolor{keywordtype}{bool} connected() \{}
+\DoxyCodeLine{97         \textcolor{keywordflow}{return} mConn;}
+\DoxyCodeLine{98     \}}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100     \textcolor{keywordtype}{size\_t} read(\textcolor{keywordtype}{void}* buf, \textcolor{keywordtype}{size\_t} len) \{}
+\DoxyCodeLine{101         millis\_time\_t start = BlynkMillis();}
+\DoxyCodeLine{102         \textcolor{keywordflow}{while} (BlynkMillis() -\/ start < BLYNK\_TIMEOUT\_MS) \{}
+\DoxyCodeLine{103             \textcolor{keywordflow}{if} (available() < len) \{}
+\DoxyCodeLine{104                 delay(1);}
+\DoxyCodeLine{105             \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{106                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{107             \}}
+\DoxyCodeLine{108         \}}
+\DoxyCodeLine{109         \textcolor{keywordtype}{size\_t} res = mBuffRX.get((uint8\_t*)buf, len);}
+\DoxyCodeLine{110         \textcolor{keywordflow}{return} res;}
+\DoxyCodeLine{111     \}}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113     \textcolor{keywordtype}{size\_t} write(\textcolor{keyword}{const} \textcolor{keywordtype}{void}* buf, \textcolor{keywordtype}{size\_t} len) \{}
+\DoxyCodeLine{114         pCharacteristicTX-\/>setValue((uint8\_t*)buf, len);}
+\DoxyCodeLine{115         pCharacteristicTX-\/>notify();}
+\DoxyCodeLine{116         \textcolor{keywordflow}{return} len;}
+\DoxyCodeLine{117     \}}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119     \textcolor{keywordtype}{size\_t} available() \{}
+\DoxyCodeLine{120         \textcolor{keywordtype}{size\_t} rxSize = mBuffRX.size();}
+\DoxyCodeLine{121         \textcolor{keywordflow}{return} rxSize;}
+\DoxyCodeLine{122     \}}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124 \textcolor{keyword}{private}:}
+\DoxyCodeLine{125 }
+\DoxyCodeLine{126     \textcolor{keywordtype}{void} onConnect(BLEServer* pServer);}
+\DoxyCodeLine{127     \textcolor{keywordtype}{void} onDisconnect(BLEServer* pServer);}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129     \textcolor{keywordtype}{void} onWrite(BLECharacteristic *pCharacteristic) \{}
+\DoxyCodeLine{130       std::string rxValue = pCharacteristic-\/>getValue();}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132       \textcolor{keywordflow}{if} (rxValue.length() > 0) \{}
+\DoxyCodeLine{133         uint8\_t* data = (uint8\_t*)rxValue.data();}
+\DoxyCodeLine{134         \textcolor{keywordtype}{size\_t} len = rxValue.length();}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136         BLYNK\_DBG\_DUMP(\textcolor{stringliteral}{"{}>> "{}}, data, len);}
+\DoxyCodeLine{137         mBuffRX.put(data, len);}
+\DoxyCodeLine{138       \}}
+\DoxyCodeLine{139     \}}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141 \textcolor{keyword}{private}:}
+\DoxyCodeLine{142     \textcolor{keywordtype}{bool} mConn;}
+\DoxyCodeLine{143     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* mName;}
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145     BLEServer *pServer;}
+\DoxyCodeLine{146     BLEService *pService;}
+\DoxyCodeLine{147     BLECharacteristic *pCharacteristicTX;}
+\DoxyCodeLine{148     BLECharacteristic *pCharacteristicRX;}
+\DoxyCodeLine{149 }
+\DoxyCodeLine{150     \mbox{\hyperlink{class_blynk_fifo}{BlynkFifo<uint8\_t, BLYNK\_MAX\_READBYTES*2>}} mBuffRX;}
+\DoxyCodeLine{151 \};}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_esp32___b_l_e}{BlynkEsp32\_BLE}}}
+\DoxyCodeLine{154     : \textcolor{keyword}{public} \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol}}<BlynkTransportEsp32\_BLE>}
+\DoxyCodeLine{155 \{}
+\DoxyCodeLine{156     \textcolor{keyword}{typedef} \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol<BlynkTransportEsp32\_BLE>}} \mbox{\hyperlink{class_blynk_protocol}{Base}};}
+\DoxyCodeLine{157 \textcolor{keyword}{public}:}
+\DoxyCodeLine{158     \mbox{\hyperlink{class_blynk_esp32___b_l_e}{BlynkEsp32\_BLE}}(\mbox{\hyperlink{class_blynk_transport_esp32___b_l_e}{BlynkTransportEsp32\_BLE}}\& transp)}
+\DoxyCodeLine{159         : \mbox{\hyperlink{class_blynk_protocol}{Base}}(transp)}
+\DoxyCodeLine{160 }
+\DoxyCodeLine{161     \{\}}
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163     \textcolor{keywordtype}{void} begin(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth)}
+\DoxyCodeLine{164     \{}
+\DoxyCodeLine{165         Base::begin(auth);}
+\DoxyCodeLine{166         state = DISCONNECTED;}
+\DoxyCodeLine{167         conn.begin();}
+\DoxyCodeLine{168     \}}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170     \textcolor{keywordtype}{void} setDeviceName(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* name) \{}
+\DoxyCodeLine{171         conn.setDeviceName(name);}
+\DoxyCodeLine{172     \}}
+\DoxyCodeLine{173 }
+\DoxyCodeLine{174 \};}
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177 \textcolor{keyword}{static} \mbox{\hyperlink{class_blynk_transport_esp32___b_l_e}{BlynkTransportEsp32\_BLE}} \_blynkTransportBLE;}
+\DoxyCodeLine{178 \mbox{\hyperlink{class_blynk_esp32___b_l_e}{BlynkEsp32\_BLE}} Blynk(\_blynkTransportBLE);}
+\DoxyCodeLine{179 }
+\DoxyCodeLine{180 \textcolor{keyword}{inline}}
+\DoxyCodeLine{181 \textcolor{keywordtype}{void} BlynkTransportEsp32\_BLE::onConnect(BLEServer* pServer) \{}
+\DoxyCodeLine{182   BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}BLE connect"{}}));}
+\DoxyCodeLine{183   connect();}
+\DoxyCodeLine{184   Blynk.startSession();}
+\DoxyCodeLine{185 \};}
+\DoxyCodeLine{186 }
+\DoxyCodeLine{187 \textcolor{keyword}{inline}}
+\DoxyCodeLine{188 \textcolor{keywordtype}{void} BlynkTransportEsp32\_BLE::onDisconnect(BLEServer* pServer) \{}
+\DoxyCodeLine{189   BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}BLE disconnect"{}}));}
+\DoxyCodeLine{190   Blynk.disconnect();}
+\DoxyCodeLine{191   disconnect();}
+\DoxyCodeLine{192 \}}
+\DoxyCodeLine{193 }
+\DoxyCodeLine{194 }
+\DoxyCodeLine{195 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_widgets_8h}{BlynkWidgets.h}}>}}
+\DoxyCodeLine{196 }
+\DoxyCodeLine{197 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

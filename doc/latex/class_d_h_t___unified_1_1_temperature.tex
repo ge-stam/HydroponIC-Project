@@ -1,0 +1,99 @@
+\hypertarget{class_d_h_t___unified_1_1_temperature}{}\doxysection{DHT\+\_\+\+Unified\+::Temperature Class Reference}
+\label{class_d_h_t___unified_1_1_temperature}\index{DHT\_Unified::Temperature@{DHT\_Unified::Temperature}}
+
+
+Class that stores state and functions about \mbox{\hyperlink{class_d_h_t___unified_1_1_temperature}{Temperature}}.  
+
+
+
+
+{\ttfamily \#include $<$DHT\+\_\+\+U.\+h$>$}
+
+Inheritance diagram for DHT\+\_\+\+Unified\+::Temperature\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_d_h_t___unified_1_1_temperature}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_d_h_t___unified_1_1_temperature_a291c84db68c2cbacda72b461f4961399}{Temperature}} (\mbox{\hyperlink{class_d_h_t___unified}{DHT\+\_\+\+Unified}} $\ast$parent, int32\+\_\+t id)
+\begin{DoxyCompactList}\small\item\em Instantiates a new \mbox{\hyperlink{class_d_h_t___unified}{DHT\+\_\+\+Unified}} \mbox{\hyperlink{class_d_h_t___unified_1_1_temperature}{Temperature}} Class. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_d_h_t___unified_1_1_temperature_a3579ab819efb2ebd045b27e45529a533}{get\+Event}} (\mbox{\hyperlink{structsensors__event__t}{sensors\+\_\+event\+\_\+t}} $\ast$event)
+\begin{DoxyCompactList}\small\item\em Reads the sensor and returns the data as a \mbox{\hyperlink{structsensors__event__t}{sensors\+\_\+event\+\_\+t}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_d_h_t___unified_1_1_temperature_ac30038292830ac3e38a75a07682cc958}{get\+Sensor}} (\mbox{\hyperlink{structsensor__t}{sensor\+\_\+t}} $\ast$sensor)
+\begin{DoxyCompactList}\small\item\em Provides the \mbox{\hyperlink{structsensor__t}{sensor\+\_\+t}} data for this sensor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class that stores state and functions about \mbox{\hyperlink{class_d_h_t___unified_1_1_temperature}{Temperature}}. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_d_h_t___unified_1_1_temperature_a291c84db68c2cbacda72b461f4961399}\label{class_d_h_t___unified_1_1_temperature_a291c84db68c2cbacda72b461f4961399}} 
+\index{DHT\_Unified::Temperature@{DHT\_Unified::Temperature}!Temperature@{Temperature}}
+\index{Temperature@{Temperature}!DHT\_Unified::Temperature@{DHT\_Unified::Temperature}}
+\doxysubsubsection{\texorpdfstring{Temperature()}{Temperature()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_d_h_t___unified_1_1_temperature}{Temperature}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_d_h_t___unified}{DHT\+\_\+\+Unified}} $\ast$}]{parent,  }\item[{int32\+\_\+t}]{id }\end{DoxyParamCaption})}
+
+
+
+Instantiates a new \mbox{\hyperlink{class_d_h_t___unified}{DHT\+\_\+\+Unified}} \mbox{\hyperlink{class_d_h_t___unified_1_1_temperature}{Temperature}} Class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parent} & Parent Sensor \\
+\hline
+{\em id} & Sensor id \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_d_h_t___unified_1_1_temperature_a3579ab819efb2ebd045b27e45529a533}\label{class_d_h_t___unified_1_1_temperature_a3579ab819efb2ebd045b27e45529a533}} 
+\index{DHT\_Unified::Temperature@{DHT\_Unified::Temperature}!getEvent@{getEvent}}
+\index{getEvent@{getEvent}!DHT\_Unified::Temperature@{DHT\_Unified::Temperature}}
+\doxysubsubsection{\texorpdfstring{getEvent()}{getEvent()}}
+{\footnotesize\ttfamily bool get\+Event (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsensors__event__t}{sensors\+\_\+event\+\_\+t}} $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reads the sensor and returns the data as a \mbox{\hyperlink{structsensors__event__t}{sensors\+\_\+event\+\_\+t}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em event} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+always returns true 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{class_adafruit___sensor_ac54c74a0a51e7af8f4f59339967d0988}{Adafruit\+\_\+\+Sensor}}.
+
+\mbox{\Hypertarget{class_d_h_t___unified_1_1_temperature_ac30038292830ac3e38a75a07682cc958}\label{class_d_h_t___unified_1_1_temperature_ac30038292830ac3e38a75a07682cc958}} 
+\index{DHT\_Unified::Temperature@{DHT\_Unified::Temperature}!getSensor@{getSensor}}
+\index{getSensor@{getSensor}!DHT\_Unified::Temperature@{DHT\_Unified::Temperature}}
+\doxysubsubsection{\texorpdfstring{getSensor()}{getSensor()}}
+{\footnotesize\ttfamily void get\+Sensor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsensor__t}{sensor\+\_\+t}} $\ast$}]{sensor }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Provides the \mbox{\hyperlink{structsensor__t}{sensor\+\_\+t}} data for this sensor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sensor} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_adafruit___sensor_a396d196231a92a3b3023c2bee8b2d897}{Adafruit\+\_\+\+Sensor}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+DHT/\mbox{\hyperlink{_d_h_t___u_8h}{DHT\+\_\+\+U.\+h}}\item 
+lib/\+DHT/\mbox{\hyperlink{_d_h_t___u_8cpp}{DHT\+\_\+\+U.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,94 @@
+\hypertarget{class_d_h_t___unified}{}\doxysection{DHT\+\_\+\+Unified Class Reference}
+\label{class_d_h_t___unified}\index{DHT\_Unified@{DHT\_Unified}}
+
+
+Class that stores state and functions for interacting with \mbox{\hyperlink{class_d_h_t___unified}{DHT\+\_\+\+Unified}}.  
+
+
+
+
+{\ttfamily \#include $<$DHT\+\_\+\+U.\+h$>$}
+
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_d_h_t___unified_1_1_humidity}{Humidity}}
+\begin{DoxyCompactList}\small\item\em Class that stores state and functions about \mbox{\hyperlink{class_d_h_t___unified_1_1_humidity}{Humidity}}. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_d_h_t___unified_1_1_temperature}{Temperature}}
+\begin{DoxyCompactList}\small\item\em Class that stores state and functions about \mbox{\hyperlink{class_d_h_t___unified_1_1_temperature}{Temperature}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_d_h_t___unified_a6ec0cec0251a82c93b53ed9b45de62a7}{DHT\+\_\+\+Unified}} (uint8\+\_\+t pin, uint8\+\_\+t type, uint8\+\_\+t count=6, int32\+\_\+t temp\+Sensor\+Id=-\/1, int32\+\_\+t humidity\+Sensor\+Id=-\/1)
+\begin{DoxyCompactList}\small\item\em Instantiates a new \mbox{\hyperlink{class_d_h_t___unified}{DHT\+\_\+\+Unified}} class. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_d_h_t___unified_ab0bdf5cca484fb2ba637c39384b27fb2}\label{class_d_h_t___unified_ab0bdf5cca484fb2ba637c39384b27fb2}} 
+void {\bfseries begin} ()
+\begin{DoxyCompactList}\small\item\em Setup sensor (calls begin on It) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_d_h_t___unified_1_1_temperature}{Temperature}} \mbox{\hyperlink{class_d_h_t___unified_a6e3cc33404dfb4627cfcc78bb26cf93a}{temperature}} ()
+\begin{DoxyCompactList}\small\item\em Returns temperature stored in \+\_\+temp. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_d_h_t___unified_1_1_humidity}{Humidity}} \mbox{\hyperlink{class_d_h_t___unified_a00c4be92fe939f646aab4701ecc82e79}{humidity}} ()
+\begin{DoxyCompactList}\small\item\em Returns humidity stored in \+\_\+humidity. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class that stores state and functions for interacting with \mbox{\hyperlink{class_d_h_t___unified}{DHT\+\_\+\+Unified}}. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_d_h_t___unified_a6ec0cec0251a82c93b53ed9b45de62a7}\label{class_d_h_t___unified_a6ec0cec0251a82c93b53ed9b45de62a7}} 
+\index{DHT\_Unified@{DHT\_Unified}!DHT\_Unified@{DHT\_Unified}}
+\index{DHT\_Unified@{DHT\_Unified}!DHT\_Unified@{DHT\_Unified}}
+\doxysubsubsection{\texorpdfstring{DHT\_Unified()}{DHT\_Unified()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_d_h_t___unified}{DHT\+\_\+\+Unified}} (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{pin,  }\item[{uint8\+\_\+t}]{type,  }\item[{uint8\+\_\+t}]{count = {\ttfamily 6},  }\item[{int32\+\_\+t}]{temp\+Sensor\+Id = {\ttfamily -\/1},  }\item[{int32\+\_\+t}]{humidity\+Sensor\+Id = {\ttfamily -\/1} }\end{DoxyParamCaption})}
+
+
+
+Instantiates a new \mbox{\hyperlink{class_d_h_t___unified}{DHT\+\_\+\+Unified}} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pin} & pin number that sensor is connected \\
+\hline
+{\em type} & type of sensor \\
+\hline
+{\em count} & number of sensors \\
+\hline
+{\em temp\+Sensor\+Id} & temperature sensor id \\
+\hline
+{\em humidity\+Sensor\+Id} & humidity sensor id \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_d_h_t___unified_a00c4be92fe939f646aab4701ecc82e79}\label{class_d_h_t___unified_a00c4be92fe939f646aab4701ecc82e79}} 
+\index{DHT\_Unified@{DHT\_Unified}!humidity@{humidity}}
+\index{humidity@{humidity}!DHT\_Unified@{DHT\_Unified}}
+\doxysubsubsection{\texorpdfstring{humidity()}{humidity()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_d_h_t___unified_1_1_humidity}{Humidity}} humidity (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns humidity stored in \+\_\+humidity. 
+
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{class_d_h_t___unified_1_1_humidity}{Humidity}} value 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_d_h_t___unified_a6e3cc33404dfb4627cfcc78bb26cf93a}\label{class_d_h_t___unified_a6e3cc33404dfb4627cfcc78bb26cf93a}} 
+\index{DHT\_Unified@{DHT\_Unified}!temperature@{temperature}}
+\index{temperature@{temperature}!DHT\_Unified@{DHT\_Unified}}
+\doxysubsubsection{\texorpdfstring{temperature()}{temperature()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_d_h_t___unified_1_1_temperature}{Temperature}} temperature (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns temperature stored in \+\_\+temp. 
+
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{class_d_h_t___unified_1_1_temperature}{Temperature}} value 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+DHT/\mbox{\hyperlink{_d_h_t___u_8h}{DHT\+\_\+\+U.\+h}}\item 
+lib/\+DHT/\mbox{\hyperlink{_d_h_t___u_8cpp}{DHT\+\_\+\+U.\+cpp}}\end{DoxyCompactItemize}

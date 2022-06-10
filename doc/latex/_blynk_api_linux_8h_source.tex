@@ -1,0 +1,143 @@
+\hypertarget{_blynk_api_linux_8h_source}{}\doxysection{Blynk\+Api\+Linux.\+h}
+\label{_blynk_api_linux_8h_source}\index{lib/Blynk/linux/BlynkApiLinux.h@{lib/Blynk/linux/BlynkApiLinux.h}}
+\mbox{\hyperlink{_blynk_api_linux_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef BlynkApiLinux\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define BlynkApiLinux\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_api_8h}{Blynk/BlynkApi.h}}>}}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#ifndef BLYNK\_INFO\_DEVICE}}
+\DoxyCodeLine{17 \textcolor{preprocessor}{    \#define BLYNK\_INFO\_DEVICE  "{}Linux"{}}}
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20 \textcolor{keyword}{template}<\textcolor{keyword}{class} Proto>}
+\DoxyCodeLine{21 BLYNK\_FORCE\_INLINE}
+\DoxyCodeLine{22 \textcolor{keywordtype}{void} \mbox{\hyperlink{class_blynk_api}{BlynkApi<Proto>::sendInfo}}()}
+\DoxyCodeLine{23 \{}
+\DoxyCodeLine{24     \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{char} profile[] BLYNK\_PROGMEM = \textcolor{stringliteral}{"{}blnkinf\(\backslash\)0"{}}}
+\DoxyCodeLine{25         BLYNK\_PARAM\_KV(\textcolor{stringliteral}{"{}ver"{}}    , BLYNK\_VERSION)}
+\DoxyCodeLine{26         BLYNK\_PARAM\_KV(\textcolor{stringliteral}{"{}h-\/beat"{}} , BLYNK\_TOSTRING(BLYNK\_HEARTBEAT))}
+\DoxyCodeLine{27         BLYNK\_PARAM\_KV(\textcolor{stringliteral}{"{}buff-\/in"{}}, BLYNK\_TOSTRING(BLYNK\_MAX\_READBYTES))}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#ifdef BLYNK\_INFO\_DEVICE}}
+\DoxyCodeLine{29         BLYNK\_PARAM\_KV(\textcolor{stringliteral}{"{}dev"{}}    , BLYNK\_INFO\_DEVICE)}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#ifdef BLYNK\_INFO\_CPU}}
+\DoxyCodeLine{32         BLYNK\_PARAM\_KV(\textcolor{stringliteral}{"{}cpu"{}}    , BLYNK\_INFO\_CPU)}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#ifdef BLYNK\_INFO\_CONNECTION}}
+\DoxyCodeLine{35         BLYNK\_PARAM\_KV(\textcolor{stringliteral}{"{}con"{}}    , BLYNK\_INFO\_CONNECTION)}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#ifdef BLYNK\_FIRMWARE\_TYPE}}
+\DoxyCodeLine{38         BLYNK\_PARAM\_KV(\textcolor{stringliteral}{"{}fw-\/type"{}}, BLYNK\_FIRMWARE\_TYPE)}
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{40 \textcolor{preprocessor}{\#ifdef BLYNK\_FIRMWARE\_VERSION}}
+\DoxyCodeLine{41         BLYNK\_PARAM\_KV(\textcolor{stringliteral}{"{}fw"{}}     , BLYNK\_FIRMWARE\_VERSION)}
+\DoxyCodeLine{42 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{43         BLYNK\_PARAM\_KV(\textcolor{stringliteral}{"{}build"{}}  , \_\_DATE\_\_ \textcolor{stringliteral}{"{} "{}} \_\_TIME\_\_)}
+\DoxyCodeLine{44         \textcolor{stringliteral}{"{}\(\backslash\)0"{}}}
+\DoxyCodeLine{45     ;}
+\DoxyCodeLine{46     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} profile\_len = \textcolor{keyword}{sizeof}(profile)-\/8-\/2;}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     \textcolor{keywordtype}{char} mem\_dyn[64];}
+\DoxyCodeLine{49     \mbox{\hyperlink{class_blynk_param}{BlynkParam}} profile\_dyn(mem\_dyn, 0, \textcolor{keyword}{sizeof}(mem\_dyn));}
+\DoxyCodeLine{50     profile\_dyn.add\_key(\textcolor{stringliteral}{"{}conn"{}}, \textcolor{stringliteral}{"{}Socket"{}});}
+\DoxyCodeLine{51 \textcolor{preprocessor}{\#ifdef BLYNK\_TEMPLATE\_ID}}
+\DoxyCodeLine{52     \{}
+\DoxyCodeLine{53         \textcolor{keyword}{const} \textcolor{keywordtype}{char}* tmpl = BLYNK\_TEMPLATE\_ID;}
+\DoxyCodeLine{54         \textcolor{keywordflow}{if} (tmpl \&\& strlen(tmpl)) \{}
+\DoxyCodeLine{55             profile\_dyn.add\_key(\textcolor{stringliteral}{"{}tmpl"{}}, tmpl);}
+\DoxyCodeLine{56         \}}
+\DoxyCodeLine{57     \}}
+\DoxyCodeLine{58 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60     \textcolor{keyword}{static\_cast<}Proto*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>sendCmd(BLYNK\_CMD\_INTERNAL, 0, profile+8, profile\_len, profile\_dyn.getBuffer(), profile\_dyn.getLength());}
+\DoxyCodeLine{61     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{62 \}}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65 \textcolor{keyword}{template}<\textcolor{keyword}{class} Proto>}
+\DoxyCodeLine{66 BLYNK\_FORCE\_INLINE}
+\DoxyCodeLine{67 \textcolor{keywordtype}{void} \mbox{\hyperlink{class_blynk_api}{BlynkApi<Proto>::processCmd}}(\textcolor{keyword}{const} \textcolor{keywordtype}{void}* buff, \textcolor{keywordtype}{size\_t} len)}
+\DoxyCodeLine{68 \{}
+\DoxyCodeLine{69     \mbox{\hyperlink{class_blynk_param}{BlynkParam}} param((\textcolor{keywordtype}{void}*)buff, len);}
+\DoxyCodeLine{70     \mbox{\hyperlink{class_blynk_param_1_1iterator}{BlynkParam::iterator}} it = param.begin();}
+\DoxyCodeLine{71     \textcolor{keywordflow}{if} (it >= param.end())}
+\DoxyCodeLine{72         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{73     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* cmd = it.asStr();}
+\DoxyCodeLine{74     uint16\_t cmd16;}
+\DoxyCodeLine{75     memcpy(\&cmd16, cmd, \textcolor{keyword}{sizeof}(cmd16));}
+\DoxyCodeLine{76     \textcolor{keywordflow}{if} (++it >= param.end())}
+\DoxyCodeLine{77         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79     \textcolor{keyword}{const} uint8\_t pin = it.asInt();}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81     \textcolor{keywordflow}{switch}(cmd16) \{}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83 \textcolor{preprocessor}{\#ifndef BLYNK\_NO\_BUILTIN}}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85     \textcolor{keywordflow}{case} BLYNK\_HW\_PM: \{}
+\DoxyCodeLine{86         \textcolor{keywordflow}{while} (it < param.end()) \{}
+\DoxyCodeLine{87             ++it;}
+\DoxyCodeLine{88 \textcolor{preprocessor}{\#ifdef BLYNK\_DEBUG}}
+\DoxyCodeLine{89             BLYNK\_LOG4(BLYNK\_F(\textcolor{stringliteral}{"{}Invalid pin "{}}), pin, BLYNK\_F(\textcolor{stringliteral}{"{} mode "{}}), it.asStr());}
+\DoxyCodeLine{90 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{91             ++it;}
+\DoxyCodeLine{92         \}}
+\DoxyCodeLine{93     \} \textcolor{keywordflow}{break};}
+\DoxyCodeLine{94     \textcolor{keywordflow}{case} BLYNK\_HW\_DR: \{}
+\DoxyCodeLine{95         \textcolor{keywordtype}{char} mem[16];}
+\DoxyCodeLine{96         \mbox{\hyperlink{class_blynk_param}{BlynkParam}} rsp(mem, 0, \textcolor{keyword}{sizeof}(mem));}
+\DoxyCodeLine{97         rsp.add(\textcolor{stringliteral}{"{}dw"{}});}
+\DoxyCodeLine{98         rsp.add(pin);}
+\DoxyCodeLine{99         rsp.add(0); \textcolor{comment}{// TODO}}
+\DoxyCodeLine{100         \textcolor{keyword}{static\_cast<}Proto*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>sendCmd(BLYNK\_CMD\_HARDWARE, 0, rsp.getBuffer(), rsp.getLength()-\/1);}
+\DoxyCodeLine{101     \} \textcolor{keywordflow}{break};}
+\DoxyCodeLine{102     \textcolor{keywordflow}{case} BLYNK\_HW\_DW: \{}
+\DoxyCodeLine{103         \textcolor{comment}{// Should be 1 parameter (value)}}
+\DoxyCodeLine{104         \textcolor{keywordflow}{if} (++it >= param.end())}
+\DoxyCodeLine{105             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107         \textcolor{comment}{// TODO: digitalWrite(pin, it.asInt() ? HIGH : LOW);}}
+\DoxyCodeLine{108     \} \textcolor{keywordflow}{break};}
+\DoxyCodeLine{109     \textcolor{keywordflow}{case} BLYNK\_HW\_AW: \{}
+\DoxyCodeLine{110         \textcolor{comment}{// Should be 1 parameter (value)}}
+\DoxyCodeLine{111         \textcolor{keywordflow}{if} (++it >= param.end())}
+\DoxyCodeLine{112             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114         \textcolor{comment}{// TODO: analogWrite(pin, it.asInt());}}
+\DoxyCodeLine{115     \} \textcolor{keywordflow}{break};}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119     \textcolor{keywordflow}{case} BLYNK\_HW\_VR: \{}
+\DoxyCodeLine{120         \mbox{\hyperlink{struct_blynk_req}{BlynkReq}} req = \{ pin \};}
+\DoxyCodeLine{121         WidgetReadHandler handler = GetReadHandler(pin);}
+\DoxyCodeLine{122         \textcolor{keywordflow}{if} (handler \&\& (handler != BlynkWidgetRead)) \{}
+\DoxyCodeLine{123             handler(req);}
+\DoxyCodeLine{124         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{125             BlynkWidgetReadDefault(req);}
+\DoxyCodeLine{126         \}}
+\DoxyCodeLine{127     \} \textcolor{keywordflow}{break};}
+\DoxyCodeLine{128     \textcolor{keywordflow}{case} BLYNK\_HW\_VW: \{}
+\DoxyCodeLine{129         ++it;}
+\DoxyCodeLine{130         \textcolor{keywordtype}{char}* start = (\textcolor{keywordtype}{char}*)it.asStr();}
+\DoxyCodeLine{131         \mbox{\hyperlink{class_blynk_param}{BlynkParam}} param2(start, len -\/ (start -\/ (\textcolor{keywordtype}{char}*)buff));}
+\DoxyCodeLine{132         \mbox{\hyperlink{struct_blynk_req}{BlynkReq}} req = \{ pin \};}
+\DoxyCodeLine{133         WidgetWriteHandler handler = GetWriteHandler(pin);}
+\DoxyCodeLine{134         \textcolor{keywordflow}{if} (handler \&\& (handler != BlynkWidgetWrite)) \{}
+\DoxyCodeLine{135             handler(req, param2);}
+\DoxyCodeLine{136         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{137             BlynkWidgetWriteDefault(req, param2);}
+\DoxyCodeLine{138         \}}
+\DoxyCodeLine{139     \} \textcolor{keywordflow}{break};}
+\DoxyCodeLine{140     \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{141         BLYNK\_LOG2(BLYNK\_F(\textcolor{stringliteral}{"{}Invalid HW cmd: "{}}), cmd);}
+\DoxyCodeLine{142         \textcolor{keyword}{static\_cast<}Proto*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>sendCmd(BLYNK\_CMD\_RESPONSE, \textcolor{keyword}{static\_cast<}Proto*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>msgIdOutOverride, NULL, BLYNK\_ILLEGAL\_COMMAND);}
+\DoxyCodeLine{143     \}}
+\DoxyCodeLine{144 \}}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

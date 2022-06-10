@@ -21,6 +21,9 @@ void LiquidPumps::Init_LiquidPumps(){
     pinMode(PH_UP_PIN, OUTPUT);
     pinMode(PH_DOWN_PIN, OUTPUT);
     pinMode(EC_UP_PIN, OUTPUT);
+    set_EC_UP_PUMP_OFF();
+    set_PH_UP_PUMP_OFF();
+    set_PH_DOWN_PUMP_OFF();
     Serial.println("************        INITIALISE LIQUID PUMPS           ************\n");
 }
 

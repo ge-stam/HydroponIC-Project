@@ -1,0 +1,46 @@
+\hypertarget{_edgent___m_k_r1010_2_blynk_state_8h_source}{}\doxysection{Blynk\+State.\+h}
+\label{_edgent___m_k_r1010_2_blynk_state_8h_source}\index{lib/Blynk/examples/Blynk.Edgent/Edgent\_MKR1010/BlynkState.h@{lib/Blynk/examples/Blynk.Edgent/Edgent\_MKR1010/BlynkState.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{2 \textcolor{keyword}{enum} State \{}
+\DoxyCodeLine{3   MODE\_WAIT\_CONFIG,}
+\DoxyCodeLine{4   MODE\_CONFIGURING,}
+\DoxyCodeLine{5   MODE\_CONNECTING\_NET,}
+\DoxyCodeLine{6   MODE\_CONNECTING\_CLOUD,}
+\DoxyCodeLine{7   MODE\_RUNNING,}
+\DoxyCodeLine{8   MODE\_OTA\_UPGRADE,}
+\DoxyCodeLine{9   MODE\_SWITCH\_TO\_STA,}
+\DoxyCodeLine{10   MODE\_RESET\_CONFIG,}
+\DoxyCodeLine{11   MODE\_ERROR,}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13   MODE\_MAX\_VALUE}
+\DoxyCodeLine{14 \};}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#if defined(APP\_DEBUG)}}
+\DoxyCodeLine{17 \textcolor{keyword}{const} \textcolor{keywordtype}{char}* StateStr[MODE\_MAX\_VALUE+1] = \{}
+\DoxyCodeLine{18   \textcolor{stringliteral}{"{}WAIT\_CONFIG"{}},}
+\DoxyCodeLine{19   \textcolor{stringliteral}{"{}CONFIGURING"{}},}
+\DoxyCodeLine{20   \textcolor{stringliteral}{"{}CONNECTING\_NET"{}},}
+\DoxyCodeLine{21   \textcolor{stringliteral}{"{}CONNECTING\_CLOUD"{}},}
+\DoxyCodeLine{22   \textcolor{stringliteral}{"{}RUNNING"{}},}
+\DoxyCodeLine{23   \textcolor{stringliteral}{"{}OTA\_UPGRADE"{}},}
+\DoxyCodeLine{24   \textcolor{stringliteral}{"{}SWITCH\_TO\_STA"{}},}
+\DoxyCodeLine{25   \textcolor{stringliteral}{"{}RESET\_CONFIG"{}},}
+\DoxyCodeLine{26   \textcolor{stringliteral}{"{}ERROR"{}},}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28   \textcolor{stringliteral}{"{}INIT"{}}}
+\DoxyCodeLine{29 \};}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{keyword}{namespace }BlynkState}
+\DoxyCodeLine{33 \{}
+\DoxyCodeLine{34   \textcolor{keyword}{volatile} State state = MODE\_MAX\_VALUE;}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36   State get()        \{ \textcolor{keywordflow}{return} state; \}}
+\DoxyCodeLine{37   \textcolor{keywordtype}{bool}  is (State m) \{ \textcolor{keywordflow}{return} (state == m); \}}
+\DoxyCodeLine{38   \textcolor{keywordtype}{void}  set(State m);}
+\DoxyCodeLine{39 \};}
+\DoxyCodeLine{40 }
+
+\end{DoxyCode}

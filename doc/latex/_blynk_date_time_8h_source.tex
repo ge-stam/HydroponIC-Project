@@ -1,0 +1,174 @@
+\hypertarget{_blynk_date_time_8h_source}{}\doxysection{Blynk\+Date\+Time.\+h}
+\label{_blynk_date_time_8h_source}\index{lib/Blynk/src/utility/BlynkDateTime.h@{lib/Blynk/src/utility/BlynkDateTime.h}}
+\mbox{\hyperlink{_blynk_date_time_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef BlynkDateTime\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define BlynkDateTime\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keyword}{typedef} \textcolor{keywordtype}{long} blynk\_time\_t;}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{keyword}{struct }\mbox{\hyperlink{structblynk__tm}{blynk\_tm}} *blynk\_gmtime\_r(\textcolor{keyword}{const} blynk\_time\_t *time, \textcolor{keyword}{struct} \mbox{\hyperlink{structblynk__tm}{blynk\_tm}} *tm);}
+\DoxyCodeLine{17 blynk\_time\_t blynk\_mk\_gmtime(\textcolor{keyword}{struct} \mbox{\hyperlink{structblynk__tm}{blynk\_tm}} *tm);}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19 \textcolor{keyword}{struct }\mbox{\hyperlink{structblynk__tm}{blynk\_tm}} \{}
+\DoxyCodeLine{20     int8\_t          tm\_sec;}
+\DoxyCodeLine{21     int8\_t          tm\_min;}
+\DoxyCodeLine{22     int8\_t          tm\_hour;}
+\DoxyCodeLine{23     int8\_t          tm\_mday;}
+\DoxyCodeLine{24     int8\_t          tm\_wday;}
+\DoxyCodeLine{25     int8\_t          tm\_mon;}
+\DoxyCodeLine{26     int16\_t         tm\_year;}
+\DoxyCodeLine{27     int16\_t         tm\_yday;}
+\DoxyCodeLine{28     int16\_t         tm\_isdst;}
+\DoxyCodeLine{29 \};}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_time}{BlynkTime}} \{}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{keyword}{public}:}
+\DoxyCodeLine{34     \textcolor{keyword}{static} \textcolor{keyword}{const} uint32\_t MAX\_TIME = 86400L;}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36     \textcolor{keyword}{static} \mbox{\hyperlink{class_blynk_time}{BlynkTime}} invalid() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_blynk_time}{BlynkTime}}(); \}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38     \mbox{\hyperlink{class_blynk_time}{BlynkTime}}() : mTime(-\/1) \{\}}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \mbox{\hyperlink{class_blynk_time}{BlynkTime}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_blynk_time}{BlynkTime}}\& t) : mTime(t.mTime) \{\}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     \mbox{\hyperlink{class_blynk_time}{BlynkTime}}(\textcolor{keywordtype}{long} seconds) : mTime(seconds \% MAX\_TIME) \{\}}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44     \mbox{\hyperlink{class_blynk_time}{BlynkTime}}(\textcolor{keywordtype}{int} hour, \textcolor{keywordtype}{int} minute, \textcolor{keywordtype}{int} second)}
+\DoxyCodeLine{45     \{}
+\DoxyCodeLine{46         mTime = (hour * 3600 + minute * 60 + second) \% MAX\_TIME;}
+\DoxyCodeLine{47     \}}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49     \textcolor{keywordtype}{int} second()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} mTime \% 60; \}}
+\DoxyCodeLine{50     \textcolor{keywordtype}{int} minute()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} (mTime / 60) \% 60; \}}
+\DoxyCodeLine{51     \textcolor{keywordtype}{int} hour()\textcolor{keyword}{   const }\{ \textcolor{keywordflow}{return} mTime / 3600; \}}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53     \textcolor{keywordtype}{int} hour12()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{54         \textcolor{keywordtype}{int} h = hour();}
+\DoxyCodeLine{55         \textcolor{keywordflow}{if} (h == 0)}
+\DoxyCodeLine{56             \textcolor{keywordflow}{return} 12; \textcolor{comment}{// 12 midnight}}
+\DoxyCodeLine{57         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (h > 12)}
+\DoxyCodeLine{58             \textcolor{keywordflow}{return} h -\/ 12;}
+\DoxyCodeLine{59         \textcolor{keywordflow}{return} h;}
+\DoxyCodeLine{60     \}}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62     \textcolor{keywordtype}{bool} isAM()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} !isPM(); \}}
+\DoxyCodeLine{63     \textcolor{keywordtype}{bool} isPM()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} (hour() >= 12); \}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     \textcolor{keywordtype}{void} adjustSeconds(\textcolor{keywordtype}{int} sec) \{}
+\DoxyCodeLine{66         \textcolor{keywordflow}{if} (isValid()) \{}
+\DoxyCodeLine{67             mTime = (mTime + sec) \% MAX\_TIME;}
+\DoxyCodeLine{68         \}}
+\DoxyCodeLine{69     \}}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71     blynk\_time\_t getUnixOffset()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} mTime; \}}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73     \textcolor{keywordtype}{bool} isValid()\textcolor{keyword}{  const }\{ \textcolor{keywordflow}{return} mTime < MAX\_TIME; \}}
+\DoxyCodeLine{74     \textcolor{keyword}{operator} bool()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} isValid(); \}}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76     \textcolor{keywordtype}{bool} operator != (\textcolor{keyword}{const} \mbox{\hyperlink{class_blynk_time}{BlynkTime}}\& t)\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} mTime != t.mTime; \}}
+\DoxyCodeLine{77     \textcolor{keywordtype}{bool} operator == (\textcolor{keyword}{const} \mbox{\hyperlink{class_blynk_time}{BlynkTime}}\& t)\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} mTime == t.mTime; \}}
+\DoxyCodeLine{78     \textcolor{keywordtype}{bool} operator >= (\textcolor{keyword}{const} \mbox{\hyperlink{class_blynk_time}{BlynkTime}}\& t)\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} mTime >= t.mTime; \}}
+\DoxyCodeLine{79     \textcolor{keywordtype}{bool} operator <= (\textcolor{keyword}{const} \mbox{\hyperlink{class_blynk_time}{BlynkTime}}\& t)\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} mTime <= t.mTime; \}}
+\DoxyCodeLine{80     \textcolor{keywordtype}{bool} operator >  (\textcolor{keyword}{const} \mbox{\hyperlink{class_blynk_time}{BlynkTime}}\& t)\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} mTime >  t.mTime; \}}
+\DoxyCodeLine{81     \textcolor{keywordtype}{bool} operator <  (\textcolor{keyword}{const} \mbox{\hyperlink{class_blynk_time}{BlynkTime}}\& t)\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} mTime <  t.mTime; \}}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83 \textcolor{keyword}{private}:}
+\DoxyCodeLine{84     uint32\_t mTime;}
+\DoxyCodeLine{85 \};}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_date_time}{BlynkDateTime}} \{}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89 \textcolor{keyword}{public}:}
+\DoxyCodeLine{90     \mbox{\hyperlink{class_blynk_date_time}{BlynkDateTime}}() : mTime(0) \{\}}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92     \mbox{\hyperlink{class_blynk_date_time}{BlynkDateTime}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_blynk_date_time}{BlynkDateTime}}\& t)}
+\DoxyCodeLine{93     \{}
+\DoxyCodeLine{94         mTime = t.mTime;}
+\DoxyCodeLine{95         blynk\_gmtime\_r(\&mTime, \&mTm);}
+\DoxyCodeLine{96     \}}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98     \mbox{\hyperlink{class_blynk_date_time}{BlynkDateTime}}(blynk\_time\_t t)}
+\DoxyCodeLine{99     \{}
+\DoxyCodeLine{100         mTime = t;}
+\DoxyCodeLine{101         blynk\_gmtime\_r(\&mTime, \&mTm);}
+\DoxyCodeLine{102     \}}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104     \mbox{\hyperlink{class_blynk_date_time}{BlynkDateTime}}(\textcolor{keywordtype}{int} hour, \textcolor{keywordtype}{int} minute, \textcolor{keywordtype}{int} second, \textcolor{keywordtype}{int} day, \textcolor{keywordtype}{int} month, \textcolor{keywordtype}{int} year)}
+\DoxyCodeLine{105     \{}
+\DoxyCodeLine{106         mTm.tm\_hour = hour;}
+\DoxyCodeLine{107         mTm.tm\_min  = minute;}
+\DoxyCodeLine{108         mTm.tm\_sec  = second;}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110         mTm.tm\_mday = day;}
+\DoxyCodeLine{111         mTm.tm\_mon  = month -\/ 1;}
+\DoxyCodeLine{112         mTm.tm\_year = year -\/ 1900;}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114         mTm.tm\_isdst = 0;}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116         mTime = blynk\_mk\_gmtime(\&mTm);}
+\DoxyCodeLine{117     \}}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119     \textcolor{keywordtype}{int} second()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} mTm.tm\_sec; \}}
+\DoxyCodeLine{120     \textcolor{keywordtype}{int} minute()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} mTm.tm\_min; \}}
+\DoxyCodeLine{121     \textcolor{keywordtype}{int} hour()\textcolor{keyword}{   const }\{ \textcolor{keywordflow}{return} mTm.tm\_hour; \}}
+\DoxyCodeLine{122     \textcolor{keywordtype}{int} day()\textcolor{keyword}{    const }\{ \textcolor{keywordflow}{return} mTm.tm\_mday; \}}
+\DoxyCodeLine{123     \textcolor{keywordtype}{int} month()\textcolor{keyword}{  const }\{ \textcolor{keywordflow}{return} 1 + mTm.tm\_mon; \}}
+\DoxyCodeLine{124     \textcolor{keywordtype}{int} year()\textcolor{keyword}{   const }\{ \textcolor{keywordflow}{return} 1900 + mTm.tm\_year; \}}
+\DoxyCodeLine{125 }
+\DoxyCodeLine{126     \textcolor{keywordtype}{int} day\_of\_year()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} 1 + mTm.tm\_yday; \}}
+\DoxyCodeLine{127     \textcolor{keywordtype}{int} day\_of\_week()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} mTm.tm\_wday == 0 ? 7 : mTm.tm\_wday; \}}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129     \textcolor{comment}{/*int weak\_of\_year() const \{}}
+\DoxyCodeLine{130 \textcolor{comment}{        int julian = day\_of\_year();}}
+\DoxyCodeLine{131 \textcolor{comment}{        int dow = day\_of\_week();}}
+\DoxyCodeLine{132 \textcolor{comment}{        int dowJan1 = BlynkDateTime(0,0,0, 1,1,year()).day\_of\_week();}}
+\DoxyCodeLine{133 \textcolor{comment}{        int weekNum = ((julian + 6) / 7);}}
+\DoxyCodeLine{134 \textcolor{comment}{        if (dow < dowJan1)}}
+\DoxyCodeLine{135 \textcolor{comment}{            ++weekNum;}}
+\DoxyCodeLine{136 \textcolor{comment}{        return (weekNum);}}
+\DoxyCodeLine{137 \textcolor{comment}{    \}*/}}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139     \textcolor{keywordtype}{int} hour12()\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{140         \textcolor{keywordtype}{int} h = hour();}
+\DoxyCodeLine{141         \textcolor{keywordflow}{if} (h == 0)}
+\DoxyCodeLine{142             \textcolor{keywordflow}{return} 12; \textcolor{comment}{// 12 midnight}}
+\DoxyCodeLine{143         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (h > 12)}
+\DoxyCodeLine{144             \textcolor{keywordflow}{return} h -\/ 12;}
+\DoxyCodeLine{145         \textcolor{keywordflow}{return} h;}
+\DoxyCodeLine{146     \}}
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148     \textcolor{keywordtype}{bool} isAM()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} !isPM(); \}}
+\DoxyCodeLine{149     \textcolor{keywordtype}{bool} isPM()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} (hour() >= 12); \}}
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151     \textcolor{keywordtype}{void} adjustSeconds(\textcolor{keywordtype}{int} sec) \{}
+\DoxyCodeLine{152         \textcolor{keywordflow}{if} (isValid()) \{}
+\DoxyCodeLine{153             mTime += sec;}
+\DoxyCodeLine{154             blynk\_gmtime\_r(\&mTime, \&mTm);}
+\DoxyCodeLine{155         \}}
+\DoxyCodeLine{156     \}}
+\DoxyCodeLine{157 }
+\DoxyCodeLine{158     \textcolor{comment}{//tm\& getTm() \{ return mTm; \}}}
+\DoxyCodeLine{159     blynk\_time\_t getUnix()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} mTime; \}}
+\DoxyCodeLine{160 }
+\DoxyCodeLine{161     \textcolor{keywordtype}{bool} isValid()\textcolor{keyword}{  const }\{ \textcolor{keywordflow}{return} mTime != 0; \}}
+\DoxyCodeLine{162     \textcolor{keyword}{operator} bool()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} isValid(); \}}
+\DoxyCodeLine{163 }
+\DoxyCodeLine{164     \textcolor{keywordtype}{bool} operator != (\textcolor{keyword}{const} \mbox{\hyperlink{class_blynk_date_time}{BlynkDateTime}}\& t)\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} mTime != t.mTime; \}}
+\DoxyCodeLine{165     \textcolor{keywordtype}{bool} operator == (\textcolor{keyword}{const} \mbox{\hyperlink{class_blynk_date_time}{BlynkDateTime}}\& t)\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} mTime == t.mTime; \}}
+\DoxyCodeLine{166     \textcolor{keywordtype}{bool} operator >= (\textcolor{keyword}{const} \mbox{\hyperlink{class_blynk_date_time}{BlynkDateTime}}\& t)\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} mTime >= t.mTime; \}}
+\DoxyCodeLine{167     \textcolor{keywordtype}{bool} operator <= (\textcolor{keyword}{const} \mbox{\hyperlink{class_blynk_date_time}{BlynkDateTime}}\& t)\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} mTime <= t.mTime; \}}
+\DoxyCodeLine{168     \textcolor{keywordtype}{bool} operator >  (\textcolor{keyword}{const} \mbox{\hyperlink{class_blynk_date_time}{BlynkDateTime}}\& t)\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} mTime >  t.mTime; \}}
+\DoxyCodeLine{169     \textcolor{keywordtype}{bool} operator <  (\textcolor{keyword}{const} \mbox{\hyperlink{class_blynk_date_time}{BlynkDateTime}}\& t)\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} mTime <  t.mTime; \}}
+\DoxyCodeLine{170 }
+\DoxyCodeLine{171 \textcolor{keyword}{private}:}
+\DoxyCodeLine{172     \mbox{\hyperlink{structblynk__tm}{blynk\_tm}} mTm;}
+\DoxyCodeLine{173     blynk\_time\_t mTime;}
+\DoxyCodeLine{174 \};}
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176 }
+\DoxyCodeLine{177 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

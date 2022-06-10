@@ -1,0 +1,80 @@
+\hypertarget{class_blynk_protocol}{}\doxysection{Blynk\+Protocol\texorpdfstring{$<$}{<} Transp \texorpdfstring{$>$}{>} Class Template Reference}
+\label{class_blynk_protocol}\index{BlynkProtocol$<$ Transp $>$@{BlynkProtocol$<$ Transp $>$}}
+Inheritance diagram for Blynk\+Protocol\texorpdfstring{$<$}{<} Transp \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_blynk_protocol}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_blynk_protocol_a37b3bffa9832d334353de106ffa06683}\label{class_blynk_protocol_a37b3bffa9832d334353de106ffa06683}} 
+enum {\bfseries Blynk\+State} \{ {\bfseries CONNECTING}
+, {\bfseries CONNECTED}
+, {\bfseries DISCONNECTED}
+, {\bfseries TOKEN\+\_\+\+INVALID}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_blynk_protocol_a1309b6f05b7fc2230977717d654797c5}\label{class_blynk_protocol_a1309b6f05b7fc2230977717d654797c5}} 
+{\bfseries Blynk\+Protocol} (Transp \&transp)
+\item 
+\mbox{\Hypertarget{class_blynk_protocol_aa0fd96bc25e3d509fb54028c2e4b91f6}\label{class_blynk_protocol_aa0fd96bc25e3d509fb54028c2e4b91f6}} 
+bool {\bfseries connected} () const
+\item 
+\mbox{\Hypertarget{class_blynk_protocol_a466b72a2b3e7496cfa8e5cd3c70b4067}\label{class_blynk_protocol_a466b72a2b3e7496cfa8e5cd3c70b4067}} 
+bool {\bfseries is\+Token\+Invalid} () const
+\item 
+\mbox{\Hypertarget{class_blynk_protocol_ae6f9788d73090c999e850ad9034ff794}\label{class_blynk_protocol_ae6f9788d73090c999e850ad9034ff794}} 
+bool {\bfseries connect} (uint32\+\_\+t timeout=BLYNK\+\_\+\+TIMEOUT\+\_\+\+MS $\ast$3)
+\item 
+\mbox{\Hypertarget{class_blynk_protocol_a960705de531a20389fb29928d43258c3}\label{class_blynk_protocol_a960705de531a20389fb29928d43258c3}} 
+void {\bfseries disconnect} ()
+\item 
+\mbox{\Hypertarget{class_blynk_protocol_a4906db4d292c3e3864aa153489a64138}\label{class_blynk_protocol_a4906db4d292c3e3864aa153489a64138}} 
+bool {\bfseries run} (bool avail=false)
+\item 
+\mbox{\Hypertarget{class_blynk_protocol_a3e4203ea07d549c0790de91899a074cd}\label{class_blynk_protocol_a3e4203ea07d549c0790de91899a074cd}} 
+void {\bfseries start\+Session} ()
+\item 
+\mbox{\Hypertarget{class_blynk_protocol_ad224787c0dc30adab0dcdecfc1c22bfb}\label{class_blynk_protocol_ad224787c0dc30adab0dcdecfc1c22bfb}} 
+void {\bfseries send\+Cmd} (uint8\+\_\+t cmd, uint16\+\_\+t id=0, const void $\ast$data=NULL, size\+\_\+t length=0, const void $\ast$data2=NULL, size\+\_\+t length2=0)
+\item 
+\mbox{\Hypertarget{class_blynk_protocol_afdec053dbaac5e9cb872a47e56216145}\label{class_blynk_protocol_afdec053dbaac5e9cb872a47e56216145}} 
+void {\bfseries send\+Response} (Blynk\+Status rsp, uint16\+\_\+t id=0)
+\item 
+\mbox{\Hypertarget{class_blynk_protocol_aeb93e25e95d089d3e1c79baf4a71b594}\label{class_blynk_protocol_aeb93e25e95d089d3e1c79baf4a71b594}} 
+void {\bfseries print\+Banner} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_blynk_protocol_aad323435a2ce780a8e262b1ec1bfe118}\label{class_blynk_protocol_aad323435a2ce780a8e262b1ec1bfe118}} 
+void {\bfseries begin} (const char $\ast$auth)
+\item 
+\mbox{\Hypertarget{class_blynk_protocol_acc32d61719f0dfcac95f927884e89137}\label{class_blynk_protocol_acc32d61719f0dfcac95f927884e89137}} 
+bool {\bfseries process\+Input} (void)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_blynk_protocol_ae77ccbc3eee44f8c4e64013ac7967c87}\label{class_blynk_protocol_ae77ccbc3eee44f8c4e64013ac7967c87}} 
+Transp \& {\bfseries conn}
+\item 
+\mbox{\Hypertarget{class_blynk_protocol_ab63dcaba8ed2de37db8f2f9bc8b6967e}\label{class_blynk_protocol_ab63dcaba8ed2de37db8f2f9bc8b6967e}} 
+Blynk\+State {\bfseries state}
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_blynk_protocol_a0646026965cc5940b8a93aa23817d8fd}\label{class_blynk_protocol_a0646026965cc5940b8a93aa23817d8fd}} 
+class {\bfseries Blynk\+Api$<$ Blynk\+Protocol$<$ Transp $>$ $>$}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+Blynk/src/\+Blynk/\mbox{\hyperlink{_blynk_protocol_8h}{Blynk\+Protocol.\+h}}\end{DoxyCompactItemize}

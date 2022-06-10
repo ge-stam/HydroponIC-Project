@@ -1,0 +1,27 @@
+\hypertarget{_blynk_simple_wi_fi_link_8h_source}{}\doxysection{Blynk\+Simple\+Wi\+Fi\+Link.\+h}
+\label{_blynk_simple_wi_fi_link_8h_source}\index{lib/Blynk/src/BlynkSimpleWiFiLink.h@{lib/Blynk/src/BlynkSimpleWiFiLink.h}}
+\mbox{\hyperlink{_blynk_simple_wi_fi_link_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#ifndef BlynkSimpleWiFiLink\_h}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#define BlynkSimpleWiFiLink\_h}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#ifndef BLYNK\_INFO\_CONNECTION}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#define BLYNK\_INFO\_CONNECTION  "{}WiFiLink"{}}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#define BLYNK\_SEND\_ATOMIC}}
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#define BLYNK\_SEND\_CHUNK 64}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#include <WiFiLink.h>}}
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_wi_fi_common_8h}{Adapters/BlynkWiFiCommon.h}}>}}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23 \textcolor{keyword}{static} WiFiClient \_blynkWifiClient;}
+\DoxyCodeLine{24 \textcolor{keyword}{static} \mbox{\hyperlink{class_blynk_arduino_client_gen}{BlynkArduinoClient}} \_blynkTransport(\_blynkWifiClient);}
+\DoxyCodeLine{25 \mbox{\hyperlink{class_blynk_wifi_common}{BlynkWifiCommon}} Blynk(\_blynkTransport);}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_widgets_8h}{BlynkWidgets.h}}>}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,56 @@
+\hypertarget{class_widget_table}{}\doxysection{Widget\+Table Class Reference}
+\label{class_widget_table}\index{WidgetTable@{WidgetTable}}
+Inheritance diagram for Widget\+Table\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_widget_table}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_widget_table_ac4f0fe6d8896ce85f9b7f8e7af4f1fcc}\label{class_widget_table_ac4f0fe6d8896ce85f9b7f8e7af4f1fcc}} 
+typedef void($\ast$ {\bfseries Item\+Select\+Change}) (int index, bool selected)
+\item 
+\mbox{\Hypertarget{class_widget_table_a8ffbf051dbd759205cc76b4d6b22a5d3}\label{class_widget_table_a8ffbf051dbd759205cc76b4d6b22a5d3}} 
+typedef void($\ast$ {\bfseries Item\+Order\+Change}) (int index\+From, int index\+To)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_widget_table_abce03915bc8bf8e9fdfe86e4dfa059e6}\label{class_widget_table_abce03915bc8bf8e9fdfe86e4dfa059e6}} 
+{\bfseries Widget\+Table} (uint8\+\_\+t v\+Pin=-\/1)
+\item 
+\mbox{\Hypertarget{class_widget_table_a692f6c51f7e2947831855ccdf93d5fc6}\label{class_widget_table_a692f6c51f7e2947831855ccdf93d5fc6}} 
+void {\bfseries on\+Write} (\mbox{\hyperlink{struct_blynk_req}{Blynk\+Req}} BLYNK\+\_\+\+UNUSED \&request, const \mbox{\hyperlink{class_blynk_param}{Blynk\+Param}} \&param)
+\item 
+\mbox{\Hypertarget{class_widget_table_a733e28c54e71ff66767e697ce3a57aa4}\label{class_widget_table_a733e28c54e71ff66767e697ce3a57aa4}} 
+void {\bfseries on\+Order\+Change} (Item\+Order\+Change cbk)
+\item 
+\mbox{\Hypertarget{class_widget_table_a03066ba7eae351d7823b5dbe2770c646}\label{class_widget_table_a03066ba7eae351d7823b5dbe2770c646}} 
+void {\bfseries on\+Select\+Change} (Item\+Select\+Change cbk)
+\item 
+\mbox{\Hypertarget{class_widget_table_ac8bb3912a3ce86b15842e79d0b421204}\label{class_widget_table_ac8bb3912a3ce86b15842e79d0b421204}} 
+void {\bfseries clear} ()
+\item 
+\mbox{\Hypertarget{class_widget_table_ad4c05488f1681f83017b7247753146e8}\label{class_widget_table_ad4c05488f1681f83017b7247753146e8}} 
+{\footnotesize template$<$typename T1 , typename T2 $>$ }\\void {\bfseries add\+Row} (int index, const T1 \&name, const T2 \&value)
+\item 
+\mbox{\Hypertarget{class_widget_table_a202d0ef151871073c2b9edebec9b6bb6}\label{class_widget_table_a202d0ef151871073c2b9edebec9b6bb6}} 
+{\footnotesize template$<$typename T1 , typename T2 $>$ }\\void {\bfseries update\+Row} (int index, const T1 \&name, const T2 \&value)
+\item 
+\mbox{\Hypertarget{class_widget_table_a5af2acffc0c3a542ba9b69b8accd5d1e}\label{class_widget_table_a5af2acffc0c3a542ba9b69b8accd5d1e}} 
+void {\bfseries pick\+Row} (int index)
+\item 
+\mbox{\Hypertarget{class_widget_table_afd8912d2dcaa09474b2b05ea23e5d95b}\label{class_widget_table_afd8912d2dcaa09474b2b05ea23e5d95b}} 
+void {\bfseries select\+Row} (int index)
+\item 
+\mbox{\Hypertarget{class_widget_table_a58572b7fa3f4f334c155104828dd97d7}\label{class_widget_table_a58572b7fa3f4f334c155104828dd97d7}} 
+void {\bfseries deselect\+Row} (int index)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+Blynk/src/\mbox{\hyperlink{_widget_table_8h}{Widget\+Table.\+h}}\end{DoxyCompactItemize}

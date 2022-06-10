@@ -1,0 +1,154 @@
+\hypertarget{_edgent___m_k_r1000_2_config_store_8h_source}{}\doxysection{Config\+Store.\+h}
+\label{_edgent___m_k_r1000_2_config_store_8h_source}\index{lib/Blynk/examples/Blynk.Edgent/Edgent\_MKR1000/ConfigStore.h@{lib/Blynk/examples/Blynk.Edgent/Edgent\_MKR1000/ConfigStore.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define CONFIG\_FLAG\_VALID       0x01}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#define CONFIG\_FLAG\_STATIC\_IP   0x02}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#define BLYNK\_PROV\_ERR\_NONE     0      }\textcolor{comment}{// All good}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define BLYNK\_PROV\_ERR\_CONFIG   700    }\textcolor{comment}{// Invalid config from app (malformed token,etc)}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#define BLYNK\_PROV\_ERR\_NETWORK  701    }\textcolor{comment}{// Could not connect to the router}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#define BLYNK\_PROV\_ERR\_CLOUD    702    }\textcolor{comment}{// Could not connect to the cloud}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#define BLYNK\_PROV\_ERR\_TOKEN    703    }\textcolor{comment}{// Invalid token error (after connection)}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#define BLYNK\_PROV\_ERR\_INTERNAL 704    }\textcolor{comment}{// Other issues (i.e. hardware failure)}}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{keyword}{struct }\mbox{\hyperlink{struct_config_store}{ConfigStore}} \{}
+\DoxyCodeLine{13   uint32\_t  magic;}
+\DoxyCodeLine{14   \textcolor{keywordtype}{char}      version[15];}
+\DoxyCodeLine{15   uint8\_t   flags;}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17   \textcolor{keywordtype}{char}      wifiSSID[34];}
+\DoxyCodeLine{18   \textcolor{keywordtype}{char}      wifiPass[64];}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20   \textcolor{keywordtype}{char}      cloudToken[34];}
+\DoxyCodeLine{21   \textcolor{keywordtype}{char}      cloudHost[34];}
+\DoxyCodeLine{22   uint16\_t  cloudPort;}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24   uint32\_t  staticIP;}
+\DoxyCodeLine{25   uint32\_t  staticMask;}
+\DoxyCodeLine{26   uint32\_t  staticGW;}
+\DoxyCodeLine{27   uint32\_t  staticDNS;}
+\DoxyCodeLine{28   uint32\_t  staticDNS2;}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30   \textcolor{keywordtype}{int}       last\_error;}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32   \textcolor{keywordtype}{void} setFlag(uint8\_t mask, \textcolor{keywordtype}{bool} value) \{}
+\DoxyCodeLine{33     \textcolor{keywordflow}{if} (value) \{}
+\DoxyCodeLine{34       flags |= mask;}
+\DoxyCodeLine{35     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{36       flags \&= \string~mask;}
+\DoxyCodeLine{37     \}}
+\DoxyCodeLine{38   \}}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40   \textcolor{keywordtype}{bool} getFlag(uint8\_t mask) \{}
+\DoxyCodeLine{41     \textcolor{keywordflow}{return} (flags \& mask) == mask;}
+\DoxyCodeLine{42   \}}
+\DoxyCodeLine{43 \} \_\_attribute\_\_((packed));}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45 \mbox{\hyperlink{struct_config_store}{ConfigStore}} configStore;}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47 \textcolor{keyword}{const} \mbox{\hyperlink{struct_config_store}{ConfigStore}} configDefault = \{}
+\DoxyCodeLine{48   0x626C6E6B,}
+\DoxyCodeLine{49   BLYNK\_FIRMWARE\_VERSION,}
+\DoxyCodeLine{50   0x00,}
+\DoxyCodeLine{51   }
+\DoxyCodeLine{52   \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{53   \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{54   }
+\DoxyCodeLine{55   \textcolor{stringliteral}{"{}invalid token"{}},}
+\DoxyCodeLine{56   CONFIG\_DEFAULT\_SERVER,}
+\DoxyCodeLine{57   CONFIG\_DEFAULT\_PORT,}
+\DoxyCodeLine{58   0,}
+\DoxyCodeLine{59   BLYNK\_PROV\_ERR\_NONE}
+\DoxyCodeLine{60 \};}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T, \textcolor{keywordtype}{int} size>}
+\DoxyCodeLine{63 \textcolor{keywordtype}{void} CopyString(\textcolor{keyword}{const} String\& s, T(\&arr)[size]) \{}
+\DoxyCodeLine{64   s.toCharArray(arr, size);}
+\DoxyCodeLine{65 \}}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67 \textcolor{keyword}{static} \textcolor{keywordtype}{bool} config\_load\_blnkopt()}
+\DoxyCodeLine{68 \{}
+\DoxyCodeLine{69   \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{char} blnkopt[] = \textcolor{stringliteral}{"{}blnkopt\(\backslash\)0"{}}}
+\DoxyCodeLine{70     BLYNK\_PARAM\_KV(\textcolor{stringliteral}{"{}ssid"{}} , BLYNK\_PARAM\_PLACEHOLDER\_64}
+\DoxyCodeLine{71                             BLYNK\_PARAM\_PLACEHOLDER\_64}
+\DoxyCodeLine{72                             BLYNK\_PARAM\_PLACEHOLDER\_64}
+\DoxyCodeLine{73                             BLYNK\_PARAM\_PLACEHOLDER\_64)}
+\DoxyCodeLine{74     BLYNK\_PARAM\_KV(\textcolor{stringliteral}{"{}host"{}} , CONFIG\_DEFAULT\_SERVER)}
+\DoxyCodeLine{75     BLYNK\_PARAM\_KV(\textcolor{stringliteral}{"{}port"{}} , BLYNK\_TOSTRING(CONFIG\_DEFAULT\_PORT))}
+\DoxyCodeLine{76     \textcolor{stringliteral}{"{}\(\backslash\)0"{}};}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78   \mbox{\hyperlink{class_blynk_param}{BlynkParam}} prov(blnkopt+8, \textcolor{keyword}{sizeof}(blnkopt)-\/8-\/2);}
+\DoxyCodeLine{79   \mbox{\hyperlink{class_blynk_param_1_1iterator}{BlynkParam::iterator}} ssid = prov[\textcolor{stringliteral}{"{}ssid"{}}];}
+\DoxyCodeLine{80   \mbox{\hyperlink{class_blynk_param_1_1iterator}{BlynkParam::iterator}} pass = prov[\textcolor{stringliteral}{"{}pass"{}}];}
+\DoxyCodeLine{81   \mbox{\hyperlink{class_blynk_param_1_1iterator}{BlynkParam::iterator}} auth = prov[\textcolor{stringliteral}{"{}auth"{}}];}
+\DoxyCodeLine{82   \mbox{\hyperlink{class_blynk_param_1_1iterator}{BlynkParam::iterator}} host = prov[\textcolor{stringliteral}{"{}host"{}}];}
+\DoxyCodeLine{83   \mbox{\hyperlink{class_blynk_param_1_1iterator}{BlynkParam::iterator}} port = prov[\textcolor{stringliteral}{"{}port"{}}];}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85   \textcolor{keywordflow}{if} (!(ssid.isValid() \&\& auth.isValid())) \{}
+\DoxyCodeLine{86     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{87   \}}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89   \textcolor{comment}{// reset to defaut before loading values from blnkopt}}
+\DoxyCodeLine{90   configStore = configDefault;}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92   \textcolor{keywordflow}{if} (ssid.isValid()) \{ CopyString(ssid.asStr(), configStore.wifiSSID); \}}
+\DoxyCodeLine{93   \textcolor{keywordflow}{if} (pass.isValid()) \{ CopyString(pass.asStr(), configStore.wifiPass); \}}
+\DoxyCodeLine{94   \textcolor{keywordflow}{if} (auth.isValid()) \{ CopyString(auth.asStr(), configStore.cloudToken); \}}
+\DoxyCodeLine{95   \textcolor{keywordflow}{if} (host.isValid()) \{ CopyString(host.asStr(), configStore.cloudHost); \}}
+\DoxyCodeLine{96   \textcolor{keywordflow}{if} (port.isValid()) \{ configStore.cloudPort = port.asInt(); \}}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{99 \}}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101 \textcolor{comment}{// Offset is derived from EEPROM\_EMULATION\_RESERVATION in ArduinoOTA library}}
+\DoxyCodeLine{102 \textcolor{comment}{// See InternalStorage.debugPrint() output}}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104 \textcolor{preprocessor}{\#include <FlashStorage.h>}}
+\DoxyCodeLine{105 FlashStorageClass<ConfigStore> flash((\textcolor{keywordtype}{void}*)(0x40000-\/1024));}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107 \textcolor{keywordtype}{void} config\_load()}
+\DoxyCodeLine{108 \{}
+\DoxyCodeLine{109   memset(\&configStore, 0, \textcolor{keyword}{sizeof}(configStore));}
+\DoxyCodeLine{110   configStore = flash.read();}
+\DoxyCodeLine{111   \textcolor{keywordflow}{if} (configStore.magic != configDefault.magic) \{}
+\DoxyCodeLine{112     \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}Using default config."{}});}
+\DoxyCodeLine{113     configStore = configDefault;}
+\DoxyCodeLine{114     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{115   \}}
+\DoxyCodeLine{116 \}}
+\DoxyCodeLine{117 }
+\DoxyCodeLine{118 \textcolor{keywordtype}{bool} config\_save()}
+\DoxyCodeLine{119 \{}
+\DoxyCodeLine{120   flash.write(configStore);}
+\DoxyCodeLine{121   \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}Configuration stored to flash"{}});}
+\DoxyCodeLine{122   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{123 \}}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125 \textcolor{keywordtype}{bool} config\_init()}
+\DoxyCodeLine{126 \{}
+\DoxyCodeLine{127   config\_load();}
+\DoxyCodeLine{128   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{129 \}}
+\DoxyCodeLine{130 }
+\DoxyCodeLine{131 \textcolor{keywordtype}{void} enterResetConfig()}
+\DoxyCodeLine{132 \{}
+\DoxyCodeLine{133   \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}Resetting configuration!"{}});}
+\DoxyCodeLine{134   configStore = configDefault;}
+\DoxyCodeLine{135   config\_save();}
+\DoxyCodeLine{136   BlynkState::set(MODE\_WAIT\_CONFIG);}
+\DoxyCodeLine{137 \}}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139 \textcolor{keywordtype}{void} config\_set\_last\_error(\textcolor{keywordtype}{int} error) \{}
+\DoxyCodeLine{140   \textcolor{comment}{// Only set error if not provisioned}}
+\DoxyCodeLine{141   \textcolor{keywordflow}{if} (!configStore.getFlag(CONFIG\_FLAG\_VALID)) \{}
+\DoxyCodeLine{142     configStore = configDefault;}
+\DoxyCodeLine{143     configStore.last\_error = error;}
+\DoxyCodeLine{144     BLYNK\_LOG2(\textcolor{stringliteral}{"{}Last error code: "{}}, error);}
+\DoxyCodeLine{145     config\_save();}
+\DoxyCodeLine{146   \}}
+\DoxyCodeLine{147 \}}
+\DoxyCodeLine{148 }
+
+\end{DoxyCode}

@@ -1,0 +1,57 @@
+\hypertarget{_d_h_t___u_8h_source}{}\doxysection{DHT\+\_\+\+U.\+h}
+\label{_d_h_t___u_8h_source}\index{lib/DHT/DHT\_U.h@{lib/DHT/DHT\_U.h}}
+\mbox{\hyperlink{_d_h_t___u_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#ifndef DHT\_U\_H}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#define DHT\_U\_H}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#include <../Adafruit\_Sensor/Adafruit\_Sensor.h>}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_d_h_t_8h}{DHT.h}}>}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#define DHT\_SENSOR\_VERSION 1 }}
+\DoxyCodeLine{45 \textcolor{keyword}{class }\mbox{\hyperlink{class_d_h_t___unified}{DHT\_Unified}} \{}
+\DoxyCodeLine{46 \textcolor{keyword}{public}:}
+\DoxyCodeLine{47   \mbox{\hyperlink{class_d_h_t___unified_a6ec0cec0251a82c93b53ed9b45de62a7}{DHT\_Unified}}(uint8\_t pin, uint8\_t type, uint8\_t count = 6,}
+\DoxyCodeLine{48               int32\_t tempSensorId = -\/1, int32\_t humiditySensorId = -\/1);}
+\DoxyCodeLine{49   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_h_t___unified_ab0bdf5cca484fb2ba637c39384b27fb2}{begin}}();}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{54   \textcolor{keyword}{class }\mbox{\hyperlink{class_d_h_t___unified_1_1_temperature}{Temperature}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_adafruit___sensor}{Adafruit\_Sensor}} \{}
+\DoxyCodeLine{55   \textcolor{keyword}{public}:}
+\DoxyCodeLine{56     \mbox{\hyperlink{class_d_h_t___unified_1_1_temperature_a291c84db68c2cbacda72b461f4961399}{Temperature}}(\mbox{\hyperlink{class_d_h_t___unified}{DHT\_Unified}} *parent, int32\_t \textcolor{keywordtype}{id});}
+\DoxyCodeLine{57     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_h_t___unified_1_1_temperature_a3579ab819efb2ebd045b27e45529a533}{getEvent}}(\mbox{\hyperlink{structsensors__event__t}{sensors\_event\_t}} *event);}
+\DoxyCodeLine{58     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_h_t___unified_1_1_temperature_ac30038292830ac3e38a75a07682cc958}{getSensor}}(\mbox{\hyperlink{structsensor__t}{sensor\_t}} *sensor);}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60   \textcolor{keyword}{private}:}
+\DoxyCodeLine{61     \mbox{\hyperlink{class_d_h_t___unified}{DHT\_Unified}} *\_parent;}
+\DoxyCodeLine{62     int32\_t \_id;}
+\DoxyCodeLine{63   \};}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{68   \textcolor{keyword}{class }\mbox{\hyperlink{class_d_h_t___unified_1_1_humidity}{Humidity}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_adafruit___sensor}{Adafruit\_Sensor}} \{}
+\DoxyCodeLine{69   \textcolor{keyword}{public}:}
+\DoxyCodeLine{70     \mbox{\hyperlink{class_d_h_t___unified_1_1_humidity_a38647e54c0b48e69552067086b93ae4c}{Humidity}}(\mbox{\hyperlink{class_d_h_t___unified}{DHT\_Unified}} *parent, int32\_t \textcolor{keywordtype}{id});}
+\DoxyCodeLine{71     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_h_t___unified_1_1_humidity_a3579ab819efb2ebd045b27e45529a533}{getEvent}}(\mbox{\hyperlink{structsensors__event__t}{sensors\_event\_t}} *event);}
+\DoxyCodeLine{72     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_h_t___unified_1_1_humidity_ac30038292830ac3e38a75a07682cc958}{getSensor}}(\mbox{\hyperlink{structsensor__t}{sensor\_t}} *sensor);}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74   \textcolor{keyword}{private}:}
+\DoxyCodeLine{75     \mbox{\hyperlink{class_d_h_t___unified}{DHT\_Unified}} *\_parent;}
+\DoxyCodeLine{76     int32\_t \_id;}
+\DoxyCodeLine{77   \};}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{83   \mbox{\hyperlink{class_d_h_t___unified_1_1_temperature}{Temperature}} \mbox{\hyperlink{class_d_h_t___unified_a6e3cc33404dfb4627cfcc78bb26cf93a}{temperature}}() \{ \textcolor{keywordflow}{return} \_temp; \}}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{89   \mbox{\hyperlink{class_d_h_t___unified_1_1_humidity}{Humidity}} \mbox{\hyperlink{class_d_h_t___unified_a00c4be92fe939f646aab4701ecc82e79}{humidity}}() \{ \textcolor{keywordflow}{return} \_humidity; \}}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91 \textcolor{keyword}{private}:}
+\DoxyCodeLine{92   \mbox{\hyperlink{class_d_h_t}{DHT}} \_dht;}
+\DoxyCodeLine{93   uint8\_t \_type;}
+\DoxyCodeLine{94   Temperature \_temp;}
+\DoxyCodeLine{95   Humidity \_humidity;}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97   \textcolor{keywordtype}{void} setName(\mbox{\hyperlink{structsensor__t}{sensor\_t}} *sensor);}
+\DoxyCodeLine{98   \textcolor{keywordtype}{void} setMinDelay(\mbox{\hyperlink{structsensor__t}{sensor\_t}} *sensor);}
+\DoxyCodeLine{99 \};}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

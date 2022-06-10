@@ -1,0 +1,60 @@
+\hypertarget{_blynk_widget_base_8h_source}{}\doxysection{Blynk\+Widget\+Base.\+h}
+\label{_blynk_widget_base_8h_source}\index{lib/Blynk/src/Blynk/BlynkWidgetBase.h@{lib/Blynk/src/Blynk/BlynkWidgetBase.h}}
+\mbox{\hyperlink{_blynk_widget_base_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#ifndef BlynkWidgetBase\_h}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#define BlynkWidgetBase\_h}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_api_8h}{Blynk/BlynkApi.h}}>}}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_widget_base}{BlynkWidgetBase}}}
+\DoxyCodeLine{16 \{}
+\DoxyCodeLine{17 \textcolor{keyword}{public}:}
+\DoxyCodeLine{18     \mbox{\hyperlink{class_blynk_widget_base}{BlynkWidgetBase}}(uint8\_t vPin) : mPin(vPin) \{\}}
+\DoxyCodeLine{19     \textcolor{keywordtype}{void} setVPin(uint8\_t vPin) \{ mPin = vPin; \}}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21     \textcolor{keywordtype}{void} onWrite(\mbox{\hyperlink{struct_blynk_req}{BlynkReq}} BLYNK\_UNUSED \&request, \textcolor{keyword}{const} \mbox{\hyperlink{class_blynk_param}{BlynkParam}} BLYNK\_UNUSED \&param) \{}
+\DoxyCodeLine{22         BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}BlynkWidgetBase::onWrite should not be called"{}}));}
+\DoxyCodeLine{23     \}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25     \textcolor{keyword}{template}<\textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{26     \textcolor{keywordtype}{void} setLabel(Args... args) \{}
+\DoxyCodeLine{27         Blynk.\mbox{\hyperlink{class_blynk_api_a151346ac5507d012f405c9ec39f483c3}{setProperty}}(mPin, \textcolor{stringliteral}{"{}label"{}}, args...);}
+\DoxyCodeLine{28     \}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30     \textcolor{keyword}{template}<\textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{31     \textcolor{keywordtype}{void} setColor(Args... args) \{}
+\DoxyCodeLine{32         Blynk.\mbox{\hyperlink{class_blynk_api_a151346ac5507d012f405c9ec39f483c3}{setProperty}}(mPin, \textcolor{stringliteral}{"{}color"{}}, args...);}
+\DoxyCodeLine{33     \}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     \textcolor{keyword}{template}<\textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{36     \textcolor{keywordtype}{void} setMin(Args... args) \{}
+\DoxyCodeLine{37         Blynk.\mbox{\hyperlink{class_blynk_api_a151346ac5507d012f405c9ec39f483c3}{setProperty}}(mPin, \textcolor{stringliteral}{"{}min"{}}, args...);}
+\DoxyCodeLine{38     \}}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \textcolor{keyword}{template}<\textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{41     \textcolor{keywordtype}{void} setMax(Args... args) \{}
+\DoxyCodeLine{42         Blynk.\mbox{\hyperlink{class_blynk_api_a151346ac5507d012f405c9ec39f483c3}{setProperty}}(mPin, \textcolor{stringliteral}{"{}max"{}}, args...);}
+\DoxyCodeLine{43     \}}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{46     uint8\_t mPin;}
+\DoxyCodeLine{47 \};}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_attach_widget_helper}{BlynkAttachWidgetHelper}} \{}
+\DoxyCodeLine{50 \textcolor{keyword}{public}:}
+\DoxyCodeLine{51     \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{52     \textcolor{keyword}{explicit} \mbox{\hyperlink{class_blynk_attach_widget_helper}{BlynkAttachWidgetHelper}}(T\& widget, uint8\_t vPin) \{}
+\DoxyCodeLine{53         widget.setVPin(vPin);}
+\DoxyCodeLine{54     \}}
+\DoxyCodeLine{55 \};}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57 \textcolor{comment}{// Could use \_\_attribute\_\_ ((constructor)), but hope for better portability}}
+\DoxyCodeLine{58 \textcolor{preprocessor}{\#define BLYNK\_ATTACH\_WIDGET(widget, pin) \(\backslash\)}}
+\DoxyCodeLine{59 \textcolor{preprocessor}{    BlynkAttachWidgetHelper BLYNK\_CONCAT2(blnk\_widget\_helper\_, \_\_COUNTER\_\_)((widget), (pin)); \(\backslash\)}}
+\DoxyCodeLine{60 \textcolor{preprocessor}{    BLYNK\_WRITE(pin) \{ (widget).onWrite(request, param); \}}}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

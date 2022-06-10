@@ -1,0 +1,92 @@
+\hypertarget{_blynk_config_8h_source}{}\doxysection{Blynk\+Config.\+h}
+\label{_blynk_config_8h_source}\index{lib/Blynk/src/Blynk/BlynkConfig.h@{lib/Blynk/src/Blynk/BlynkConfig.h}}
+\mbox{\hyperlink{_blynk_config_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef BlynkConfig\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define BlynkConfig\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_detect_device_8h}{Blynk/BlynkDetectDevice.h}}>}}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{comment}{/***************************************************}}
+\DoxyCodeLine{17 \textcolor{comment}{ * Change these settings to match your need}}
+\DoxyCodeLine{18 \textcolor{comment}{ ***************************************************/}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#ifdef BLYNK\_TEMPLATE\_ID}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#define BLYNK\_DEFAULT\_DOMAIN     "{}blynk.cloud"{}}}
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#define BLYNK\_DEFAULT\_DOMAIN     "{}blynk-\/cloud.com"{}}}
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#define BLYNK\_DEFAULT\_PORT       80}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#define BLYNK\_DEFAULT\_PORT\_SSL   443}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{comment}{/***************************************************}}
+\DoxyCodeLine{29 \textcolor{comment}{ * Professional settings}}
+\DoxyCodeLine{30 \textcolor{comment}{ ***************************************************/}}
+\DoxyCodeLine{31 \textcolor{comment}{// Library version.}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#define BLYNK\_VERSION        "{}1.0.1"{}}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#define BLYNK\_NEW\_LIBRARY}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{comment}{// Heartbeat period in seconds.}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#ifndef BLYNK\_HEARTBEAT}}
+\DoxyCodeLine{38 \textcolor{preprocessor}{\#define BLYNK\_HEARTBEAT      45}}
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41 \textcolor{comment}{// Network timeout in milliseconds.}}
+\DoxyCodeLine{42 \textcolor{preprocessor}{\#ifndef BLYNK\_TIMEOUT\_MS}}
+\DoxyCodeLine{43 \textcolor{preprocessor}{\#define BLYNK\_TIMEOUT\_MS     6000UL}}
+\DoxyCodeLine{44 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46 \textcolor{comment}{// Limit the amount of outgoing commands per second.}}
+\DoxyCodeLine{47 \textcolor{preprocessor}{\#ifndef BLYNK\_MSG\_LIMIT}}
+\DoxyCodeLine{48 \textcolor{preprocessor}{\#define BLYNK\_MSG\_LIMIT      15}}
+\DoxyCodeLine{49 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51 \textcolor{comment}{// Limit the incoming command length.}}
+\DoxyCodeLine{52 \textcolor{preprocessor}{\#ifndef BLYNK\_MAX\_READBYTES}}
+\DoxyCodeLine{53 \textcolor{preprocessor}{\#define BLYNK\_MAX\_READBYTES  256}}
+\DoxyCodeLine{54 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56 \textcolor{comment}{// Limit the outgoing command length.}}
+\DoxyCodeLine{57 \textcolor{preprocessor}{\#ifndef BLYNK\_MAX\_SENDBYTES}}
+\DoxyCodeLine{58 \textcolor{preprocessor}{\#define BLYNK\_MAX\_SENDBYTES  128}}
+\DoxyCodeLine{59 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61 \textcolor{comment}{// Uncomment to disable built-\/in analog and digital operations.}}
+\DoxyCodeLine{62 \textcolor{comment}{//\#define BLYNK\_NO\_BUILTIN}}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64 \textcolor{comment}{// Uncomment to enable debug prints.}}
+\DoxyCodeLine{65 \textcolor{comment}{//\#define BLYNK\_DEBUG}}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67 \textcolor{comment}{// Uncomment to force-\/enable 128 virtual pins}}
+\DoxyCodeLine{68 \textcolor{comment}{//\#define BLYNK\_USE\_128\_VPINS}}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70 \textcolor{comment}{// Uncomment to disable fancy logo}}
+\DoxyCodeLine{71 \textcolor{comment}{//\#define BLYNK\_NO\_FANCY\_LOGO}}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73 \textcolor{comment}{// Uncomment to enable 3D fancy logo}}
+\DoxyCodeLine{74 \textcolor{comment}{//\#define BLYNK\_FANCY\_LOGO\_3D}}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76 \textcolor{comment}{// Uncomment to enable experimental functions.}}
+\DoxyCodeLine{77 \textcolor{comment}{//\#define BLYNK\_EXPERIMENTAL}}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79 \textcolor{comment}{// Uncomment to disable all float/double usage}}
+\DoxyCodeLine{80 \textcolor{comment}{//\#define BLYNK\_NO\_FLOAT}}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82 \textcolor{comment}{// Uncomment to switch to direct-\/connect mode}}
+\DoxyCodeLine{83 \textcolor{comment}{//\#define BLYNK\_USE\_DIRECT\_CONNECT}}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86 \textcolor{comment}{// Uncomment to append command body to header (uses more RAM)}}
+\DoxyCodeLine{87 \textcolor{comment}{//\#define BLYNK\_SEND\_ATOMIC}}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89 \textcolor{comment}{// Split whole command into chunks (in bytes)}}
+\DoxyCodeLine{90 \textcolor{comment}{//\#define BLYNK\_SEND\_CHUNK 64}}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92 \textcolor{comment}{// Wait after sending each chunk (in milliseconds)}}
+\DoxyCodeLine{93 \textcolor{comment}{//\#define BLYNK\_SEND\_THROTTLE 10}}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

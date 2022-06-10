@@ -1,0 +1,155 @@
+\hypertarget{_blynk_socket_8h_source}{}\doxysection{Blynk\+Socket.\+h}
+\label{_blynk_socket_8h_source}\index{lib/Blynk/linux/BlynkSocket.h@{lib/Blynk/linux/BlynkSocket.h}}
+\mbox{\hyperlink{_blynk_socket_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#ifndef BlynkSocket\_h}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#define BlynkSocket\_h}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include <sys/socket.h>}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <sys/types.h>}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include <sys/ioctl.h>}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#include <netinet/in.h>}}
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#include <netinet/tcp.h>}}
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#include <netdb.h>}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#include <stdio.h>}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#include <string.h>}}
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#include <stdlib.h>}}
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#include <unistd.h>}}
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#include <errno.h>}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#include <arpa/inet.h>}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_protocol_8h}{Blynk/BlynkProtocol.h}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_transport_socket}{BlynkTransportSocket}}}
+\DoxyCodeLine{29 \{}
+\DoxyCodeLine{30 \textcolor{keyword}{public}:}
+\DoxyCodeLine{31     \mbox{\hyperlink{class_blynk_transport_socket}{BlynkTransportSocket}}()}
+\DoxyCodeLine{32         : sockfd(-\/1), domain(NULL), port(0)}
+\DoxyCodeLine{33     \{\}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     \textcolor{keywordtype}{void} begin(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* h, uint16\_t p) \{}
+\DoxyCodeLine{36         this-\/>domain = h;}
+\DoxyCodeLine{37         this-\/>port = p;}
+\DoxyCodeLine{38     \}}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \textcolor{keywordtype}{bool} connect()}
+\DoxyCodeLine{41     \{}
+\DoxyCodeLine{42         BLYNK\_LOG4(BLYNK\_F(\textcolor{stringliteral}{"{}Connecting to "{}}), domain, \textcolor{charliteral}{':'}, port);}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44         \textcolor{keyword}{struct }addrinfo hints;}
+\DoxyCodeLine{45         \textcolor{keyword}{struct }addrinfo *res = NULL;  \textcolor{comment}{// will point to the results}}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47         memset(\&hints, 0, \textcolor{keyword}{sizeof} hints); \textcolor{comment}{// make sure the struct is empty}}
+\DoxyCodeLine{48         hints.ai\_family = AF\_UNSPEC;     \textcolor{comment}{// don't care IPv4 or IPv6}}
+\DoxyCodeLine{49         hints.ai\_socktype = SOCK\_STREAM; \textcolor{comment}{// TCP stream sockets}}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51         \textcolor{comment}{// get ready to connect}}
+\DoxyCodeLine{52         \textcolor{keywordtype}{char} port\_str[8];}
+\DoxyCodeLine{53         snprintf(port\_str, \textcolor{keyword}{sizeof}(port\_str), \textcolor{stringliteral}{"{}\%u"{}}, port);}
+\DoxyCodeLine{54         getaddrinfo(domain, port\_str, \&hints, \&res);}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56         \textcolor{keywordflow}{if} (res == NULL) \{}
+\DoxyCodeLine{57             BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}Cannot get addr info"{}}));}
+\DoxyCodeLine{58             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{59         \}}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61         \textcolor{keywordflow}{if} ((sockfd = ::socket(res-\/>ai\_family, res-\/>ai\_socktype, res-\/>ai\_protocol)) < 0)}
+\DoxyCodeLine{62         \{}
+\DoxyCodeLine{63             BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}Can't create socket"{}}));}
+\DoxyCodeLine{64             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{65         \}}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67         \textcolor{keywordflow}{if} (::connect(sockfd, res-\/>ai\_addr, res-\/>ai\_addrlen) < 0)}
+\DoxyCodeLine{68         \{}
+\DoxyCodeLine{69             BLYNK\_LOG2(BLYNK\_F(\textcolor{stringliteral}{"{}Can't connect to "{}}), domain);}
+\DoxyCodeLine{70             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{71         \}}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73         \textcolor{keyword}{struct }timeval tv;}
+\DoxyCodeLine{74         tv.tv\_sec = 0;}
+\DoxyCodeLine{75         tv.tv\_usec = 1000;}
+\DoxyCodeLine{76         setsockopt(sockfd, SOL\_SOCKET, SO\_RCVTIMEO, (\textcolor{keywordtype}{char} *)\&tv, \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} timeval));}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78         \textcolor{keywordtype}{int} one = 1;}
+\DoxyCodeLine{79         setsockopt(sockfd, SOL\_TCP, TCP\_NODELAY, \&one, \textcolor{keyword}{sizeof}(one));}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81         freeaddrinfo(res); \textcolor{comment}{// TODO: Leak here}}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83         \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{84     \}}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86     \textcolor{keywordtype}{void} disconnect()}
+\DoxyCodeLine{87     \{}
+\DoxyCodeLine{88         \textcolor{keywordflow}{if} (sockfd != -\/1) \{}
+\DoxyCodeLine{89             \textcolor{keywordflow}{while} (::close(sockfd) < 0) \{}
+\DoxyCodeLine{90                 usleep(10000);}
+\DoxyCodeLine{91             \}}
+\DoxyCodeLine{92             sockfd = -\/1;}
+\DoxyCodeLine{93         \}}
+\DoxyCodeLine{94     \}}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96     \textcolor{keywordtype}{size\_t} read(\textcolor{keywordtype}{void}* buf, \textcolor{keywordtype}{size\_t} len) \{}
+\DoxyCodeLine{97         ssize\_t rlen = ::read(sockfd, buf, len);}
+\DoxyCodeLine{98         \textcolor{keywordflow}{if} (rlen == -\/1) \{}
+\DoxyCodeLine{99             \textcolor{comment}{//BLYNK\_LOG4("{}Read error "{}, errno, "{}: "{}, strerror(errno));}}
+\DoxyCodeLine{100             \textcolor{keywordflow}{if} (errno == ETIMEDOUT || errno == EWOULDBLOCK || errno == EAGAIN) \{}
+\DoxyCodeLine{101                 \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{102             \}}
+\DoxyCodeLine{103             disconnect();}
+\DoxyCodeLine{104             \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{105         \}}
+\DoxyCodeLine{106         \textcolor{keywordflow}{return} rlen;}
+\DoxyCodeLine{107     \}}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109     \textcolor{keywordtype}{size\_t} write(\textcolor{keyword}{const} \textcolor{keywordtype}{void}* buf, \textcolor{keywordtype}{size\_t} len) \{}
+\DoxyCodeLine{110         return ::write(sockfd, buf, len);}
+\DoxyCodeLine{111     \}}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113     \textcolor{keywordtype}{bool} connected() \{}
+\DoxyCodeLine{114       \textcolor{keywordflow}{return} sockfd >= 0;}
+\DoxyCodeLine{115     \}}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117     \textcolor{keywordtype}{int} available() \{}
+\DoxyCodeLine{118         \textcolor{keywordflow}{if} (!connected()) \{}
+\DoxyCodeLine{119             \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{120         \}}
+\DoxyCodeLine{121 }
+\DoxyCodeLine{122         \textcolor{keywordtype}{int} count = 0;}
+\DoxyCodeLine{123         \textcolor{keywordflow}{if} (0 == ioctl(sockfd, FIONREAD, \&count)) \{}
+\DoxyCodeLine{124             \textcolor{keywordflow}{if} (!count) \{}
+\DoxyCodeLine{125                 usleep(10000); \textcolor{comment}{// not to stall CPU with 100\% load}}
+\DoxyCodeLine{126             \}}
+\DoxyCodeLine{127             \textcolor{keywordflow}{return} count;}
+\DoxyCodeLine{128         \}}
+\DoxyCodeLine{129         \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{130     \}}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{133     \textcolor{keywordtype}{int}         sockfd;}
+\DoxyCodeLine{134     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* domain;}
+\DoxyCodeLine{135     uint16\_t    port;}
+\DoxyCodeLine{136 \};}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_socket}{BlynkSocket}}}
+\DoxyCodeLine{139     : \textcolor{keyword}{public} \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol}}<BlynkTransportSocket>}
+\DoxyCodeLine{140 \{}
+\DoxyCodeLine{141     \textcolor{keyword}{typedef} \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol<BlynkTransportSocket>}} \mbox{\hyperlink{class_blynk_protocol}{Base}};}
+\DoxyCodeLine{142 \textcolor{keyword}{public}:}
+\DoxyCodeLine{143     \mbox{\hyperlink{class_blynk_socket}{BlynkSocket}}(\mbox{\hyperlink{class_blynk_transport_socket}{BlynkTransportSocket}}\& transp)}
+\DoxyCodeLine{144         : \mbox{\hyperlink{class_blynk_protocol}{Base}}(transp)}
+\DoxyCodeLine{145     \{\}}
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147     \textcolor{keywordtype}{void} begin(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth,}
+\DoxyCodeLine{148                \textcolor{keyword}{const} \textcolor{keywordtype}{char}* domain = BLYNK\_DEFAULT\_DOMAIN,}
+\DoxyCodeLine{149                uint16\_t    port   = BLYNK\_DEFAULT\_PORT)}
+\DoxyCodeLine{150     \{}
+\DoxyCodeLine{151         Base::begin(auth);}
+\DoxyCodeLine{152         this-\/>conn.begin(domain, port);}
+\DoxyCodeLine{153     \}}
+\DoxyCodeLine{154 }
+\DoxyCodeLine{155 \};}
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

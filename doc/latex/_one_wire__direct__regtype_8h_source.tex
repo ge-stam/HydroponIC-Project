@@ -1,0 +1,61 @@
+\hypertarget{_one_wire__direct__regtype_8h_source}{}\doxysection{One\+Wire\+\_\+direct\+\_\+regtype.\+h}
+\label{_one_wire__direct__regtype_8h_source}\index{lib/OneWire/util/OneWire\_direct\_regtype.h@{lib/OneWire/util/OneWire\_direct\_regtype.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef OneWire\_Direct\_RegType\_h}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define OneWire\_Direct\_RegType\_h}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <stdint.h>}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{comment}{// Platform specific I/O register type}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#if defined(\_\_AVR\_\_)}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint8\_t}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#elif defined(\_\_MK20DX128\_\_) || defined(\_\_MK20DX256\_\_) || defined(\_\_MK66FX1M0\_\_) || defined(\_\_MK64FX512\_\_)}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint8\_t}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#elif defined(\_\_IMXRT1052\_\_) || defined(\_\_IMXRT1062\_\_)}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint32\_t}}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#elif defined(\_\_MKL26Z64\_\_)}}
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint8\_t}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#elif defined(\_\_SAM3X8E\_\_) || defined(\_\_SAM3A8C\_\_) || defined(\_\_SAM3A4C\_\_)}}
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint32\_t}}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#elif defined(\_\_PIC32MX\_\_)}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint32\_t}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#elif defined(ARDUINO\_ARCH\_ESP8266)}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint32\_t}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#elif defined(ARDUINO\_ARCH\_ESP32)}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint32\_t}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#define IO\_REG\_MASK\_ATTR}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#elif defined(ARDUINO\_ARCH\_STM32)}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint32\_t}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#elif defined(\_\_SAMD21G18A\_\_)}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint32\_t}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#elif defined(\_\_ASR6501\_\_)}}
+\DoxyCodeLine{40 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint32\_t}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42 \textcolor{preprocessor}{\#elif defined(RBL\_NRF51822)}}
+\DoxyCodeLine{43 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint32\_t}}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45 \textcolor{preprocessor}{\#elif defined(\_\_arc\_\_) }\textcolor{comment}{/* Arduino101/Genuino101 specifics */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{46 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint32\_t}}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48 \textcolor{preprocessor}{\#elif defined(\_\_riscv)}}
+\DoxyCodeLine{49 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint32\_t}}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{52 \textcolor{preprocessor}{\#define IO\_REG\_TYPE unsigned int}}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{55 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

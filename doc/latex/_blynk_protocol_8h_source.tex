@@ -1,0 +1,554 @@
+\hypertarget{_blynk_protocol_8h_source}{}\doxysection{Blynk\+Protocol.\+h}
+\label{_blynk_protocol_8h_source}\index{lib/Blynk/src/Blynk/BlynkProtocol.h@{lib/Blynk/src/Blynk/BlynkProtocol.h}}
+\mbox{\hyperlink{_blynk_protocol_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef BlynkProtocol\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define BlynkProtocol\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <string.h>}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include <stdlib.h>}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_debug_8h}{Blynk/BlynkDebug.h}}>}}
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_protocol_defs_8h}{Blynk/BlynkProtocolDefs.h}}>}}
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_api_8h}{Blynk/BlynkApi.h}}>}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_utility_8h}{utility/BlynkUtility.h}}>}}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 \textcolor{keyword}{template} <\textcolor{keyword}{class} Transp>}
+\DoxyCodeLine{22 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol}}}
+\DoxyCodeLine{23     : \textcolor{keyword}{public} \mbox{\hyperlink{class_blynk_api}{BlynkApi}}< BlynkProtocol<Transp> >}
+\DoxyCodeLine{24 \{}
+\DoxyCodeLine{25     \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_api}{BlynkApi}}< \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol}}<Transp> >;}
+\DoxyCodeLine{26 \textcolor{keyword}{public}:}
+\DoxyCodeLine{27     \textcolor{keyword}{enum} BlynkState \{}
+\DoxyCodeLine{28         CONNECTING,}
+\DoxyCodeLine{29         CONNECTED,}
+\DoxyCodeLine{30         DISCONNECTED,}
+\DoxyCodeLine{31         TOKEN\_INVALID,}
+\DoxyCodeLine{32     \};}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34     \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol}}(Transp\& transp)}
+\DoxyCodeLine{35         : conn(transp)}
+\DoxyCodeLine{36         , authkey(NULL)}
+\DoxyCodeLine{37         , redir\_serv(NULL)}
+\DoxyCodeLine{38         , lastActivityIn(0)}
+\DoxyCodeLine{39         , lastActivityOut(0)}
+\DoxyCodeLine{40         , lastHeartbeat(0)}
+\DoxyCodeLine{41         , msgIdOut(0)}
+\DoxyCodeLine{42         , msgIdOutOverride(0)}
+\DoxyCodeLine{43         , nesting(0)}
+\DoxyCodeLine{44         , state(CONNECTING)}
+\DoxyCodeLine{45     \{\}}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{keywordtype}{bool} connected()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} state == CONNECTED; \}}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49     \textcolor{keywordtype}{bool} isTokenInvalid()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} state == TOKEN\_INVALID; \}}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     \textcolor{keywordtype}{bool} connect(uint32\_t timeout = BLYNK\_TIMEOUT\_MS*3) \{}
+\DoxyCodeLine{52         conn.disconnect();}
+\DoxyCodeLine{53         state = CONNECTING;}
+\DoxyCodeLine{54         millis\_time\_t started = BlynkMillis();}
+\DoxyCodeLine{55         \textcolor{keywordflow}{while} ((state != CONNECTED) \&\&}
+\DoxyCodeLine{56                (BlynkMillis() -\/ started < timeout))}
+\DoxyCodeLine{57         \{}
+\DoxyCodeLine{58             run();}
+\DoxyCodeLine{59         \}}
+\DoxyCodeLine{60         \textcolor{keywordflow}{return} state == CONNECTED;}
+\DoxyCodeLine{61     \}}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63     \textcolor{keywordtype}{void} disconnect() \{}
+\DoxyCodeLine{64         conn.disconnect();}
+\DoxyCodeLine{65         state = DISCONNECTED;}
+\DoxyCodeLine{66         BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}Disconnected"{}}));}
+\DoxyCodeLine{67     \}}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69     \textcolor{keywordtype}{bool} run(\textcolor{keywordtype}{bool} avail = \textcolor{keyword}{false});}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71     \textcolor{comment}{// TODO: Fixme}}
+\DoxyCodeLine{72     \textcolor{keywordtype}{void} startSession() \{}
+\DoxyCodeLine{73         conn.connect();}
+\DoxyCodeLine{74         state = CONNECTING;}
+\DoxyCodeLine{75         msgIdOut = 0;}
+\DoxyCodeLine{76         lastHeartbeat = lastActivityIn = lastActivityOut = (BlynkMillis() -\/ 5000UL);}
+\DoxyCodeLine{77     \}}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79     \textcolor{keywordtype}{void} sendCmd(uint8\_t cmd, uint16\_t \textcolor{keywordtype}{id} = 0, \textcolor{keyword}{const} \textcolor{keywordtype}{void}* data = NULL, \textcolor{keywordtype}{size\_t} length = 0, \textcolor{keyword}{const} \textcolor{keywordtype}{void}* data2 = NULL, \textcolor{keywordtype}{size\_t} length2 = 0);}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81     \textcolor{keywordtype}{void} sendResponse(BlynkStatus rsp, uint16\_t \textcolor{keywordtype}{id} = 0) \{}
+\DoxyCodeLine{82         sendCmd(BLYNK\_CMD\_RESPONSE, \textcolor{keywordtype}{id}, NULL, rsp);}
+\DoxyCodeLine{83     \}}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85     \textcolor{keywordtype}{void} printBanner() \{}
+\DoxyCodeLine{86 \textcolor{preprocessor}{\#if defined(BLYNK\_NO\_FANCY\_LOGO)}}
+\DoxyCodeLine{87         BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}Blynk v"{}} BLYNK\_VERSION \textcolor{stringliteral}{"{} on "{}} BLYNK\_INFO\_DEVICE));}
+\DoxyCodeLine{88 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{89         BLYNK\_LOG1(BLYNK\_F(BLYNK\_NEWLINE}
+\DoxyCodeLine{90             \textcolor{stringliteral}{"{}    \_\_\_  \_\_          \_\_"{}} BLYNK\_NEWLINE}
+\DoxyCodeLine{91             \textcolor{stringliteral}{"{}   / \_ )/ /\_ \_\_\_\_\_  / /\_\_"{}} BLYNK\_NEWLINE}
+\DoxyCodeLine{92             \textcolor{stringliteral}{"{}  / \_  / / // / \_ \(\backslash\)\(\backslash\)/  '\_/"{}} BLYNK\_NEWLINE}
+\DoxyCodeLine{93             \textcolor{stringliteral}{"{} /\_\_\_\_/\_/\(\backslash\)\(\backslash\)\_, /\_//\_/\_/\(\backslash\)\(\backslash\)\_\(\backslash\)\(\backslash\)"{}} BLYNK\_NEWLINE}
+\DoxyCodeLine{94             \textcolor{stringliteral}{"{}        /\_\_\_/ v"{}} BLYNK\_VERSION \textcolor{stringliteral}{"{} on "{}} BLYNK\_INFO\_DEVICE BLYNK\_NEWLINE}
+\DoxyCodeLine{95         ));}
+\DoxyCodeLine{96 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{97     \}}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99 \textcolor{keyword}{private}:}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101     \textcolor{keywordtype}{void} internalReconnect() \{}
+\DoxyCodeLine{102         state = CONNECTING;}
+\DoxyCodeLine{103         conn.disconnect();}
+\DoxyCodeLine{104         BlynkOnDisconnected();}
+\DoxyCodeLine{105     \}}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107     \textcolor{keywordtype}{int} readHeader(\mbox{\hyperlink{struct_blynk_header}{BlynkHeader}}\& hdr);}
+\DoxyCodeLine{108     uint16\_t getNextMsgId();}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{111     \textcolor{keywordtype}{void} begin(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth) \{}
+\DoxyCodeLine{112         this-\/>authkey = auth;}
+\DoxyCodeLine{113         lastHeartbeat = lastActivityIn = lastActivityOut = (BlynkMillis() -\/ 5000UL);}
+\DoxyCodeLine{114 \textcolor{preprocessor}{\#if !defined(BLYNK\_NO\_DEFAULT\_BANNER)}}
+\DoxyCodeLine{115         printBanner();}
+\DoxyCodeLine{116 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{117     \}}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119     \textcolor{keywordtype}{bool} processInput(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121     Transp\& conn;}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123 \textcolor{keyword}{private}:}
+\DoxyCodeLine{124     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* authkey;}
+\DoxyCodeLine{125     \textcolor{keywordtype}{char}*       redir\_serv;}
+\DoxyCodeLine{126     millis\_time\_t lastActivityIn;}
+\DoxyCodeLine{127     millis\_time\_t lastActivityOut;}
+\DoxyCodeLine{128     \textcolor{keyword}{union }\{}
+\DoxyCodeLine{129         millis\_time\_t lastHeartbeat;}
+\DoxyCodeLine{130         millis\_time\_t lastLogin;}
+\DoxyCodeLine{131     \};}
+\DoxyCodeLine{132     uint16\_t msgIdOut;}
+\DoxyCodeLine{133     uint16\_t msgIdOutOverride;}
+\DoxyCodeLine{134     uint8\_t  nesting;}
+\DoxyCodeLine{135 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{136     BlynkState state;}
+\DoxyCodeLine{137 \};}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139 \textcolor{keyword}{template} <\textcolor{keyword}{class} Transp>}
+\DoxyCodeLine{140 \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol<Transp>::run}}(\textcolor{keywordtype}{bool} avail)}
+\DoxyCodeLine{141 \{}
+\DoxyCodeLine{142     BLYNK\_RUN\_YIELD();}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144     \textcolor{keywordflow}{if} (state == DISCONNECTED) \{}
+\DoxyCodeLine{145         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{146     \}}
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148     \textcolor{comment}{// Detect nesting}}
+\DoxyCodeLine{149     \mbox{\hyperlink{class_blynk_helper_auto_inc}{BlynkHelperAutoInc}} guard(nesting);}
+\DoxyCodeLine{150     \textcolor{keywordflow}{if} (msgIdOutOverride || nesting > 2) \{}
+\DoxyCodeLine{151       \textcolor{comment}{//BLYNK\_LOG1(BLYNK\_F("{}Nested run() skipped"{}));}}
+\DoxyCodeLine{152       \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{153     \}}
+\DoxyCodeLine{154 }
+\DoxyCodeLine{155     \textcolor{keywordflow}{if} (conn.connected()) \{}
+\DoxyCodeLine{156         \textcolor{keywordflow}{while} (avail || conn.available() > 0) \{}
+\DoxyCodeLine{157             \textcolor{comment}{//BLYNK\_LOG2(BLYNK\_F("{}Available: "{}), conn.available());}}
+\DoxyCodeLine{158             \textcolor{comment}{//const unsigned long t = micros();}}
+\DoxyCodeLine{159             \textcolor{keywordflow}{if} (!processInput()) \{}
+\DoxyCodeLine{160                 conn.disconnect();}
+\DoxyCodeLine{161 \textcolor{comment}{// TODO: Only when in direct mode?}}
+\DoxyCodeLine{162 \textcolor{preprocessor}{\#ifdef BLYNK\_USE\_DIRECT\_CONNECT}}
+\DoxyCodeLine{163                 state = CONNECTING;}
+\DoxyCodeLine{164 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{165                 BlynkOnDisconnected();}
+\DoxyCodeLine{166                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{167             \}}
+\DoxyCodeLine{168             avail = \textcolor{keyword}{false};}
+\DoxyCodeLine{169             \textcolor{comment}{//BLYNK\_LOG2(BLYNK\_F("{}Proc time: "{}), micros() -\/ t);}}
+\DoxyCodeLine{170         \}}
+\DoxyCodeLine{171     \}}
+\DoxyCodeLine{172 }
+\DoxyCodeLine{173     \textcolor{keyword}{const} millis\_time\_t t = BlynkMillis();}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175     \textcolor{comment}{// Update connection status after running commands}}
+\DoxyCodeLine{176     \textcolor{keyword}{const} \textcolor{keywordtype}{bool} tconn = conn.connected();}
+\DoxyCodeLine{177 }
+\DoxyCodeLine{178     \textcolor{keywordflow}{if} (state == CONNECTED) \{}
+\DoxyCodeLine{179         \textcolor{keywordflow}{if} (!tconn) \{}
+\DoxyCodeLine{180             lastHeartbeat = t;}
+\DoxyCodeLine{181             internalReconnect();}
+\DoxyCodeLine{182             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{183         \}}
+\DoxyCodeLine{184 }
+\DoxyCodeLine{185         \textcolor{keywordflow}{if} (t -\/ lastActivityIn > (1000UL * BLYNK\_HEARTBEAT + BLYNK\_TIMEOUT\_MS*3)) \{}
+\DoxyCodeLine{186 \textcolor{preprocessor}{\#ifdef BLYNK\_DEBUG}}
+\DoxyCodeLine{187             BLYNK\_LOG6(BLYNK\_F(\textcolor{stringliteral}{"{}Heartbeat timeout: "{}}), t, BLYNK\_F(\textcolor{stringliteral}{"{}, "{}}), lastActivityIn, BLYNK\_F(\textcolor{stringliteral}{"{}, "{}}), lastHeartbeat);}
+\DoxyCodeLine{188 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{189             BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}Heartbeat timeout"{}}));}
+\DoxyCodeLine{190 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{191             internalReconnect();}
+\DoxyCodeLine{192             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{193         \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ((t -\/ lastActivityIn  > 1000UL * BLYNK\_HEARTBEAT ||}
+\DoxyCodeLine{194                     t -\/ lastActivityOut > 1000UL * BLYNK\_HEARTBEAT) \&\&}
+\DoxyCodeLine{195                     t -\/ lastHeartbeat   > BLYNK\_TIMEOUT\_MS)}
+\DoxyCodeLine{196         \{}
+\DoxyCodeLine{197             \textcolor{comment}{// Send ping if we didn't either send or receive something}}
+\DoxyCodeLine{198             \textcolor{comment}{// for BLYNK\_HEARTBEAT seconds}}
+\DoxyCodeLine{199             sendCmd(BLYNK\_CMD\_PING);}
+\DoxyCodeLine{200             lastHeartbeat = t;}
+\DoxyCodeLine{201         \}}
+\DoxyCodeLine{202     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (state == CONNECTING) \{}
+\DoxyCodeLine{203 \textcolor{preprocessor}{\#ifdef BLYNK\_USE\_DIRECT\_CONNECT}}
+\DoxyCodeLine{204         \textcolor{keywordflow}{if} (!tconn)}
+\DoxyCodeLine{205             conn.connect();}
+\DoxyCodeLine{206 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{207         \textcolor{keywordflow}{if} (tconn \&\& (t -\/ lastLogin > BLYNK\_TIMEOUT\_MS)) \{}
+\DoxyCodeLine{208             BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}Login timeout"{}}));}
+\DoxyCodeLine{209             conn.disconnect();}
+\DoxyCodeLine{210             state = CONNECTING;}
+\DoxyCodeLine{211             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{212         \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (!tconn \&\& (t -\/ lastLogin > 5000UL)) \{}
+\DoxyCodeLine{213             conn.disconnect();}
+\DoxyCodeLine{214             \textcolor{keywordflow}{if} (!conn.connect()) \{}
+\DoxyCodeLine{215                 lastLogin = t;}
+\DoxyCodeLine{216                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{217             \}}
+\DoxyCodeLine{218 }
+\DoxyCodeLine{219             msgIdOut = 1;}
+\DoxyCodeLine{220             sendCmd(BLYNK\_CMD\_HW\_LOGIN, 1, authkey, strlen(authkey));}
+\DoxyCodeLine{221             lastLogin = lastActivityOut;}
+\DoxyCodeLine{222             \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{223         \}}
+\DoxyCodeLine{224 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{225     \}}
+\DoxyCodeLine{226     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{227 \}}
+\DoxyCodeLine{228 }
+\DoxyCodeLine{229 \textcolor{keyword}{template} <\textcolor{keyword}{class} Transp>}
+\DoxyCodeLine{230 BLYNK\_FORCE\_INLINE}
+\DoxyCodeLine{231 \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol<Transp>::processInput}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{232 \{}
+\DoxyCodeLine{233     \mbox{\hyperlink{struct_blynk_header}{BlynkHeader}} hdr;}
+\DoxyCodeLine{234     \textcolor{keyword}{const} \textcolor{keywordtype}{int} ret = readHeader(hdr);}
+\DoxyCodeLine{235 }
+\DoxyCodeLine{236     \textcolor{keywordflow}{if} (ret == 0) \{}
+\DoxyCodeLine{237         \textcolor{keywordflow}{return} \textcolor{keyword}{true}; \textcolor{comment}{// Considered OK (no data on input)}}
+\DoxyCodeLine{238     \}}
+\DoxyCodeLine{239 }
+\DoxyCodeLine{240     \textcolor{keywordflow}{if} (ret < 0 || hdr.msg\_id == 0) \{}
+\DoxyCodeLine{241 \textcolor{preprocessor}{\#ifdef BLYNK\_DEBUG}}
+\DoxyCodeLine{242         BLYNK\_LOG2(BLYNK\_F(\textcolor{stringliteral}{"{}Bad hdr len: "{}}), ret);}
+\DoxyCodeLine{243 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{244         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{245     \}}
+\DoxyCodeLine{246 }
+\DoxyCodeLine{247     \textcolor{keywordflow}{if} (hdr.type == BLYNK\_CMD\_RESPONSE) \{}
+\DoxyCodeLine{248         lastActivityIn = BlynkMillis();}
+\DoxyCodeLine{249 }
+\DoxyCodeLine{250 \textcolor{preprocessor}{\#ifndef BLYNK\_USE\_DIRECT\_CONNECT}}
+\DoxyCodeLine{251         \textcolor{keywordflow}{if} (state == CONNECTING \&\& (1 == hdr.msg\_id)) \{}
+\DoxyCodeLine{252             \textcolor{keywordflow}{switch} (hdr.length) \{}
+\DoxyCodeLine{253             \textcolor{keywordflow}{case} BLYNK\_SUCCESS:}
+\DoxyCodeLine{254             \textcolor{keywordflow}{case} BLYNK\_ALREADY\_REGISTERED:}
+\DoxyCodeLine{255                 BLYNK\_LOG3(BLYNK\_F(\textcolor{stringliteral}{"{}Ready (ping: "{}}), lastActivityIn-\/lastHeartbeat, BLYNK\_F(\textcolor{stringliteral}{"{}ms)."{}}));}
+\DoxyCodeLine{256                 lastHeartbeat = lastActivityIn;}
+\DoxyCodeLine{257                 state = CONNECTED;}
+\DoxyCodeLine{258 \textcolor{preprocessor}{\#ifdef BLYNK\_DEBUG}}
+\DoxyCodeLine{259                 \textcolor{keywordflow}{if} (\textcolor{keywordtype}{size\_t} ram = BlynkFreeRam()) \{}
+\DoxyCodeLine{260                     BLYNK\_LOG2(BLYNK\_F(\textcolor{stringliteral}{"{}Free RAM: "{}}), ram);}
+\DoxyCodeLine{261                 \}}
+\DoxyCodeLine{262 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{263                 this-\/>sendInfo();}
+\DoxyCodeLine{264                 BLYNK\_RUN\_YIELD();}
+\DoxyCodeLine{265                 BlynkOnConnected();}
+\DoxyCodeLine{266                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{267             \textcolor{keywordflow}{case} BLYNK\_INVALID\_TOKEN:}
+\DoxyCodeLine{268                 BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}Invalid auth token"{}}));}
+\DoxyCodeLine{269                 state = TOKEN\_INVALID;}
+\DoxyCodeLine{270                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{271             \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{272                 BLYNK\_LOG2(BLYNK\_F(\textcolor{stringliteral}{"{}Connect failed. code: "{}}), hdr.length);}
+\DoxyCodeLine{273             \}}
+\DoxyCodeLine{274             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{275         \}}
+\DoxyCodeLine{276         \textcolor{keywordflow}{if} (BLYNK\_NOT\_AUTHENTICATED == hdr.length) \{}
+\DoxyCodeLine{277             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{278         \}}
+\DoxyCodeLine{279 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{280         \textcolor{comment}{// TODO: return code may indicate App presence}}
+\DoxyCodeLine{281         \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{282     \}}
+\DoxyCodeLine{283 }
+\DoxyCodeLine{284     \textcolor{keywordflow}{if} (hdr.length > BLYNK\_MAX\_READBYTES) \{}
+\DoxyCodeLine{285         BLYNK\_LOG2(BLYNK\_F(\textcolor{stringliteral}{"{}Packet too big: "{}}), hdr.length);}
+\DoxyCodeLine{286         \textcolor{comment}{// TODO: Flush}}
+\DoxyCodeLine{287         internalReconnect();}
+\DoxyCodeLine{288         \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{289     \}}
+\DoxyCodeLine{290 }
+\DoxyCodeLine{291     uint8\_t inputBuffer[hdr.length+1]; \textcolor{comment}{// Add 1 to zero-\/terminate}}
+\DoxyCodeLine{292     \textcolor{keywordflow}{if} (hdr.length != conn.read(inputBuffer, hdr.length)) \{}
+\DoxyCodeLine{293 \textcolor{preprocessor}{\#ifdef BLYNK\_DEBUG}}
+\DoxyCodeLine{294         BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}Can't read body"{}}));}
+\DoxyCodeLine{295 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{296         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{297     \}}
+\DoxyCodeLine{298     inputBuffer[hdr.length] = \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{299 }
+\DoxyCodeLine{300     BLYNK\_DBG\_DUMP(\textcolor{stringliteral}{"{}>"{}}, inputBuffer, hdr.length);}
+\DoxyCodeLine{301 }
+\DoxyCodeLine{302     lastActivityIn = BlynkMillis();}
+\DoxyCodeLine{303 }
+\DoxyCodeLine{304     \textcolor{keywordflow}{switch} (hdr.type)}
+\DoxyCodeLine{305     \{}
+\DoxyCodeLine{306     \textcolor{keywordflow}{case} BLYNK\_CMD\_LOGIN:}
+\DoxyCodeLine{307     \textcolor{keywordflow}{case} BLYNK\_CMD\_HW\_LOGIN: \{}
+\DoxyCodeLine{308 \textcolor{preprocessor}{\#ifdef BLYNK\_USE\_DIRECT\_CONNECT}}
+\DoxyCodeLine{309         \textcolor{keywordflow}{if} (strncmp(authkey, (\textcolor{keywordtype}{char}*)inputBuffer, 32)) \{}
+\DoxyCodeLine{310             BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}Invalid token"{}}));}
+\DoxyCodeLine{311             sendResponse(BLYNK\_INVALID\_TOKEN, hdr.msg\_id);}
+\DoxyCodeLine{312             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{313         \}}
+\DoxyCodeLine{314 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{315         \textcolor{keywordflow}{if} (state == CONNECTING) \{}
+\DoxyCodeLine{316             BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}Ready"{}}));}
+\DoxyCodeLine{317             state = CONNECTED;}
+\DoxyCodeLine{318 \textcolor{preprocessor}{\#ifdef BLYNK\_DEBUG}}
+\DoxyCodeLine{319             \textcolor{keywordflow}{if} (\textcolor{keywordtype}{size\_t} ram = BlynkFreeRam()) \{}
+\DoxyCodeLine{320                 BLYNK\_LOG2(BLYNK\_F(\textcolor{stringliteral}{"{}Free RAM: "{}}), ram);}
+\DoxyCodeLine{321             \}}
+\DoxyCodeLine{322 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{323             this-\/>sendInfo();}
+\DoxyCodeLine{324             BLYNK\_RUN\_YIELD();}
+\DoxyCodeLine{325             BlynkOnConnected();}
+\DoxyCodeLine{326         \}}
+\DoxyCodeLine{327         sendResponse(BLYNK\_SUCCESS, hdr.msg\_id);}
+\DoxyCodeLine{328     \} \textcolor{keywordflow}{break};}
+\DoxyCodeLine{329     \textcolor{keywordflow}{case} BLYNK\_CMD\_PING: \{}
+\DoxyCodeLine{330         sendResponse(BLYNK\_SUCCESS, hdr.msg\_id);}
+\DoxyCodeLine{331     \} \textcolor{keywordflow}{break};}
+\DoxyCodeLine{332     \textcolor{keywordflow}{case} BLYNK\_CMD\_REDIRECT: \{}
+\DoxyCodeLine{333         \textcolor{keywordflow}{if} (!redir\_serv) \{}
+\DoxyCodeLine{334              redir\_serv = (\textcolor{keywordtype}{char}*)malloc(64);}
+\DoxyCodeLine{335         \}}
+\DoxyCodeLine{336         \mbox{\hyperlink{class_blynk_param}{BlynkParam}} param(inputBuffer, hdr.length);}
+\DoxyCodeLine{337         uint16\_t redir\_port = BLYNK\_DEFAULT\_PORT;}
+\DoxyCodeLine{338 }
+\DoxyCodeLine{339         \mbox{\hyperlink{class_blynk_param_1_1iterator}{BlynkParam::iterator}} it = param.begin();}
+\DoxyCodeLine{340         \textcolor{keywordflow}{if} (it >= param.end())}
+\DoxyCodeLine{341             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{342 }
+\DoxyCodeLine{343         strncpy(redir\_serv, it.asStr(), 64);}
+\DoxyCodeLine{344         redir\_serv[63] = \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{345 }
+\DoxyCodeLine{346         \textcolor{keywordflow}{if} (++it < param.end())}
+\DoxyCodeLine{347             redir\_port = it.asLong();}
+\DoxyCodeLine{348         BLYNK\_LOG4(BLYNK\_F(\textcolor{stringliteral}{"{}Redirecting to "{}}), redir\_serv, \textcolor{charliteral}{':'}, redir\_port);}
+\DoxyCodeLine{349         conn.disconnect();}
+\DoxyCodeLine{350         conn.begin(redir\_serv, redir\_port);}
+\DoxyCodeLine{351         state = CONNECTING;}
+\DoxyCodeLine{352         lastHeartbeat = lastActivityIn = lastActivityOut = (BlynkMillis() -\/ 5000UL);}
+\DoxyCodeLine{353     \} \textcolor{keywordflow}{break};}
+\DoxyCodeLine{354     \textcolor{keywordflow}{case} BLYNK\_CMD\_HARDWARE:}
+\DoxyCodeLine{355     \textcolor{keywordflow}{case} BLYNK\_CMD\_BRIDGE: \{}
+\DoxyCodeLine{356         msgIdOutOverride = hdr.msg\_id;}
+\DoxyCodeLine{357         this-\/>processCmd(inputBuffer, hdr.length);}
+\DoxyCodeLine{358         msgIdOutOverride = 0;}
+\DoxyCodeLine{359     \} \textcolor{keywordflow}{break};}
+\DoxyCodeLine{360     \textcolor{keywordflow}{case} BLYNK\_CMD\_INTERNAL: \{}
+\DoxyCodeLine{361         \mbox{\hyperlink{struct_blynk_req}{BlynkReq}} req = \{ 0 \};}
+\DoxyCodeLine{362         \mbox{\hyperlink{class_blynk_param}{BlynkParam}} param(inputBuffer, hdr.length);}
+\DoxyCodeLine{363         \mbox{\hyperlink{class_blynk_param_1_1iterator}{BlynkParam::iterator}} it = param.begin();}
+\DoxyCodeLine{364         \textcolor{keywordflow}{if} (it >= param.end())}
+\DoxyCodeLine{365             \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{366 }
+\DoxyCodeLine{367         uint32\_t cmd32;}
+\DoxyCodeLine{368         memcpy(\&cmd32, it.asStr(), \textcolor{keyword}{sizeof}(cmd32));}
+\DoxyCodeLine{369 }
+\DoxyCodeLine{370         ++it;}
+\DoxyCodeLine{371         \textcolor{keywordtype}{char}* start = (\textcolor{keywordtype}{char}*)(it).asStr();}
+\DoxyCodeLine{372         \textcolor{keywordtype}{unsigned} length = hdr.length -\/ (start -\/ (\textcolor{keywordtype}{char}*)inputBuffer);}
+\DoxyCodeLine{373         \mbox{\hyperlink{class_blynk_param}{BlynkParam}} param2(start, length);}
+\DoxyCodeLine{374 }
+\DoxyCodeLine{375         msgIdOutOverride = hdr.msg\_id;}
+\DoxyCodeLine{376         \textcolor{keywordflow}{switch} (cmd32) \{}
+\DoxyCodeLine{377         \textcolor{keywordflow}{case} BLYNK\_INT\_RTC:  BlynkWidgetWriteInternalPinRTC(req, param2);    \textcolor{keywordflow}{break};}
+\DoxyCodeLine{378         \textcolor{keywordflow}{case} BLYNK\_INT\_UTC:  BlynkWidgetWriteInternalPinUTC(req, param2);    \textcolor{keywordflow}{break};}
+\DoxyCodeLine{379         \textcolor{keywordflow}{case} BLYNK\_INT\_OTA:  BlynkWidgetWriteInternalPinOTA(req, param2);    \textcolor{keywordflow}{break};}
+\DoxyCodeLine{380         \textcolor{keywordflow}{case} BLYNK\_INT\_ACON: BlynkWidgetWriteInternalPinACON(req, param2);   \textcolor{keywordflow}{break};}
+\DoxyCodeLine{381         \textcolor{keywordflow}{case} BLYNK\_INT\_ADIS: BlynkWidgetWriteInternalPinADIS(req, param2);   \textcolor{keywordflow}{break};}
+\DoxyCodeLine{382         \textcolor{keywordflow}{case} BLYNK\_INT\_META: BlynkWidgetWriteInternalPinMETA(req, param2);   \textcolor{keywordflow}{break};}
+\DoxyCodeLine{383         \textcolor{keywordflow}{case} BLYNK\_INT\_VFS:  BlynkWidgetWriteInternalPinVFS(req, param2);    \textcolor{keywordflow}{break};}
+\DoxyCodeLine{384         \textcolor{keywordflow}{case} BLYNK\_INT\_DBG:  BlynkWidgetWriteInternalPinDBG(req, param2);    \textcolor{keywordflow}{break};}
+\DoxyCodeLine{385 \textcolor{preprocessor}{\#ifdef BLYNK\_DEBUG}}
+\DoxyCodeLine{386         \textcolor{keywordflow}{default}:             BLYNK\_LOG2(BLYNK\_F(\textcolor{stringliteral}{"{}Invalid internal cmd:"{}}), param.asStr());}
+\DoxyCodeLine{387 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{388         \}}
+\DoxyCodeLine{389         msgIdOutOverride = 0;}
+\DoxyCodeLine{390     \} \textcolor{keywordflow}{break};}
+\DoxyCodeLine{391     \textcolor{keywordflow}{case} BLYNK\_CMD\_DEBUG\_PRINT: \{}
+\DoxyCodeLine{392         \textcolor{keywordflow}{if} (hdr.length) \{}
+\DoxyCodeLine{393             BLYNK\_LOG2(BLYNK\_F(\textcolor{stringliteral}{"{}Server: "{}}), (\textcolor{keywordtype}{char}*)inputBuffer);}
+\DoxyCodeLine{394         \}}
+\DoxyCodeLine{395     \} \textcolor{keywordflow}{break};}
+\DoxyCodeLine{396     \textcolor{keywordflow}{default}: \{}
+\DoxyCodeLine{397 \textcolor{preprocessor}{\#ifdef BLYNK\_DEBUG}}
+\DoxyCodeLine{398         BLYNK\_LOG2(BLYNK\_F(\textcolor{stringliteral}{"{}Invalid header type: "{}}), hdr.type);}
+\DoxyCodeLine{399 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{400         \textcolor{comment}{// TODO: Flush}}
+\DoxyCodeLine{401         internalReconnect();}
+\DoxyCodeLine{402     \} \textcolor{keywordflow}{break};}
+\DoxyCodeLine{403     \}}
+\DoxyCodeLine{404 }
+\DoxyCodeLine{405     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{406 \}}
+\DoxyCodeLine{407 }
+\DoxyCodeLine{408 \textcolor{keyword}{template} <\textcolor{keyword}{class} Transp>}
+\DoxyCodeLine{409 \textcolor{keywordtype}{int} \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol<Transp>::readHeader}}(\mbox{\hyperlink{struct_blynk_header}{BlynkHeader}}\& hdr)}
+\DoxyCodeLine{410 \{}
+\DoxyCodeLine{411     \textcolor{keywordtype}{size\_t} rlen = conn.read(\&hdr, \textcolor{keyword}{sizeof}(hdr));}
+\DoxyCodeLine{412     \textcolor{keywordflow}{if} (rlen == 0) \{}
+\DoxyCodeLine{413         \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{414     \}}
+\DoxyCodeLine{415 }
+\DoxyCodeLine{416     \textcolor{keywordflow}{if} (\textcolor{keyword}{sizeof}(hdr) != rlen) \{}
+\DoxyCodeLine{417         \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{418     \}}
+\DoxyCodeLine{419 }
+\DoxyCodeLine{420     BLYNK\_DBG\_DUMP(\textcolor{stringliteral}{"{}>"{}}, \&hdr, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct_blynk_header}{BlynkHeader}}));}
+\DoxyCodeLine{421 }
+\DoxyCodeLine{422     hdr.msg\_id = ntohs(hdr.msg\_id);}
+\DoxyCodeLine{423     hdr.length = ntohs(hdr.length);}
+\DoxyCodeLine{424 }
+\DoxyCodeLine{425     \textcolor{keywordflow}{return} rlen;}
+\DoxyCodeLine{426 \}}
+\DoxyCodeLine{427 }
+\DoxyCodeLine{428 \textcolor{preprocessor}{\#ifndef BLYNK\_SEND\_THROTTLE}}
+\DoxyCodeLine{429 \textcolor{preprocessor}{\#define BLYNK\_SEND\_THROTTLE 0}}
+\DoxyCodeLine{430 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{431 }
+\DoxyCodeLine{432 \textcolor{preprocessor}{\#ifndef BLYNK\_SEND\_CHUNK}}
+\DoxyCodeLine{433 \textcolor{preprocessor}{\#define BLYNK\_SEND\_CHUNK 1024 }\textcolor{comment}{// Just a big number}}
+\DoxyCodeLine{434 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{435 }
+\DoxyCodeLine{436 \textcolor{keyword}{template} <\textcolor{keyword}{class} Transp>}
+\DoxyCodeLine{437 \textcolor{keywordtype}{void} \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol<Transp>::sendCmd}}(uint8\_t cmd, uint16\_t \textcolor{keywordtype}{id}, \textcolor{keyword}{const} \textcolor{keywordtype}{void}* data, \textcolor{keywordtype}{size\_t} length, \textcolor{keyword}{const} \textcolor{keywordtype}{void}* data2, \textcolor{keywordtype}{size\_t} length2)}
+\DoxyCodeLine{438 \{}
+\DoxyCodeLine{439     \textcolor{keywordflow}{if} (!conn.connected() || (cmd != BLYNK\_CMD\_RESPONSE \&\& cmd != BLYNK\_CMD\_PING \&\& cmd != BLYNK\_CMD\_LOGIN \&\& cmd != BLYNK\_CMD\_HW\_LOGIN \&\& state != CONNECTED) ) \{}
+\DoxyCodeLine{440 \textcolor{preprocessor}{\#ifdef BLYNK\_DEBUG\_ALL}}
+\DoxyCodeLine{441         BLYNK\_LOG2(BLYNK\_F(\textcolor{stringliteral}{"{}Cmd skipped:"{}}), cmd);}
+\DoxyCodeLine{442 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{443         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{444     \}}
+\DoxyCodeLine{445 }
+\DoxyCodeLine{446     \textcolor{keywordflow}{if} (0 == \textcolor{keywordtype}{id}) \{}
+\DoxyCodeLine{447         \textcolor{keywordtype}{id} = getNextMsgId();}
+\DoxyCodeLine{448     \}}
+\DoxyCodeLine{449 }
+\DoxyCodeLine{450 \textcolor{preprocessor}{\#if defined(BLYNK\_MSG\_LIMIT) \&\& BLYNK\_MSG\_LIMIT > 0}}
+\DoxyCodeLine{451     \textcolor{keywordflow}{if} (cmd >= BLYNK\_CMD\_TWEET \&\& cmd <= BLYNK\_CMD\_HARDWARE) \{}
+\DoxyCodeLine{452         \textcolor{keyword}{const} millis\_time\_t allowed\_time = BlynkMax(lastActivityOut, lastActivityIn) + 1000/BLYNK\_MSG\_LIMIT;}
+\DoxyCodeLine{453         int32\_t wait\_time = allowed\_time -\/ BlynkMillis();}
+\DoxyCodeLine{454         \textcolor{keywordflow}{if} (wait\_time >= 0) \{}
+\DoxyCodeLine{455 \textcolor{preprocessor}{\#ifdef BLYNK\_DEBUG\_ALL}}
+\DoxyCodeLine{456             BLYNK\_LOG2(BLYNK\_F(\textcolor{stringliteral}{"{}Waiting:"{}}), wait\_time);}
+\DoxyCodeLine{457 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{458             \textcolor{keywordflow}{while} (wait\_time >= 0) \{}
+\DoxyCodeLine{459                 run();}
+\DoxyCodeLine{460                 wait\_time = allowed\_time -\/ BlynkMillis();}
+\DoxyCodeLine{461             \}}
+\DoxyCodeLine{462         \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (nesting == 0) \{}
+\DoxyCodeLine{463             run();}
+\DoxyCodeLine{464         \}}
+\DoxyCodeLine{465     \}}
+\DoxyCodeLine{466 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{467 }
+\DoxyCodeLine{468     \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} full\_length = (\textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct_blynk_header}{BlynkHeader}})) +}
+\DoxyCodeLine{469                                (data  ? length  : 0) +}
+\DoxyCodeLine{470                                (data2 ? length2 : 0);}
+\DoxyCodeLine{471 }
+\DoxyCodeLine{472 \textcolor{preprocessor}{\#if defined(BLYNK\_SEND\_ATOMIC) || defined(ESP8266) || defined(ESP32) || defined(SPARK) || defined(PARTICLE) || defined(ENERGIA)}}
+\DoxyCodeLine{473     \textcolor{comment}{// Those have more RAM and like single write at a time...}}
+\DoxyCodeLine{474 }
+\DoxyCodeLine{475     uint8\_t buff[full\_length];}
+\DoxyCodeLine{476 }
+\DoxyCodeLine{477     \mbox{\hyperlink{struct_blynk_header}{BlynkHeader}}* hdr = (\mbox{\hyperlink{struct_blynk_header}{BlynkHeader}}*)buff;}
+\DoxyCodeLine{478     hdr-\/>type = cmd;}
+\DoxyCodeLine{479     hdr-\/>msg\_id = htons(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{480     hdr-\/>length = htons(length+length2);}
+\DoxyCodeLine{481 }
+\DoxyCodeLine{482     \textcolor{keywordtype}{size\_t} pos = \textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct_blynk_header}{BlynkHeader}});}
+\DoxyCodeLine{483     \textcolor{keywordflow}{if} (data \&\& length) \{}
+\DoxyCodeLine{484         memcpy(buff + pos, data, length);}
+\DoxyCodeLine{485         pos += length;}
+\DoxyCodeLine{486     \}}
+\DoxyCodeLine{487     \textcolor{keywordflow}{if} (data2 \&\& length2) \{}
+\DoxyCodeLine{488         memcpy(buff + pos, data2, length2);}
+\DoxyCodeLine{489     \}}
+\DoxyCodeLine{490 }
+\DoxyCodeLine{491     \textcolor{keywordtype}{size\_t} wlen = 0;}
+\DoxyCodeLine{492     \textcolor{keywordflow}{while} (wlen < full\_length) \{}
+\DoxyCodeLine{493         \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} chunk = BlynkMin(\textcolor{keywordtype}{size\_t}(BLYNK\_SEND\_CHUNK), full\_length -\/ wlen);}
+\DoxyCodeLine{494         BLYNK\_DBG\_DUMP(\textcolor{stringliteral}{"{}<"{}}, buff + wlen, chunk);}
+\DoxyCodeLine{495         \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} w = conn.write(buff + wlen, chunk);}
+\DoxyCodeLine{496         BlynkDelay(BLYNK\_SEND\_THROTTLE);}
+\DoxyCodeLine{497         \textcolor{keywordflow}{if} (w == 0) \{}
+\DoxyCodeLine{498 \textcolor{preprocessor}{\#ifdef BLYNK\_DEBUG}}
+\DoxyCodeLine{499             BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}Cmd error"{}}));}
+\DoxyCodeLine{500 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{501             conn.disconnect();}
+\DoxyCodeLine{502             state = CONNECTING;}
+\DoxyCodeLine{503             BlynkOnDisconnected();}
+\DoxyCodeLine{504             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{505         \}}
+\DoxyCodeLine{506         wlen += w;}
+\DoxyCodeLine{507     \}}
+\DoxyCodeLine{508 }
+\DoxyCodeLine{509 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{510 }
+\DoxyCodeLine{511     \mbox{\hyperlink{struct_blynk_header}{BlynkHeader}} hdr;}
+\DoxyCodeLine{512     hdr.type = cmd;}
+\DoxyCodeLine{513     hdr.msg\_id = htons(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{514     hdr.length = htons(length+length2);}
+\DoxyCodeLine{515 }
+\DoxyCodeLine{516     BLYNK\_DBG\_DUMP(\textcolor{stringliteral}{"{}<"{}}, \&hdr, \textcolor{keyword}{sizeof}(hdr));}
+\DoxyCodeLine{517     \textcolor{keywordtype}{size\_t} wlen = conn.write(\&hdr, \textcolor{keyword}{sizeof}(hdr));}
+\DoxyCodeLine{518     BlynkDelay(BLYNK\_SEND\_THROTTLE);}
+\DoxyCodeLine{519 }
+\DoxyCodeLine{520     \textcolor{keywordflow}{if} (cmd != BLYNK\_CMD\_RESPONSE) \{}
+\DoxyCodeLine{521         \textcolor{keywordflow}{if} (length) \{}
+\DoxyCodeLine{522             BLYNK\_DBG\_DUMP(\textcolor{stringliteral}{"{}<"{}}, data, length);}
+\DoxyCodeLine{523             wlen += conn.write(data, length);}
+\DoxyCodeLine{524             BlynkDelay(BLYNK\_SEND\_THROTTLE);}
+\DoxyCodeLine{525         \}}
+\DoxyCodeLine{526         \textcolor{keywordflow}{if} (length2) \{}
+\DoxyCodeLine{527             BLYNK\_DBG\_DUMP(\textcolor{stringliteral}{"{}<"{}}, data2, length2);}
+\DoxyCodeLine{528             wlen += conn.write(data2, length2);}
+\DoxyCodeLine{529             BlynkDelay(BLYNK\_SEND\_THROTTLE);}
+\DoxyCodeLine{530         \}}
+\DoxyCodeLine{531     \}}
+\DoxyCodeLine{532 }
+\DoxyCodeLine{533 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{534 }
+\DoxyCodeLine{535     \textcolor{keywordflow}{if} (wlen != full\_length) \{}
+\DoxyCodeLine{536 \textcolor{preprocessor}{\#ifdef BLYNK\_DEBUG}}
+\DoxyCodeLine{537         BLYNK\_LOG4(BLYNK\_F(\textcolor{stringliteral}{"{}Sent "{}}), wlen, \textcolor{charliteral}{'/'}, full\_length);}
+\DoxyCodeLine{538 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{539         internalReconnect();}
+\DoxyCodeLine{540         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{541     \}}
+\DoxyCodeLine{542 }
+\DoxyCodeLine{543     lastActivityOut = BlynkMillis();}
+\DoxyCodeLine{544 }
+\DoxyCodeLine{545 \}}
+\DoxyCodeLine{546 }
+\DoxyCodeLine{547 \textcolor{keyword}{template} <\textcolor{keyword}{class} Transp>}
+\DoxyCodeLine{548 uint16\_t \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol<Transp>::getNextMsgId}}()}
+\DoxyCodeLine{549 \{}
+\DoxyCodeLine{550     \textcolor{keywordflow}{if} (msgIdOutOverride != 0)}
+\DoxyCodeLine{551         \textcolor{keywordflow}{return} msgIdOutOverride;}
+\DoxyCodeLine{552     \textcolor{keywordflow}{if} (++msgIdOut == 0)}
+\DoxyCodeLine{553         msgIdOut = 1;}
+\DoxyCodeLine{554     \textcolor{keywordflow}{return} msgIdOut;}
+\DoxyCodeLine{555 \}}
+\DoxyCodeLine{556 }
+\DoxyCodeLine{557 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,285 @@
+\hypertarget{_adafruit___neo_pixel_8h_source}{}\doxysection{Adafruit\+\_\+\+Neo\+Pixel.\+h}
+\label{_adafruit___neo_pixel_8h_source}\index{lib/Adafruit\_NeoPixel/Adafruit\_NeoPixel.h@{lib/Adafruit\_NeoPixel/Adafruit\_NeoPixel.h}}
+\mbox{\hyperlink{_adafruit___neo_pixel_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#ifndef ADAFRUIT\_NEOPIXEL\_H}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#define ADAFRUIT\_NEOPIXEL\_H}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#ifdef ARDUINO}}
+\DoxyCodeLine{40 \textcolor{preprocessor}{\#if (ARDUINO >= 100)}}
+\DoxyCodeLine{41 \textcolor{preprocessor}{\#include <Arduino.h>}}
+\DoxyCodeLine{42 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{43 \textcolor{preprocessor}{\#include <WProgram.h>}}
+\DoxyCodeLine{44 \textcolor{preprocessor}{\#include <pins\_arduino.h>}}
+\DoxyCodeLine{45 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47 \textcolor{preprocessor}{\#ifdef USE\_TINYUSB }\textcolor{comment}{// For Serial when selecting TinyUSB}}
+\DoxyCodeLine{48 \textcolor{preprocessor}{\#include <Adafruit\_TinyUSB.h>}}
+\DoxyCodeLine{49 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53 \textcolor{preprocessor}{\#ifdef TARGET\_LPC1768}}
+\DoxyCodeLine{54 \textcolor{preprocessor}{\#include <Arduino.h>}}
+\DoxyCodeLine{55 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57 \textcolor{preprocessor}{\#if defined(ARDUINO\_ARCH\_RP2040)}}
+\DoxyCodeLine{58 \textcolor{preprocessor}{\#include <stdlib.h>}}
+\DoxyCodeLine{59 \textcolor{preprocessor}{\#include "{}hardware/pio.h"{}}}
+\DoxyCodeLine{60 \textcolor{preprocessor}{\#include "{}hardware/clocks.h"{}}}
+\DoxyCodeLine{61 \textcolor{preprocessor}{\#include "{}rp2040\_pio.h"{}}}
+\DoxyCodeLine{62 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64 \textcolor{comment}{// The order of primary colors in the NeoPixel data stream can vary among}}
+\DoxyCodeLine{65 \textcolor{comment}{// device types, manufacturers and even different revisions of the same}}
+\DoxyCodeLine{66 \textcolor{comment}{// item.  The third parameter to the Adafruit\_NeoPixel constructor encodes}}
+\DoxyCodeLine{67 \textcolor{comment}{// the per-\/pixel byte offsets of the red, green and blue primaries (plus}}
+\DoxyCodeLine{68 \textcolor{comment}{// white, if present) in the data stream -\/-\/ the following \#defines provide}}
+\DoxyCodeLine{69 \textcolor{comment}{// an easier-\/to-\/use named version for each permutation. e.g. NEO\_GRB}}
+\DoxyCodeLine{70 \textcolor{comment}{// indicates a NeoPixel-\/compatible device expecting three bytes per pixel,}}
+\DoxyCodeLine{71 \textcolor{comment}{// with the first byte transmitted containing the green value, second}}
+\DoxyCodeLine{72 \textcolor{comment}{// containing red and third containing blue. The in-\/memory representation}}
+\DoxyCodeLine{73 \textcolor{comment}{// of a chain of NeoPixels is the same as the data-\/stream order; no}}
+\DoxyCodeLine{74 \textcolor{comment}{// re-\/ordering of bytes is required when issuing data to the chain.}}
+\DoxyCodeLine{75 \textcolor{comment}{// Most of these values won't exist in real-\/world devices, but it's done}}
+\DoxyCodeLine{76 \textcolor{comment}{// this way so we're ready for it (also, if using the WS2811 driver IC,}}
+\DoxyCodeLine{77 \textcolor{comment}{// one might have their pixels set up in any weird permutation).}}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79 \textcolor{comment}{// Bits 5,4 of this value are the offset (0-\/3) from the first byte of a}}
+\DoxyCodeLine{80 \textcolor{comment}{// pixel to the location of the red color byte.  Bits 3,2 are the green}}
+\DoxyCodeLine{81 \textcolor{comment}{// offset and 1,0 are the blue offset.  If it is an RGBW-\/type device}}
+\DoxyCodeLine{82 \textcolor{comment}{// (supporting a white primary in addition to R,G,B), bits 7,6 are the}}
+\DoxyCodeLine{83 \textcolor{comment}{// offset to the white byte...otherwise, bits 7,6 are set to the same value}}
+\DoxyCodeLine{84 \textcolor{comment}{// as 5,4 (red) to indicate an RGB (not RGBW) device.}}
+\DoxyCodeLine{85 \textcolor{comment}{// i.e. binary representation:}}
+\DoxyCodeLine{86 \textcolor{comment}{// 0bWWRRGGBB for RGBW devices}}
+\DoxyCodeLine{87 \textcolor{comment}{// 0bRRRRGGBB for RGB}}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89 \textcolor{comment}{// RGB NeoPixel permutations; white and red offsets are always same}}
+\DoxyCodeLine{90 \textcolor{comment}{// Offset:         W        R        G        B}}
+\DoxyCodeLine{91 \textcolor{preprocessor}{\#define NEO\_RGB ((0 << 6) | (0 << 4) | (1 << 2) | (2)) }}
+\DoxyCodeLine{92 \textcolor{preprocessor}{\#define NEO\_RBG ((0 << 6) | (0 << 4) | (2 << 2) | (1)) }}
+\DoxyCodeLine{93 \textcolor{preprocessor}{\#define NEO\_GRB ((1 << 6) | (1 << 4) | (0 << 2) | (2)) }}
+\DoxyCodeLine{94 \textcolor{preprocessor}{\#define NEO\_GBR ((2 << 6) | (2 << 4) | (0 << 2) | (1)) }}
+\DoxyCodeLine{95 \textcolor{preprocessor}{\#define NEO\_BRG ((1 << 6) | (1 << 4) | (2 << 2) | (0)) }}
+\DoxyCodeLine{96 \textcolor{preprocessor}{\#define NEO\_BGR ((2 << 6) | (2 << 4) | (1 << 2) | (0)) }}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98 \textcolor{comment}{// RGBW NeoPixel permutations; all 4 offsets are distinct}}
+\DoxyCodeLine{99 \textcolor{comment}{// Offset:         W          R          G          B}}
+\DoxyCodeLine{100 \textcolor{preprocessor}{\#define NEO\_WRGB ((0 << 6) | (1 << 4) | (2 << 2) | (3)) }}
+\DoxyCodeLine{101 \textcolor{preprocessor}{\#define NEO\_WRBG ((0 << 6) | (1 << 4) | (3 << 2) | (2)) }}
+\DoxyCodeLine{102 \textcolor{preprocessor}{\#define NEO\_WGRB ((0 << 6) | (2 << 4) | (1 << 2) | (3)) }}
+\DoxyCodeLine{103 \textcolor{preprocessor}{\#define NEO\_WGBR ((0 << 6) | (3 << 4) | (1 << 2) | (2)) }}
+\DoxyCodeLine{104 \textcolor{preprocessor}{\#define NEO\_WBRG ((0 << 6) | (2 << 4) | (3 << 2) | (1)) }}
+\DoxyCodeLine{105 \textcolor{preprocessor}{\#define NEO\_WBGR ((0 << 6) | (3 << 4) | (2 << 2) | (1)) }}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107 \textcolor{preprocessor}{\#define NEO\_RWGB ((1 << 6) | (0 << 4) | (2 << 2) | (3)) }}
+\DoxyCodeLine{108 \textcolor{preprocessor}{\#define NEO\_RWBG ((1 << 6) | (0 << 4) | (3 << 2) | (2)) }}
+\DoxyCodeLine{109 \textcolor{preprocessor}{\#define NEO\_RGWB ((2 << 6) | (0 << 4) | (1 << 2) | (3)) }}
+\DoxyCodeLine{110 \textcolor{preprocessor}{\#define NEO\_RGBW ((3 << 6) | (0 << 4) | (1 << 2) | (2)) }}
+\DoxyCodeLine{111 \textcolor{preprocessor}{\#define NEO\_RBWG ((2 << 6) | (0 << 4) | (3 << 2) | (1)) }}
+\DoxyCodeLine{112 \textcolor{preprocessor}{\#define NEO\_RBGW ((3 << 6) | (0 << 4) | (2 << 2) | (1)) }}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114 \textcolor{preprocessor}{\#define NEO\_GWRB ((1 << 6) | (2 << 4) | (0 << 2) | (3)) }}
+\DoxyCodeLine{115 \textcolor{preprocessor}{\#define NEO\_GWBR ((1 << 6) | (3 << 4) | (0 << 2) | (2)) }}
+\DoxyCodeLine{116 \textcolor{preprocessor}{\#define NEO\_GRWB ((2 << 6) | (1 << 4) | (0 << 2) | (3)) }}
+\DoxyCodeLine{117 \textcolor{preprocessor}{\#define NEO\_GRBW ((3 << 6) | (1 << 4) | (0 << 2) | (2)) }}
+\DoxyCodeLine{118 \textcolor{preprocessor}{\#define NEO\_GBWR ((2 << 6) | (3 << 4) | (0 << 2) | (1)) }}
+\DoxyCodeLine{119 \textcolor{preprocessor}{\#define NEO\_GBRW ((3 << 6) | (2 << 4) | (0 << 2) | (1)) }}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121 \textcolor{preprocessor}{\#define NEO\_BWRG ((1 << 6) | (2 << 4) | (3 << 2) | (0)) }}
+\DoxyCodeLine{122 \textcolor{preprocessor}{\#define NEO\_BWGR ((1 << 6) | (3 << 4) | (2 << 2) | (0)) }}
+\DoxyCodeLine{123 \textcolor{preprocessor}{\#define NEO\_BRWG ((2 << 6) | (1 << 4) | (3 << 2) | (0)) }}
+\DoxyCodeLine{124 \textcolor{preprocessor}{\#define NEO\_BRGW ((3 << 6) | (1 << 4) | (2 << 2) | (0)) }}
+\DoxyCodeLine{125 \textcolor{preprocessor}{\#define NEO\_BGWR ((2 << 6) | (3 << 4) | (1 << 2) | (0)) }}
+\DoxyCodeLine{126 \textcolor{preprocessor}{\#define NEO\_BGRW ((3 << 6) | (2 << 4) | (1 << 2) | (0)) }}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128 \textcolor{comment}{// Add NEO\_KHZ400 to the color order value to indicate a 400 KHz device.}}
+\DoxyCodeLine{129 \textcolor{comment}{// All but the earliest v1 NeoPixels expect an 800 KHz data stream, this is}}
+\DoxyCodeLine{130 \textcolor{comment}{// the default if unspecified. Because flash space is very limited on ATtiny}}
+\DoxyCodeLine{131 \textcolor{comment}{// devices (e.g. Trinket, Gemma), v1 NeoPixels aren't handled by default on}}
+\DoxyCodeLine{132 \textcolor{comment}{// those chips, though it can be enabled by removing the ifndef/endif below,}}
+\DoxyCodeLine{133 \textcolor{comment}{// but code will be bigger. Conversely, can disable the NEO\_KHZ400 line on}}
+\DoxyCodeLine{134 \textcolor{comment}{// other MCUs to remove v1 support and save a little space.}}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136 \textcolor{preprocessor}{\#define NEO\_KHZ800 0x0000 }}
+\DoxyCodeLine{137 \textcolor{preprocessor}{\#ifndef \_\_AVR\_ATtiny85\_\_}}
+\DoxyCodeLine{138 \textcolor{preprocessor}{\#define NEO\_KHZ400 0x0100 }}
+\DoxyCodeLine{139 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141 \textcolor{comment}{// If 400 KHz support is enabled, the third parameter to the constructor}}
+\DoxyCodeLine{142 \textcolor{comment}{// requires a 16-\/bit value (in order to select 400 vs 800 KHz speed).}}
+\DoxyCodeLine{143 \textcolor{comment}{// If only 800 KHz is enabled (as is default on ATtiny), an 8-\/bit value}}
+\DoxyCodeLine{144 \textcolor{comment}{// is sufficient to encode pixel color order, saving some space.}}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146 \textcolor{preprocessor}{\#ifdef NEO\_KHZ400}}
+\DoxyCodeLine{147 \textcolor{keyword}{typedef} uint16\_t \mbox{\hyperlink{_adafruit___neo_pixel_8h_ab88a50d51bb5488df4379ff49c81fd72}{neoPixelType}}; }
+\DoxyCodeLine{148 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{149 \textcolor{keyword}{typedef} uint8\_t \mbox{\hyperlink{_adafruit___neo_pixel_8h_ab88a50d51bb5488df4379ff49c81fd72}{neoPixelType}}; }
+\DoxyCodeLine{150 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{151 }
+\DoxyCodeLine{152 \textcolor{comment}{// These two tables are declared outside the Adafruit\_NeoPixel class}}
+\DoxyCodeLine{153 \textcolor{comment}{// because some boards may require oldschool compilers that don't}}
+\DoxyCodeLine{154 \textcolor{comment}{// handle the C++11 constexpr keyword.}}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156 \textcolor{comment}{/* A PROGMEM (flash mem) table containing 8-\/bit unsigned sine wave (0-\/255).}}
+\DoxyCodeLine{157 \textcolor{comment}{   Copy \& paste this snippet into a Python REPL to regenerate:}}
+\DoxyCodeLine{158 \textcolor{comment}{import math}}
+\DoxyCodeLine{159 \textcolor{comment}{for x in range(256):}}
+\DoxyCodeLine{160 \textcolor{comment}{    print("{}\{:3\},"{}.format(int((math.sin(x/128.0*math.pi)+1.0)*127.5+0.5))),}}
+\DoxyCodeLine{161 \textcolor{comment}{    if x\&15 == 15: print}}
+\DoxyCodeLine{162 \textcolor{comment}{*/}}
+\DoxyCodeLine{163 \textcolor{keyword}{static} \textcolor{keyword}{const} uint8\_t PROGMEM \_NeoPixelSineTable[256] = \{}
+\DoxyCodeLine{164     128, 131, 134, 137, 140, 143, 146, 149, 152, 155, 158, 162, 165, 167, 170,}
+\DoxyCodeLine{165     173, 176, 179, 182, 185, 188, 190, 193, 196, 198, 201, 203, 206, 208, 211,}
+\DoxyCodeLine{166     213, 215, 218, 220, 222, 224, 226, 228, 230, 232, 234, 235, 237, 238, 240,}
+\DoxyCodeLine{167     241, 243, 244, 245, 246, 248, 249, 250, 250, 251, 252, 253, 253, 254, 254,}
+\DoxyCodeLine{168     254, 255, 255, 255, 255, 255, 255, 255, 254, 254, 254, 253, 253, 252, 251,}
+\DoxyCodeLine{169     250, 250, 249, 248, 246, 245, 244, 243, 241, 240, 238, 237, 235, 234, 232,}
+\DoxyCodeLine{170     230, 228, 226, 224, 222, 220, 218, 215, 213, 211, 208, 206, 203, 201, 198,}
+\DoxyCodeLine{171     196, 193, 190, 188, 185, 182, 179, 176, 173, 170, 167, 165, 162, 158, 155,}
+\DoxyCodeLine{172     152, 149, 146, 143, 140, 137, 134, 131, 128, 124, 121, 118, 115, 112, 109,}
+\DoxyCodeLine{173     106, 103, 100, 97,  93,  90,  88,  85,  82,  79,  76,  73,  70,  67,  65,}
+\DoxyCodeLine{174     62,  59,  57,  54,  52,  49,  47,  44,  42,  40,  37,  35,  33,  31,  29,}
+\DoxyCodeLine{175     27,  25,  23,  21,  20,  18,  17,  15,  14,  12,  11,  10,  9,   7,   6,}
+\DoxyCodeLine{176     5,   5,   4,   3,   2,   2,   1,   1,   1,   0,   0,   0,   0,   0,   0,}
+\DoxyCodeLine{177     0,   1,   1,   1,   2,   2,   3,   4,   5,   5,   6,   7,   9,   10,  11,}
+\DoxyCodeLine{178     12,  14,  15,  17,  18,  20,  21,  23,  25,  27,  29,  31,  33,  35,  37,}
+\DoxyCodeLine{179     40,  42,  44,  47,  49,  52,  54,  57,  59,  62,  65,  67,  70,  73,  76,}
+\DoxyCodeLine{180     79,  82,  85,  88,  90,  93,  97,  100, 103, 106, 109, 112, 115, 118, 121,}
+\DoxyCodeLine{181     124\};}
+\DoxyCodeLine{182 }
+\DoxyCodeLine{183 \textcolor{comment}{/* Similar to above, but for an 8-\/bit gamma-\/correction table.}}
+\DoxyCodeLine{184 \textcolor{comment}{   Copy \& paste this snippet into a Python REPL to regenerate:}}
+\DoxyCodeLine{185 \textcolor{comment}{import math}}
+\DoxyCodeLine{186 \textcolor{comment}{gamma=2.6}}
+\DoxyCodeLine{187 \textcolor{comment}{for x in range(256):}}
+\DoxyCodeLine{188 \textcolor{comment}{    print("{}\{:3\},"{}.format(int(math.pow((x)/255.0,gamma)*255.0+0.5))),}}
+\DoxyCodeLine{189 \textcolor{comment}{    if x\&15 == 15: print}}
+\DoxyCodeLine{190 \textcolor{comment}{*/}}
+\DoxyCodeLine{191 \textcolor{keyword}{static} \textcolor{keyword}{const} uint8\_t PROGMEM \_NeoPixelGammaTable[256] = \{}
+\DoxyCodeLine{192     0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,}
+\DoxyCodeLine{193     0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   1,   1,   1,   1,}
+\DoxyCodeLine{194     1,   1,   1,   1,   1,   1,   2,   2,   2,   2,   2,   2,   2,   2,   3,}
+\DoxyCodeLine{195     3,   3,   3,   3,   3,   4,   4,   4,   4,   5,   5,   5,   5,   5,   6,}
+\DoxyCodeLine{196     6,   6,   6,   7,   7,   7,   8,   8,   8,   9,   9,   9,   10,  10,  10,}
+\DoxyCodeLine{197     11,  11,  11,  12,  12,  13,  13,  13,  14,  14,  15,  15,  16,  16,  17,}
+\DoxyCodeLine{198     17,  18,  18,  19,  19,  20,  20,  21,  21,  22,  22,  23,  24,  24,  25,}
+\DoxyCodeLine{199     25,  26,  27,  27,  28,  29,  29,  30,  31,  31,  32,  33,  34,  34,  35,}
+\DoxyCodeLine{200     36,  37,  38,  38,  39,  40,  41,  42,  42,  43,  44,  45,  46,  47,  48,}
+\DoxyCodeLine{201     49,  50,  51,  52,  53,  54,  55,  56,  57,  58,  59,  60,  61,  62,  63,}
+\DoxyCodeLine{202     64,  65,  66,  68,  69,  70,  71,  72,  73,  75,  76,  77,  78,  80,  81,}
+\DoxyCodeLine{203     82,  84,  85,  86,  88,  89,  90,  92,  93,  94,  96,  97,  99,  100, 102,}
+\DoxyCodeLine{204     103, 105, 106, 108, 109, 111, 112, 114, 115, 117, 119, 120, 122, 124, 125,}
+\DoxyCodeLine{205     127, 129, 130, 132, 134, 136, 137, 139, 141, 143, 145, 146, 148, 150, 152,}
+\DoxyCodeLine{206     154, 156, 158, 160, 162, 164, 166, 168, 170, 172, 174, 176, 178, 180, 182,}
+\DoxyCodeLine{207     184, 186, 188, 191, 193, 195, 197, 199, 202, 204, 206, 209, 211, 213, 215,}
+\DoxyCodeLine{208     218, 220, 223, 225, 227, 230, 232, 235, 237, 240, 242, 245, 247, 250, 252,}
+\DoxyCodeLine{209     255\};}
+\DoxyCodeLine{210 }
+\DoxyCodeLine{215 \textcolor{keyword}{class }\mbox{\hyperlink{class_adafruit___neo_pixel}{Adafruit\_NeoPixel}} \{}
+\DoxyCodeLine{216 }
+\DoxyCodeLine{217 \textcolor{keyword}{public}:}
+\DoxyCodeLine{218   \textcolor{comment}{// Constructor: number of LEDs, pin number, LED type}}
+\DoxyCodeLine{219   \mbox{\hyperlink{class_adafruit___neo_pixel_ab1ac0c48cf3fd9185e40308c37f1d320}{Adafruit\_NeoPixel}}(uint16\_t n, int16\_t \mbox{\hyperlink{class_adafruit___neo_pixel_a04d8241befedb580e6fb0744b73955ba}{pin}} = 6,}
+\DoxyCodeLine{220                     \mbox{\hyperlink{_adafruit___neo_pixel_8h_ab88a50d51bb5488df4379ff49c81fd72}{neoPixelType}} type = \mbox{\hyperlink{_adafruit___neo_pixel_8h_a95d0d6b0a1f52bc72d9dcea2b3a48e3f}{NEO\_GRB}} + \mbox{\hyperlink{_adafruit___neo_pixel_8h_a475fef7028a743310aa4311a97899d5d}{NEO\_KHZ800}});}
+\DoxyCodeLine{221   \mbox{\hyperlink{class_adafruit___neo_pixel_ab1ac0c48cf3fd9185e40308c37f1d320}{Adafruit\_NeoPixel}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{222   \mbox{\hyperlink{class_adafruit___neo_pixel_a16d970aa16f9d0128800346f4ca567db}{\string~Adafruit\_NeoPixel}}();}
+\DoxyCodeLine{223 }
+\DoxyCodeLine{224   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_adafruit___neo_pixel_aad78931e44ce43c9b9c460dba7c9bbb7}{begin}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{225   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_adafruit___neo_pixel_ae335a7c214036a6c1734969f2bc3f4f7}{show}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{226   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_adafruit___neo_pixel_a7e16e93b214852dee3a79ea82dfb0584}{setPin}}(int16\_t p);}
+\DoxyCodeLine{227   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_adafruit___neo_pixel_a0ec91c90f337e806cd98956514257cf1}{setPixelColor}}(uint16\_t n, uint8\_t r, uint8\_t g, uint8\_t b);}
+\DoxyCodeLine{228   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_adafruit___neo_pixel_a0ec91c90f337e806cd98956514257cf1}{setPixelColor}}(uint16\_t n, uint8\_t r, uint8\_t g, uint8\_t b, uint8\_t w);}
+\DoxyCodeLine{229   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_adafruit___neo_pixel_a0ec91c90f337e806cd98956514257cf1}{setPixelColor}}(uint16\_t n, uint32\_t c);}
+\DoxyCodeLine{230   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_adafruit___neo_pixel_ad65b34a4e8e632b3257d7d4df7792171}{fill}}(uint32\_t c = 0, uint16\_t first = 0, uint16\_t count = 0);}
+\DoxyCodeLine{231   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_adafruit___neo_pixel_afa1740af1d8eec971eada06d53901c53}{setBrightness}}(uint8\_t);}
+\DoxyCodeLine{232   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_adafruit___neo_pixel_ae683fe63c33c388e9ba1c6392dd477eb}{clear}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{233   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_adafruit___neo_pixel_a05542d574f1a9a73f9e3547990321944}{updateLength}}(uint16\_t n);}
+\DoxyCodeLine{234   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_adafruit___neo_pixel_a65e59263e0f5a04c7202d4385d3a539b}{updateType}}(\mbox{\hyperlink{_adafruit___neo_pixel_8h_ab88a50d51bb5488df4379ff49c81fd72}{neoPixelType}} t);}
+\DoxyCodeLine{248   \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_adafruit___neo_pixel_ad38ce8112667b70ad7c411a98892af0e}{canShow}}(\textcolor{keywordtype}{void}) \{}
+\DoxyCodeLine{249     \textcolor{comment}{// It's normal and possible for endTime to exceed micros() if the}}
+\DoxyCodeLine{250     \textcolor{comment}{// 32-\/bit clock counter has rolled over (about every 70 minutes).}}
+\DoxyCodeLine{251     \textcolor{comment}{// Since both are uint32\_t, a negative delta correctly maps back to}}
+\DoxyCodeLine{252     \textcolor{comment}{// positive space, and it would seem like the subtraction below would}}
+\DoxyCodeLine{253     \textcolor{comment}{// suffice. But a problem arises if code invokes show() very}}
+\DoxyCodeLine{254     \textcolor{comment}{// infrequently...the micros() counter may roll over MULTIPLE times in}}
+\DoxyCodeLine{255     \textcolor{comment}{// that interval, the delta calculation is no longer correct and the}}
+\DoxyCodeLine{256     \textcolor{comment}{// next update may stall for a very long time. The check below resets}}
+\DoxyCodeLine{257     \textcolor{comment}{// the latch counter if a rollover has occurred. This can cause an}}
+\DoxyCodeLine{258     \textcolor{comment}{// extra delay of up to 300 microseconds in the rare case where a}}
+\DoxyCodeLine{259     \textcolor{comment}{// show() call happens precisely around the rollover, but that's}}
+\DoxyCodeLine{260     \textcolor{comment}{// neither likely nor especially harmful, vs. other code that might}}
+\DoxyCodeLine{261     \textcolor{comment}{// stall for 30+ minutes, or having to document and frequently remind}}
+\DoxyCodeLine{262     \textcolor{comment}{// and/or provide tech support explaining an unintuitive need for}}
+\DoxyCodeLine{263     \textcolor{comment}{// show() calls at least once an hour.}}
+\DoxyCodeLine{264     uint32\_t now = micros();}
+\DoxyCodeLine{265     \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_adafruit___neo_pixel_a31db024b35c25f93c2dd2dae2fcc0cf8}{endTime}} > now) \{}
+\DoxyCodeLine{266       \mbox{\hyperlink{class_adafruit___neo_pixel_a31db024b35c25f93c2dd2dae2fcc0cf8}{endTime}} = now;}
+\DoxyCodeLine{267     \}}
+\DoxyCodeLine{268     \textcolor{keywordflow}{return} (now -\/ \mbox{\hyperlink{class_adafruit___neo_pixel_a31db024b35c25f93c2dd2dae2fcc0cf8}{endTime}}) >= 300L;}
+\DoxyCodeLine{269   \}}
+\DoxyCodeLine{284   uint8\_t *\mbox{\hyperlink{class_adafruit___neo_pixel_a10c99f32656605acb0d881cbb0929bf3}{getPixels}}(\textcolor{keywordtype}{void})\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_adafruit___neo_pixel_a5e97f2110c1b66c571902dda9b85ab54}{pixels}}; \};}
+\DoxyCodeLine{285   uint8\_t \mbox{\hyperlink{class_adafruit___neo_pixel_a08bf8f7c91911390dc733a3241ff7846}{getBrightness}}(\textcolor{keywordtype}{void}) \textcolor{keyword}{const};}
+\DoxyCodeLine{290   int16\_t \mbox{\hyperlink{class_adafruit___neo_pixel_ab41a374c8fba4153b2629b91e79063b3}{getPin}}(\textcolor{keywordtype}{void})\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_adafruit___neo_pixel_a04d8241befedb580e6fb0744b73955ba}{pin}}; \};}
+\DoxyCodeLine{295   uint16\_t \mbox{\hyperlink{class_adafruit___neo_pixel_a1e8cebdf79d56a4c9da71d0b3f3dd4ee}{numPixels}}(\textcolor{keywordtype}{void})\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_adafruit___neo_pixel_ae235fc44998e8a1d5b0ee9d7a883c462}{numLEDs}}; \}}
+\DoxyCodeLine{296   uint32\_t \mbox{\hyperlink{class_adafruit___neo_pixel_aa75e95794daaf9185b2398197db53ad9}{getPixelColor}}(uint16\_t n) \textcolor{keyword}{const};}
+\DoxyCodeLine{309   \textcolor{keyword}{static} uint8\_t \mbox{\hyperlink{class_adafruit___neo_pixel_a9aa626848c5b2270e6383d38bad3e736}{sine8}}(uint8\_t x) \{}
+\DoxyCodeLine{310     \textcolor{keywordflow}{return} pgm\_read\_byte(\&\_NeoPixelSineTable[x]); \textcolor{comment}{// 0-\/255 in, 0-\/255 out}}
+\DoxyCodeLine{311   \}}
+\DoxyCodeLine{323   \textcolor{keyword}{static} uint8\_t \mbox{\hyperlink{class_adafruit___neo_pixel_a49d51f2780040faab52b5f7167957ce5}{gamma8}}(uint8\_t x) \{}
+\DoxyCodeLine{324     \textcolor{keywordflow}{return} pgm\_read\_byte(\&\_NeoPixelGammaTable[x]); \textcolor{comment}{// 0-\/255 in, 0-\/255 out}}
+\DoxyCodeLine{325   \}}
+\DoxyCodeLine{337   \textcolor{keyword}{static} uint32\_t \mbox{\hyperlink{class_adafruit___neo_pixel_a8bc7efd259d2185ae0d77b8a14714ecb}{Color}}(uint8\_t r, uint8\_t g, uint8\_t b) \{}
+\DoxyCodeLine{338     \textcolor{keywordflow}{return} ((uint32\_t)r << 16) | ((uint32\_t)g << 8) | b;}
+\DoxyCodeLine{339   \}}
+\DoxyCodeLine{352   \textcolor{keyword}{static} uint32\_t \mbox{\hyperlink{class_adafruit___neo_pixel_aacafad54ebc122b2b73040f7831555ef}{Color}}(uint8\_t r, uint8\_t g, uint8\_t b, uint8\_t w) \{}
+\DoxyCodeLine{353     \textcolor{keywordflow}{return} ((uint32\_t)w << 24) | ((uint32\_t)r << 16) | ((uint32\_t)g << 8) | b;}
+\DoxyCodeLine{354   \}}
+\DoxyCodeLine{355   \textcolor{keyword}{static} uint32\_t \mbox{\hyperlink{class_adafruit___neo_pixel_aa1c19b4c52fadeaf49c7abcfaa5cc9b0}{ColorHSV}}(uint16\_t hue, uint8\_t sat = 255, uint8\_t val = 255);}
+\DoxyCodeLine{368   \textcolor{keyword}{static} uint32\_t \mbox{\hyperlink{class_adafruit___neo_pixel_a0378f0de643c6f7a506b6cff35966e9e}{gamma32}}(uint32\_t x);}
+\DoxyCodeLine{369 }
+\DoxyCodeLine{370   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_adafruit___neo_pixel_addde1679edc4ec5fcd86409469906e23}{rainbow}}(uint16\_t first\_hue = 0, int8\_t reps = 1,}
+\DoxyCodeLine{371                uint8\_t saturation = 255, uint8\_t \mbox{\hyperlink{class_adafruit___neo_pixel_a837c871f200f8c3d19d0c7f2e031ffc4}{brightness}} = 255,}
+\DoxyCodeLine{372                \textcolor{keywordtype}{bool} gammify = \textcolor{keyword}{true});}
+\DoxyCodeLine{373 }
+\DoxyCodeLine{374 \textcolor{keyword}{private}:}
+\DoxyCodeLine{375 \textcolor{preprocessor}{\#if defined(ARDUINO\_ARCH\_RP2040)}}
+\DoxyCodeLine{376   \textcolor{keywordtype}{void}  rp2040Init(uint8\_t \mbox{\hyperlink{class_adafruit___neo_pixel_a04d8241befedb580e6fb0744b73955ba}{pin}}, \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_adafruit___neo_pixel_aac7f3ebaa7b987caa68fc992b105b538}{is800KHz}});}
+\DoxyCodeLine{377   \textcolor{keywordtype}{void}  rp2040Show(uint8\_t \mbox{\hyperlink{class_adafruit___neo_pixel_a04d8241befedb580e6fb0744b73955ba}{pin}}, uint8\_t *\mbox{\hyperlink{class_adafruit___neo_pixel_a5e97f2110c1b66c571902dda9b85ab54}{pixels}}, uint32\_t \mbox{\hyperlink{class_adafruit___neo_pixel_a625d064298a0c5f99429e3be56b16f18}{numBytes}}, \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_adafruit___neo_pixel_aac7f3ebaa7b987caa68fc992b105b538}{is800KHz}});}
+\DoxyCodeLine{378 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{379 }
+\DoxyCodeLine{380 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{381 \textcolor{preprocessor}{\#ifdef NEO\_KHZ400 }\textcolor{comment}{// If 400 KHz NeoPixel support enabled...}}
+\DoxyCodeLine{382   \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_adafruit___neo_pixel_aac7f3ebaa7b987caa68fc992b105b538}{is800KHz}}; }
+\DoxyCodeLine{383 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{384   \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_adafruit___neo_pixel_a790ebbc4c583e3272a6d1fb11ba7f1b7}{begun}};         }
+\DoxyCodeLine{385   uint16\_t \mbox{\hyperlink{class_adafruit___neo_pixel_ae235fc44998e8a1d5b0ee9d7a883c462}{numLEDs}};   }
+\DoxyCodeLine{386   uint16\_t \mbox{\hyperlink{class_adafruit___neo_pixel_a625d064298a0c5f99429e3be56b16f18}{numBytes}};  }
+\DoxyCodeLine{387   int16\_t \mbox{\hyperlink{class_adafruit___neo_pixel_a04d8241befedb580e6fb0744b73955ba}{pin}};        }
+\DoxyCodeLine{388   uint8\_t \mbox{\hyperlink{class_adafruit___neo_pixel_a837c871f200f8c3d19d0c7f2e031ffc4}{brightness}}; }
+\DoxyCodeLine{389   uint8\_t *\mbox{\hyperlink{class_adafruit___neo_pixel_a5e97f2110c1b66c571902dda9b85ab54}{pixels}};    }
+\DoxyCodeLine{390   uint8\_t \mbox{\hyperlink{class_adafruit___neo_pixel_aba34a616093cf4d3196291bb240e93ac}{rOffset}};    }
+\DoxyCodeLine{391   uint8\_t \mbox{\hyperlink{class_adafruit___neo_pixel_af4df917cb8346bb2bd5f34be1879e88e}{gOffset}};    }
+\DoxyCodeLine{392   uint8\_t \mbox{\hyperlink{class_adafruit___neo_pixel_a3cc61571e7482414c90d9ee73017f569}{bOffset}};    }
+\DoxyCodeLine{393   uint8\_t \mbox{\hyperlink{class_adafruit___neo_pixel_a63edd045ca806017c80e458844839db6}{wOffset}};    }
+\DoxyCodeLine{394   uint32\_t \mbox{\hyperlink{class_adafruit___neo_pixel_a31db024b35c25f93c2dd2dae2fcc0cf8}{endTime}};   }
+\DoxyCodeLine{395 \textcolor{preprocessor}{\#ifdef \_\_AVR\_\_}}
+\DoxyCodeLine{396   \textcolor{keyword}{volatile} uint8\_t *port; }
+\DoxyCodeLine{397   uint8\_t pinMask;        }
+\DoxyCodeLine{398 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{399 \textcolor{preprocessor}{\#if defined(ARDUINO\_ARCH\_STM32) || defined(ARDUINO\_ARCH\_ARDUINO\_CORE\_STM32)}}
+\DoxyCodeLine{400   GPIO\_TypeDef *gpioPort; }
+\DoxyCodeLine{401   uint32\_t gpioPin;       }
+\DoxyCodeLine{402 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{403 \textcolor{preprocessor}{\#if defined(ARDUINO\_ARCH\_RP2040)}}
+\DoxyCodeLine{404   PIO pio = pio0;}
+\DoxyCodeLine{405   \textcolor{keywordtype}{int} sm = 0;}
+\DoxyCodeLine{406   \textcolor{keywordtype}{bool} init = \textcolor{keyword}{true};}
+\DoxyCodeLine{407 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{408 \};}
+\DoxyCodeLine{409 }
+\DoxyCodeLine{410 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// ADAFRUIT\_NEOPIXEL\_H}}
+
+\end{DoxyCode}

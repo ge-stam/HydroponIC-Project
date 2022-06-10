@@ -1,0 +1,67 @@
+\hypertarget{_blynk_simple_red_bear___duo___b_l_e_8h}{}\doxysection{lib/\+Blynk/src/\+Blynk\+Simple\+Red\+Bear\+\_\+\+Duo\+\_\+\+BLE.h File Reference}
+\label{_blynk_simple_red_bear___duo___b_l_e_8h}\index{lib/Blynk/src/BlynkSimpleRedBear\_Duo\_BLE.h@{lib/Blynk/src/BlynkSimpleRedBear\_Duo\_BLE.h}}
+{\ttfamily \#include $<$Blynk\+Api\+Arduino.\+h$>$}\newline
+{\ttfamily \#include $<$Blynk/\+Blynk\+Protocol.\+h$>$}\newline
+{\ttfamily \#include $<$utility/\+Blynk\+Fifo.\+h$>$}\newline
+{\ttfamily \#include $<$Blynk\+Widgets.\+h$>$}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_blynk_transport_red_bear_duo_b_l_e}{Blynk\+Transport\+Red\+Bear\+Duo\+BLE}}
+\item 
+class \mbox{\hyperlink{class_blynk_red_bear_duo_b_l_e}{Blynk\+Red\+Bear\+Duo\+BLE}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_blynk_simple_red_bear___duo___b_l_e_8h_a33284361f2c2edaecda374e136b4b2cb}\label{_blynk_simple_red_bear___duo___b_l_e_8h_a33284361f2c2edaecda374e136b4b2cb}} 
+\#define {\bfseries BLYNK\+\_\+\+INFO\+\_\+\+CONNECTION}~\char`\"{}RB\+\_\+\+Duo\+\_\+\+BLE\char`\"{}
+\item 
+\mbox{\Hypertarget{_blynk_simple_red_bear___duo___b_l_e_8h_ad498cfca060101a974a8471adaad4002}\label{_blynk_simple_red_bear___duo___b_l_e_8h_ad498cfca060101a974a8471adaad4002}} 
+\#define {\bfseries BLYNK\+\_\+\+SEND\+\_\+\+ATOMIC}
+\item 
+\mbox{\Hypertarget{_blynk_simple_red_bear___duo___b_l_e_8h_afa4b162d2c64525338afec57d50efd42}\label{_blynk_simple_red_bear___duo___b_l_e_8h_afa4b162d2c64525338afec57d50efd42}} 
+\#define {\bfseries BLYNK\+\_\+\+SEND\+\_\+\+CHUNK}~20
+\item 
+\mbox{\Hypertarget{_blynk_simple_red_bear___duo___b_l_e_8h_a95196d5d0f40cf195a6001955d6d98cf}\label{_blynk_simple_red_bear___duo___b_l_e_8h_a95196d5d0f40cf195a6001955d6d98cf}} 
+\#define {\bfseries MIN\+\_\+\+CONN\+\_\+\+INTERVAL}~0x0028
+\item 
+\mbox{\Hypertarget{_blynk_simple_red_bear___duo___b_l_e_8h_a7d868ed8adb7d475b463fd8855907a18}\label{_blynk_simple_red_bear___duo___b_l_e_8h_a7d868ed8adb7d475b463fd8855907a18}} 
+\#define {\bfseries MAX\+\_\+\+CONN\+\_\+\+INTERVAL}~0x0190
+\item 
+\mbox{\Hypertarget{_blynk_simple_red_bear___duo___b_l_e_8h_a0c921a874ac37870fc1516ce66cd228a}\label{_blynk_simple_red_bear___duo___b_l_e_8h_a0c921a874ac37870fc1516ce66cd228a}} 
+\#define {\bfseries SLAVE\+\_\+\+LATENCY}~0x0000
+\item 
+\mbox{\Hypertarget{_blynk_simple_red_bear___duo___b_l_e_8h_a2083b31eff1ae7e17255aabff964c0fa}\label{_blynk_simple_red_bear___duo___b_l_e_8h_a2083b31eff1ae7e17255aabff964c0fa}} 
+\#define {\bfseries CONN\+\_\+\+SUPERVISION\+\_\+\+TIMEOUT}~0x03\+E8
+\item 
+\mbox{\Hypertarget{_blynk_simple_red_bear___duo___b_l_e_8h_a690e8f893ae93c7b324df39854ca4bbb}\label{_blynk_simple_red_bear___duo___b_l_e_8h_a690e8f893ae93c7b324df39854ca4bbb}} 
+\#define {\bfseries BLE\+\_\+\+PERIPHERAL\+\_\+\+APPEARANCE}~BLE\+\_\+\+APPEARANCE\+\_\+\+UNKNOWN
+\item 
+\mbox{\Hypertarget{_blynk_simple_red_bear___duo___b_l_e_8h_a3b349281f66852ccb8ac192b907fa5ed}\label{_blynk_simple_red_bear___duo___b_l_e_8h_a3b349281f66852ccb8ac192b907fa5ed}} 
+\#define {\bfseries BLE\+\_\+\+DEVICE\+\_\+\+NAME}~\char`\"{}Blynk\char`\"{}
+\item 
+\mbox{\Hypertarget{_blynk_simple_red_bear___duo___b_l_e_8h_ae82402b337ebe019bb4386ec8d9b6895}\label{_blynk_simple_red_bear___duo___b_l_e_8h_ae82402b337ebe019bb4386ec8d9b6895}} 
+\#define {\bfseries CHARACTERISTIC1\+\_\+\+MAX\+\_\+\+LEN}~20
+\item 
+\mbox{\Hypertarget{_blynk_simple_red_bear___duo___b_l_e_8h_a147f5d798f2edbe592dcc696e9d6188f}\label{_blynk_simple_red_bear___duo___b_l_e_8h_a147f5d798f2edbe592dcc696e9d6188f}} 
+\#define {\bfseries CHARACTERISTIC2\+\_\+\+MAX\+\_\+\+LEN}~20
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_blynk_simple_red_bear___duo___b_l_e_8h_a9efd66fc798ad8f7574f934251963a13}\label{_blynk_simple_red_bear___duo___b_l_e_8h_a9efd66fc798ad8f7574f934251963a13}} 
+\mbox{\hyperlink{class_blynk_red_bear_duo_b_l_e}{Blynk\+Red\+Bear\+Duo\+BLE}} {\bfseries Blynk} (\+\_\+blynk\+Transport)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Volodymyr Shymanskyy @license This project is released under the MIT License (MIT) 
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2015 Volodymyr Shymanskyy 
+\end{DoxyCopyright}
+\begin{DoxyDate}{Date}
+May 2016 
+\end{DoxyDate}

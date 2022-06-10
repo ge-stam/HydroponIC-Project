@@ -1,0 +1,469 @@
+\hypertarget{_one_wire__direct__gpio_8h_source}{}\doxysection{One\+Wire\+\_\+direct\+\_\+gpio.\+h}
+\label{_one_wire__direct__gpio_8h_source}\index{lib/OneWire/util/OneWire\_direct\_gpio.h@{lib/OneWire/util/OneWire\_direct\_gpio.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef OneWire\_Direct\_GPIO\_h}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define OneWire\_Direct\_GPIO\_h}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{comment}{// This header should ONLY be included by OneWire.cpp.  These defines are}}
+\DoxyCodeLine{5 \textcolor{comment}{// meant to be private, used within OneWire.cpp, but not exposed to Arduino}}
+\DoxyCodeLine{6 \textcolor{comment}{// sketches or other libraries which may include OneWire.h.}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <stdint.h>}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{comment}{// Platform specific I/O definitions}}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#if defined(\_\_AVR\_\_)}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#define PIN\_TO\_BASEREG(pin)             (portInputRegister(digitalPinToPort(pin)))}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#define PIN\_TO\_BITMASK(pin)             (digitalPinToBitMask(pin))}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint8\_t}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#define IO\_REG\_BASE\_ATTR asm("{}r30"{}})}
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#define IO\_REG\_MASK\_ATTR}}
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#if defined(\_\_AVR\_ATmega4809\_\_)}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#define DIRECT\_READ(base, mask)         (((*(base)) \& (mask)) ? 1 : 0)}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#define DIRECT\_MODE\_INPUT(base, mask)   ((*((base)-\/8)) \&= \string~(mask))}}
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#define DIRECT\_MODE\_OUTPUT(base, mask)  ((*((base)-\/8)) |= (mask))}}
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_LOW(base, mask)    ((*((base)-\/4)) \&= \string~(mask))}}
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_HIGH(base, mask)   ((*((base)-\/4)) |= (mask))}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#define DIRECT\_READ(base, mask)         (((*(base)) \& (mask)) ? 1 : 0)}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#define DIRECT\_MODE\_INPUT(base, mask)   ((*((base)+1)) \&= \string~(mask))}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#define DIRECT\_MODE\_OUTPUT(base, mask)  ((*((base)+1)) |= (mask))}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_LOW(base, mask)    ((*((base)+2)) \&= \string~(mask))}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_HIGH(base, mask)   ((*((base)+2)) |= (mask))}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#elif defined(\_\_MK20DX128\_\_) || defined(\_\_MK20DX256\_\_) || defined(\_\_MK66FX1M0\_\_) || defined(\_\_MK64FX512\_\_)}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#define PIN\_TO\_BASEREG(pin)             (portOutputRegister(pin))}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#define PIN\_TO\_BITMASK(pin)             (1)}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint8\_t}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#define IO\_REG\_BASE\_ATTR}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#define IO\_REG\_MASK\_ATTR \_\_attribute\_\_ ((unused))}}
+\DoxyCodeLine{38 \textcolor{preprocessor}{\#define DIRECT\_READ(base, mask)         (*((base)+512))}}
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#define DIRECT\_MODE\_INPUT(base, mask)   (*((base)+640) = 0)}}
+\DoxyCodeLine{40 \textcolor{preprocessor}{\#define DIRECT\_MODE\_OUTPUT(base, mask)  (*((base)+640) = 1)}}
+\DoxyCodeLine{41 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_LOW(base, mask)    (*((base)+256) = 1)}}
+\DoxyCodeLine{42 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_HIGH(base, mask)   (*((base)+128) = 1)}}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44 \textcolor{preprocessor}{\#elif defined(\_\_MKL26Z64\_\_)}}
+\DoxyCodeLine{45 \textcolor{preprocessor}{\#define PIN\_TO\_BASEREG(pin)             (portOutputRegister(pin))}}
+\DoxyCodeLine{46 \textcolor{preprocessor}{\#define PIN\_TO\_BITMASK(pin)             (digitalPinToBitMask(pin))}}
+\DoxyCodeLine{47 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint8\_t}}
+\DoxyCodeLine{48 \textcolor{preprocessor}{\#define IO\_REG\_BASE\_ATTR}}
+\DoxyCodeLine{49 \textcolor{preprocessor}{\#define IO\_REG\_MASK\_ATTR}}
+\DoxyCodeLine{50 \textcolor{preprocessor}{\#define DIRECT\_READ(base, mask)         ((*((base)+16) \& (mask)) ? 1 : 0)}}
+\DoxyCodeLine{51 \textcolor{preprocessor}{\#define DIRECT\_MODE\_INPUT(base, mask)   (*((base)+20) \&= \string~(mask))}}
+\DoxyCodeLine{52 \textcolor{preprocessor}{\#define DIRECT\_MODE\_OUTPUT(base, mask)  (*((base)+20) |= (mask))}}
+\DoxyCodeLine{53 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_LOW(base, mask)    (*((base)+8) = (mask))}}
+\DoxyCodeLine{54 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_HIGH(base, mask)   (*((base)+4) = (mask))}}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56 \textcolor{preprocessor}{\#elif defined(\_\_IMXRT1052\_\_) || defined(\_\_IMXRT1062\_\_)}}
+\DoxyCodeLine{57 \textcolor{preprocessor}{\#define PIN\_TO\_BASEREG(pin)             (portOutputRegister(pin))}}
+\DoxyCodeLine{58 \textcolor{preprocessor}{\#define PIN\_TO\_BITMASK(pin)             (digitalPinToBitMask(pin))}}
+\DoxyCodeLine{59 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint32\_t}}
+\DoxyCodeLine{60 \textcolor{preprocessor}{\#define IO\_REG\_BASE\_ATTR}}
+\DoxyCodeLine{61 \textcolor{preprocessor}{\#define IO\_REG\_MASK\_ATTR}}
+\DoxyCodeLine{62 \textcolor{preprocessor}{\#define DIRECT\_READ(base, mask)         ((*((base)+2) \& (mask)) ? 1 : 0)}}
+\DoxyCodeLine{63 \textcolor{preprocessor}{\#define DIRECT\_MODE\_INPUT(base, mask)   (*((base)+1) \&= \string~(mask))}}
+\DoxyCodeLine{64 \textcolor{preprocessor}{\#define DIRECT\_MODE\_OUTPUT(base, mask)  (*((base)+1) |= (mask))}}
+\DoxyCodeLine{65 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_LOW(base, mask)    (*((base)+34) = (mask))}}
+\DoxyCodeLine{66 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_HIGH(base, mask)   (*((base)+33) = (mask))}}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68 \textcolor{preprocessor}{\#elif defined(\_\_SAM3X8E\_\_) || defined(\_\_SAM3A8C\_\_) || defined(\_\_SAM3A4C\_\_)}}
+\DoxyCodeLine{69 \textcolor{comment}{// Arduino 1.5.1 may have a bug in delayMicroseconds() on Arduino Due.}}
+\DoxyCodeLine{70 \textcolor{comment}{// http://arduino.cc/forum/index.php/topic,141030.msg1076268.html\#msg1076268}}
+\DoxyCodeLine{71 \textcolor{comment}{// If you have trouble with OneWire on Arduino Due, please check the}}
+\DoxyCodeLine{72 \textcolor{comment}{// status of delayMicroseconds() before reporting a bug in OneWire!}}
+\DoxyCodeLine{73 \textcolor{preprocessor}{\#define PIN\_TO\_BASEREG(pin)             (\&(digitalPinToPort(pin)-\/>PIO\_PER))}}
+\DoxyCodeLine{74 \textcolor{preprocessor}{\#define PIN\_TO\_BITMASK(pin)             (digitalPinToBitMask(pin))}}
+\DoxyCodeLine{75 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint32\_t}}
+\DoxyCodeLine{76 \textcolor{preprocessor}{\#define IO\_REG\_BASE\_ATTR}}
+\DoxyCodeLine{77 \textcolor{preprocessor}{\#define IO\_REG\_MASK\_ATTR}}
+\DoxyCodeLine{78 \textcolor{preprocessor}{\#define DIRECT\_READ(base, mask)         (((*((base)+15)) \& (mask)) ? 1 : 0)}}
+\DoxyCodeLine{79 \textcolor{preprocessor}{\#define DIRECT\_MODE\_INPUT(base, mask)   ((*((base)+5)) = (mask))}}
+\DoxyCodeLine{80 \textcolor{preprocessor}{\#define DIRECT\_MODE\_OUTPUT(base, mask)  ((*((base)+4)) = (mask))}}
+\DoxyCodeLine{81 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_LOW(base, mask)    ((*((base)+13)) = (mask))}}
+\DoxyCodeLine{82 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_HIGH(base, mask)   ((*((base)+12)) = (mask))}}
+\DoxyCodeLine{83 \textcolor{preprocessor}{\#ifndef PROGMEM}}
+\DoxyCodeLine{84 \textcolor{preprocessor}{\#define PROGMEM}}
+\DoxyCodeLine{85 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{86 \textcolor{preprocessor}{\#ifndef pgm\_read\_byte}}
+\DoxyCodeLine{87 \textcolor{preprocessor}{\#define pgm\_read\_byte(addr) (*(const uint8\_t *)(addr))}}
+\DoxyCodeLine{88 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90 \textcolor{preprocessor}{\#elif defined(\_\_PIC32MX\_\_)}}
+\DoxyCodeLine{91 \textcolor{preprocessor}{\#define PIN\_TO\_BASEREG(pin)             (portModeRegister(digitalPinToPort(pin)))}}
+\DoxyCodeLine{92 \textcolor{preprocessor}{\#define PIN\_TO\_BITMASK(pin)             (digitalPinToBitMask(pin))}}
+\DoxyCodeLine{93 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint32\_t}}
+\DoxyCodeLine{94 \textcolor{preprocessor}{\#define IO\_REG\_BASE\_ATTR}}
+\DoxyCodeLine{95 \textcolor{preprocessor}{\#define IO\_REG\_MASK\_ATTR}}
+\DoxyCodeLine{96 \textcolor{preprocessor}{\#define DIRECT\_READ(base, mask)         (((*(base+4)) \& (mask)) ? 1 : 0)  }\textcolor{comment}{//PORTX + 0x10}}
+\DoxyCodeLine{97 \textcolor{preprocessor}{\#define DIRECT\_MODE\_INPUT(base, mask)   ((*(base+2)) = (mask))            }\textcolor{comment}{//TRISXSET + 0x08}}
+\DoxyCodeLine{98 \textcolor{preprocessor}{\#define DIRECT\_MODE\_OUTPUT(base, mask)  ((*(base+1)) = (mask))            }\textcolor{comment}{//TRISXCLR + 0x04}}
+\DoxyCodeLine{99 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_LOW(base, mask)    ((*(base+8+1)) = (mask))          }\textcolor{comment}{//LATXCLR  + 0x24}}
+\DoxyCodeLine{100 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_HIGH(base, mask)   ((*(base+8+2)) = (mask))          }\textcolor{comment}{//LATXSET + 0x28}}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102 \textcolor{preprocessor}{\#elif defined(ARDUINO\_ARCH\_ESP8266)}}
+\DoxyCodeLine{103 \textcolor{comment}{// Special note: I depend on the ESP community to maintain these definitions and}}
+\DoxyCodeLine{104 \textcolor{comment}{// submit good pull requests.  I can not answer any ESP questions or help you}}
+\DoxyCodeLine{105 \textcolor{comment}{// resolve any problems related to ESP chips.  Please do not contact me and please}}
+\DoxyCodeLine{106 \textcolor{comment}{// DO NOT CREATE GITHUB ISSUES for ESP support.  All ESP questions must be asked}}
+\DoxyCodeLine{107 \textcolor{comment}{// on ESP community forums.}}
+\DoxyCodeLine{108 \textcolor{preprocessor}{\#define PIN\_TO\_BASEREG(pin)             ((volatile uint32\_t*) GPO)}}
+\DoxyCodeLine{109 \textcolor{preprocessor}{\#define PIN\_TO\_BITMASK(pin)             (1 << pin)}}
+\DoxyCodeLine{110 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint32\_t}}
+\DoxyCodeLine{111 \textcolor{preprocessor}{\#define IO\_REG\_BASE\_ATTR}}
+\DoxyCodeLine{112 \textcolor{preprocessor}{\#define IO\_REG\_MASK\_ATTR}}
+\DoxyCodeLine{113 \textcolor{preprocessor}{\#define DIRECT\_READ(base, mask)         ((GPI \& (mask)) ? 1 : 0)    }\textcolor{comment}{//GPIO\_IN\_ADDRESS}}
+\DoxyCodeLine{114 \textcolor{preprocessor}{\#define DIRECT\_MODE\_INPUT(base, mask)   (GPE \&= \string~(mask))            }\textcolor{comment}{//GPIO\_ENABLE\_W1TC\_ADDRESS}}
+\DoxyCodeLine{115 \textcolor{preprocessor}{\#define DIRECT\_MODE\_OUTPUT(base, mask)  (GPE |= (mask))             }\textcolor{comment}{//GPIO\_ENABLE\_W1TS\_ADDRESS}}
+\DoxyCodeLine{116 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_LOW(base, mask)    (GPOC = (mask))             }\textcolor{comment}{//GPIO\_OUT\_W1TC\_ADDRESS}}
+\DoxyCodeLine{117 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_HIGH(base, mask)   (GPOS = (mask))             }\textcolor{comment}{//GPIO\_OUT\_W1TS\_ADDRESS}}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119 \textcolor{preprocessor}{\#elif defined(ARDUINO\_ARCH\_ESP32)}}
+\DoxyCodeLine{120 \textcolor{preprocessor}{\#include <driver/rtc\_io.h>}}
+\DoxyCodeLine{121 \textcolor{preprocessor}{\#define PIN\_TO\_BASEREG(pin)             (0)}}
+\DoxyCodeLine{122 \textcolor{preprocessor}{\#define PIN\_TO\_BITMASK(pin)             (pin)}}
+\DoxyCodeLine{123 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint32\_t}}
+\DoxyCodeLine{124 \textcolor{preprocessor}{\#define IO\_REG\_BASE\_ATTR}}
+\DoxyCodeLine{125 \textcolor{preprocessor}{\#define IO\_REG\_MASK\_ATTR}}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127 \textcolor{keyword}{static} \textcolor{keyword}{inline} \_\_attribute\_\_((always\_inline))}
+\DoxyCodeLine{128 IO\_REG\_TYPE directRead(IO\_REG\_TYPE pin)}
+\DoxyCodeLine{129 \{}
+\DoxyCodeLine{130     \textcolor{keywordflow}{if} ( pin < 32 )}
+\DoxyCodeLine{131         \textcolor{keywordflow}{return} (GPIO.in >> pin) \& 0x1;}
+\DoxyCodeLine{132     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ( pin < 40 )}
+\DoxyCodeLine{133         \textcolor{keywordflow}{return} (GPIO.in1.val >> (pin -\/ 32)) \& 0x1;}
+\DoxyCodeLine{134 }
+\DoxyCodeLine{135     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{136 \}}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138 \textcolor{keyword}{static} \textcolor{keyword}{inline} \_\_attribute\_\_((always\_inline))}
+\DoxyCodeLine{139 \textcolor{keywordtype}{void} directWriteLow(IO\_REG\_TYPE pin)}
+\DoxyCodeLine{140 \{}
+\DoxyCodeLine{141     \textcolor{keywordflow}{if} ( pin < 32 )}
+\DoxyCodeLine{142         GPIO.out\_w1tc = ((uint32\_t)1 << pin);}
+\DoxyCodeLine{143     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ( pin < 34 )}
+\DoxyCodeLine{144         GPIO.out1\_w1tc.val = ((uint32\_t)1 << (pin -\/ 32));}
+\DoxyCodeLine{145 \}}
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147 \textcolor{keyword}{static} \textcolor{keyword}{inline} \_\_attribute\_\_((always\_inline))}
+\DoxyCodeLine{148 \textcolor{keywordtype}{void} directWriteHigh(IO\_REG\_TYPE pin)}
+\DoxyCodeLine{149 \{}
+\DoxyCodeLine{150     \textcolor{keywordflow}{if} ( pin < 32 )}
+\DoxyCodeLine{151         GPIO.out\_w1ts = ((uint32\_t)1 << pin);}
+\DoxyCodeLine{152     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ( pin < 34 )}
+\DoxyCodeLine{153         GPIO.out1\_w1ts.val = ((uint32\_t)1 << (pin -\/ 32));}
+\DoxyCodeLine{154 \}}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{156 \textcolor{keyword}{static} \textcolor{keyword}{inline} \_\_attribute\_\_((always\_inline))}
+\DoxyCodeLine{157 \textcolor{keywordtype}{void} directModeInput(IO\_REG\_TYPE pin)}
+\DoxyCodeLine{158 \{}
+\DoxyCodeLine{159     \textcolor{keywordflow}{if} ( digitalPinIsValid(pin) )}
+\DoxyCodeLine{160     \{}
+\DoxyCodeLine{161 \textcolor{preprocessor}{        \#if defined(ESP\_ARDUINO\_VERSION)}}
+\DoxyCodeLine{162 \textcolor{preprocessor}{        \#if ESP\_ARDUINO\_VERSION >= ESP\_ARDUINO\_VERSION\_VAL(2, 0, 0)}}
+\DoxyCodeLine{163         \textcolor{keywordtype}{int} pin\_io = rtc\_io\_number\_get((gpio\_num\_t)pin);}
+\DoxyCodeLine{164         uint32\_t rtc\_reg(rtc\_io\_desc[pin\_io].reg);}
+\DoxyCodeLine{165 }
+\DoxyCodeLine{166         \textcolor{keywordflow}{if} ( rtc\_reg ) \textcolor{comment}{// RTC pins PULL settings}}
+\DoxyCodeLine{167         \{}
+\DoxyCodeLine{168             ESP\_REG(rtc\_reg) = ESP\_REG(rtc\_reg) \& \string~(rtc\_io\_desc[pin\_io].mux);}
+\DoxyCodeLine{169             ESP\_REG(rtc\_reg) = ESP\_REG(rtc\_reg) \& \string~(rtc\_io\_desc[pin\_io].pullup | rtc\_io\_desc[pin\_io].pulldown);}
+\DoxyCodeLine{170         \}}
+\DoxyCodeLine{171 \textcolor{preprocessor}{        \#endif}}
+\DoxyCodeLine{172 \textcolor{preprocessor}{        \#else}}
+\DoxyCodeLine{173         uint32\_t rtc\_reg(rtc\_gpio\_desc[pin].reg);}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175         \textcolor{keywordflow}{if} ( rtc\_reg ) \textcolor{comment}{// RTC pins PULL settings}}
+\DoxyCodeLine{176         \{}
+\DoxyCodeLine{177             ESP\_REG(rtc\_reg) = ESP\_REG(rtc\_reg) \& \string~(rtc\_gpio\_desc[pin].mux);}
+\DoxyCodeLine{178             ESP\_REG(rtc\_reg) = ESP\_REG(rtc\_reg) \& \string~(rtc\_gpio\_desc[pin].pullup | rtc\_gpio\_desc[pin].pulldown);}
+\DoxyCodeLine{179         \}}
+\DoxyCodeLine{180 \textcolor{preprocessor}{        \#endif}}
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182         \textcolor{keywordflow}{if} ( pin < 32 )}
+\DoxyCodeLine{183             GPIO.enable\_w1tc = ((uint32\_t)1 << pin);}
+\DoxyCodeLine{184         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{185             GPIO.enable1\_w1tc.val = ((uint32\_t)1 << (pin -\/ 32));}
+\DoxyCodeLine{186 }
+\DoxyCodeLine{187         uint32\_t pinFunction((uint32\_t)2 << FUN\_DRV\_S); \textcolor{comment}{// what are the drivers?}}
+\DoxyCodeLine{188         pinFunction |= FUN\_IE; \textcolor{comment}{// input enable but required for output as well?}}
+\DoxyCodeLine{189         pinFunction |= ((uint32\_t)2 << MCU\_SEL\_S);}
+\DoxyCodeLine{190 }
+\DoxyCodeLine{191         ESP\_REG(DR\_REG\_IO\_MUX\_BASE + esp32\_gpioMux[pin].reg) = pinFunction;}
+\DoxyCodeLine{192 }
+\DoxyCodeLine{193         GPIO.pin[pin].val = 0;}
+\DoxyCodeLine{194     \}}
+\DoxyCodeLine{195 \}}
+\DoxyCodeLine{196 }
+\DoxyCodeLine{197 \textcolor{keyword}{static} \textcolor{keyword}{inline} \_\_attribute\_\_((always\_inline))}
+\DoxyCodeLine{198 \textcolor{keywordtype}{void} directModeOutput(IO\_REG\_TYPE pin)}
+\DoxyCodeLine{199 \{}
+\DoxyCodeLine{200     \textcolor{keywordflow}{if} ( digitalPinIsValid(pin) \&\& pin <= 33 ) \textcolor{comment}{// pins above 33 can be only inputs}}
+\DoxyCodeLine{201     \{}
+\DoxyCodeLine{202 \textcolor{preprocessor}{        \#if defined(ESP\_ARDUINO\_VERSION)}}
+\DoxyCodeLine{203 \textcolor{preprocessor}{        \#if ESP\_ARDUINO\_VERSION >= ESP\_ARDUINO\_VERSION\_VAL(2, 0, 0)}}
+\DoxyCodeLine{204         \textcolor{keywordtype}{int} pin\_io = rtc\_io\_number\_get((gpio\_num\_t)pin);}
+\DoxyCodeLine{205         uint32\_t rtc\_reg(rtc\_io\_desc[pin\_io].reg);}
+\DoxyCodeLine{206 }
+\DoxyCodeLine{207         \textcolor{keywordflow}{if} ( rtc\_reg ) \textcolor{comment}{// RTC pins PULL settings}}
+\DoxyCodeLine{208         \{}
+\DoxyCodeLine{209             ESP\_REG(rtc\_reg) = ESP\_REG(rtc\_reg) \& \string~(rtc\_io\_desc[pin\_io].mux);}
+\DoxyCodeLine{210             ESP\_REG(rtc\_reg) = ESP\_REG(rtc\_reg) \& \string~(rtc\_io\_desc[pin\_io].pullup | rtc\_io\_desc[pin\_io].pulldown);}
+\DoxyCodeLine{211         \}}
+\DoxyCodeLine{212 \textcolor{preprocessor}{        \#endif}}
+\DoxyCodeLine{213 \textcolor{preprocessor}{        \#else}}
+\DoxyCodeLine{214         uint32\_t rtc\_reg(rtc\_gpio\_desc[pin].reg);}
+\DoxyCodeLine{215 }
+\DoxyCodeLine{216         \textcolor{keywordflow}{if} ( rtc\_reg ) \textcolor{comment}{// RTC pins PULL settings}}
+\DoxyCodeLine{217         \{}
+\DoxyCodeLine{218             ESP\_REG(rtc\_reg) = ESP\_REG(rtc\_reg) \& \string~(rtc\_gpio\_desc[pin].mux);}
+\DoxyCodeLine{219             ESP\_REG(rtc\_reg) = ESP\_REG(rtc\_reg) \& \string~(rtc\_gpio\_desc[pin].pullup | rtc\_gpio\_desc[pin].pulldown);}
+\DoxyCodeLine{220         \}}
+\DoxyCodeLine{221 \textcolor{preprocessor}{        \#endif}}
+\DoxyCodeLine{222 }
+\DoxyCodeLine{223         \textcolor{keywordflow}{if} ( pin < 32 )}
+\DoxyCodeLine{224             GPIO.enable\_w1ts = ((uint32\_t)1 << pin);}
+\DoxyCodeLine{225         \textcolor{keywordflow}{else} \textcolor{comment}{// already validated to pins <= 33}}
+\DoxyCodeLine{226             GPIO.enable1\_w1ts.val = ((uint32\_t)1 << (pin -\/ 32));}
+\DoxyCodeLine{227 }
+\DoxyCodeLine{228         uint32\_t pinFunction((uint32\_t)2 << FUN\_DRV\_S); \textcolor{comment}{// what are the drivers?}}
+\DoxyCodeLine{229         pinFunction |= FUN\_IE; \textcolor{comment}{// input enable but required for output as well?}}
+\DoxyCodeLine{230         pinFunction |= ((uint32\_t)2 << MCU\_SEL\_S);}
+\DoxyCodeLine{231 }
+\DoxyCodeLine{232         ESP\_REG(DR\_REG\_IO\_MUX\_BASE + esp32\_gpioMux[pin].reg) = pinFunction;}
+\DoxyCodeLine{233 }
+\DoxyCodeLine{234         GPIO.pin[pin].val = 0;}
+\DoxyCodeLine{235     \}}
+\DoxyCodeLine{236 \}}
+\DoxyCodeLine{237 }
+\DoxyCodeLine{238 \textcolor{preprocessor}{\#define DIRECT\_READ(base, pin)          directRead(pin)}}
+\DoxyCodeLine{239 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_LOW(base, pin)     directWriteLow(pin)}}
+\DoxyCodeLine{240 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_HIGH(base, pin)    directWriteHigh(pin)}}
+\DoxyCodeLine{241 \textcolor{preprocessor}{\#define DIRECT\_MODE\_INPUT(base, pin)    directModeInput(pin)}}
+\DoxyCodeLine{242 \textcolor{preprocessor}{\#define DIRECT\_MODE\_OUTPUT(base, pin)   directModeOutput(pin)}}
+\DoxyCodeLine{243 \textcolor{comment}{// https://github.com/PaulStoffregen/OneWire/pull/47}}
+\DoxyCodeLine{244 \textcolor{comment}{// https://github.com/stickbreaker/OneWire/commit/6eb7fc1c11a15b6ac8c60e5671cf36eb6829f82c}}
+\DoxyCodeLine{245 \textcolor{preprocessor}{\#ifdef  interrupts}}
+\DoxyCodeLine{246 \textcolor{preprocessor}{\#undef  interrupts}}
+\DoxyCodeLine{247 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{248 \textcolor{preprocessor}{\#ifdef  noInterrupts}}
+\DoxyCodeLine{249 \textcolor{preprocessor}{\#undef  noInterrupts}}
+\DoxyCodeLine{250 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{251 \textcolor{preprocessor}{\#define noInterrupts() \{portMUX\_TYPE mux = portMUX\_INITIALIZER\_UNLOCKED;portENTER\_CRITICAL(\&mux)}}
+\DoxyCodeLine{252 \textcolor{preprocessor}{\#define interrupts() portEXIT\_CRITICAL(\&mux);\}}}
+\DoxyCodeLine{253 \textcolor{comment}{//\#warning "{}ESP32 OneWire testing"{}}}
+\DoxyCodeLine{254 }
+\DoxyCodeLine{255 \textcolor{preprocessor}{\#elif defined(ARDUINO\_ARCH\_STM32)}}
+\DoxyCodeLine{256 \textcolor{preprocessor}{\#define PIN\_TO\_BASEREG(pin)             (0)}}
+\DoxyCodeLine{257 \textcolor{preprocessor}{\#define PIN\_TO\_BITMASK(pin)             ((uint32\_t)digitalPinToPinName(pin))}}
+\DoxyCodeLine{258 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint32\_t}}
+\DoxyCodeLine{259 \textcolor{preprocessor}{\#define IO\_REG\_BASE\_ATTR}}
+\DoxyCodeLine{260 \textcolor{preprocessor}{\#define IO\_REG\_MASK\_ATTR}}
+\DoxyCodeLine{261 \textcolor{preprocessor}{\#define DIRECT\_READ(base, pin)          digitalReadFast((PinName)pin)}}
+\DoxyCodeLine{262 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_LOW(base, pin)     digitalWriteFast((PinName)pin, LOW)}}
+\DoxyCodeLine{263 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_HIGH(base, pin)    digitalWriteFast((PinName)pin, HIGH)}}
+\DoxyCodeLine{264 \textcolor{preprocessor}{\#define DIRECT\_MODE\_INPUT(base, pin)    pin\_function((PinName)pin, STM\_PIN\_DATA(STM\_MODE\_INPUT, GPIO\_NOPULL, 0))}}
+\DoxyCodeLine{265 \textcolor{preprocessor}{\#define DIRECT\_MODE\_OUTPUT(base, pin)   pin\_function((PinName)pin, STM\_PIN\_DATA(STM\_MODE\_OUTPUT\_PP, GPIO\_NOPULL, 0))}}
+\DoxyCodeLine{266 }
+\DoxyCodeLine{267 \textcolor{preprocessor}{\#elif defined(\_\_SAMD21G18A\_\_)}}
+\DoxyCodeLine{268 \textcolor{preprocessor}{\#define PIN\_TO\_BASEREG(pin)             portModeRegister(digitalPinToPort(pin))}}
+\DoxyCodeLine{269 \textcolor{preprocessor}{\#define PIN\_TO\_BITMASK(pin)             (digitalPinToBitMask(pin))}}
+\DoxyCodeLine{270 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint32\_t}}
+\DoxyCodeLine{271 \textcolor{preprocessor}{\#define IO\_REG\_BASE\_ATTR}}
+\DoxyCodeLine{272 \textcolor{preprocessor}{\#define IO\_REG\_MASK\_ATTR}}
+\DoxyCodeLine{273 \textcolor{preprocessor}{\#define DIRECT\_READ(base, mask)         (((*((base)+8)) \& (mask)) ? 1 : 0)}}
+\DoxyCodeLine{274 \textcolor{preprocessor}{\#define DIRECT\_MODE\_INPUT(base, mask)   ((*((base)+1)) = (mask))}}
+\DoxyCodeLine{275 \textcolor{preprocessor}{\#define DIRECT\_MODE\_OUTPUT(base, mask)  ((*((base)+2)) = (mask))}}
+\DoxyCodeLine{276 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_LOW(base, mask)    ((*((base)+5)) = (mask))}}
+\DoxyCodeLine{277 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_HIGH(base, mask)   ((*((base)+6)) = (mask))}}
+\DoxyCodeLine{278 }
+\DoxyCodeLine{279 \textcolor{preprocessor}{\#elif defined(\_\_ASR6501\_\_)}}
+\DoxyCodeLine{280 \textcolor{preprocessor}{\#define PIN\_IN\_PORT(pin)    (pin \% PIN\_NUMBER\_IN\_PORT)}}
+\DoxyCodeLine{281 \textcolor{preprocessor}{\#define PORT\_FROM\_PIN(pin)  (pin / PIN\_NUMBER\_IN\_PORT)}}
+\DoxyCodeLine{282 \textcolor{preprocessor}{\#define PORT\_OFFSET(port)   (PORT\_REG\_SHFIT * port)}}
+\DoxyCodeLine{283 \textcolor{preprocessor}{\#define PORT\_ADDRESS(pin)   (CYDEV\_GPIO\_BASE + PORT\_OFFSET(PORT\_FROM\_PIN(pin)))}}
+\DoxyCodeLine{284 }
+\DoxyCodeLine{285 \textcolor{preprocessor}{\#define PIN\_TO\_BASEREG(pin)             (0)}}
+\DoxyCodeLine{286 \textcolor{preprocessor}{\#define PIN\_TO\_BITMASK(pin)             (pin)}}
+\DoxyCodeLine{287 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint32\_t}}
+\DoxyCodeLine{288 \textcolor{preprocessor}{\#define IO\_REG\_BASE\_ATTR}}
+\DoxyCodeLine{289 \textcolor{preprocessor}{\#define IO\_REG\_MASK\_ATTR}}
+\DoxyCodeLine{290 \textcolor{preprocessor}{\#define DIRECT\_READ(base, pin)          CY\_SYS\_PINS\_READ\_PIN(PORT\_ADDRESS(pin)+4, PIN\_IN\_PORT(pin))}}
+\DoxyCodeLine{291 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_LOW(base, pin)     CY\_SYS\_PINS\_CLEAR\_PIN(PORT\_ADDRESS(pin), PIN\_IN\_PORT(pin))}}
+\DoxyCodeLine{292 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_HIGH(base, pin)    CY\_SYS\_PINS\_SET\_PIN(PORT\_ADDRESS(pin), PIN\_IN\_PORT(pin))}}
+\DoxyCodeLine{293 \textcolor{preprocessor}{\#define DIRECT\_MODE\_INPUT(base, pin)    CY\_SYS\_PINS\_SET\_DRIVE\_MODE(PORT\_ADDRESS(pin)+8, PIN\_IN\_PORT(pin), CY\_SYS\_PINS\_DM\_DIG\_HIZ)}}
+\DoxyCodeLine{294 \textcolor{preprocessor}{\#define DIRECT\_MODE\_OUTPUT(base, pin)   CY\_SYS\_PINS\_SET\_DRIVE\_MODE(PORT\_ADDRESS(pin)+8, PIN\_IN\_PORT(pin), CY\_SYS\_PINS\_DM\_STRONG)}}
+\DoxyCodeLine{295 }
+\DoxyCodeLine{296 \textcolor{preprocessor}{\#elif defined(RBL\_NRF51822)}}
+\DoxyCodeLine{297 \textcolor{preprocessor}{\#define PIN\_TO\_BASEREG(pin)             (0)}}
+\DoxyCodeLine{298 \textcolor{preprocessor}{\#define PIN\_TO\_BITMASK(pin)             (pin)}}
+\DoxyCodeLine{299 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint32\_t}}
+\DoxyCodeLine{300 \textcolor{preprocessor}{\#define IO\_REG\_BASE\_ATTR}}
+\DoxyCodeLine{301 \textcolor{preprocessor}{\#define IO\_REG\_MASK\_ATTR}}
+\DoxyCodeLine{302 \textcolor{preprocessor}{\#define DIRECT\_READ(base, pin)          nrf\_gpio\_pin\_read(pin)}}
+\DoxyCodeLine{303 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_LOW(base, pin)     nrf\_gpio\_pin\_clear(pin)}}
+\DoxyCodeLine{304 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_HIGH(base, pin)    nrf\_gpio\_pin\_set(pin)}}
+\DoxyCodeLine{305 \textcolor{preprocessor}{\#define DIRECT\_MODE\_INPUT(base, pin)    nrf\_gpio\_cfg\_input(pin, NRF\_GPIO\_PIN\_NOPULL)}}
+\DoxyCodeLine{306 \textcolor{preprocessor}{\#define DIRECT\_MODE\_OUTPUT(base, pin)   nrf\_gpio\_cfg\_output(pin)}}
+\DoxyCodeLine{307 }
+\DoxyCodeLine{308 \textcolor{preprocessor}{\#elif defined(\_\_arc\_\_) }\textcolor{comment}{/* Arduino101/Genuino101 specifics */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{309 }
+\DoxyCodeLine{310 \textcolor{preprocessor}{\#include "{}scss\_registers.h"{}}}
+\DoxyCodeLine{311 \textcolor{preprocessor}{\#include "{}portable.h"{}}}
+\DoxyCodeLine{312 \textcolor{preprocessor}{\#include "{}avr/pgmspace.h"{}}}
+\DoxyCodeLine{313 }
+\DoxyCodeLine{314 \textcolor{preprocessor}{\#define GPIO\_ID(pin)            (g\_APinDescription[pin].ulGPIOId)}}
+\DoxyCodeLine{315 \textcolor{preprocessor}{\#define GPIO\_TYPE(pin)          (g\_APinDescription[pin].ulGPIOType)}}
+\DoxyCodeLine{316 \textcolor{preprocessor}{\#define GPIO\_BASE(pin)          (g\_APinDescription[pin].ulGPIOBase)}}
+\DoxyCodeLine{317 \textcolor{preprocessor}{\#define DIR\_OFFSET\_SS           0x01}}
+\DoxyCodeLine{318 \textcolor{preprocessor}{\#define DIR\_OFFSET\_SOC          0x04}}
+\DoxyCodeLine{319 \textcolor{preprocessor}{\#define EXT\_PORT\_OFFSET\_SS      0x0A}}
+\DoxyCodeLine{320 \textcolor{preprocessor}{\#define EXT\_PORT\_OFFSET\_SOC     0x50}}
+\DoxyCodeLine{321 }
+\DoxyCodeLine{322 \textcolor{comment}{/* GPIO registers base address */}}
+\DoxyCodeLine{323 \textcolor{preprocessor}{\#define PIN\_TO\_BASEREG(pin)     ((volatile uint32\_t *)g\_APinDescription[pin].ulGPIOBase)}}
+\DoxyCodeLine{324 \textcolor{preprocessor}{\#define PIN\_TO\_BITMASK(pin)     pin}}
+\DoxyCodeLine{325 \textcolor{preprocessor}{\#define IO\_REG\_TYPE         uint32\_t}}
+\DoxyCodeLine{326 \textcolor{preprocessor}{\#define IO\_REG\_BASE\_ATTR}}
+\DoxyCodeLine{327 \textcolor{preprocessor}{\#define IO\_REG\_MASK\_ATTR}}
+\DoxyCodeLine{328 }
+\DoxyCodeLine{329 \textcolor{keyword}{static} \textcolor{keyword}{inline} \_\_attribute\_\_((always\_inline))}
+\DoxyCodeLine{330 IO\_REG\_TYPE directRead(\textcolor{keyword}{volatile} IO\_REG\_TYPE *base, IO\_REG\_TYPE pin)}
+\DoxyCodeLine{331 \{}
+\DoxyCodeLine{332     IO\_REG\_TYPE ret;}
+\DoxyCodeLine{333     \textcolor{keywordflow}{if} (SS\_GPIO == GPIO\_TYPE(pin)) \{}
+\DoxyCodeLine{334         ret = READ\_ARC\_REG(((IO\_REG\_TYPE)base + EXT\_PORT\_OFFSET\_SS));}
+\DoxyCodeLine{335     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{336         ret = MMIO\_REG\_VAL\_FROM\_BASE((IO\_REG\_TYPE)base, EXT\_PORT\_OFFSET\_SOC);}
+\DoxyCodeLine{337     \}}
+\DoxyCodeLine{338     \textcolor{keywordflow}{return} ((ret >> GPIO\_ID(pin)) \& 0x01);}
+\DoxyCodeLine{339 \}}
+\DoxyCodeLine{340 }
+\DoxyCodeLine{341 \textcolor{keyword}{static} \textcolor{keyword}{inline} \_\_attribute\_\_((always\_inline))}
+\DoxyCodeLine{342 \textcolor{keywordtype}{void} directModeInput(\textcolor{keyword}{volatile} IO\_REG\_TYPE *base, IO\_REG\_TYPE pin)}
+\DoxyCodeLine{343 \{}
+\DoxyCodeLine{344     \textcolor{keywordflow}{if} (SS\_GPIO == GPIO\_TYPE(pin)) \{}
+\DoxyCodeLine{345         WRITE\_ARC\_REG(READ\_ARC\_REG((((IO\_REG\_TYPE)base) + DIR\_OFFSET\_SS)) \& \string~(0x01 << GPIO\_ID(pin)),}
+\DoxyCodeLine{346             ((IO\_REG\_TYPE)(base) + DIR\_OFFSET\_SS));}
+\DoxyCodeLine{347     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{348         MMIO\_REG\_VAL\_FROM\_BASE((IO\_REG\_TYPE)base, DIR\_OFFSET\_SOC) \&= \string~(0x01 << GPIO\_ID(pin));}
+\DoxyCodeLine{349     \}}
+\DoxyCodeLine{350 \}}
+\DoxyCodeLine{351 }
+\DoxyCodeLine{352 \textcolor{keyword}{static} \textcolor{keyword}{inline} \_\_attribute\_\_((always\_inline))}
+\DoxyCodeLine{353 \textcolor{keywordtype}{void} directModeOutput(\textcolor{keyword}{volatile} IO\_REG\_TYPE *base, IO\_REG\_TYPE pin)}
+\DoxyCodeLine{354 \{}
+\DoxyCodeLine{355     \textcolor{keywordflow}{if} (SS\_GPIO == GPIO\_TYPE(pin)) \{}
+\DoxyCodeLine{356         WRITE\_ARC\_REG(READ\_ARC\_REG(((IO\_REG\_TYPE)(base) + DIR\_OFFSET\_SS)) | (0x01 << GPIO\_ID(pin)),}
+\DoxyCodeLine{357             ((IO\_REG\_TYPE)(base) + DIR\_OFFSET\_SS));}
+\DoxyCodeLine{358     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{359         MMIO\_REG\_VAL\_FROM\_BASE((IO\_REG\_TYPE)base, DIR\_OFFSET\_SOC) |= (0x01 << GPIO\_ID(pin));}
+\DoxyCodeLine{360     \}}
+\DoxyCodeLine{361 \}}
+\DoxyCodeLine{362 }
+\DoxyCodeLine{363 \textcolor{keyword}{static} \textcolor{keyword}{inline} \_\_attribute\_\_((always\_inline))}
+\DoxyCodeLine{364 \textcolor{keywordtype}{void} directWriteLow(\textcolor{keyword}{volatile} IO\_REG\_TYPE *base, IO\_REG\_TYPE pin)}
+\DoxyCodeLine{365 \{}
+\DoxyCodeLine{366     \textcolor{keywordflow}{if} (SS\_GPIO == GPIO\_TYPE(pin)) \{}
+\DoxyCodeLine{367         WRITE\_ARC\_REG(READ\_ARC\_REG(base) \& \string~(0x01 << GPIO\_ID(pin)), base);}
+\DoxyCodeLine{368     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{369         MMIO\_REG\_VAL(base) \&= \string~(0x01 << GPIO\_ID(pin));}
+\DoxyCodeLine{370     \}}
+\DoxyCodeLine{371 \}}
+\DoxyCodeLine{372 }
+\DoxyCodeLine{373 \textcolor{keyword}{static} \textcolor{keyword}{inline} \_\_attribute\_\_((always\_inline))}
+\DoxyCodeLine{374 \textcolor{keywordtype}{void} directWriteHigh(\textcolor{keyword}{volatile} IO\_REG\_TYPE *base, IO\_REG\_TYPE pin)}
+\DoxyCodeLine{375 \{}
+\DoxyCodeLine{376     \textcolor{keywordflow}{if} (SS\_GPIO == GPIO\_TYPE(pin)) \{}
+\DoxyCodeLine{377         WRITE\_ARC\_REG(READ\_ARC\_REG(base) | (0x01 << GPIO\_ID(pin)), base);}
+\DoxyCodeLine{378     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{379         MMIO\_REG\_VAL(base) |= (0x01 << GPIO\_ID(pin));}
+\DoxyCodeLine{380     \}}
+\DoxyCodeLine{381 \}}
+\DoxyCodeLine{382 }
+\DoxyCodeLine{383 \textcolor{preprocessor}{\#define DIRECT\_READ(base, pin)      directRead(base, pin)}}
+\DoxyCodeLine{384 \textcolor{preprocessor}{\#define DIRECT\_MODE\_INPUT(base, pin)    directModeInput(base, pin)}}
+\DoxyCodeLine{385 \textcolor{preprocessor}{\#define DIRECT\_MODE\_OUTPUT(base, pin)   directModeOutput(base, pin)}}
+\DoxyCodeLine{386 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_LOW(base, pin) directWriteLow(base, pin)}}
+\DoxyCodeLine{387 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_HIGH(base, pin)    directWriteHigh(base, pin)}}
+\DoxyCodeLine{388 }
+\DoxyCodeLine{389 \textcolor{preprocessor}{\#elif defined(\_\_riscv)}}
+\DoxyCodeLine{390 }
+\DoxyCodeLine{391 \textcolor{comment}{/*}}
+\DoxyCodeLine{392 \textcolor{comment}{ * Tested on highfive1}}
+\DoxyCodeLine{393 \textcolor{comment}{ *}}
+\DoxyCodeLine{394 \textcolor{comment}{ * Stable results are achieved operating in the}}
+\DoxyCodeLine{395 \textcolor{comment}{ * two high speed modes of the highfive1.  It}}
+\DoxyCodeLine{396 \textcolor{comment}{ * seems to be less reliable in slow mode.}}
+\DoxyCodeLine{397 \textcolor{comment}{ */}}
+\DoxyCodeLine{398 \textcolor{preprocessor}{\#define PIN\_TO\_BASEREG(pin)             (0)}}
+\DoxyCodeLine{399 \textcolor{preprocessor}{\#define PIN\_TO\_BITMASK(pin)             digitalPinToBitMask(pin)}}
+\DoxyCodeLine{400 \textcolor{preprocessor}{\#define IO\_REG\_TYPE uint32\_t}}
+\DoxyCodeLine{401 \textcolor{preprocessor}{\#define IO\_REG\_BASE\_ATTR}}
+\DoxyCodeLine{402 \textcolor{preprocessor}{\#define IO\_REG\_MASK\_ATTR}}
+\DoxyCodeLine{403 }
+\DoxyCodeLine{404 \textcolor{keyword}{static} \textcolor{keyword}{inline} \_\_attribute\_\_((always\_inline))}
+\DoxyCodeLine{405 IO\_REG\_TYPE directRead(IO\_REG\_TYPE mask)}
+\DoxyCodeLine{406 \{}
+\DoxyCodeLine{407     \textcolor{keywordflow}{return} ((GPIO\_REG(GPIO\_INPUT\_VAL) \& mask) != 0) ? 1 : 0;}
+\DoxyCodeLine{408 \}}
+\DoxyCodeLine{409 }
+\DoxyCodeLine{410 \textcolor{keyword}{static} \textcolor{keyword}{inline} \_\_attribute\_\_((always\_inline))}
+\DoxyCodeLine{411 \textcolor{keywordtype}{void} directModeInput(IO\_REG\_TYPE mask)}
+\DoxyCodeLine{412 \{}
+\DoxyCodeLine{413     GPIO\_REG(GPIO\_OUTPUT\_XOR)  \&= \string~mask;}
+\DoxyCodeLine{414     GPIO\_REG(GPIO\_IOF\_EN)      \&= \string~mask;}
+\DoxyCodeLine{415 }
+\DoxyCodeLine{416     GPIO\_REG(GPIO\_INPUT\_EN)  |=  mask;}
+\DoxyCodeLine{417     GPIO\_REG(GPIO\_OUTPUT\_EN) \&= \string~mask;}
+\DoxyCodeLine{418 \}}
+\DoxyCodeLine{419 }
+\DoxyCodeLine{420 \textcolor{keyword}{static} \textcolor{keyword}{inline} \_\_attribute\_\_((always\_inline))}
+\DoxyCodeLine{421 \textcolor{keywordtype}{void} directModeOutput(IO\_REG\_TYPE mask)}
+\DoxyCodeLine{422 \{}
+\DoxyCodeLine{423     GPIO\_REG(GPIO\_OUTPUT\_XOR)  \&= \string~mask;}
+\DoxyCodeLine{424     GPIO\_REG(GPIO\_IOF\_EN)      \&= \string~mask;}
+\DoxyCodeLine{425 }
+\DoxyCodeLine{426     GPIO\_REG(GPIO\_INPUT\_EN)  \&= \string~mask;}
+\DoxyCodeLine{427     GPIO\_REG(GPIO\_OUTPUT\_EN) |=  mask;}
+\DoxyCodeLine{428 \}}
+\DoxyCodeLine{429 }
+\DoxyCodeLine{430 \textcolor{keyword}{static} \textcolor{keyword}{inline} \_\_attribute\_\_((always\_inline))}
+\DoxyCodeLine{431 \textcolor{keywordtype}{void} directWriteLow(IO\_REG\_TYPE mask)}
+\DoxyCodeLine{432 \{}
+\DoxyCodeLine{433     GPIO\_REG(GPIO\_OUTPUT\_VAL) \&= \string~mask;}
+\DoxyCodeLine{434 \}}
+\DoxyCodeLine{435 }
+\DoxyCodeLine{436 \textcolor{keyword}{static} \textcolor{keyword}{inline} \_\_attribute\_\_((always\_inline))}
+\DoxyCodeLine{437 \textcolor{keywordtype}{void} directWriteHigh(IO\_REG\_TYPE mask)}
+\DoxyCodeLine{438 \{}
+\DoxyCodeLine{439     GPIO\_REG(GPIO\_OUTPUT\_VAL) |= mask;}
+\DoxyCodeLine{440 \}}
+\DoxyCodeLine{441 }
+\DoxyCodeLine{442 \textcolor{preprocessor}{\#define DIRECT\_READ(base, mask)          directRead(mask)}}
+\DoxyCodeLine{443 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_LOW(base, mask)     directWriteLow(mask)}}
+\DoxyCodeLine{444 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_HIGH(base, mask)    directWriteHigh(mask)}}
+\DoxyCodeLine{445 \textcolor{preprocessor}{\#define DIRECT\_MODE\_INPUT(base, mask)    directModeInput(mask)}}
+\DoxyCodeLine{446 \textcolor{preprocessor}{\#define DIRECT\_MODE\_OUTPUT(base, mask)   directModeOutput(mask)}}
+\DoxyCodeLine{447 }
+\DoxyCodeLine{448 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{449 \textcolor{preprocessor}{\#define PIN\_TO\_BASEREG(pin)             (0)}}
+\DoxyCodeLine{450 \textcolor{preprocessor}{\#define PIN\_TO\_BITMASK(pin)             (pin)}}
+\DoxyCodeLine{451 \textcolor{preprocessor}{\#define IO\_REG\_TYPE unsigned int}}
+\DoxyCodeLine{452 \textcolor{preprocessor}{\#define IO\_REG\_BASE\_ATTR}}
+\DoxyCodeLine{453 \textcolor{preprocessor}{\#define IO\_REG\_MASK\_ATTR}}
+\DoxyCodeLine{454 \textcolor{preprocessor}{\#define DIRECT\_READ(base, pin)          digitalRead(pin)}}
+\DoxyCodeLine{455 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_LOW(base, pin)     digitalWrite(pin, LOW)}}
+\DoxyCodeLine{456 \textcolor{preprocessor}{\#define DIRECT\_WRITE\_HIGH(base, pin)    digitalWrite(pin, HIGH)}}
+\DoxyCodeLine{457 \textcolor{preprocessor}{\#define DIRECT\_MODE\_INPUT(base, pin)    pinMode(pin,INPUT)}}
+\DoxyCodeLine{458 \textcolor{preprocessor}{\#define DIRECT\_MODE\_OUTPUT(base, pin)   pinMode(pin,OUTPUT)}}
+\DoxyCodeLine{459 \textcolor{preprocessor}{\#warning "{}OneWire. Fallback mode. Using API calls for pinMode,digitalRead and digitalWrite. Operation of this library is not guaranteed on this architecture."{}}}
+\DoxyCodeLine{460 }
+\DoxyCodeLine{461 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{462 }
+\DoxyCodeLine{463 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

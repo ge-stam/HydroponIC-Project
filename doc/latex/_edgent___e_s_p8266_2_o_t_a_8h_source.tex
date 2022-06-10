@@ -1,0 +1,263 @@
+\hypertarget{_edgent___e_s_p8266_2_o_t_a_8h_source}{}\doxysection{OTA.\+h}
+\label{_edgent___e_s_p8266_2_o_t_a_8h_source}\index{lib/Blynk/examples/Blynk.Edgent/Edgent\_ESP8266/OTA.h@{lib/Blynk/examples/Blynk.Edgent/Edgent\_ESP8266/OTA.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define OTA\_FATAL(...) \{ BLYNK\_LOG1(\_\_VA\_ARGS\_\_); delay(1000); restartMCU(); \}}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#define USE\_SSL}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 String overTheAirURL;}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{keyword}{extern} BlynkTimer edgentTimer;}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 BLYNK\_WRITE(InternalPinOTA) \{}
+\DoxyCodeLine{11   overTheAirURL = param.asString();}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13   edgentTimer.setTimeout(2000L, []()\{}
+\DoxyCodeLine{14     \textcolor{comment}{// Start OTA}}
+\DoxyCodeLine{15     Blynk.logEvent(\textcolor{stringliteral}{"{}sys\_ota"{}}, \textcolor{stringliteral}{"{}OTA started"{}});}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17     \textcolor{comment}{// Disconnect, not to interfere with OTA process}}
+\DoxyCodeLine{18     Blynk.disconnect();}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20     BlynkState::set(MODE\_OTA\_UPGRADE);}
+\DoxyCodeLine{21   \});}
+\DoxyCodeLine{22 \}}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#if defined(ESP32)}}
+\DoxyCodeLine{25 \textcolor{preprocessor}{  \#include <Update.h>}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{  \#include <WiFiClientSecure.h>}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#elif defined(ESP8266)}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{  \#include <ESP8266WiFi.h>}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{  \#include <WiFiClientSecure.h>}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{  \#include <time.h>}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#if defined(USE\_SSL) \&\& defined(ESP8266)}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 WiFiClient* connectSSL(\textcolor{keyword}{const} String\& host, \textcolor{keyword}{const} \textcolor{keywordtype}{int} port)}
+\DoxyCodeLine{36 \{}
+\DoxyCodeLine{37   WiFiUDP::stopAll();}
+\DoxyCodeLine{38   WiFiClient::stopAll();}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40   time\_t now = time(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{41   \textcolor{keywordflow}{if} (time(\textcolor{keyword}{nullptr}) < 100000) \{}
+\DoxyCodeLine{42     \textcolor{comment}{// Synchronize time useing SNTP. This is necessary to verify that}}
+\DoxyCodeLine{43     \textcolor{comment}{// the TLS certificates offered by the server are currently valid}}
+\DoxyCodeLine{44     configTime(0, 0, \textcolor{stringliteral}{"{}pool.ntp.org"{}}, \textcolor{stringliteral}{"{}time.nist.gov"{}});}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46     \textcolor{keywordflow}{while} (now < 100000) \{}
+\DoxyCodeLine{47         delay(100);}
+\DoxyCodeLine{48         now = time(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{49     \}}
+\DoxyCodeLine{50   \}}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52   \textcolor{comment}{// Reuse Secure WIFI Client on ESP8266}}
+\DoxyCodeLine{53   \textcolor{comment}{//WiFiClientSecure* clientSSL = \&\_blynkWifiClient;}}
+\DoxyCodeLine{54   WiFiClientSecure* clientSSL = \textcolor{keyword}{new} WiFiClientSecure();}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56   clientSSL-\/>setTrustAnchors(\&BlynkCert);}
+\DoxyCodeLine{57   \textcolor{keywordflow}{if} (!clientSSL-\/>connect(host.c\_str(), port)) \{}
+\DoxyCodeLine{58     OTA\_FATAL(F(\textcolor{stringliteral}{"{}Connection failed"{}}));}
+\DoxyCodeLine{59   \}}
+\DoxyCodeLine{60   \textcolor{keywordflow}{return} clientSSL;}
+\DoxyCodeLine{61 \}}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63 \textcolor{preprocessor}{\#elif defined(USE\_SSL) \&\& defined(ESP32)}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65 WiFiClient* connectSSL(\textcolor{keyword}{const} String\& host, \textcolor{keyword}{const} \textcolor{keywordtype}{int} port)}
+\DoxyCodeLine{66 \{}
+\DoxyCodeLine{67   WiFiUDP::stopAll();}
+\DoxyCodeLine{68   WiFiClient::stopAll();}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70   WiFiClientSecure* clientSSL = \textcolor{keyword}{new} WiFiClientSecure();}
+\DoxyCodeLine{71   clientSSL-\/>setCACert(BLYNK\_DEFAULT\_ROOT\_CA);}
+\DoxyCodeLine{72   \textcolor{keywordflow}{if} (clientSSL-\/>connect(host.c\_str(), port)) \{}
+\DoxyCodeLine{73     \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(F(\textcolor{stringliteral}{"{}Certificate OK"{}}));}
+\DoxyCodeLine{74   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{75     OTA\_FATAL(F(\textcolor{stringliteral}{"{}Secure connection failed"{}}));}
+\DoxyCodeLine{76   \}}
+\DoxyCodeLine{77   \textcolor{keywordflow}{return} clientSSL;}
+\DoxyCodeLine{78 \}}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82 WiFiClient* connectTCP(\textcolor{keyword}{const} String\& host, \textcolor{keyword}{const} \textcolor{keywordtype}{int} port)}
+\DoxyCodeLine{83 \{}
+\DoxyCodeLine{84   WiFiUDP::stopAll();}
+\DoxyCodeLine{85   WiFiClient::stopAll();}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87   WiFiClient* clientTCP = \textcolor{keyword}{new} WiFiClient();}
+\DoxyCodeLine{88   \textcolor{keywordflow}{if} (!clientTCP-\/>connect(host.c\_str(), port)) \{}
+\DoxyCodeLine{89     OTA\_FATAL(F(\textcolor{stringliteral}{"{}Client not connected"{}}));}
+\DoxyCodeLine{90   \}}
+\DoxyCodeLine{91   \textcolor{keywordflow}{return} clientTCP;}
+\DoxyCodeLine{92 \}}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94 \textcolor{keywordtype}{bool} parseURL(String url, String\& protocol, String\& host, \textcolor{keywordtype}{int}\& port, String\& uri)}
+\DoxyCodeLine{95 \{}
+\DoxyCodeLine{96   \textcolor{keywordtype}{int} index = url.indexOf(\textcolor{charliteral}{':'});}
+\DoxyCodeLine{97   \textcolor{keywordflow}{if}(index < 0) \{}
+\DoxyCodeLine{98     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{99   \}}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101   protocol = url.substring(0, index);}
+\DoxyCodeLine{102   url.remove(0, (index + 3)); \textcolor{comment}{// remove protocol part}}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104   index = url.indexOf(\textcolor{charliteral}{'/'});}
+\DoxyCodeLine{105   String server = url.substring(0, index);}
+\DoxyCodeLine{106   url.remove(0, index);       \textcolor{comment}{// remove server part}}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108   index = server.indexOf(\textcolor{charliteral}{':'});}
+\DoxyCodeLine{109   \textcolor{keywordflow}{if}(index >= 0) \{}
+\DoxyCodeLine{110     host = server.substring(0, index);          \textcolor{comment}{// hostname}}
+\DoxyCodeLine{111     port = server.substring(index + 1).toInt(); \textcolor{comment}{// port}}
+\DoxyCodeLine{112   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{113     host = server;}
+\DoxyCodeLine{114     \textcolor{keywordflow}{if} (protocol == \textcolor{stringliteral}{"{}http"{}}) \{}
+\DoxyCodeLine{115       port = 80;}
+\DoxyCodeLine{116     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (protocol == \textcolor{stringliteral}{"{}https"{}}) \{}
+\DoxyCodeLine{117       port = 443;}
+\DoxyCodeLine{118     \}}
+\DoxyCodeLine{119   \}}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121   \textcolor{keywordflow}{if} (url.length()) \{}
+\DoxyCodeLine{122     uri = url;}
+\DoxyCodeLine{123   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{124     uri = \textcolor{stringliteral}{"{}/"{}};}
+\DoxyCodeLine{125   \}}
+\DoxyCodeLine{126   \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{127 \}}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129 \textcolor{keywordtype}{void} enterOTA() \{}
+\DoxyCodeLine{130   BlynkState::set(MODE\_OTA\_UPGRADE);}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132   \textcolor{comment}{// Disconnect, not to interfere with OTA process}}
+\DoxyCodeLine{133   Blynk.disconnect();}
+\DoxyCodeLine{134 }
+\DoxyCodeLine{135   String protocol, host, url;}
+\DoxyCodeLine{136   \textcolor{keywordtype}{int} port;}
+\DoxyCodeLine{137   }
+\DoxyCodeLine{138   \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(String(\textcolor{stringliteral}{"{}OTA: "{}}) + overTheAirURL);}
+\DoxyCodeLine{139 }
+\DoxyCodeLine{140   \textcolor{keywordflow}{if} (!parseURL(overTheAirURL, protocol, host, port, url)) \{}
+\DoxyCodeLine{141     OTA\_FATAL(F(\textcolor{stringliteral}{"{}Cannot parse URL"{}}));}
+\DoxyCodeLine{142   \}}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144   \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(String(\textcolor{stringliteral}{"{}Connecting to "{}}) + host + \textcolor{stringliteral}{"{}:"{}} + port);}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146   Client* client = NULL;}
+\DoxyCodeLine{147   \textcolor{keywordflow}{if} (protocol == \textcolor{stringliteral}{"{}http"{}}) \{}
+\DoxyCodeLine{148     client = connectTCP(host, port);}
+\DoxyCodeLine{149 \textcolor{preprocessor}{\#ifdef USE\_SSL}}
+\DoxyCodeLine{150   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (protocol == \textcolor{stringliteral}{"{}https"{}}) \{}
+\DoxyCodeLine{151     client = connectSSL(host, port);}
+\DoxyCodeLine{152 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{153   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{154     OTA\_FATAL(String(\textcolor{stringliteral}{"{}Unsupported protocol: "{}}) + protocol);}
+\DoxyCodeLine{155   \}}
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157   client-\/>print(String(\textcolor{stringliteral}{"{}GET "{}}) + url + \textcolor{stringliteral}{"{} HTTP/1.0\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{158                + \textcolor{stringliteral}{"{}Host: "{}} + host + \textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{159                + \textcolor{stringliteral}{"{}Connection: keep-\/alive\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{160                + \textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n"{}});}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162   uint32\_t timeout = millis();}
+\DoxyCodeLine{163   \textcolor{keywordflow}{while} (client-\/>connected() \&\& !client-\/>available()) \{}
+\DoxyCodeLine{164     \textcolor{keywordflow}{if} (millis() -\/ timeout > 10000L) \{}
+\DoxyCodeLine{165       OTA\_FATAL(\textcolor{stringliteral}{"{}Response timeout"{}});}
+\DoxyCodeLine{166     \}}
+\DoxyCodeLine{167     delay(10);}
+\DoxyCodeLine{168   \}}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170   \textcolor{comment}{// Collect headers}}
+\DoxyCodeLine{171   String md5;}
+\DoxyCodeLine{172   \textcolor{keywordtype}{int} contentLength = 0;}
+\DoxyCodeLine{173 }
+\DoxyCodeLine{174   \textcolor{keywordflow}{while} (client-\/>available()) \{}
+\DoxyCodeLine{175     String line = client-\/>readStringUntil(\textcolor{charliteral}{'\(\backslash\)n'});}
+\DoxyCodeLine{176     line.trim();}
+\DoxyCodeLine{177     \textcolor{comment}{//DEBUG\_PRINT(line);    // Uncomment this to show response headers}}
+\DoxyCodeLine{178     line.toLowerCase();}
+\DoxyCodeLine{179     \textcolor{keywordflow}{if} (line.startsWith(\textcolor{stringliteral}{"{}content-\/length:"{}})) \{}
+\DoxyCodeLine{180       contentLength = line.substring(line.lastIndexOf(\textcolor{charliteral}{':'}) + 1).toInt();}
+\DoxyCodeLine{181     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (line.startsWith(\textcolor{stringliteral}{"{}x-\/md5:"{}})) \{}
+\DoxyCodeLine{182       md5 = line.substring(line.lastIndexOf(\textcolor{charliteral}{':'}) + 1);}
+\DoxyCodeLine{183     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (line.length() == 0) \{}
+\DoxyCodeLine{184       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{185     \}}
+\DoxyCodeLine{186     delay(10);}
+\DoxyCodeLine{187   \}}
+\DoxyCodeLine{188 }
+\DoxyCodeLine{189   \textcolor{keywordflow}{if} (contentLength <= 0) \{}
+\DoxyCodeLine{190     OTA\_FATAL(\textcolor{stringliteral}{"{}Content-\/Length not defined"{}});}
+\DoxyCodeLine{191   \}}
+\DoxyCodeLine{192 }
+\DoxyCodeLine{193   \textcolor{keywordtype}{bool} canBegin = Update.begin(contentLength);}
+\DoxyCodeLine{194   \textcolor{keywordflow}{if} (!canBegin) \{}
+\DoxyCodeLine{195     Update.printError(BLYNK\_PRINT);}
+\DoxyCodeLine{196     OTA\_FATAL(\textcolor{stringliteral}{"{}OTA begin failed"{}});}
+\DoxyCodeLine{197   \}}
+\DoxyCodeLine{198 }
+\DoxyCodeLine{199   \textcolor{keywordflow}{if} (md5.length()) \{}
+\DoxyCodeLine{200     md5.trim();}
+\DoxyCodeLine{201     md5.toLowerCase();}
+\DoxyCodeLine{202     \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(String(\textcolor{stringliteral}{"{}Expected MD5: "{}}) + md5);}
+\DoxyCodeLine{203     \textcolor{keywordflow}{if}(!Update.setMD5(md5.c\_str())) \{}
+\DoxyCodeLine{204       OTA\_FATAL(\textcolor{stringliteral}{"{}Cannot set MD5"{}});}
+\DoxyCodeLine{205     \}}
+\DoxyCodeLine{206   \}}
+\DoxyCodeLine{207 }
+\DoxyCodeLine{208   \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}Flashing..."{}});}
+\DoxyCodeLine{209 }
+\DoxyCodeLine{210   \textcolor{comment}{// The next loop does approx. the same thing as Update.writeStream(http) or Update.write(http)}}
+\DoxyCodeLine{211 }
+\DoxyCodeLine{212   \textcolor{keywordtype}{int} written = 0;}
+\DoxyCodeLine{213   \textcolor{keywordtype}{int} prevProgress = 0;}
+\DoxyCodeLine{214   uint8\_t buff[256];}
+\DoxyCodeLine{215   \textcolor{keywordflow}{while} (client-\/>connected() \&\& written < contentLength) \{}
+\DoxyCodeLine{216     delay(10);}
+\DoxyCodeLine{217     timeout = millis();}
+\DoxyCodeLine{218     \textcolor{keywordflow}{while} (client-\/>connected() \&\& !client-\/>available()) \{}
+\DoxyCodeLine{219       delay(1);}
+\DoxyCodeLine{220       \textcolor{keywordflow}{if} (millis() -\/ timeout > 10000L) \{}
+\DoxyCodeLine{221         OTA\_FATAL(\textcolor{stringliteral}{"{}Timeout"{}});}
+\DoxyCodeLine{222       \}}
+\DoxyCodeLine{223     \}}
+\DoxyCodeLine{224 }
+\DoxyCodeLine{225     \textcolor{keywordtype}{int} len = client-\/>read(buff, \textcolor{keyword}{sizeof}(buff));}
+\DoxyCodeLine{226     \textcolor{keywordflow}{if} (len <= 0) \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{227 }
+\DoxyCodeLine{228     Update.write(buff, len);}
+\DoxyCodeLine{229     written += len;}
+\DoxyCodeLine{230 }
+\DoxyCodeLine{231     \textcolor{keyword}{const} \textcolor{keywordtype}{int} progress = (written*100)/contentLength;}
+\DoxyCodeLine{232     \textcolor{keywordflow}{if} (progress -\/ prevProgress >= 10 || progress == 100) \{}
+\DoxyCodeLine{233       BLYNK\_PRINT.print(String(\textcolor{stringliteral}{"{}\(\backslash\)r "{}}) + progress + \textcolor{stringliteral}{"{}\%"{}});}
+\DoxyCodeLine{234       prevProgress = progress;}
+\DoxyCodeLine{235     \}}
+\DoxyCodeLine{236   \}}
+\DoxyCodeLine{237   BLYNK\_PRINT.println();}
+\DoxyCodeLine{238   client-\/>stop();}
+\DoxyCodeLine{239 }
+\DoxyCodeLine{240   \textcolor{keywordflow}{if} (written != contentLength) \{}
+\DoxyCodeLine{241     Update.printError(BLYNK\_PRINT);}
+\DoxyCodeLine{242     OTA\_FATAL(String(\textcolor{stringliteral}{"{}Write failed. Written "{}}) + written + \textcolor{stringliteral}{"{} / "{}} + contentLength + \textcolor{stringliteral}{"{} bytes"{}});}
+\DoxyCodeLine{243   \}}
+\DoxyCodeLine{244 }
+\DoxyCodeLine{245   \textcolor{keywordflow}{if} (!Update.end()) \{}
+\DoxyCodeLine{246     Update.printError(BLYNK\_PRINT);}
+\DoxyCodeLine{247     OTA\_FATAL(F(\textcolor{stringliteral}{"{}Update not ended"{}}));}
+\DoxyCodeLine{248   \}}
+\DoxyCodeLine{249 }
+\DoxyCodeLine{250   \textcolor{keywordflow}{if} (!Update.isFinished()) \{}
+\DoxyCodeLine{251     OTA\_FATAL(F(\textcolor{stringliteral}{"{}Update not finished"{}}));}
+\DoxyCodeLine{252   \}}
+\DoxyCodeLine{253 }
+\DoxyCodeLine{254   \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}=== Update successfully completed. Rebooting."{}});}
+\DoxyCodeLine{255   restartMCU();}
+\DoxyCodeLine{256 \}}
+\DoxyCodeLine{257 }
+
+\end{DoxyCode}

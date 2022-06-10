@@ -1,0 +1,29 @@
+\hypertarget{_blynk_simple_wifi_8h_source}{}\doxysection{Blynk\+Simple\+Wifi.\+h}
+\label{_blynk_simple_wifi_8h_source}\index{lib/Blynk/src/BlynkSimpleWifi.h@{lib/Blynk/src/BlynkSimpleWifi.h}}
+\mbox{\hyperlink{_blynk_simple_wifi_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef BlynkSimpleWifi\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define BlynkSimpleWifi\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#ifndef BLYNK\_INFO\_CONNECTION}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#define BLYNK\_INFO\_CONNECTION  "{}HDG204"{}}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{comment}{// Fix for WiFi shield (it has a crazy ping duration)}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#define BLYNK\_TIMEOUT\_MS 6000UL}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#define BLYNK\_SEND\_ATOMIC}}
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#define BLYNK\_SEND\_CHUNK 64}}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#include <WiFi.h>}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_wi_fi_common_8h}{Adapters/BlynkWiFiCommon.h}}>}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{keyword}{static} WiFiClient \_blynkWifiClient;}
+\DoxyCodeLine{27 \textcolor{keyword}{static} \mbox{\hyperlink{class_blynk_arduino_client_gen}{BlynkArduinoClient}} \_blynkTransport(\_blynkWifiClient);}
+\DoxyCodeLine{28 \mbox{\hyperlink{class_blynk_wifi_common}{BlynkWifiCommon}} Blynk(\_blynkTransport);}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_widgets_8h}{BlynkWidgets.h}}>}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,84 @@
+\hypertarget{structsensor__t}{}\doxysection{sensor\+\_\+t Struct Reference}
+\label{structsensor__t}\index{sensor\_t@{sensor\_t}}
+
+
+{\ttfamily \#include $<$Adafruit\+\_\+\+Sensor.\+h$>$}
+
+\doxysubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+char \mbox{\hyperlink{structsensor__t_adb17b9f54ff17e3b134e9614ff8f6742}{name}} \mbox{[}12\mbox{]}
+\item 
+int32\+\_\+t \mbox{\hyperlink{structsensor__t_a67fae7dd1de9edce3656ed214d20377f}{version}}
+\item 
+int32\+\_\+t \mbox{\hyperlink{structsensor__t_a6429c13b9cff87152fc3027267f2784e}{sensor\+\_\+id}}
+\item 
+int32\+\_\+t \mbox{\hyperlink{structsensor__t_a449e574ed6911881dc55507cb5635c2c}{type}}
+\item 
+float \mbox{\hyperlink{structsensor__t_ab57d4076e7e499e5da8c1ae500170a02}{max\+\_\+value}}
+\item 
+float \mbox{\hyperlink{structsensor__t_aad5729d76ea20f8aded557bc39d776bf}{min\+\_\+value}}
+\item 
+float \mbox{\hyperlink{structsensor__t_a4333d786c60465d20826583358b2798d}{resolution}}
+\item 
+int32\+\_\+t \mbox{\hyperlink{structsensor__t_ab63874406049ab96a4acb232b49ad0b8}{min\+\_\+delay}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+struct sensor\+\_\+s is used to describe basic information about a specific sensor. 
+
+\doxysubsection{Field Documentation}
+\mbox{\Hypertarget{structsensor__t_ab57d4076e7e499e5da8c1ae500170a02}\label{structsensor__t_ab57d4076e7e499e5da8c1ae500170a02}} 
+\index{sensor\_t@{sensor\_t}!max\_value@{max\_value}}
+\index{max\_value@{max\_value}!sensor\_t@{sensor\_t}}
+\doxysubsubsection{\texorpdfstring{max\_value}{max\_value}}
+{\footnotesize\ttfamily float max\+\_\+value}
+
+maximum value of this sensor\textquotesingle{}s value in SI units \mbox{\Hypertarget{structsensor__t_ab63874406049ab96a4acb232b49ad0b8}\label{structsensor__t_ab63874406049ab96a4acb232b49ad0b8}} 
+\index{sensor\_t@{sensor\_t}!min\_delay@{min\_delay}}
+\index{min\_delay@{min\_delay}!sensor\_t@{sensor\_t}}
+\doxysubsubsection{\texorpdfstring{min\_delay}{min\_delay}}
+{\footnotesize\ttfamily int32\+\_\+t min\+\_\+delay}
+
+min delay in microseconds between events. zero = not a constant rate \mbox{\Hypertarget{structsensor__t_aad5729d76ea20f8aded557bc39d776bf}\label{structsensor__t_aad5729d76ea20f8aded557bc39d776bf}} 
+\index{sensor\_t@{sensor\_t}!min\_value@{min\_value}}
+\index{min\_value@{min\_value}!sensor\_t@{sensor\_t}}
+\doxysubsubsection{\texorpdfstring{min\_value}{min\_value}}
+{\footnotesize\ttfamily float min\+\_\+value}
+
+minimum value of this sensor\textquotesingle{}s value in SI units \mbox{\Hypertarget{structsensor__t_adb17b9f54ff17e3b134e9614ff8f6742}\label{structsensor__t_adb17b9f54ff17e3b134e9614ff8f6742}} 
+\index{sensor\_t@{sensor\_t}!name@{name}}
+\index{name@{name}!sensor\_t@{sensor\_t}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily char name\mbox{[}12\mbox{]}}
+
+sensor name \mbox{\Hypertarget{structsensor__t_a4333d786c60465d20826583358b2798d}\label{structsensor__t_a4333d786c60465d20826583358b2798d}} 
+\index{sensor\_t@{sensor\_t}!resolution@{resolution}}
+\index{resolution@{resolution}!sensor\_t@{sensor\_t}}
+\doxysubsubsection{\texorpdfstring{resolution}{resolution}}
+{\footnotesize\ttfamily float resolution}
+
+smallest difference between two values reported by this sensor \mbox{\Hypertarget{structsensor__t_a6429c13b9cff87152fc3027267f2784e}\label{structsensor__t_a6429c13b9cff87152fc3027267f2784e}} 
+\index{sensor\_t@{sensor\_t}!sensor\_id@{sensor\_id}}
+\index{sensor\_id@{sensor\_id}!sensor\_t@{sensor\_t}}
+\doxysubsubsection{\texorpdfstring{sensor\_id}{sensor\_id}}
+{\footnotesize\ttfamily int32\+\_\+t sensor\+\_\+id}
+
+unique sensor identifier \mbox{\Hypertarget{structsensor__t_a449e574ed6911881dc55507cb5635c2c}\label{structsensor__t_a449e574ed6911881dc55507cb5635c2c}} 
+\index{sensor\_t@{sensor\_t}!type@{type}}
+\index{type@{type}!sensor\_t@{sensor\_t}}
+\doxysubsubsection{\texorpdfstring{type}{type}}
+{\footnotesize\ttfamily int32\+\_\+t type}
+
+this sensor\textquotesingle{}s type (ex. SENSOR\+\_\+\+TYPE\+\_\+\+LIGHT) \mbox{\Hypertarget{structsensor__t_a67fae7dd1de9edce3656ed214d20377f}\label{structsensor__t_a67fae7dd1de9edce3656ed214d20377f}} 
+\index{sensor\_t@{sensor\_t}!version@{version}}
+\index{version@{version}!sensor\_t@{sensor\_t}}
+\doxysubsubsection{\texorpdfstring{version}{version}}
+{\footnotesize\ttfamily int32\+\_\+t version}
+
+version of the hardware + driver 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+Adafruit\+\_\+\+Sensor/Adafruit\+\_\+\+Sensor.\+h\end{DoxyCompactItemize}

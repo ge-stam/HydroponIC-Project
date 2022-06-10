@@ -1,0 +1,78 @@
+\hypertarget{_widget_bridge_8h_source}{}\doxysection{Widget\+Bridge.\+h}
+\label{_widget_bridge_8h_source}\index{lib/Blynk/src/WidgetBridge.h@{lib/Blynk/src/WidgetBridge.h}}
+\mbox{\hyperlink{_widget_bridge_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef WidgetBridge\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define WidgetBridge\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_widget_base_8h}{Blynk/BlynkWidgetBase.h}}>}}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{keyword}{class }\mbox{\hyperlink{class_widget_bridge}{WidgetBridge}}}
+\DoxyCodeLine{17     : \textcolor{keyword}{private} \mbox{\hyperlink{class_blynk_widget_base}{BlynkWidgetBase}}}
+\DoxyCodeLine{18 \{}
+\DoxyCodeLine{19 \textcolor{keyword}{public}:}
+\DoxyCodeLine{20     \mbox{\hyperlink{class_widget_bridge}{WidgetBridge}}(uint8\_t vPin)}
+\DoxyCodeLine{21         : \mbox{\hyperlink{class_blynk_widget_base}{BlynkWidgetBase}}(vPin)}
+\DoxyCodeLine{22     \{\}}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24     \textcolor{keywordtype}{void} setAuthToken(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* token) \{}
+\DoxyCodeLine{25         \textcolor{keywordtype}{char} mem[BLYNK\_MAX\_SENDBYTES];}
+\DoxyCodeLine{26         \mbox{\hyperlink{class_blynk_param}{BlynkParam}} cmd(mem, 0, \textcolor{keyword}{sizeof}(mem));}
+\DoxyCodeLine{27         cmd.add(mPin);}
+\DoxyCodeLine{28         cmd.add(\textcolor{stringliteral}{"{}i"{}});}
+\DoxyCodeLine{29         cmd.add(token);}
+\DoxyCodeLine{30         Blynk.sendCmd(BLYNK\_CMD\_BRIDGE, 0, cmd.getBuffer(), cmd.getLength()-\/1);}
+\DoxyCodeLine{31     \}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{34     \textcolor{keywordtype}{void} digitalWrite(\textcolor{keyword}{const} T\& pin, \textcolor{keywordtype}{int} val) \{}
+\DoxyCodeLine{35         \textcolor{keywordtype}{char} mem[BLYNK\_MAX\_SENDBYTES];}
+\DoxyCodeLine{36         \mbox{\hyperlink{class_blynk_param}{BlynkParam}} cmd(mem, 0, \textcolor{keyword}{sizeof}(mem));}
+\DoxyCodeLine{37         cmd.add(mPin);}
+\DoxyCodeLine{38         cmd.add(\textcolor{stringliteral}{"{}dw"{}});}
+\DoxyCodeLine{39         cmd.add(pin);}
+\DoxyCodeLine{40         cmd.add(val);}
+\DoxyCodeLine{41         Blynk.sendCmd(BLYNK\_CMD\_BRIDGE, 0, cmd.getBuffer(), cmd.getLength()-\/1);}
+\DoxyCodeLine{42     \}}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{45     \textcolor{keywordtype}{void} analogWrite(\textcolor{keyword}{const} T\& pin, \textcolor{keywordtype}{int} val) \{}
+\DoxyCodeLine{46         \textcolor{keywordtype}{char} mem[BLYNK\_MAX\_SENDBYTES];}
+\DoxyCodeLine{47         \mbox{\hyperlink{class_blynk_param}{BlynkParam}} cmd(mem, 0, \textcolor{keyword}{sizeof}(mem));}
+\DoxyCodeLine{48         cmd.add(mPin);}
+\DoxyCodeLine{49         cmd.add(\textcolor{stringliteral}{"{}aw"{}});}
+\DoxyCodeLine{50         cmd.add(pin);}
+\DoxyCodeLine{51         cmd.add(val);}
+\DoxyCodeLine{52         Blynk.sendCmd(BLYNK\_CMD\_BRIDGE, 0, cmd.getBuffer(), cmd.getLength()-\/1);}
+\DoxyCodeLine{53     \}}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... Args>}
+\DoxyCodeLine{56     \textcolor{keywordtype}{void} virtualWrite(\textcolor{keywordtype}{int} pin, Args... values) \{}
+\DoxyCodeLine{57         \textcolor{keywordtype}{char} mem[BLYNK\_MAX\_SENDBYTES];}
+\DoxyCodeLine{58         \mbox{\hyperlink{class_blynk_param}{BlynkParam}} cmd(mem, 0, \textcolor{keyword}{sizeof}(mem));}
+\DoxyCodeLine{59         cmd.add(mPin);}
+\DoxyCodeLine{60         cmd.add(\textcolor{stringliteral}{"{}vw"{}});}
+\DoxyCodeLine{61         cmd.add(pin);}
+\DoxyCodeLine{62         cmd.add\_multi(values...);}
+\DoxyCodeLine{63         Blynk.sendCmd(BLYNK\_CMD\_BRIDGE, 0, cmd.getBuffer(), cmd.getLength()-\/1);}
+\DoxyCodeLine{64     \}}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66     \textcolor{keywordtype}{void} virtualWriteBinary(\textcolor{keywordtype}{int} pin, \textcolor{keyword}{const} \textcolor{keywordtype}{void}* buff, \textcolor{keywordtype}{size\_t} len) \{}
+\DoxyCodeLine{67         \textcolor{keywordtype}{char} mem[8];}
+\DoxyCodeLine{68         \mbox{\hyperlink{class_blynk_param}{BlynkParam}} cmd(mem, 0, \textcolor{keyword}{sizeof}(mem));}
+\DoxyCodeLine{69         cmd.add(mPin);}
+\DoxyCodeLine{70         cmd.add(\textcolor{stringliteral}{"{}vw"{}});}
+\DoxyCodeLine{71         cmd.add(pin);}
+\DoxyCodeLine{72         Blynk.sendCmd(BLYNK\_CMD\_BRIDGE, 0, cmd.getBuffer(), cmd.getLength(), buff, len);}
+\DoxyCodeLine{73     \}}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75     \textcolor{keywordtype}{void} virtualWrite(\textcolor{keywordtype}{int} pin, \textcolor{keyword}{const} \mbox{\hyperlink{class_blynk_param}{BlynkParam}}\& param) \{}
+\DoxyCodeLine{76         virtualWriteBinary(pin, param.getBuffer(), param.getLength()-\/1);}
+\DoxyCodeLine{77     \}}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79 \};}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

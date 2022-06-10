@@ -1,0 +1,72 @@
+\hypertarget{_widget_table_8h_source}{}\doxysection{Widget\+Table.\+h}
+\label{_widget_table_8h_source}\index{lib/Blynk/src/WidgetTable.h@{lib/Blynk/src/WidgetTable.h}}
+\mbox{\hyperlink{_widget_table_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef WidgetTable\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define WidgetTable\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_widget_base_8h}{Blynk/BlynkWidgetBase.h}}>}}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{keyword}{class }\mbox{\hyperlink{class_widget_table}{WidgetTable}}}
+\DoxyCodeLine{17     : \textcolor{keyword}{public} \mbox{\hyperlink{class_blynk_widget_base}{BlynkWidgetBase}}}
+\DoxyCodeLine{18 \{}
+\DoxyCodeLine{19 \textcolor{keyword}{public}:}
+\DoxyCodeLine{20     \textcolor{keyword}{typedef} void (*ItemSelectChange)(\textcolor{keywordtype}{int} index, \textcolor{keywordtype}{bool} selected);}
+\DoxyCodeLine{21     \textcolor{keyword}{typedef} void (*ItemOrderChange)(\textcolor{keywordtype}{int} indexFrom, \textcolor{keywordtype}{int} indexTo);}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23 \textcolor{keyword}{public}:}
+\DoxyCodeLine{24     \mbox{\hyperlink{class_widget_table}{WidgetTable}}(uint8\_t vPin = -\/1)}
+\DoxyCodeLine{25         : \mbox{\hyperlink{class_blynk_widget_base}{BlynkWidgetBase}}(vPin)}
+\DoxyCodeLine{26         , mOnOrderChange(NULL)}
+\DoxyCodeLine{27         , mOnSelectChange(NULL)}
+\DoxyCodeLine{28     \{\}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30     \textcolor{keywordtype}{void} onWrite(\mbox{\hyperlink{struct_blynk_req}{BlynkReq}} BLYNK\_UNUSED \&request, \textcolor{keyword}{const} \mbox{\hyperlink{class_blynk_param}{BlynkParam}}\& param) \{}
+\DoxyCodeLine{31         \textcolor{keywordflow}{if} (mOnOrderChange \&\& 0 == strcmp(param[0].asStr(), \textcolor{stringliteral}{"{}order"{}})) \{}
+\DoxyCodeLine{32             mOnOrderChange(param[1].asInt(), param[2].asInt());}
+\DoxyCodeLine{33         \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (mOnSelectChange \&\& 0 == strcmp(param[0].asStr(), \textcolor{stringliteral}{"{}select"{}})) \{}
+\DoxyCodeLine{34             mOnSelectChange(param[1].asInt(), \textcolor{keyword}{true});}
+\DoxyCodeLine{35         \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (mOnSelectChange \&\& 0 == strcmp(param[0].asStr(), \textcolor{stringliteral}{"{}deselect"{}})) \{}
+\DoxyCodeLine{36             mOnSelectChange(param[1].asInt(), \textcolor{keyword}{false});}
+\DoxyCodeLine{37         \}}
+\DoxyCodeLine{38     \}}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \textcolor{keywordtype}{void} onOrderChange(ItemOrderChange cbk)   \{ mOnOrderChange = cbk; \}}
+\DoxyCodeLine{41     \textcolor{keywordtype}{void} onSelectChange(ItemSelectChange cbk) \{ mOnSelectChange = cbk; \}}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \textcolor{keywordtype}{void} clear() \{}
+\DoxyCodeLine{44         Blynk.\mbox{\hyperlink{class_blynk_api_a2d8229be57903f8d1140dbad6dbf6e05}{virtualWrite}}(mPin, \textcolor{stringliteral}{"{}clr"{}});}
+\DoxyCodeLine{45     \}}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T1, \textcolor{keyword}{typename} T2>}
+\DoxyCodeLine{48     \textcolor{keywordtype}{void} addRow(\textcolor{keywordtype}{int} index, \textcolor{keyword}{const} T1\& name, \textcolor{keyword}{const} T2\& value) \{}
+\DoxyCodeLine{49         Blynk.\mbox{\hyperlink{class_blynk_api_a2d8229be57903f8d1140dbad6dbf6e05}{virtualWrite}}(mPin, \textcolor{stringliteral}{"{}add"{}}, index, name, value);}
+\DoxyCodeLine{50     \}}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T1, \textcolor{keyword}{typename} T2>}
+\DoxyCodeLine{53     \textcolor{keywordtype}{void} updateRow(\textcolor{keywordtype}{int} index, \textcolor{keyword}{const} T1\& name, \textcolor{keyword}{const} T2\& value) \{}
+\DoxyCodeLine{54         Blynk.\mbox{\hyperlink{class_blynk_api_a2d8229be57903f8d1140dbad6dbf6e05}{virtualWrite}}(mPin, \textcolor{stringliteral}{"{}update"{}}, index, name, value);}
+\DoxyCodeLine{55     \}}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57     \textcolor{keywordtype}{void} pickRow(\textcolor{keywordtype}{int} index) \{}
+\DoxyCodeLine{58         Blynk.\mbox{\hyperlink{class_blynk_api_a2d8229be57903f8d1140dbad6dbf6e05}{virtualWrite}}(mPin, \textcolor{stringliteral}{"{}pick"{}}, index);}
+\DoxyCodeLine{59     \}}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61     \textcolor{keywordtype}{void} selectRow(\textcolor{keywordtype}{int} index) \{}
+\DoxyCodeLine{62         Blynk.\mbox{\hyperlink{class_blynk_api_a2d8229be57903f8d1140dbad6dbf6e05}{virtualWrite}}(mPin, \textcolor{stringliteral}{"{}select"{}}, index);}
+\DoxyCodeLine{63     \}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     \textcolor{keywordtype}{void} deselectRow(\textcolor{keywordtype}{int} index) \{}
+\DoxyCodeLine{66         Blynk.\mbox{\hyperlink{class_blynk_api_a2d8229be57903f8d1140dbad6dbf6e05}{virtualWrite}}(mPin, \textcolor{stringliteral}{"{}deselect"{}}, index);}
+\DoxyCodeLine{67     \}}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69 \textcolor{keyword}{private}:}
+\DoxyCodeLine{70     ItemOrderChange  mOnOrderChange;}
+\DoxyCodeLine{71     ItemSelectChange mOnSelectChange;}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73 \};}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

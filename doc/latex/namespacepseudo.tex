@@ -1,0 +1,41 @@
+\hypertarget{namespacepseudo}{}\doxysection{pseudo Namespace Reference}
+\label{namespacepseudo}\index{pseudo@{pseudo}}
+
+
+-\/library  
+
+
+
+
+\doxysubsection{Detailed Description}
+-\/library 
+
+-\/server-\/dw-\/mt
+
+-\/server-\/ar-\/select
+
+-\/server-\/ar-\/mt
+
+\begin{DoxyVerb} This is a pseudo-library implementation
+ 
+ Example:
+   ./pseudo-library.py -t b168ccc8c8734fad98323247afbc1113 --dump
+
+ Author:   Volodymyr Shymanskyy
+ License:  The MIT license
+\end{DoxyVerb}
+
+
+\begin{DoxyVerb} This is a pseudo-server that sends predefined pattern to any connected client.
+ It is used to test transport behaviour and throughput.
+
+ If you want to use it with a sketch, connect your PC and Blynk-enabled device
+ into the same network and configure Blynk to connect to this pseudo-server:
+
+   IPAddress serv(192,168,0,105); // IP address of your PC
+   Blynk.begin(auth, serv, 8888);
+
+ Author:   Volodymyr Shymanskyy
+ License:  The MIT license
+\end{DoxyVerb}
+ 

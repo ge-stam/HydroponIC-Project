@@ -1,0 +1,42 @@
+\hypertarget{_blynk_widget_base_8h}{}\doxysection{lib/\+Blynk/src/\+Blynk/\+Blynk\+Widget\+Base.h File Reference}
+\label{_blynk_widget_base_8h}\index{lib/Blynk/src/Blynk/BlynkWidgetBase.h@{lib/Blynk/src/Blynk/BlynkWidgetBase.h}}
+{\ttfamily \#include $<$Blynk/\+Blynk\+Api.\+h$>$}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_blynk_widget_base}{Blynk\+Widget\+Base}}
+\item 
+class \mbox{\hyperlink{class_blynk_attach_widget_helper}{Blynk\+Attach\+Widget\+Helper}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_blynk_widget_base_8h_ac63b59e4b7baba0a912a4e326ae4c17d}{BLYNK\+\_\+\+ATTACH\+\_\+\+WIDGET}}(widget,  pin)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Volodymyr Shymanskyy @license This project is released under the MIT License (MIT) 
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2016 Volodymyr Shymanskyy 
+\end{DoxyCopyright}
+\begin{DoxyDate}{Date}
+Nov 2016 
+\end{DoxyDate}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{_blynk_widget_base_8h_ac63b59e4b7baba0a912a4e326ae4c17d}\label{_blynk_widget_base_8h_ac63b59e4b7baba0a912a4e326ae4c17d}} 
+\index{BlynkWidgetBase.h@{BlynkWidgetBase.h}!BLYNK\_ATTACH\_WIDGET@{BLYNK\_ATTACH\_WIDGET}}
+\index{BLYNK\_ATTACH\_WIDGET@{BLYNK\_ATTACH\_WIDGET}!BlynkWidgetBase.h@{BlynkWidgetBase.h}}
+\doxysubsubsection{\texorpdfstring{BLYNK\_ATTACH\_WIDGET}{BLYNK\_ATTACH\_WIDGET}}
+{\footnotesize\ttfamily \#define BLYNK\+\_\+\+ATTACH\+\_\+\+WIDGET(\begin{DoxyParamCaption}\item[{}]{widget,  }\item[{}]{pin }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \mbox{\hyperlink{class_blynk_attach_widget_helper}{BlynkAttachWidgetHelper}} BLYNK\_CONCAT2(blnk\_widget\_helper\_, \_\_COUNTER\_\_)((widget), (pin)); \(\backslash\)}
+\DoxyCodeLine{    BLYNK\_WRITE(pin) \{ (widget).onWrite(request, param); \}}
+
+\end{DoxyCode}

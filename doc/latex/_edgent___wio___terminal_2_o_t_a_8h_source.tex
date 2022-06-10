@@ -1,0 +1,83 @@
+\hypertarget{_edgent___wio___terminal_2_o_t_a_8h_source}{}\doxysection{OTA.\+h}
+\label{_edgent___wio___terminal_2_o_t_a_8h_source}\index{lib/Blynk/examples/Blynk.Edgent/Edgent\_Wio\_Terminal/OTA.h@{lib/Blynk/examples/Blynk.Edgent/Edgent\_Wio\_Terminal/OTA.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <WiFi.h>}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <Update.h>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <HTTPClient.h>}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 String overTheAirURL;}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{keyword}{extern} BlynkTimer edgentTimer;}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 BLYNK\_WRITE(InternalPinOTA) \{}
+\DoxyCodeLine{11   overTheAirURL = param.asString();}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13   \textcolor{comment}{//overTheAirURL.replace("{}http://"{}, "{}https://"{});}}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15   edgentTimer.setTimeout(2000L, []()\{}
+\DoxyCodeLine{16     \textcolor{comment}{// Start OTA}}
+\DoxyCodeLine{17     Blynk.logEvent(\textcolor{stringliteral}{"{}sys\_ota"{}}, \textcolor{stringliteral}{"{}OTA started"{}});}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19     \textcolor{comment}{// Disconnect, not to interfere with OTA process}}
+\DoxyCodeLine{20     Blynk.disconnect();}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22     BlynkState::set(MODE\_OTA\_UPGRADE);}
+\DoxyCodeLine{23   \});}
+\DoxyCodeLine{24 \}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{keywordtype}{void} enterOTA() \{}
+\DoxyCodeLine{27   BlynkState::set(MODE\_OTA\_UPGRADE);}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29   \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(String(\textcolor{stringliteral}{"{}Firmware update URL: "{}}) + overTheAirURL);}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31   HTTPClient http;}
+\DoxyCodeLine{32   http.begin(overTheAirURL);}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34   \textcolor{keywordtype}{int} httpCode = http.GET();}
+\DoxyCodeLine{35   \textcolor{keywordflow}{if} (httpCode != HTTP\_CODE\_OK) \{}
+\DoxyCodeLine{36     \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}HTTP response should be 200"{}});}
+\DoxyCodeLine{37     BlynkState::set(MODE\_ERROR);}
+\DoxyCodeLine{38     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{39   \}}
+\DoxyCodeLine{40   \textcolor{keywordtype}{int} contentLength = http.getSize();}
+\DoxyCodeLine{41   \textcolor{keywordflow}{if} (contentLength <= 0) \{}
+\DoxyCodeLine{42     \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}Content-\/Length not defined"{}});}
+\DoxyCodeLine{43     BlynkState::set(MODE\_ERROR);}
+\DoxyCodeLine{44     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{45   \}}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47   \textcolor{keywordtype}{bool} canBegin = Update.begin(contentLength);}
+\DoxyCodeLine{48   \textcolor{keywordflow}{if} (!canBegin) \{}
+\DoxyCodeLine{49     \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}Not enough space to begin OTA"{}});}
+\DoxyCodeLine{50     BlynkState::set(MODE\_ERROR);}
+\DoxyCodeLine{51     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{52   \}}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54   Client\& client = http.getStream();}
+\DoxyCodeLine{55   \textcolor{keywordtype}{int} written = Update.writeStream(client);}
+\DoxyCodeLine{56   \textcolor{keywordflow}{if} (written != contentLength) \{}
+\DoxyCodeLine{57     \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(String(\textcolor{stringliteral}{"{}OTA written "{}}) + written + \textcolor{stringliteral}{"{} / "{}} + contentLength + \textcolor{stringliteral}{"{} bytes"{}});}
+\DoxyCodeLine{58     BlynkState::set(MODE\_ERROR);}
+\DoxyCodeLine{59     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{60   \}}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62   \textcolor{keywordflow}{if} (!Update.end()) \{}
+\DoxyCodeLine{63     \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}Error \#"{}} + String(Update.getError()));}
+\DoxyCodeLine{64     BlynkState::set(MODE\_ERROR);}
+\DoxyCodeLine{65     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{66   \}}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68   \textcolor{keywordflow}{if} (!Update.isFinished()) \{}
+\DoxyCodeLine{69     \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}Update failed."{}});}
+\DoxyCodeLine{70     BlynkState::set(MODE\_ERROR);}
+\DoxyCodeLine{71     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{72   \}}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74   \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}=== Update successfully completed. Rebooting."{}});}
+\DoxyCodeLine{75   restartMCU();}
+\DoxyCodeLine{76 \}}
+\DoxyCodeLine{77 }
+
+\end{DoxyCode}

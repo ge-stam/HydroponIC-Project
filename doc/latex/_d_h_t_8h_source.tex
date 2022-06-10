@@ -1,0 +1,86 @@
+\hypertarget{_d_h_t_8h_source}{}\doxysection{DHT.\+h}
+\label{_d_h_t_8h_source}\index{lib/DHT/DHT.h@{lib/DHT/DHT.h}}
+\mbox{\hyperlink{_d_h_t_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#ifndef DHT\_H}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#define DHT\_H}}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#include "{}Arduino.h"{}}}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23 \textcolor{comment}{/* Uncomment to enable printing out nice debug messages. */}}
+\DoxyCodeLine{24 \textcolor{comment}{//\#define DHT\_DEBUG}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#define DEBUG\_PRINTER                                                          \(\backslash\)}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{  Serial }}
+\DoxyCodeLine{30 \textcolor{comment}{/* Setup debug printing macros. */}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#ifdef DHT\_DEBUG}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#define DEBUG\_PRINT(...)                                                       \(\backslash\)}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{  \{ DEBUG\_PRINTER.print(\_\_VA\_ARGS\_\_); \}}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#define DEBUG\_PRINTLN(...)                                                     \(\backslash\)}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{  \{ DEBUG\_PRINTER.println(\_\_VA\_ARGS\_\_); \}}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#define DEBUG\_PRINT(...)                                                       \(\backslash\)}}
+\DoxyCodeLine{38 \textcolor{preprocessor}{  \{\} }}
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#define DEBUG\_PRINTLN(...)                                                     \(\backslash\)}}
+\DoxyCodeLine{40 \textcolor{preprocessor}{  \{\} }}
+\DoxyCodeLine{41 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43 \textcolor{comment}{/* Define types of sensors. */}}
+\DoxyCodeLine{44 \textcolor{keyword}{static} \textcolor{keyword}{const} uint8\_t DHT11\{11\};  }
+\DoxyCodeLine{45 \textcolor{keyword}{static} \textcolor{keyword}{const} uint8\_t DHT12\{12\};  }
+\DoxyCodeLine{46 \textcolor{keyword}{static} \textcolor{keyword}{const} uint8\_t DHT21\{21\};  }
+\DoxyCodeLine{47 \textcolor{keyword}{static} \textcolor{keyword}{const} uint8\_t DHT22\{22\};  }
+\DoxyCodeLine{48 \textcolor{keyword}{static} \textcolor{keyword}{const} uint8\_t AM2301\{21\}; }
+\DoxyCodeLine{50 \textcolor{preprocessor}{\#if defined(TARGET\_NAME) \&\& (TARGET\_NAME == ARDUINO\_NANO33BLE)}}
+\DoxyCodeLine{51 \textcolor{preprocessor}{\#ifndef microsecondsToClockCycles}}
+\DoxyCodeLine{56 \textcolor{preprocessor}{\#define microsecondsToClockCycles(a) ((a) * (SystemCoreClock / 1000000L))}}
+\DoxyCodeLine{57 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{58 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{63 \textcolor{keyword}{class }\mbox{\hyperlink{class_d_h_t}{DHT}} \{}
+\DoxyCodeLine{64 \textcolor{keyword}{public}:}
+\DoxyCodeLine{65   \mbox{\hyperlink{class_d_h_t_aa99481cc91b9592456399c784829a15e}{DHT}}(uint8\_t pin, uint8\_t type, uint8\_t count = 6);}
+\DoxyCodeLine{66   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_h_t_a9ec43ca7d76a4784b75fb99f8cb63294}{begin}}(uint8\_t usec = 55);}
+\DoxyCodeLine{67   \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_h_t_a934478c84a6f4692fec4c7044818d202}{readTemperature}}(\textcolor{keywordtype}{bool} S = \textcolor{keyword}{false}, \textcolor{keywordtype}{bool} force = \textcolor{keyword}{false});}
+\DoxyCodeLine{68   \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_h_t_aec22571d5dd1a36e12fda6059f2628c4}{convertCtoF}}(\textcolor{keywordtype}{float});}
+\DoxyCodeLine{69   \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_h_t_ae11f9dac1634e7831496860bf04b4861}{convertFtoC}}(\textcolor{keywordtype}{float});}
+\DoxyCodeLine{70   \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_h_t_ae373ee6912daa02e8be8a10825f91e5a}{computeHeatIndex}}(\textcolor{keywordtype}{bool} isFahrenheit = \textcolor{keyword}{true});}
+\DoxyCodeLine{71   \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_h_t_ae373ee6912daa02e8be8a10825f91e5a}{computeHeatIndex}}(\textcolor{keywordtype}{float} temperature, \textcolor{keywordtype}{float} percentHumidity,}
+\DoxyCodeLine{72                          \textcolor{keywordtype}{bool} isFahrenheit = \textcolor{keyword}{true});}
+\DoxyCodeLine{73   \textcolor{keywordtype}{float} \mbox{\hyperlink{class_d_h_t_ac04f2f7951f4bc672b9b8012d5fee4d5}{readHumidity}}(\textcolor{keywordtype}{bool} force = \textcolor{keyword}{false});}
+\DoxyCodeLine{74   \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_h_t_a4990289d60a7a67048cfbcccef1c1211}{read}}(\textcolor{keywordtype}{bool} force = \textcolor{keyword}{false});}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76 \textcolor{keyword}{private}:}
+\DoxyCodeLine{77   uint8\_t data[5];}
+\DoxyCodeLine{78   uint8\_t \_pin, \_type;}
+\DoxyCodeLine{79 \textcolor{preprocessor}{\#ifdef \_\_AVR}}
+\DoxyCodeLine{80   \textcolor{comment}{// Use direct GPIO access on an 8-\/bit AVR so keep track of the port and}}
+\DoxyCodeLine{81   \textcolor{comment}{// bitmask for the digital pin connected to the DHT.  Other platforms will use}}
+\DoxyCodeLine{82   \textcolor{comment}{// digitalRead.}}
+\DoxyCodeLine{83   uint8\_t \_bit, \_port;}
+\DoxyCodeLine{84 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{85   uint32\_t \_lastreadtime, \_maxcycles;}
+\DoxyCodeLine{86   \textcolor{keywordtype}{bool} \_lastresult;}
+\DoxyCodeLine{87   uint8\_t pullTime; \textcolor{comment}{// Time (in usec) to pull up data line before reading}}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89   uint32\_t expectPulse(\textcolor{keywordtype}{bool} level);}
+\DoxyCodeLine{90 \};}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{95 \textcolor{keyword}{class }\mbox{\hyperlink{class_interrupt_lock}{InterruptLock}} \{}
+\DoxyCodeLine{96 \textcolor{keyword}{public}:}
+\DoxyCodeLine{97   \mbox{\hyperlink{class_interrupt_lock}{InterruptLock}}() \{}
+\DoxyCodeLine{98 \textcolor{preprocessor}{\#if !defined(ARDUINO\_ARCH\_NRF52)}}
+\DoxyCodeLine{99     noInterrupts();}
+\DoxyCodeLine{100 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{101   \}}
+\DoxyCodeLine{102   \mbox{\hyperlink{class_interrupt_lock}{\string~InterruptLock}}() \{}
+\DoxyCodeLine{103 \textcolor{preprocessor}{\#if !defined(ARDUINO\_ARCH\_NRF52)}}
+\DoxyCodeLine{104     interrupts();}
+\DoxyCodeLine{105 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{106   \}}
+\DoxyCodeLine{107 \};}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

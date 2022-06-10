@@ -1,0 +1,52 @@
+\hypertarget{_d_h_t_8h}{}\doxysection{lib/\+DHT/\+DHT.h File Reference}
+\label{_d_h_t_8h}\index{lib/DHT/DHT.h@{lib/DHT/DHT.h}}
+{\ttfamily \#include \char`\"{}Arduino.\+h\char`\"{}}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_d_h_t}{DHT}}
+\begin{DoxyCompactList}\small\item\em Class that stores state and functions for \mbox{\hyperlink{class_d_h_t}{DHT}}. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_interrupt_lock}{Interrupt\+Lock}}
+\begin{DoxyCompactList}\small\item\em Class that defines Interrupt Lock Avaiability. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_d_h_t_8h_afe84d42042833e4e334c977b93ff2407}{DEBUG\+\_\+\+PRINTER}}~  Serial
+\item 
+\#define \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\+\_\+\+PRINT}}(...)~  \{\}
+\item 
+\#define \mbox{\hyperlink{_d_h_t_8h_ae414eccb9fbdc7c0cc6edfc588a3aa34}{DEBUG\+\_\+\+PRINTLN}}(...)~  \{\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This is a library for \mbox{\hyperlink{class_d_h_t}{DHT}} series of low cost temperature/humidity sensors.
+
+You must have Adafruit Unified Sensor Library library installed to use this class.
+
+Adafruit invests time and resources providing this open source code, please support Adafruit andopen-\/source hardware by purchasing products from Adafruit!
+
+Written by Adafruit Industries.
+
+MIT license, all text above must be included in any redistribution 
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}\label{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}} 
+\index{DHT.h@{DHT.h}!DEBUG\_PRINT@{DEBUG\_PRINT}}
+\index{DEBUG\_PRINT@{DEBUG\_PRINT}!DHT.h@{DHT.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_PRINT}{DEBUG\_PRINT}}
+{\footnotesize\ttfamily \#define DEBUG\+\_\+\+PRINT(\begin{DoxyParamCaption}\item[{}]{... }\end{DoxyParamCaption})~  \{\}}
+
+Debug Print Placeholder if Debug is disabled \mbox{\Hypertarget{_d_h_t_8h_afe84d42042833e4e334c977b93ff2407}\label{_d_h_t_8h_afe84d42042833e4e334c977b93ff2407}} 
+\index{DHT.h@{DHT.h}!DEBUG\_PRINTER@{DEBUG\_PRINTER}}
+\index{DEBUG\_PRINTER@{DEBUG\_PRINTER}!DHT.h@{DHT.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_PRINTER}{DEBUG\_PRINTER}}
+{\footnotesize\ttfamily \#define DEBUG\+\_\+\+PRINTER~  Serial}
+
+Define where debug output will be printed. \textbackslash{} \mbox{\Hypertarget{_d_h_t_8h_ae414eccb9fbdc7c0cc6edfc588a3aa34}\label{_d_h_t_8h_ae414eccb9fbdc7c0cc6edfc588a3aa34}} 
+\index{DHT.h@{DHT.h}!DEBUG\_PRINTLN@{DEBUG\_PRINTLN}}
+\index{DEBUG\_PRINTLN@{DEBUG\_PRINTLN}!DHT.h@{DHT.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_PRINTLN}{DEBUG\_PRINTLN}}
+{\footnotesize\ttfamily \#define DEBUG\+\_\+\+PRINTLN(\begin{DoxyParamCaption}\item[{}]{... }\end{DoxyParamCaption})~  \{\}}
+
+Debug Print Line Placeholder if Debug is disabled 

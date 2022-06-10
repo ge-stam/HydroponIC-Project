@@ -1,0 +1,62 @@
+\hypertarget{_blynk_utility_8h}{}\doxysection{lib/\+Blynk/src/utility/\+Blynk\+Utility.h File Reference}
+\label{_blynk_utility_8h}\index{lib/Blynk/src/utility/BlynkUtility.h@{lib/Blynk/src/utility/BlynkUtility.h}}
+
+
+Utility functions.  
+
+
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_blynk_helper_auto_inc}{Blynk\+Helper\+Auto\+Inc}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_blynk_utility_8h_ae49f84e186ef354c7b0ce1697706cb27}\label{_blynk_utility_8h_ae49f84e186ef354c7b0ce1697706cb27}} 
+\#define {\bfseries Blynk\+Bit\+Set}(value,  bit)~((value) $\vert$= (1UL $<$$<$ (bit)))
+\item 
+\mbox{\Hypertarget{_blynk_utility_8h_aeaba159d0afd398e136a5c51da19510c}\label{_blynk_utility_8h_aeaba159d0afd398e136a5c51da19510c}} 
+\#define {\bfseries Blynk\+Bit\+Clear}(value,  bit)~((value) \&= $\sim$(1UL $<$$<$ (bit)))
+\item 
+\mbox{\Hypertarget{_blynk_utility_8h_aba7cdcfe3ec621168707a44e59cb0f36}\label{_blynk_utility_8h_aba7cdcfe3ec621168707a44e59cb0f36}} 
+\#define {\bfseries Blynk\+Bit\+Read}(value,  bit)~(((value) $>$$>$ (bit)) \& 0x01)
+\item 
+\mbox{\Hypertarget{_blynk_utility_8h_ad01c83fe0349737dcbd9ce75bee2bf7b}\label{_blynk_utility_8h_ad01c83fe0349737dcbd9ce75bee2bf7b}} 
+\#define {\bfseries Blynk\+Bit\+Write}(value,  bit,  bitvalue)~(bitvalue ? bit\+Set(value, bit) \+: bit\+Clear(value, bit))
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_blynk_utility_8h_a262b7ca91bc60849da5cacb9b350d4ed}\label{_blynk_utility_8h_a262b7ca91bc60849da5cacb9b350d4ed}} 
+{\footnotesize template$<$class T $>$ }\\const T \& {\bfseries Blynk\+Min} (const T \&a, const T \&b)
+\item 
+\mbox{\Hypertarget{_blynk_utility_8h_a9d8f80f5fd377292137450093b85b457}\label{_blynk_utility_8h_a9d8f80f5fd377292137450093b85b457}} 
+{\footnotesize template$<$class T $>$ }\\const T \& {\bfseries Blynk\+Max} (const T \&a, const T \&b)
+\item 
+\mbox{\Hypertarget{_blynk_utility_8h_ae1eb977b00c63cc08421f1e146f28ed6}\label{_blynk_utility_8h_ae1eb977b00c63cc08421f1e146f28ed6}} 
+{\footnotesize template$<$class T , class T2 $>$ }\\T {\bfseries Blynk\+Math\+Map} (T x, T2 in\+\_\+min, T2 in\+\_\+max, T2 out\+\_\+min, T2 out\+\_\+max)
+\item 
+\mbox{\Hypertarget{_blynk_utility_8h_af3b297f9542eca39f8a3c013d1cf8407}\label{_blynk_utility_8h_af3b297f9542eca39f8a3c013d1cf8407}} 
+{\footnotesize template$<$class T , class T2 $>$ }\\T {\bfseries Blynk\+Math\+Clamp} (T val, T2 low, T2 high)
+\item 
+\mbox{\Hypertarget{_blynk_utility_8h_a1e67d2a2d9045a3d8995aea0f0c86dbd}\label{_blynk_utility_8h_a1e67d2a2d9045a3d8995aea0f0c86dbd}} 
+{\footnotesize template$<$class T , class T2 $>$ }\\T {\bfseries Blynk\+Math\+Clamp\+Map} (T x, T2 in\+\_\+min, T2 in\+\_\+max, T2 out\+\_\+min, T2 out\+\_\+max)
+\item 
+\mbox{\Hypertarget{_blynk_utility_8h_afe7e468db8bdc8b5f0e9daeb27dec66e}\label{_blynk_utility_8h_afe7e468db8bdc8b5f0e9daeb27dec66e}} 
+{\footnotesize template$<$unsigned WSIZE, typename T $>$ }\\void {\bfseries Blynk\+Average\+Sample} (T \&avg, const T \&input)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Utility functions. 
+
+\begin{DoxyAuthor}{Author}
+Volodymyr Shymanskyy @license This project is released under the MIT License (MIT) 
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2015 Volodymyr Shymanskyy 
+\end{DoxyCopyright}
+\begin{DoxyDate}{Date}
+Jun 2015 
+\end{DoxyDate}

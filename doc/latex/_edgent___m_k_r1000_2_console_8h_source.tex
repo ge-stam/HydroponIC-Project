@@ -1,0 +1,59 @@
+\hypertarget{_edgent___m_k_r1000_2_console_8h_source}{}\doxysection{Console.\+h}
+\label{_edgent___m_k_r1000_2_console_8h_source}\index{lib/Blynk/examples/Blynk.Edgent/Edgent\_MKR1000/Console.h@{lib/Blynk/examples/Blynk.Edgent/Edgent\_MKR1000/Console.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_console_8h}{Blynk/BlynkConsole.h}}>}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \mbox{\hyperlink{class_blynk_console}{BlynkConsole}}    edgentConsole;}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{keywordtype}{void} console\_init()}
+\DoxyCodeLine{7 \{}
+\DoxyCodeLine{8   edgentConsole.init(BLYNK\_PRINT);}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10   edgentConsole.print(\textcolor{stringliteral}{"{}\(\backslash\)n>"{}});}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12   edgentConsole.addCommand(\textcolor{stringliteral}{"{}reboot"{}}, []() \{}
+\DoxyCodeLine{13     edgentConsole.print(R\textcolor{stringliteral}{"{}json(\{"{}status"{}:"{}OK"{},"{}msg"{}:"{}resetting device"{}\})json"{} }\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{14     delay(100);}
+\DoxyCodeLine{15     restartMCU();}
+\DoxyCodeLine{16   \});}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18   edgentConsole.addCommand(\textcolor{stringliteral}{"{}config"{}}, []() \{}
+\DoxyCodeLine{19     edgentConsole.print(R\textcolor{stringliteral}{"{}json(\{"{}status"{}:"{}OK"{},"{}msg"{}:"{}entering configuration mode"{}\})json"{} }\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{20     BlynkState::set(MODE\_WAIT\_CONFIG);}
+\DoxyCodeLine{21   \});}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23   edgentConsole.addCommand(\textcolor{stringliteral}{"{}devinfo"{}}, []() \{}
+\DoxyCodeLine{24     edgentConsole.printf(}
+\DoxyCodeLine{25         R\textcolor{stringliteral}{"{}json(\{"{}board"{}:"{}\%s"{},"{}tmpl\_id"{}:"{}\%s"{},"{}fw\_type"{}:"{}\%s"{},"{}fw\_ver"{}:"{}\%s"{}\})json"{} }\textcolor{stringliteral}{"{}\(\backslash\)n"{}},}
+\DoxyCodeLine{26         BLYNK\_DEVICE\_NAME,}
+\DoxyCodeLine{27         BLYNK\_TEMPLATE\_ID,}
+\DoxyCodeLine{28         BLYNK\_FIRMWARE\_TYPE,}
+\DoxyCodeLine{29         BLYNK\_FIRMWARE\_VERSION}
+\DoxyCodeLine{30     );}
+\DoxyCodeLine{31   \});}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33   edgentConsole.addCommand(\textcolor{stringliteral}{"{}netinfo"{}}, []() \{}
+\DoxyCodeLine{34     \textcolor{keywordtype}{char} ssidBuff[64];}
+\DoxyCodeLine{35     getWiFiName(ssidBuff, \textcolor{keyword}{sizeof}(ssidBuff));}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37     \textcolor{keywordtype}{byte} mac[6] = \{ 0, \};}
+\DoxyCodeLine{38     WiFi.macAddress(mac);}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     edgentConsole.printf(}
+\DoxyCodeLine{41         R\textcolor{stringliteral}{"{}json(\{"{}ssid"{}:"{}\%s"{},"{}bssid"{}:"{}\%02x:\%02x:\%02x:\%02x:\%02x:\%02x"{},"{}rssi"{}:\%d\})json"{} }\textcolor{stringliteral}{"{}\(\backslash\)n"{}},}
+\DoxyCodeLine{42         ssidBuff,}
+\DoxyCodeLine{43         mac[5], mac[4], mac[3], mac[2], mac[1], mac[0],}
+\DoxyCodeLine{44         WiFi.RSSI()}
+\DoxyCodeLine{45     );}
+\DoxyCodeLine{46   \});}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48 \}}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50 BLYNK\_WRITE(InternalPinDBG) \{}
+\DoxyCodeLine{51   String cmd = String(param.asStr()) + \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{52   edgentConsole.runCommand((\textcolor{keywordtype}{char}*)cmd.c\_str());}
+\DoxyCodeLine{53 \}}
+
+\end{DoxyCode}

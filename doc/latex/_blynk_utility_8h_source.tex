@@ -1,0 +1,83 @@
+\hypertarget{_blynk_utility_8h_source}{}\doxysection{Blynk\+Utility.\+h}
+\label{_blynk_utility_8h_source}\index{lib/Blynk/src/utility/BlynkUtility.h@{lib/Blynk/src/utility/BlynkUtility.h}}
+\mbox{\hyperlink{_blynk_utility_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef BlynkUtility\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define BlynkUtility\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keyword}{template}<\textcolor{keyword}{class} T>}
+\DoxyCodeLine{15 \textcolor{keyword}{const} T\& BlynkMin(\textcolor{keyword}{const} T\& a, \textcolor{keyword}{const} T\& b)}
+\DoxyCodeLine{16 \{}
+\DoxyCodeLine{17     \textcolor{keywordflow}{return} (b < a) ? b : a;}
+\DoxyCodeLine{18 \}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20 \textcolor{keyword}{template}<\textcolor{keyword}{class} T>}
+\DoxyCodeLine{21 \textcolor{keyword}{const} T\& BlynkMax(\textcolor{keyword}{const} T\& a, \textcolor{keyword}{const} T\& b)}
+\DoxyCodeLine{22 \{}
+\DoxyCodeLine{23     \textcolor{keywordflow}{return} (b < a) ? a : b;}
+\DoxyCodeLine{24 \}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{keyword}{template} <\textcolor{keyword}{class} T, \textcolor{keyword}{class} T2>}
+\DoxyCodeLine{28 T BlynkMathMap(T x, T2 in\_min, T2 in\_max, T2 out\_min, T2 out\_max)}
+\DoxyCodeLine{29 \{}
+\DoxyCodeLine{30   \textcolor{keywordflow}{return} (x -\/ in\_min) * (out\_max -\/ out\_min) / (in\_max -\/ in\_min) + out\_min;}
+\DoxyCodeLine{31 \}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{keyword}{template} <\textcolor{keyword}{class} T, \textcolor{keyword}{class} T2>}
+\DoxyCodeLine{34 T BlynkMathClamp(T val, T2 low, T2 high)}
+\DoxyCodeLine{35 \{}
+\DoxyCodeLine{36   \textcolor{keywordflow}{return} (val < low) ? low : ((val > high) ? high : val);}
+\DoxyCodeLine{37 \}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 \textcolor{keyword}{template} <\textcolor{keyword}{class} T, \textcolor{keyword}{class} T2>}
+\DoxyCodeLine{40 T BlynkMathClampMap(T x, T2 in\_min, T2 in\_max, T2 out\_min, T2 out\_max)}
+\DoxyCodeLine{41 \{}
+\DoxyCodeLine{42   x = BlynkMathClamp(x, in\_min, in\_max);}
+\DoxyCodeLine{43   \textcolor{keywordflow}{return} (x -\/ in\_min) * (out\_max -\/ out\_min) / (in\_max -\/ in\_min) + out\_min;}
+\DoxyCodeLine{44 \}}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47 \textcolor{keyword}{template} <\textcolor{keywordtype}{unsigned} WSIZE, \textcolor{keyword}{typename} T>}
+\DoxyCodeLine{48 \textcolor{keywordtype}{void} BlynkAverageSample (T\& avg, \textcolor{keyword}{const} T\& input) \{}
+\DoxyCodeLine{49     avg -\/= avg/WSIZE;}
+\DoxyCodeLine{50     \textcolor{keyword}{const} T add = input/WSIZE;}
+\DoxyCodeLine{51     \textcolor{comment}{// Fix for shorter delays}}
+\DoxyCodeLine{52     \textcolor{keywordflow}{if} (add > 0)}
+\DoxyCodeLine{53       avg += add;}
+\DoxyCodeLine{54     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{55       avg -\/= 1;}
+\DoxyCodeLine{56 \}}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58 \textcolor{keyword}{static} \textcolor{keyword}{inline}}
+\DoxyCodeLine{59 uint32\_t BlynkCRC32(\textcolor{keyword}{const} \textcolor{keywordtype}{void}* data, \textcolor{keywordtype}{size\_t} length, uint32\_t previousCrc32 = 0)}
+\DoxyCodeLine{60 \{}
+\DoxyCodeLine{61   \textcolor{keyword}{const} uint32\_t Polynomial = 0xEDB88320;}
+\DoxyCodeLine{62   uint32\_t crc = \string~previousCrc32;}
+\DoxyCodeLine{63   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}* current = (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}*)data;}
+\DoxyCodeLine{64   \textcolor{keywordflow}{while} (length-\/-\/) \{}
+\DoxyCodeLine{65     crc \string^= *current++;}
+\DoxyCodeLine{66     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} j = 0; j < 8; j++) \{}
+\DoxyCodeLine{67       crc = (crc >> 1) \string^ (-\/\textcolor{keywordtype}{int}(crc \& 1) \& Polynomial);}
+\DoxyCodeLine{68     \}}
+\DoxyCodeLine{69   \}}
+\DoxyCodeLine{70   \textcolor{keywordflow}{return} \string~crc;}
+\DoxyCodeLine{71 \}}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_helper_auto_inc}{BlynkHelperAutoInc}} \{}
+\DoxyCodeLine{74 \textcolor{keyword}{public}:}
+\DoxyCodeLine{75     \mbox{\hyperlink{class_blynk_helper_auto_inc}{BlynkHelperAutoInc}}(uint8\_t\& counter) : c(counter) \{ ++c; \}}
+\DoxyCodeLine{76     \mbox{\hyperlink{class_blynk_helper_auto_inc}{\string~BlynkHelperAutoInc}}() \{ -\/-\/c; \}}
+\DoxyCodeLine{77 \textcolor{keyword}{private}:}
+\DoxyCodeLine{78     uint8\_t\& c;}
+\DoxyCodeLine{79 \};}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81 \textcolor{preprocessor}{\#define BlynkBitSet(value, bit)   ((value) |= (1UL << (bit)))}}
+\DoxyCodeLine{82 \textcolor{preprocessor}{\#define BlynkBitClear(value, bit) ((value) \&= \string~(1UL << (bit)))}}
+\DoxyCodeLine{83 \textcolor{preprocessor}{\#define BlynkBitRead(value, bit)  (((value) >> (bit)) \& 0x01)}}
+\DoxyCodeLine{84 \textcolor{preprocessor}{\#define BlynkBitWrite(value, bit, bitvalue) (bitvalue ? bitSet(value, bit) : bitClear(value, bit))}}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,126 @@
+\hypertarget{_widget_time_input_8h_source}{}\doxysection{Widget\+Time\+Input.\+h}
+\label{_widget_time_input_8h_source}\index{lib/Blynk/src/WidgetTimeInput.h@{lib/Blynk/src/WidgetTimeInput.h}}
+\mbox{\hyperlink{_widget_time_input_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef WidgetTimeInput\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define WidgetTimeInput\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_api_8h}{Blynk/BlynkApi.h}}>}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_date_time_8h}{utility/BlynkDateTime.h}}>}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_utility_8h}{utility/BlynkUtility.h}}>}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{keyword}{class }\mbox{\hyperlink{class_time_input_param}{TimeInputParam}}}
+\DoxyCodeLine{19 \{}
+\DoxyCodeLine{20 \textcolor{keyword}{public}:}
+\DoxyCodeLine{21     \textcolor{keyword}{enum} TimeMode \{}
+\DoxyCodeLine{22         TIME\_UNDEFINED,}
+\DoxyCodeLine{23         TIME\_SUNSET,}
+\DoxyCodeLine{24         TIME\_SUNRISE,}
+\DoxyCodeLine{25         TIME\_SPECIFIED}
+\DoxyCodeLine{26     \};}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28     \mbox{\hyperlink{class_time_input_param}{TimeInputParam}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_blynk_param}{BlynkParam}}\& param)}
+\DoxyCodeLine{29     \{}
+\DoxyCodeLine{30         mStartMode = TIME\_UNDEFINED;}
+\DoxyCodeLine{31         mStopMode = TIME\_UNDEFINED;}
+\DoxyCodeLine{32         mTZ[0] = \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{33         mWeekdays = -\/1; \textcolor{comment}{// All set}}
+\DoxyCodeLine{34         mTZ\_Offset = 0;}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36         \mbox{\hyperlink{class_blynk_param_1_1iterator}{BlynkParam::iterator}} it = param.begin();}
+\DoxyCodeLine{37         \textcolor{keywordflow}{if} (it >= param.end())}
+\DoxyCodeLine{38             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40         \textcolor{keywordflow}{if} (0 == strcmp(it.asStr(), \textcolor{stringliteral}{"{}sr"{}})) \{}
+\DoxyCodeLine{41             mStartMode = TIME\_SUNRISE;}
+\DoxyCodeLine{42         \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (0 == strcmp(it.asStr(), \textcolor{stringliteral}{"{}ss"{}})) \{}
+\DoxyCodeLine{43             mStartMode = TIME\_SUNSET;}
+\DoxyCodeLine{44         \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (!it.isEmpty()) \{}
+\DoxyCodeLine{45             mStart = \mbox{\hyperlink{class_blynk_time}{BlynkTime}}(it.asLong());}
+\DoxyCodeLine{46             \textcolor{keywordflow}{if} (mStart.isValid()) \{}
+\DoxyCodeLine{47                 mStartMode = TIME\_SPECIFIED;}
+\DoxyCodeLine{48             \}}
+\DoxyCodeLine{49         \}}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51         \textcolor{keywordflow}{if} (++it >= param.end())}
+\DoxyCodeLine{52             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54         \textcolor{keywordflow}{if} (0 == strcmp(it.asStr(), \textcolor{stringliteral}{"{}sr"{}})) \{}
+\DoxyCodeLine{55             mStopMode = TIME\_SUNRISE;}
+\DoxyCodeLine{56         \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (0 == strcmp(it.asStr(), \textcolor{stringliteral}{"{}ss"{}})) \{}
+\DoxyCodeLine{57             mStopMode = TIME\_SUNSET;}
+\DoxyCodeLine{58         \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (!it.isEmpty()) \{}
+\DoxyCodeLine{59             mStop = \mbox{\hyperlink{class_blynk_time}{BlynkTime}}(it.asLong());}
+\DoxyCodeLine{60             \textcolor{keywordflow}{if} (mStop.isValid()) \{}
+\DoxyCodeLine{61                 mStopMode = TIME\_SPECIFIED;}
+\DoxyCodeLine{62             \}}
+\DoxyCodeLine{63         \}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65         \textcolor{keywordflow}{if} (++it >= param.end())}
+\DoxyCodeLine{66             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68         strncpy(mTZ, it.asStr(), \textcolor{keyword}{sizeof}(mTZ));}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70         \textcolor{keywordflow}{if} (++it >= param.end())}
+\DoxyCodeLine{71             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73         \textcolor{keywordflow}{if} (!it.isEmpty()) \{}
+\DoxyCodeLine{74             mWeekdays = 0;}
+\DoxyCodeLine{75             \textcolor{keyword}{const} \textcolor{keywordtype}{char}* p = it.asStr();}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77             \textcolor{keywordflow}{while} (\textcolor{keywordtype}{int} c = *p++) \{}
+\DoxyCodeLine{78                 \textcolor{keywordflow}{if} (c >= \textcolor{charliteral}{'1'} \&\& c <= \textcolor{charliteral}{'7'}) \{}
+\DoxyCodeLine{79                     BlynkBitSet(mWeekdays, c -\/ \textcolor{charliteral}{'1'});}
+\DoxyCodeLine{80                 \}}
+\DoxyCodeLine{81             \}}
+\DoxyCodeLine{82         \}}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84         \textcolor{keywordflow}{if} (++it >= param.end())}
+\DoxyCodeLine{85             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87         mTZ\_Offset = it.asLong();}
+\DoxyCodeLine{88     \}}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90     \mbox{\hyperlink{class_blynk_time}{BlynkTime}}\& getStart() \{ \textcolor{keywordflow}{return} mStart; \}}
+\DoxyCodeLine{91     \mbox{\hyperlink{class_blynk_time}{BlynkTime}}\& getStop()  \{ \textcolor{keywordflow}{return} mStop;  \}}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93     TimeMode getStartMode()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} mStartMode; \}}
+\DoxyCodeLine{94     TimeMode getStopMode()\textcolor{keyword}{  const }\{ \textcolor{keywordflow}{return} mStopMode; \}}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96     \textcolor{keywordtype}{bool} hasStartTime()\textcolor{keyword}{   const }\{ \textcolor{keywordflow}{return} mStartMode == TIME\_SPECIFIED; \}}
+\DoxyCodeLine{97     \textcolor{keywordtype}{bool} isStartSunrise()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} mStartMode == TIME\_SUNRISE; \}}
+\DoxyCodeLine{98     \textcolor{keywordtype}{bool} isStartSunset()\textcolor{keyword}{  const }\{ \textcolor{keywordflow}{return} mStartMode == TIME\_SUNSET; \}}
+\DoxyCodeLine{99     \textcolor{keywordtype}{int} getStartHour()\textcolor{keyword}{    const }\{ \textcolor{keywordflow}{return} mStart.hour(); \}}
+\DoxyCodeLine{100     \textcolor{keywordtype}{int} getStartMinute()\textcolor{keyword}{  const }\{ \textcolor{keywordflow}{return} mStart.minute(); \}}
+\DoxyCodeLine{101     \textcolor{keywordtype}{int} getStartSecond()\textcolor{keyword}{  const }\{ \textcolor{keywordflow}{return} mStart.second(); \}}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103     \textcolor{keywordtype}{bool} hasStopTime()\textcolor{keyword}{    const }\{ \textcolor{keywordflow}{return} mStopMode == TIME\_SPECIFIED; \}}
+\DoxyCodeLine{104     \textcolor{keywordtype}{bool} isStopSunrise()\textcolor{keyword}{  const }\{ \textcolor{keywordflow}{return} mStopMode == TIME\_SUNRISE; \}}
+\DoxyCodeLine{105     \textcolor{keywordtype}{bool} isStopSunset()\textcolor{keyword}{   const }\{ \textcolor{keywordflow}{return} mStopMode == TIME\_SUNSET; \}}
+\DoxyCodeLine{106     \textcolor{keywordtype}{int} getStopHour()\textcolor{keyword}{     const }\{ \textcolor{keywordflow}{return} mStop.hour(); \}}
+\DoxyCodeLine{107     \textcolor{keywordtype}{int} getStopMinute()\textcolor{keyword}{   const }\{ \textcolor{keywordflow}{return} mStop.minute(); \}}
+\DoxyCodeLine{108     \textcolor{keywordtype}{int} getStopSecond()\textcolor{keyword}{   const }\{ \textcolor{keywordflow}{return} mStop.second(); \}}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* getTZ()\textcolor{keyword}{   const }\{ \textcolor{keywordflow}{return} mTZ; \}}
+\DoxyCodeLine{111     int32\_t getTZ\_Offset()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} mTZ\_Offset; \}}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113     \textcolor{keywordtype}{bool} isWeekdaySelected(\textcolor{keywordtype}{int} day)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{114         \textcolor{keywordflow}{return} BlynkBitRead(mWeekdays, (day -\/ 1) \% 7);}
+\DoxyCodeLine{115     \}}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117 \textcolor{keyword}{private}:}
+\DoxyCodeLine{118     \mbox{\hyperlink{class_blynk_time}{BlynkTime}} mStart;}
+\DoxyCodeLine{119     \mbox{\hyperlink{class_blynk_time}{BlynkTime}} mStop;}
+\DoxyCodeLine{120     \textcolor{keywordtype}{char}      mTZ[32];}
+\DoxyCodeLine{121     int32\_t   mTZ\_Offset;}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123     TimeMode  mStopMode;}
+\DoxyCodeLine{124     TimeMode  mStartMode;}
+\DoxyCodeLine{125 }
+\DoxyCodeLine{126     uint8\_t   mWeekdays;}
+\DoxyCodeLine{127 \};}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,100 @@
+\hypertarget{_blynk_simple_ethernet_s_s_l_8h_source}{}\doxysection{Blynk\+Simple\+Ethernet\+SSL.\+h}
+\label{_blynk_simple_ethernet_s_s_l_8h_source}\index{lib/Blynk/src/BlynkSimpleEthernetSSL.h@{lib/Blynk/src/BlynkSimpleEthernetSSL.h}}
+\mbox{\hyperlink{_blynk_simple_ethernet_s_s_l_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef BlynkSimpleEthernetSSL\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define BlynkSimpleEthernetSSL\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#ifndef BLYNK\_INFO\_CONNECTION}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#define BLYNK\_INFO\_CONNECTION "{}W5000"{}}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#include <Ethernet.h>}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#include <EthernetClient.h>}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#include <EthernetUdp.h>}}
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#include <ArduinoECCX08.h>}}
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#include <ArduinoBearSSL.h>}}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#define BLYNK\_USE\_SSL}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_ethernet_8h}{Adapters/BlynkEthernet.h}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{static} EthernetClient \_blynkEthernetClient;}
+\DoxyCodeLine{29 \textcolor{keyword}{static} BearSSLClient \_blynkEthernetClientSSL(\_blynkEthernetClient);}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{keyword}{static} \mbox{\hyperlink{class_blynk_arduino_client_gen}{BlynkArduinoClient}} \_blynkTransport(\_blynkEthernetClientSSL);}
+\DoxyCodeLine{32 \mbox{\hyperlink{class_blynk_ethernet}{BlynkEthernet}} Blynk(\_blynkTransport);}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_widgets_8h}{BlynkWidgets.h}}>}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} ntpGetTime() \{}
+\DoxyCodeLine{37   \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{char} timeServer[] = \textcolor{stringliteral}{"{}time.nist.gov"{}};}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39   \textcolor{keyword}{const} \textcolor{keywordtype}{int} NTP\_PACKET\_SIZE = 48; \textcolor{comment}{// NTP time stamp is in the first 48 bytes of the message  }}
+\DoxyCodeLine{40   \textcolor{keywordtype}{byte} packetBuffer[NTP\_PACKET\_SIZE];}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42   EthernetUDP Udp;}
+\DoxyCodeLine{43   Udp.begin(8888);}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45   \textcolor{comment}{// set all bytes in the buffer to 0}}
+\DoxyCodeLine{46   memset(packetBuffer, 0, NTP\_PACKET\_SIZE);}
+\DoxyCodeLine{47   \textcolor{comment}{// Initialize values needed to form NTP request}}
+\DoxyCodeLine{48   \textcolor{comment}{// (see URL above for details on the packets)}}
+\DoxyCodeLine{49   packetBuffer[0] = 0b11100011;   \textcolor{comment}{// LI, Version, Mode}}
+\DoxyCodeLine{50   packetBuffer[1] = 0;     \textcolor{comment}{// Stratum, or type of clock}}
+\DoxyCodeLine{51   packetBuffer[2] = 6;     \textcolor{comment}{// Polling Interval}}
+\DoxyCodeLine{52   packetBuffer[3] = 0xEC;  \textcolor{comment}{// Peer Clock Precision}}
+\DoxyCodeLine{53   \textcolor{comment}{// 8 bytes of zero for Root Delay \& Root Dispersion}}
+\DoxyCodeLine{54   packetBuffer[12]  = 49;}
+\DoxyCodeLine{55   packetBuffer[13]  = 0x4E;}
+\DoxyCodeLine{56   packetBuffer[14]  = 49;}
+\DoxyCodeLine{57   packetBuffer[15]  = 52;}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i=0; i<10; i++)}
+\DoxyCodeLine{60   \{}
+\DoxyCodeLine{61     \textcolor{comment}{// all NTP fields have been given values, now}}
+\DoxyCodeLine{62     \textcolor{comment}{// you can send a packet requesting a timestamp:}}
+\DoxyCodeLine{63     Udp.beginPacket(timeServer, 123); \textcolor{comment}{// NTP requests are to port 123}}
+\DoxyCodeLine{64     Udp.write(packetBuffer, NTP\_PACKET\_SIZE);}
+\DoxyCodeLine{65     Udp.endPacket();}
+\DoxyCodeLine{66   }
+\DoxyCodeLine{67     millis\_time\_t started = BlynkMillis();}
+\DoxyCodeLine{68     \textcolor{keywordflow}{while} (BlynkMillis() -\/ started < 1000)}
+\DoxyCodeLine{69     \{}
+\DoxyCodeLine{70       delay(100);}
+\DoxyCodeLine{71       \textcolor{keywordflow}{if} (Udp.parsePacket()) \{}
+\DoxyCodeLine{72         \textcolor{comment}{// We've received a packet, read the data from it}}
+\DoxyCodeLine{73         Udp.read(packetBuffer, NTP\_PACKET\_SIZE); \textcolor{comment}{// read the packet into the buffer}}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75         \textcolor{comment}{// the timestamp starts at byte 40 of the received packet and is four bytes,}}
+\DoxyCodeLine{76         \textcolor{comment}{// or two words, long. First, extract the two words:}}
+\DoxyCodeLine{77         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} highWord = word(packetBuffer[40], packetBuffer[41]);}
+\DoxyCodeLine{78         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} lowWord = word(packetBuffer[42], packetBuffer[43]);}
+\DoxyCodeLine{79         \textcolor{comment}{// combine the four bytes (two words) into a long integer}}
+\DoxyCodeLine{80         \textcolor{comment}{// this is NTP time (seconds since Jan 1 1900):}}
+\DoxyCodeLine{81         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} secsSince1900 = highWord << 16 | lowWord;}
+\DoxyCodeLine{82         \textcolor{comment}{//Serial.print("{}Seconds since Jan 1 1900 = "{});}}
+\DoxyCodeLine{83         \textcolor{comment}{//Serial.println(secsSince1900);}}
+\DoxyCodeLine{84           }
+\DoxyCodeLine{85         \textcolor{comment}{// Unix time starts on Jan 1 1970. In seconds, that's 2208988800:}}
+\DoxyCodeLine{86         \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} seventyYears = 2208988800UL;}
+\DoxyCodeLine{87         \textcolor{comment}{// subtract seventy years:}}
+\DoxyCodeLine{88         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} epoch = secsSince1900 -\/ seventyYears;}
+\DoxyCodeLine{89   }
+\DoxyCodeLine{90         \textcolor{comment}{// print Unix time:}}
+\DoxyCodeLine{91         Serial.print(\textcolor{stringliteral}{"{}Unix time = "{}});}
+\DoxyCodeLine{92         Serial.println(epoch);}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94         \textcolor{keywordflow}{return} epoch;}
+\DoxyCodeLine{95       \}}
+\DoxyCodeLine{96     \}}
+\DoxyCodeLine{97     Serial.println(\textcolor{stringliteral}{"{}Retry NTP"{}});}
+\DoxyCodeLine{98   \}}
+\DoxyCodeLine{99   Serial.println(\textcolor{stringliteral}{"{}NTP failed"{}});}
+\DoxyCodeLine{100   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{101 \}}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

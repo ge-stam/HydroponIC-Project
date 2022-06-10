@@ -1,0 +1,49 @@
+\hypertarget{_edgent___m_k_r1010_2_reset_button_8h_source}{}\doxysection{Reset\+Button.\+h}
+\label{_edgent___m_k_r1010_2_reset_button_8h_source}\index{lib/Blynk/examples/Blynk.Edgent/Edgent\_MKR1010/ResetButton.h@{lib/Blynk/examples/Blynk.Edgent/Edgent\_MKR1010/ResetButton.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{2 \textcolor{keyword}{volatile} \textcolor{keywordtype}{bool}     g\_buttonPressed = \textcolor{keyword}{false};}
+\DoxyCodeLine{3 \textcolor{keyword}{volatile} uint32\_t g\_buttonPressTime = -\/1;}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{keywordtype}{void} button\_action(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{6 \{}
+\DoxyCodeLine{7   BlynkState::set(MODE\_RESET\_CONFIG);}
+\DoxyCodeLine{8 \}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{keywordtype}{void} button\_change(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{11 \{}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#if BOARD\_BUTTON\_ACTIVE\_LOW}}
+\DoxyCodeLine{13   \textcolor{keywordtype}{bool} buttonState = !digitalRead(BOARD\_BUTTON\_PIN);}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{15   \textcolor{keywordtype}{bool} buttonState = digitalRead(BOARD\_BUTTON\_PIN);}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18   \textcolor{keywordflow}{if} (buttonState \&\& !g\_buttonPressed) \{}
+\DoxyCodeLine{19     g\_buttonPressTime = millis();}
+\DoxyCodeLine{20     g\_buttonPressed = \textcolor{keyword}{true};}
+\DoxyCodeLine{21     \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}Hold the button for 10 seconds to reset configuration..."{}});}
+\DoxyCodeLine{22   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (!buttonState \&\& g\_buttonPressed) \{}
+\DoxyCodeLine{23     g\_buttonPressed = \textcolor{keyword}{false};}
+\DoxyCodeLine{24     uint32\_t buttonHoldTime = millis() -\/ g\_buttonPressTime;}
+\DoxyCodeLine{25     \textcolor{keywordflow}{if} (buttonHoldTime >= BUTTON\_HOLD\_TIME\_ACTION) \{}
+\DoxyCodeLine{26       button\_action();}
+\DoxyCodeLine{27     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{28       \textcolor{comment}{// User action}}
+\DoxyCodeLine{29     \}}
+\DoxyCodeLine{30     g\_buttonPressTime = -\/1;}
+\DoxyCodeLine{31   \}}
+\DoxyCodeLine{32 \}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{keywordtype}{void} button\_init()}
+\DoxyCodeLine{35 \{}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#if BOARD\_BUTTON\_ACTIVE\_LOW}}
+\DoxyCodeLine{37   pinMode(BOARD\_BUTTON\_PIN, INPUT\_PULLUP);}
+\DoxyCodeLine{38 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{39   pinMode(BOARD\_BUTTON\_PIN, INPUT\_PULLDOWN);}
+\DoxyCodeLine{40 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{41   attachInterrupt(BOARD\_BUTTON\_PIN, button\_change, CHANGE);}
+\DoxyCodeLine{42 \}}
+\DoxyCodeLine{43 }
+
+\end{DoxyCode}

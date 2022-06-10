@@ -1,0 +1,99 @@
+\hypertarget{class_d_h_t___unified_1_1_humidity}{}\doxysection{DHT\+\_\+\+Unified\+::Humidity Class Reference}
+\label{class_d_h_t___unified_1_1_humidity}\index{DHT\_Unified::Humidity@{DHT\_Unified::Humidity}}
+
+
+Class that stores state and functions about \mbox{\hyperlink{class_d_h_t___unified_1_1_humidity}{Humidity}}.  
+
+
+
+
+{\ttfamily \#include $<$DHT\+\_\+\+U.\+h$>$}
+
+Inheritance diagram for DHT\+\_\+\+Unified\+::Humidity\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_d_h_t___unified_1_1_humidity}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_d_h_t___unified_1_1_humidity_a38647e54c0b48e69552067086b93ae4c}{Humidity}} (\mbox{\hyperlink{class_d_h_t___unified}{DHT\+\_\+\+Unified}} $\ast$parent, int32\+\_\+t id)
+\begin{DoxyCompactList}\small\item\em Instantiates a new \mbox{\hyperlink{class_d_h_t___unified}{DHT\+\_\+\+Unified}} \mbox{\hyperlink{class_d_h_t___unified_1_1_humidity}{Humidity}} Class. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_d_h_t___unified_1_1_humidity_a3579ab819efb2ebd045b27e45529a533}{get\+Event}} (\mbox{\hyperlink{structsensors__event__t}{sensors\+\_\+event\+\_\+t}} $\ast$event)
+\begin{DoxyCompactList}\small\item\em Reads the sensor and returns the data as a \mbox{\hyperlink{structsensors__event__t}{sensors\+\_\+event\+\_\+t}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_d_h_t___unified_1_1_humidity_ac30038292830ac3e38a75a07682cc958}{get\+Sensor}} (\mbox{\hyperlink{structsensor__t}{sensor\+\_\+t}} $\ast$sensor)
+\begin{DoxyCompactList}\small\item\em Provides the \mbox{\hyperlink{structsensor__t}{sensor\+\_\+t}} data for this sensor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class that stores state and functions about \mbox{\hyperlink{class_d_h_t___unified_1_1_humidity}{Humidity}}. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_d_h_t___unified_1_1_humidity_a38647e54c0b48e69552067086b93ae4c}\label{class_d_h_t___unified_1_1_humidity_a38647e54c0b48e69552067086b93ae4c}} 
+\index{DHT\_Unified::Humidity@{DHT\_Unified::Humidity}!Humidity@{Humidity}}
+\index{Humidity@{Humidity}!DHT\_Unified::Humidity@{DHT\_Unified::Humidity}}
+\doxysubsubsection{\texorpdfstring{Humidity()}{Humidity()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_d_h_t___unified_1_1_humidity}{Humidity}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_d_h_t___unified}{DHT\+\_\+\+Unified}} $\ast$}]{parent,  }\item[{int32\+\_\+t}]{id }\end{DoxyParamCaption})}
+
+
+
+Instantiates a new \mbox{\hyperlink{class_d_h_t___unified}{DHT\+\_\+\+Unified}} \mbox{\hyperlink{class_d_h_t___unified_1_1_humidity}{Humidity}} Class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em parent} & Parent Sensor \\
+\hline
+{\em id} & Sensor id \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_d_h_t___unified_1_1_humidity_a3579ab819efb2ebd045b27e45529a533}\label{class_d_h_t___unified_1_1_humidity_a3579ab819efb2ebd045b27e45529a533}} 
+\index{DHT\_Unified::Humidity@{DHT\_Unified::Humidity}!getEvent@{getEvent}}
+\index{getEvent@{getEvent}!DHT\_Unified::Humidity@{DHT\_Unified::Humidity}}
+\doxysubsubsection{\texorpdfstring{getEvent()}{getEvent()}}
+{\footnotesize\ttfamily bool get\+Event (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsensors__event__t}{sensors\+\_\+event\+\_\+t}} $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reads the sensor and returns the data as a \mbox{\hyperlink{structsensors__event__t}{sensors\+\_\+event\+\_\+t}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em event} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+always returns true 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{class_adafruit___sensor_ac54c74a0a51e7af8f4f59339967d0988}{Adafruit\+\_\+\+Sensor}}.
+
+\mbox{\Hypertarget{class_d_h_t___unified_1_1_humidity_ac30038292830ac3e38a75a07682cc958}\label{class_d_h_t___unified_1_1_humidity_ac30038292830ac3e38a75a07682cc958}} 
+\index{DHT\_Unified::Humidity@{DHT\_Unified::Humidity}!getSensor@{getSensor}}
+\index{getSensor@{getSensor}!DHT\_Unified::Humidity@{DHT\_Unified::Humidity}}
+\doxysubsubsection{\texorpdfstring{getSensor()}{getSensor()}}
+{\footnotesize\ttfamily void get\+Sensor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsensor__t}{sensor\+\_\+t}} $\ast$}]{sensor }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Provides the \mbox{\hyperlink{structsensor__t}{sensor\+\_\+t}} data for this sensor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sensor} & \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_adafruit___sensor_a396d196231a92a3b3023c2bee8b2d897}{Adafruit\+\_\+\+Sensor}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+DHT/\mbox{\hyperlink{_d_h_t___u_8h}{DHT\+\_\+\+U.\+h}}\item 
+lib/\+DHT/\mbox{\hyperlink{_d_h_t___u_8cpp}{DHT\+\_\+\+U.\+cpp}}\end{DoxyCompactItemize}

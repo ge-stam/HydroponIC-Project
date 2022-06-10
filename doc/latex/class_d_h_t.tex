@@ -1,0 +1,217 @@
+\hypertarget{class_d_h_t}{}\doxysection{DHT Class Reference}
+\label{class_d_h_t}\index{DHT@{DHT}}
+
+
+Class that stores state and functions for \mbox{\hyperlink{class_d_h_t}{DHT}}.  
+
+
+
+
+{\ttfamily \#include $<$DHT.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_d_h_t_aa99481cc91b9592456399c784829a15e}{DHT}} (uint8\+\_\+t pin, uint8\+\_\+t type, uint8\+\_\+t count=6)
+\begin{DoxyCompactList}\small\item\em Instantiates a new \mbox{\hyperlink{class_d_h_t}{DHT}} class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_d_h_t_a9ec43ca7d76a4784b75fb99f8cb63294}{begin}} (uint8\+\_\+t usec=55)
+\begin{DoxyCompactList}\small\item\em Setup sensor pins and set pull timings. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_d_h_t_a934478c84a6f4692fec4c7044818d202}{read\+Temperature}} (bool S=false, bool force=false)
+\begin{DoxyCompactList}\small\item\em Read temperature. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_d_h_t_aec22571d5dd1a36e12fda6059f2628c4}{convert\+CtoF}} (float)
+\begin{DoxyCompactList}\small\item\em Converts Celcius to Fahrenheit. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_d_h_t_ae11f9dac1634e7831496860bf04b4861}{convert\+FtoC}} (float)
+\begin{DoxyCompactList}\small\item\em Converts Fahrenheit to Celcius. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_d_h_t_ae373ee6912daa02e8be8a10825f91e5a}{compute\+Heat\+Index}} (bool is\+Fahrenheit=true)
+\begin{DoxyCompactList}\small\item\em Compute Heat Index Simplified version that reads temp and humidity from sensor. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_d_h_t_a904a813dc22806e7d31861d6ecb5e1a0}{compute\+Heat\+Index}} (float temperature, float percent\+Humidity, bool is\+Fahrenheit=true)
+\begin{DoxyCompactList}\small\item\em Compute Heat Index Using both Rothfusz and Steadman\textquotesingle{}s equations (\href{http://www.wpc.ncep.noaa.gov/html/heatindex_equation.shtml}{\texttt{ http\+://www.\+wpc.\+ncep.\+noaa.\+gov/html/heatindex\+\_\+equation.\+shtml}}) \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_d_h_t_ac04f2f7951f4bc672b9b8012d5fee4d5}{read\+Humidity}} (bool force=false)
+\begin{DoxyCompactList}\small\item\em Read Humidity. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_d_h_t_a4990289d60a7a67048cfbcccef1c1211}{read}} (bool force=false)
+\begin{DoxyCompactList}\small\item\em Read value from sensor or return last one from less than two seconds. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class that stores state and functions for \mbox{\hyperlink{class_d_h_t}{DHT}}. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_d_h_t_aa99481cc91b9592456399c784829a15e}\label{class_d_h_t_aa99481cc91b9592456399c784829a15e}} 
+\index{DHT@{DHT}!DHT@{DHT}}
+\index{DHT@{DHT}!DHT@{DHT}}
+\doxysubsubsection{\texorpdfstring{DHT()}{DHT()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_d_h_t}{DHT}} (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{pin,  }\item[{uint8\+\_\+t}]{type,  }\item[{uint8\+\_\+t}]{count = {\ttfamily 6} }\end{DoxyParamCaption})}
+
+
+
+Instantiates a new \mbox{\hyperlink{class_d_h_t}{DHT}} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pin} & pin number that sensor is connected \\
+\hline
+{\em type} & type of sensor \\
+\hline
+{\em count} & number of sensors \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_d_h_t_a9ec43ca7d76a4784b75fb99f8cb63294}\label{class_d_h_t_a9ec43ca7d76a4784b75fb99f8cb63294}} 
+\index{DHT@{DHT}!begin@{begin}}
+\index{begin@{begin}!DHT@{DHT}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily void begin (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{usec = {\ttfamily 55} }\end{DoxyParamCaption})}
+
+
+
+Setup sensor pins and set pull timings. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em usec} & Optionally pass pull-\/up time (in microseconds) before \mbox{\hyperlink{class_d_h_t}{DHT}} reading starts. Default is 55 (see function declaration in \mbox{\hyperlink{_d_h_t_8h}{DHT.\+h}}). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_d_h_t_ae373ee6912daa02e8be8a10825f91e5a}\label{class_d_h_t_ae373ee6912daa02e8be8a10825f91e5a}} 
+\index{DHT@{DHT}!computeHeatIndex@{computeHeatIndex}}
+\index{computeHeatIndex@{computeHeatIndex}!DHT@{DHT}}
+\doxysubsubsection{\texorpdfstring{computeHeatIndex()}{computeHeatIndex()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily float compute\+Heat\+Index (\begin{DoxyParamCaption}\item[{bool}]{is\+Fahrenheit = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+Compute Heat Index Simplified version that reads temp and humidity from sensor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em is\+Fahrenheit} & true if fahrenheit, false if celcius (default true) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+float heat index 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_d_h_t_a904a813dc22806e7d31861d6ecb5e1a0}\label{class_d_h_t_a904a813dc22806e7d31861d6ecb5e1a0}} 
+\index{DHT@{DHT}!computeHeatIndex@{computeHeatIndex}}
+\index{computeHeatIndex@{computeHeatIndex}!DHT@{DHT}}
+\doxysubsubsection{\texorpdfstring{computeHeatIndex()}{computeHeatIndex()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily float compute\+Heat\+Index (\begin{DoxyParamCaption}\item[{float}]{temperature,  }\item[{float}]{percent\+Humidity,  }\item[{bool}]{is\+Fahrenheit = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+Compute Heat Index Using both Rothfusz and Steadman\textquotesingle{}s equations (\href{http://www.wpc.ncep.noaa.gov/html/heatindex_equation.shtml}{\texttt{ http\+://www.\+wpc.\+ncep.\+noaa.\+gov/html/heatindex\+\_\+equation.\+shtml}}) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em temperature} & temperature in selected scale \\
+\hline
+{\em percent\+Humidity} & humidity in percent \\
+\hline
+{\em is\+Fahrenheit} & true if fahrenheit, false if celcius \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+float heat index 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_d_h_t_aec22571d5dd1a36e12fda6059f2628c4}\label{class_d_h_t_aec22571d5dd1a36e12fda6059f2628c4}} 
+\index{DHT@{DHT}!convertCtoF@{convertCtoF}}
+\index{convertCtoF@{convertCtoF}!DHT@{DHT}}
+\doxysubsubsection{\texorpdfstring{convertCtoF()}{convertCtoF()}}
+{\footnotesize\ttfamily float convert\+CtoF (\begin{DoxyParamCaption}\item[{float}]{c }\end{DoxyParamCaption})}
+
+
+
+Converts Celcius to Fahrenheit. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & value in Celcius \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+float value in Fahrenheit 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_d_h_t_ae11f9dac1634e7831496860bf04b4861}\label{class_d_h_t_ae11f9dac1634e7831496860bf04b4861}} 
+\index{DHT@{DHT}!convertFtoC@{convertFtoC}}
+\index{convertFtoC@{convertFtoC}!DHT@{DHT}}
+\doxysubsubsection{\texorpdfstring{convertFtoC()}{convertFtoC()}}
+{\footnotesize\ttfamily float convert\+FtoC (\begin{DoxyParamCaption}\item[{float}]{f }\end{DoxyParamCaption})}
+
+
+
+Converts Fahrenheit to Celcius. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em f} & value in Fahrenheit \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+float value in Celcius 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_d_h_t_a4990289d60a7a67048cfbcccef1c1211}\label{class_d_h_t_a4990289d60a7a67048cfbcccef1c1211}} 
+\index{DHT@{DHT}!read@{read}}
+\index{read@{read}!DHT@{DHT}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily bool read (\begin{DoxyParamCaption}\item[{bool}]{force = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Read value from sensor or return last one from less than two seconds. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em force} & true if using force mode \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+float value 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_d_h_t_ac04f2f7951f4bc672b9b8012d5fee4d5}\label{class_d_h_t_ac04f2f7951f4bc672b9b8012d5fee4d5}} 
+\index{DHT@{DHT}!readHumidity@{readHumidity}}
+\index{readHumidity@{readHumidity}!DHT@{DHT}}
+\doxysubsubsection{\texorpdfstring{readHumidity()}{readHumidity()}}
+{\footnotesize\ttfamily float read\+Humidity (\begin{DoxyParamCaption}\item[{bool}]{force = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Read Humidity. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em force} & force read mode \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+float value -\/ humidity in percent 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_d_h_t_a934478c84a6f4692fec4c7044818d202}\label{class_d_h_t_a934478c84a6f4692fec4c7044818d202}} 
+\index{DHT@{DHT}!readTemperature@{readTemperature}}
+\index{readTemperature@{readTemperature}!DHT@{DHT}}
+\doxysubsubsection{\texorpdfstring{readTemperature()}{readTemperature()}}
+{\footnotesize\ttfamily float read\+Temperature (\begin{DoxyParamCaption}\item[{bool}]{S = {\ttfamily false},  }\item[{bool}]{force = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Read temperature. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em S} & Scale. Boolean value\+:
+\begin{DoxyItemize}
+\item true = Fahrenheit
+\item false = Celcius 
+\end{DoxyItemize}\\
+\hline
+{\em force} & true if in force mode \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Temperature value in selected scale 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+DHT/\mbox{\hyperlink{_d_h_t_8h}{DHT.\+h}}\item 
+lib/\+DHT/\mbox{\hyperlink{_d_h_t_8cpp}{DHT.\+cpp}}\end{DoxyCompactItemize}

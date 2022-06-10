@@ -1,0 +1,87 @@
+\hypertarget{class_adafruit___sensor}{}\doxysection{Adafruit\+\_\+\+Sensor Class Reference}
+\label{class_adafruit___sensor}\index{Adafruit\_Sensor@{Adafruit\_Sensor}}
+
+
+Common sensor interface to unify various sensors. Intentionally modeled after \mbox{\hyperlink{_sensors_8h_source}{sensors.\+h}} in the Android API\+: \href{https://github.com/android/platform_hardware_libhardware/blob/master/include/hardware/sensors.h}{\texttt{ https\+://github.\+com/android/platform\+\_\+hardware\+\_\+libhardware/blob/master/include/hardware/sensors.\+h}}.  
+
+
+
+
+{\ttfamily \#include $<$Adafruit\+\_\+\+Sensor.\+h$>$}
+
+Inheritance diagram for Adafruit\+\_\+\+Sensor\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_adafruit___sensor}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \mbox{\hyperlink{class_adafruit___sensor_ae1c28a20a45a1173e13a028b34e5f6ba}{enable\+Auto\+Range}} (bool enabled)
+\begin{DoxyCompactList}\small\item\em Whether we should automatically change the range (if possible) for higher precision. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_adafruit___sensor_ac54c74a0a51e7af8f4f59339967d0988}{get\+Event}} (\mbox{\hyperlink{structsensors__event__t}{sensors\+\_\+event\+\_\+t}} $\ast$)=0
+\begin{DoxyCompactList}\small\item\em Get the latest sensor event. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_adafruit___sensor_a396d196231a92a3b3023c2bee8b2d897}{get\+Sensor}} (\mbox{\hyperlink{structsensor__t}{sensor\+\_\+t}} $\ast$)=0
+\begin{DoxyCompactList}\small\item\em Get info about the sensor itself. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_adafruit___sensor_ae9760003007eca9aa7d6861e7fd12024}\label{class_adafruit___sensor_ae9760003007eca9aa7d6861e7fd12024}} 
+void {\bfseries print\+Sensor\+Details} (void)
+\begin{DoxyCompactList}\small\item\em Prints sensor information to serial console. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Common sensor interface to unify various sensors. Intentionally modeled after \mbox{\hyperlink{_sensors_8h_source}{sensors.\+h}} in the Android API\+: \href{https://github.com/android/platform_hardware_libhardware/blob/master/include/hardware/sensors.h}{\texttt{ https\+://github.\+com/android/platform\+\_\+hardware\+\_\+libhardware/blob/master/include/hardware/sensors.\+h}}. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_adafruit___sensor_ae1c28a20a45a1173e13a028b34e5f6ba}\label{class_adafruit___sensor_ae1c28a20a45a1173e13a028b34e5f6ba}} 
+\index{Adafruit\_Sensor@{Adafruit\_Sensor}!enableAutoRange@{enableAutoRange}}
+\index{enableAutoRange@{enableAutoRange}!Adafruit\_Sensor@{Adafruit\_Sensor}}
+\doxysubsubsection{\texorpdfstring{enableAutoRange()}{enableAutoRange()}}
+{\footnotesize\ttfamily virtual void enable\+Auto\+Range (\begin{DoxyParamCaption}\item[{bool}]{enabled }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Whether we should automatically change the range (if possible) for higher precision. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em enabled} & True if we will try to autorange \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_adafruit___sensor_ac54c74a0a51e7af8f4f59339967d0988}\label{class_adafruit___sensor_ac54c74a0a51e7af8f4f59339967d0988}} 
+\index{Adafruit\_Sensor@{Adafruit\_Sensor}!getEvent@{getEvent}}
+\index{getEvent@{getEvent}!Adafruit\_Sensor@{Adafruit\_Sensor}}
+\doxysubsubsection{\texorpdfstring{getEvent()}{getEvent()}}
+{\footnotesize\ttfamily virtual bool get\+Event (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsensors__event__t}{sensors\+\_\+event\+\_\+t}} $\ast$}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Get the latest sensor event. 
+
+\begin{DoxyReturn}{Returns}
+True if able to fetch an event 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{class_d_h_t___unified_1_1_temperature_a3579ab819efb2ebd045b27e45529a533}{DHT\+\_\+\+Unified\+::\+Temperature}}, and \mbox{\hyperlink{class_d_h_t___unified_1_1_humidity_a3579ab819efb2ebd045b27e45529a533}{DHT\+\_\+\+Unified\+::\+Humidity}}.
+
+\mbox{\Hypertarget{class_adafruit___sensor_a396d196231a92a3b3023c2bee8b2d897}\label{class_adafruit___sensor_a396d196231a92a3b3023c2bee8b2d897}} 
+\index{Adafruit\_Sensor@{Adafruit\_Sensor}!getSensor@{getSensor}}
+\index{getSensor@{getSensor}!Adafruit\_Sensor@{Adafruit\_Sensor}}
+\doxysubsubsection{\texorpdfstring{getSensor()}{getSensor()}}
+{\footnotesize\ttfamily virtual void get\+Sensor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsensor__t}{sensor\+\_\+t}} $\ast$}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Get info about the sensor itself. 
+
+
+
+Implemented in \mbox{\hyperlink{class_d_h_t___unified_1_1_temperature_ac30038292830ac3e38a75a07682cc958}{DHT\+\_\+\+Unified\+::\+Temperature}}, and \mbox{\hyperlink{class_d_h_t___unified_1_1_humidity_ac30038292830ac3e38a75a07682cc958}{DHT\+\_\+\+Unified\+::\+Humidity}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+Adafruit\+\_\+\+Sensor/Adafruit\+\_\+\+Sensor.\+h\item 
+lib/\+Adafruit\+\_\+\+Sensor/Adafruit\+\_\+\+Sensor.\+cpp\end{DoxyCompactItemize}

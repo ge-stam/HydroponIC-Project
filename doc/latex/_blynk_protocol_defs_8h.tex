@@ -1,0 +1,146 @@
+\hypertarget{_blynk_protocol_defs_8h}{}\doxysection{lib/\+Blynk/src/\+Blynk/\+Blynk\+Protocol\+Defs.h File Reference}
+\label{_blynk_protocol_defs_8h}\index{lib/Blynk/src/Blynk/BlynkProtocolDefs.h@{lib/Blynk/src/Blynk/BlynkProtocolDefs.h}}
+
+
+Blynk protocol definitions.  
+
+
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_blynk_header}{Blynk\+Header}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_blynk_protocol_defs_8h_a09b4201c033e1b6490f3e880ca8e4f49}\label{_blynk_protocol_defs_8h_a09b4201c033e1b6490f3e880ca8e4f49}} 
+\#define {\bfseries BLYNK\+\_\+\+STR\+\_\+16}(a,  b)~((uint16\+\_\+t(a) $<$$<$ 0) $\vert$ (uint16\+\_\+t(b) $<$$<$ 8))
+\item 
+\mbox{\Hypertarget{_blynk_protocol_defs_8h_aca83e8beb47093f1c8559a39619b90f9}\label{_blynk_protocol_defs_8h_aca83e8beb47093f1c8559a39619b90f9}} 
+\#define {\bfseries BLYNK\+\_\+\+STR\+\_\+32}(a,  b,  c,  d)~((uint32\+\_\+t(a) $<$$<$ 0) $\vert$ (uint32\+\_\+t(b) $<$$<$ 8) $\vert$ (uint32\+\_\+t(c) $<$$<$ 16) $\vert$ (uint32\+\_\+t(d) $<$$<$ 24))
+\item 
+\mbox{\Hypertarget{_blynk_protocol_defs_8h_aadf20665a07c0a6056ab86abc48d08a0}\label{_blynk_protocol_defs_8h_aadf20665a07c0a6056ab86abc48d08a0}} 
+\#define {\bfseries BLYNK\+\_\+\+HW\+\_\+\+PM}~BLYNK\+\_\+\+STR\+\_\+16(\textquotesingle{}p\textquotesingle{},\textquotesingle{}m\textquotesingle{})
+\item 
+\mbox{\Hypertarget{_blynk_protocol_defs_8h_a9b1951108187884e51d48ef6e10675d9}\label{_blynk_protocol_defs_8h_a9b1951108187884e51d48ef6e10675d9}} 
+\#define {\bfseries BLYNK\+\_\+\+HW\+\_\+\+DW}~BLYNK\+\_\+\+STR\+\_\+16(\textquotesingle{}d\textquotesingle{},\textquotesingle{}w\textquotesingle{})
+\item 
+\mbox{\Hypertarget{_blynk_protocol_defs_8h_a5e2e513a6ec58d142b06879023135c36}\label{_blynk_protocol_defs_8h_a5e2e513a6ec58d142b06879023135c36}} 
+\#define {\bfseries BLYNK\+\_\+\+HW\+\_\+\+DR}~BLYNK\+\_\+\+STR\+\_\+16(\textquotesingle{}d\textquotesingle{},\textquotesingle{}r\textquotesingle{})
+\item 
+\mbox{\Hypertarget{_blynk_protocol_defs_8h_ac515245d537d08b81c14f258c7bbe7e7}\label{_blynk_protocol_defs_8h_ac515245d537d08b81c14f258c7bbe7e7}} 
+\#define {\bfseries BLYNK\+\_\+\+HW\+\_\+\+AW}~BLYNK\+\_\+\+STR\+\_\+16(\textquotesingle{}a\textquotesingle{},\textquotesingle{}w\textquotesingle{})
+\item 
+\mbox{\Hypertarget{_blynk_protocol_defs_8h_a0a726726b63345cfcb1660667b10e210}\label{_blynk_protocol_defs_8h_a0a726726b63345cfcb1660667b10e210}} 
+\#define {\bfseries BLYNK\+\_\+\+HW\+\_\+\+AR}~BLYNK\+\_\+\+STR\+\_\+16(\textquotesingle{}a\textquotesingle{},\textquotesingle{}r\textquotesingle{})
+\item 
+\mbox{\Hypertarget{_blynk_protocol_defs_8h_a85df777584e0b937072744bd462704bb}\label{_blynk_protocol_defs_8h_a85df777584e0b937072744bd462704bb}} 
+\#define {\bfseries BLYNK\+\_\+\+HW\+\_\+\+VW}~BLYNK\+\_\+\+STR\+\_\+16(\textquotesingle{}v\textquotesingle{},\textquotesingle{}w\textquotesingle{})
+\item 
+\mbox{\Hypertarget{_blynk_protocol_defs_8h_a2367502e7cf81030ac4ca271d2ca37b1}\label{_blynk_protocol_defs_8h_a2367502e7cf81030ac4ca271d2ca37b1}} 
+\#define {\bfseries BLYNK\+\_\+\+HW\+\_\+\+VR}~BLYNK\+\_\+\+STR\+\_\+16(\textquotesingle{}v\textquotesingle{},\textquotesingle{}r\textquotesingle{})
+\item 
+\mbox{\Hypertarget{_blynk_protocol_defs_8h_a82d55219b2ba4190a0c477ebcd32fd9e}\label{_blynk_protocol_defs_8h_a82d55219b2ba4190a0c477ebcd32fd9e}} 
+\#define {\bfseries BLYNK\+\_\+\+INT\+\_\+\+RTC}~BLYNK\+\_\+\+STR\+\_\+32(\textquotesingle{}r\textquotesingle{},\textquotesingle{}t\textquotesingle{},\textquotesingle{}c\textquotesingle{},0)
+\item 
+\mbox{\Hypertarget{_blynk_protocol_defs_8h_a177519c84a494336b360d2a93db9c699}\label{_blynk_protocol_defs_8h_a177519c84a494336b360d2a93db9c699}} 
+\#define {\bfseries BLYNK\+\_\+\+INT\+\_\+\+UTC}~BLYNK\+\_\+\+STR\+\_\+32(\textquotesingle{}u\textquotesingle{},\textquotesingle{}t\textquotesingle{},\textquotesingle{}c\textquotesingle{},0)
+\item 
+\mbox{\Hypertarget{_blynk_protocol_defs_8h_a744386cd1a0d55d501457c537ed155d5}\label{_blynk_protocol_defs_8h_a744386cd1a0d55d501457c537ed155d5}} 
+\#define {\bfseries BLYNK\+\_\+\+INT\+\_\+\+OTA}~BLYNK\+\_\+\+STR\+\_\+32(\textquotesingle{}o\textquotesingle{},\textquotesingle{}t\textquotesingle{},\textquotesingle{}a\textquotesingle{},0)
+\item 
+\mbox{\Hypertarget{_blynk_protocol_defs_8h_a8567ba7725340dfac2bc69ddc0aaf0df}\label{_blynk_protocol_defs_8h_a8567ba7725340dfac2bc69ddc0aaf0df}} 
+\#define {\bfseries BLYNK\+\_\+\+INT\+\_\+\+VFS}~BLYNK\+\_\+\+STR\+\_\+32(\textquotesingle{}v\textquotesingle{},\textquotesingle{}f\textquotesingle{},\textquotesingle{}s\textquotesingle{},0)
+\item 
+\mbox{\Hypertarget{_blynk_protocol_defs_8h_ad32d72cec8be84e83cabac00a07f5983}\label{_blynk_protocol_defs_8h_ad32d72cec8be84e83cabac00a07f5983}} 
+\#define {\bfseries BLYNK\+\_\+\+INT\+\_\+\+DBG}~BLYNK\+\_\+\+STR\+\_\+32(\textquotesingle{}d\textquotesingle{},\textquotesingle{}b\textquotesingle{},\textquotesingle{}g\textquotesingle{},0)
+\item 
+\mbox{\Hypertarget{_blynk_protocol_defs_8h_a5b19e0a5a538cb827b89b03b63be1080}\label{_blynk_protocol_defs_8h_a5b19e0a5a538cb827b89b03b63be1080}} 
+\#define {\bfseries BLYNK\+\_\+\+INT\+\_\+\+ACON}~BLYNK\+\_\+\+STR\+\_\+32(\textquotesingle{}a\textquotesingle{},\textquotesingle{}c\textquotesingle{},\textquotesingle{}o\textquotesingle{},\textquotesingle{}n\textquotesingle{})
+\item 
+\mbox{\Hypertarget{_blynk_protocol_defs_8h_a96240e70feba1cc1de64e55f907b1881}\label{_blynk_protocol_defs_8h_a96240e70feba1cc1de64e55f907b1881}} 
+\#define {\bfseries BLYNK\+\_\+\+INT\+\_\+\+ADIS}~BLYNK\+\_\+\+STR\+\_\+32(\textquotesingle{}a\textquotesingle{},\textquotesingle{}d\textquotesingle{},\textquotesingle{}i\textquotesingle{},\textquotesingle{}s\textquotesingle{})
+\item 
+\mbox{\Hypertarget{_blynk_protocol_defs_8h_a472ba64c9ef4e74b985aff75790d3925}\label{_blynk_protocol_defs_8h_a472ba64c9ef4e74b985aff75790d3925}} 
+\#define {\bfseries BLYNK\+\_\+\+INT\+\_\+\+META}~BLYNK\+\_\+\+STR\+\_\+32(\textquotesingle{}m\textquotesingle{},\textquotesingle{}e\textquotesingle{},\textquotesingle{}t\textquotesingle{},\textquotesingle{}a\textquotesingle{})
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_blynk_protocol_defs_8h_a78ec40e012f630c306c3506eb7ff797e}\label{_blynk_protocol_defs_8h_a78ec40e012f630c306c3506eb7ff797e}} 
+enum {\bfseries Blynk\+Cmd} \{ \newline
+{\bfseries BLYNK\+\_\+\+CMD\+\_\+\+RESPONSE} = 0
+, {\bfseries BLYNK\+\_\+\+CMD\+\_\+\+LOGIN} = 2
+, {\bfseries BLYNK\+\_\+\+CMD\+\_\+\+PING} = 6
+, {\bfseries BLYNK\+\_\+\+CMD\+\_\+\+TWEET} = 12
+, \newline
+{\bfseries BLYNK\+\_\+\+CMD\+\_\+\+EMAIL} = 13
+, {\bfseries BLYNK\+\_\+\+CMD\+\_\+\+NOTIFY} = 14
+, {\bfseries BLYNK\+\_\+\+CMD\+\_\+\+BRIDGE} = 15
+, {\bfseries BLYNK\+\_\+\+CMD\+\_\+\+HARDWARE\+\_\+\+SYNC} = 16
+, \newline
+{\bfseries BLYNK\+\_\+\+CMD\+\_\+\+INTERNAL} = 17
+, {\bfseries BLYNK\+\_\+\+CMD\+\_\+\+SMS} = 18
+, {\bfseries BLYNK\+\_\+\+CMD\+\_\+\+PROPERTY} = 19
+, {\bfseries BLYNK\+\_\+\+CMD\+\_\+\+HARDWARE} = 20
+, \newline
+{\bfseries BLYNK\+\_\+\+CMD\+\_\+\+HW\+\_\+\+LOGIN} = 29
+, {\bfseries BLYNK\+\_\+\+CMD\+\_\+\+REDIRECT} = 41
+, {\bfseries BLYNK\+\_\+\+CMD\+\_\+\+DEBUG\+\_\+\+PRINT} = 55
+, {\bfseries BLYNK\+\_\+\+CMD\+\_\+\+EVENT\+\_\+\+LOG} = 64
+, \newline
+{\bfseries BLYNK\+\_\+\+CMD\+\_\+\+EVENT\+\_\+\+CLEAR} = 65
+ \}
+\item 
+\mbox{\Hypertarget{_blynk_protocol_defs_8h_a7c45a3e889fac1fe6a23db06aee4a9b4}\label{_blynk_protocol_defs_8h_a7c45a3e889fac1fe6a23db06aee4a9b4}} 
+enum {\bfseries Blynk\+Status} \{ \newline
+{\bfseries BLYNK\+\_\+\+SUCCESS} = 200
+, {\bfseries BLYNK\+\_\+\+QUOTA\+\_\+\+LIMIT\+\_\+\+EXCEPTION} = 1
+, {\bfseries BLYNK\+\_\+\+ILLEGAL\+\_\+\+COMMAND} = 2
+, {\bfseries BLYNK\+\_\+\+NOT\+\_\+\+REGISTERED} = 3
+, \newline
+{\bfseries BLYNK\+\_\+\+ALREADY\+\_\+\+REGISTERED} = 4
+, {\bfseries BLYNK\+\_\+\+NOT\+\_\+\+AUTHENTICATED} = 5
+, {\bfseries BLYNK\+\_\+\+NOT\+\_\+\+ALLOWED} = 6
+, {\bfseries BLYNK\+\_\+\+DEVICE\+\_\+\+NOT\+\_\+\+IN\+\_\+\+NETWORK} = 7
+, \newline
+{\bfseries BLYNK\+\_\+\+NO\+\_\+\+ACTIVE\+\_\+\+DASHBOARD} = 8
+, {\bfseries BLYNK\+\_\+\+INVALID\+\_\+\+TOKEN} = 9
+, {\bfseries BLYNK\+\_\+\+ILLEGAL\+\_\+\+COMMAND\+\_\+\+BODY} = 11
+, {\bfseries BLYNK\+\_\+\+GET\+\_\+\+GRAPH\+\_\+\+DATA\+\_\+\+EXCEPTION} = 12
+, \newline
+{\bfseries BLYNK\+\_\+\+NO\+\_\+\+DATA\+\_\+\+EXCEPTION} = 17
+, {\bfseries BLYNK\+\_\+\+DEVICE\+\_\+\+WENT\+\_\+\+OFFLINE} = 18
+, {\bfseries BLYNK\+\_\+\+SERVER\+\_\+\+EXCEPTION} = 19
+, {\bfseries BLYNK\+\_\+\+NTF\+\_\+\+INVALID\+\_\+\+BODY} = 13
+, \newline
+{\bfseries BLYNK\+\_\+\+NTF\+\_\+\+NOT\+\_\+\+AUTHORIZED} = 14
+, {\bfseries BLYNK\+\_\+\+NTF\+\_\+\+ECXEPTION} = 15
+, {\bfseries BLYNK\+\_\+\+TIMEOUT} = 16
+, {\bfseries BLYNK\+\_\+\+NOT\+\_\+\+SUPPORTED\+\_\+\+VERSION} = 20
+, \newline
+{\bfseries BLYNK\+\_\+\+ENERGY\+\_\+\+LIMIT} = 21
+, {\bfseries BLYNK\+\_\+\+OPERATION\+\_\+\+ACCEPT} = 23
+, {\bfseries BLYNK\+\_\+\+OPERATION\+\_\+\+DECLINE} = 24
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_blynk_protocol_defs_8h_a286f01f450cd0fea01e566870e026065}\label{_blynk_protocol_defs_8h_a286f01f450cd0fea01e566870e026065}} 
+struct \mbox{\hyperlink{struct_blynk_header}{Blynk\+Header}} {\bfseries BLYNK\+\_\+\+ATTR\+\_\+\+PACKED}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Blynk protocol definitions. 
+
+\begin{DoxyAuthor}{Author}
+Volodymyr Shymanskyy @license This project is released under the MIT License (MIT) 
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2015 Volodymyr Shymanskyy 
+\end{DoxyCopyright}
+\begin{DoxyDate}{Date}
+Jan 2015 
+\end{DoxyDate}

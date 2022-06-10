@@ -162,6 +162,8 @@ float Sensors::Read_DS18B20(){
  * @return float
  */
 float Sensors::Read_TDS(){
+  Serial.print("TDS: ");
+  Serial.println(tdsValue);
   gravityTds.setTemperature(Read_Temp()); // set the temperature and execute temperature compensation
   gravityTds.update();                    //sample and calculate 
   tdsValue = gravityTds.getTdsValue();    // then get the value
@@ -181,8 +183,8 @@ float Sensors::Read_PH(){
   {
     pHArray[pHArrayIndex++]=analogRead(PH_PIN);
     if(pHArrayIndex==PH_ArrayLenth)pHArrayIndex=0;
-    voltage = avergearray(pHArray, PH_ArrayLenth)*3.4/4096;
-    pHValue = 3.5*voltage + PH_offset;
+    voltage = avergearray(pHArray, PH_ArrayLenth)*3.54/4096;
+    pHValue = 4.1*voltage + PH_offset;
     myPH = pHValue;
     samplingTime=millis();
   }
@@ -218,7 +220,8 @@ void Sensors::Read_high_freq_sensors(){
   Serial.print(temperature);
   Serial.print("°C  ");
   Serial.print("Light Level: ");
-  Serial.println(light);
+  Serial.print(light * 0.244140625); // calculate Light in Lux
+  Serial.println(" Lux");
   Serial.print("Water Temperature: ");
   Serial.print(water_temp);
   Serial.println("°C ");

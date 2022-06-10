@@ -1,0 +1,62 @@
+\hypertarget{_widget_g_p_s_8h_source}{}\doxysection{Widget\+GPS.\+h}
+\label{_widget_g_p_s_8h_source}\index{lib/Blynk/src/WidgetGPS.h@{lib/Blynk/src/WidgetGPS.h}}
+\mbox{\hyperlink{_widget_g_p_s_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef WidgetGPS\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define WidgetGPS\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#ifndef BLYNK\_NO\_FLOAT}}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_widget_base_8h}{Blynk/BlynkWidgetBase.h}}>}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{keyword}{class }\mbox{\hyperlink{class_gps_param}{GpsParam}}}
+\DoxyCodeLine{19 \{}
+\DoxyCodeLine{20 \textcolor{keyword}{public}:}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22     \mbox{\hyperlink{class_gps_param}{GpsParam}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_blynk_param}{BlynkParam}}\& param)}
+\DoxyCodeLine{23         : mLat (0)}
+\DoxyCodeLine{24         , mLon (0)}
+\DoxyCodeLine{25         , mAlt (0)}
+\DoxyCodeLine{26         , mSpeed (0)}
+\DoxyCodeLine{27     \{}
+\DoxyCodeLine{28         \mbox{\hyperlink{class_blynk_param_1_1iterator}{BlynkParam::iterator}} it = param.begin();}
+\DoxyCodeLine{29         \textcolor{keywordflow}{if} (it >= param.end())}
+\DoxyCodeLine{30             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32         mLat = it.asDouble();}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34         \textcolor{keywordflow}{if} (++it >= param.end())}
+\DoxyCodeLine{35             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37         mLon = it.asDouble();}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39         \textcolor{keywordflow}{if} (++it >= param.end())}
+\DoxyCodeLine{40             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42         mAlt = it.asDouble();}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44         \textcolor{keywordflow}{if} (++it >= param.end())}
+\DoxyCodeLine{45             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47         mSpeed = it.asDouble();}
+\DoxyCodeLine{48     \}}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     \textcolor{keywordtype}{double} getLat()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} mLat; \}}
+\DoxyCodeLine{52     \textcolor{keywordtype}{double} getLon()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} mLon; \}}
+\DoxyCodeLine{53     \textcolor{keywordtype}{double} getAltitude()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} mAlt; \}}
+\DoxyCodeLine{54     \textcolor{keywordtype}{double} getSpeed()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} mSpeed; \}}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56 \textcolor{keyword}{private}:}
+\DoxyCodeLine{57     \textcolor{keywordtype}{double} mLat;}
+\DoxyCodeLine{58     \textcolor{keywordtype}{double} mLon;}
+\DoxyCodeLine{59     \textcolor{keywordtype}{double} mAlt;}
+\DoxyCodeLine{60     \textcolor{keywordtype}{double} mSpeed;}
+\DoxyCodeLine{61 \};}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

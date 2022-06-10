@@ -1,0 +1,512 @@
+\hypertarget{_blynk_handlers_8h_source}{}\doxysection{Blynk\+Handlers.\+h}
+\label{_blynk_handlers_8h_source}\index{lib/Blynk/src/Blynk/BlynkHandlers.h@{lib/Blynk/src/Blynk/BlynkHandlers.h}}
+\mbox{\hyperlink{_blynk_handlers_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef BlynkHandlers\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define BlynkHandlers\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_config_8h}{Blynk/BlynkConfig.h}}>}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_param_8h}{Blynk/BlynkParam.h}}>}}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 \textcolor{comment}{// Helper macro}}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#define V0  0}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#define V1  1}}
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#define V2  2}}
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#define V3  3}}
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#define V4  4}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#define V5  5}}
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#define V6  6}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#define V7  7}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#define V8  8}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#define V9  9}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#define V10 10}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#define V11 11}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#define V12 12}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#define V13 13}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#define V14 14}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#define V15 15}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#define V16 16}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#define V17 17}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#define V18 18}}
+\DoxyCodeLine{38 \textcolor{preprocessor}{\#define V19 19}}
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#define V20 20}}
+\DoxyCodeLine{40 \textcolor{preprocessor}{\#define V21 21}}
+\DoxyCodeLine{41 \textcolor{preprocessor}{\#define V22 22}}
+\DoxyCodeLine{42 \textcolor{preprocessor}{\#define V23 23}}
+\DoxyCodeLine{43 \textcolor{preprocessor}{\#define V24 24}}
+\DoxyCodeLine{44 \textcolor{preprocessor}{\#define V25 25}}
+\DoxyCodeLine{45 \textcolor{preprocessor}{\#define V26 26}}
+\DoxyCodeLine{46 \textcolor{preprocessor}{\#define V27 27}}
+\DoxyCodeLine{47 \textcolor{preprocessor}{\#define V28 28}}
+\DoxyCodeLine{48 \textcolor{preprocessor}{\#define V29 29}}
+\DoxyCodeLine{49 \textcolor{preprocessor}{\#define V30 30}}
+\DoxyCodeLine{50 \textcolor{preprocessor}{\#define V31 31}}
+\DoxyCodeLine{51 \textcolor{preprocessor}{\#ifdef BLYNK\_USE\_128\_VPINS}}
+\DoxyCodeLine{52 \textcolor{preprocessor}{  \#define V32 32}}
+\DoxyCodeLine{53 \textcolor{preprocessor}{  \#define V33 33}}
+\DoxyCodeLine{54 \textcolor{preprocessor}{  \#define V34 34}}
+\DoxyCodeLine{55 \textcolor{preprocessor}{  \#define V35 35}}
+\DoxyCodeLine{56 \textcolor{preprocessor}{  \#define V36 36}}
+\DoxyCodeLine{57 \textcolor{preprocessor}{  \#define V37 37}}
+\DoxyCodeLine{58 \textcolor{preprocessor}{  \#define V38 38}}
+\DoxyCodeLine{59 \textcolor{preprocessor}{  \#define V39 39}}
+\DoxyCodeLine{60 \textcolor{preprocessor}{  \#define V40 40}}
+\DoxyCodeLine{61 \textcolor{preprocessor}{  \#define V41 41}}
+\DoxyCodeLine{62 \textcolor{preprocessor}{  \#define V42 42}}
+\DoxyCodeLine{63 \textcolor{preprocessor}{  \#define V43 43}}
+\DoxyCodeLine{64 \textcolor{preprocessor}{  \#define V44 44}}
+\DoxyCodeLine{65 \textcolor{preprocessor}{  \#define V45 45}}
+\DoxyCodeLine{66 \textcolor{preprocessor}{  \#define V46 46}}
+\DoxyCodeLine{67 \textcolor{preprocessor}{  \#define V47 47}}
+\DoxyCodeLine{68 \textcolor{preprocessor}{  \#define V48 48}}
+\DoxyCodeLine{69 \textcolor{preprocessor}{  \#define V49 49}}
+\DoxyCodeLine{70 \textcolor{preprocessor}{  \#define V50 50}}
+\DoxyCodeLine{71 \textcolor{preprocessor}{  \#define V51 51}}
+\DoxyCodeLine{72 \textcolor{preprocessor}{  \#define V52 52}}
+\DoxyCodeLine{73 \textcolor{preprocessor}{  \#define V53 53}}
+\DoxyCodeLine{74 \textcolor{preprocessor}{  \#define V54 54}}
+\DoxyCodeLine{75 \textcolor{preprocessor}{  \#define V55 55}}
+\DoxyCodeLine{76 \textcolor{preprocessor}{  \#define V56 56}}
+\DoxyCodeLine{77 \textcolor{preprocessor}{  \#define V57 57}}
+\DoxyCodeLine{78 \textcolor{preprocessor}{  \#define V58 58}}
+\DoxyCodeLine{79 \textcolor{preprocessor}{  \#define V59 59}}
+\DoxyCodeLine{80 \textcolor{preprocessor}{  \#define V60 60}}
+\DoxyCodeLine{81 \textcolor{preprocessor}{  \#define V61 61}}
+\DoxyCodeLine{82 \textcolor{preprocessor}{  \#define V62 62}}
+\DoxyCodeLine{83 \textcolor{preprocessor}{  \#define V63 63}}
+\DoxyCodeLine{84 \textcolor{preprocessor}{  \#define V64 64}}
+\DoxyCodeLine{85 \textcolor{preprocessor}{  \#define V65 65}}
+\DoxyCodeLine{86 \textcolor{preprocessor}{  \#define V66 66}}
+\DoxyCodeLine{87 \textcolor{preprocessor}{  \#define V67 67}}
+\DoxyCodeLine{88 \textcolor{preprocessor}{  \#define V68 68}}
+\DoxyCodeLine{89 \textcolor{preprocessor}{  \#define V69 69}}
+\DoxyCodeLine{90 \textcolor{preprocessor}{  \#define V70 70}}
+\DoxyCodeLine{91 \textcolor{preprocessor}{  \#define V71 71}}
+\DoxyCodeLine{92 \textcolor{preprocessor}{  \#define V72 72}}
+\DoxyCodeLine{93 \textcolor{preprocessor}{  \#define V73 73}}
+\DoxyCodeLine{94 \textcolor{preprocessor}{  \#define V74 74}}
+\DoxyCodeLine{95 \textcolor{preprocessor}{  \#define V75 75}}
+\DoxyCodeLine{96 \textcolor{preprocessor}{  \#define V76 76}}
+\DoxyCodeLine{97 \textcolor{preprocessor}{  \#define V77 77}}
+\DoxyCodeLine{98 \textcolor{preprocessor}{  \#define V78 78}}
+\DoxyCodeLine{99 \textcolor{preprocessor}{  \#define V79 79}}
+\DoxyCodeLine{100 \textcolor{preprocessor}{  \#define V80 80}}
+\DoxyCodeLine{101 \textcolor{preprocessor}{  \#define V81 81}}
+\DoxyCodeLine{102 \textcolor{preprocessor}{  \#define V82 82}}
+\DoxyCodeLine{103 \textcolor{preprocessor}{  \#define V83 83}}
+\DoxyCodeLine{104 \textcolor{preprocessor}{  \#define V84 84}}
+\DoxyCodeLine{105 \textcolor{preprocessor}{  \#define V85 85}}
+\DoxyCodeLine{106 \textcolor{preprocessor}{  \#define V86 86}}
+\DoxyCodeLine{107 \textcolor{preprocessor}{  \#define V87 87}}
+\DoxyCodeLine{108 \textcolor{preprocessor}{  \#define V88 88}}
+\DoxyCodeLine{109 \textcolor{preprocessor}{  \#define V89 89}}
+\DoxyCodeLine{110 \textcolor{preprocessor}{  \#define V90 90}}
+\DoxyCodeLine{111 \textcolor{preprocessor}{  \#define V91 91}}
+\DoxyCodeLine{112 \textcolor{preprocessor}{  \#define V92 92}}
+\DoxyCodeLine{113 \textcolor{preprocessor}{  \#define V93 93}}
+\DoxyCodeLine{114 \textcolor{preprocessor}{  \#define V94 94}}
+\DoxyCodeLine{115 \textcolor{preprocessor}{  \#define V95 95}}
+\DoxyCodeLine{116 \textcolor{preprocessor}{  \#define V96 96}}
+\DoxyCodeLine{117 \textcolor{preprocessor}{  \#define V97 97}}
+\DoxyCodeLine{118 \textcolor{preprocessor}{  \#define V98 98}}
+\DoxyCodeLine{119 \textcolor{preprocessor}{  \#define V99 99}}
+\DoxyCodeLine{120 \textcolor{preprocessor}{  \#define V100 100}}
+\DoxyCodeLine{121 \textcolor{preprocessor}{  \#define V101 101}}
+\DoxyCodeLine{122 \textcolor{preprocessor}{  \#define V102 102}}
+\DoxyCodeLine{123 \textcolor{preprocessor}{  \#define V103 103}}
+\DoxyCodeLine{124 \textcolor{preprocessor}{  \#define V104 104}}
+\DoxyCodeLine{125 \textcolor{preprocessor}{  \#define V105 105}}
+\DoxyCodeLine{126 \textcolor{preprocessor}{  \#define V106 106}}
+\DoxyCodeLine{127 \textcolor{preprocessor}{  \#define V107 107}}
+\DoxyCodeLine{128 \textcolor{preprocessor}{  \#define V108 108}}
+\DoxyCodeLine{129 \textcolor{preprocessor}{  \#define V109 109}}
+\DoxyCodeLine{130 \textcolor{preprocessor}{  \#define V110 110}}
+\DoxyCodeLine{131 \textcolor{preprocessor}{  \#define V111 111}}
+\DoxyCodeLine{132 \textcolor{preprocessor}{  \#define V112 112}}
+\DoxyCodeLine{133 \textcolor{preprocessor}{  \#define V113 113}}
+\DoxyCodeLine{134 \textcolor{preprocessor}{  \#define V114 114}}
+\DoxyCodeLine{135 \textcolor{preprocessor}{  \#define V115 115}}
+\DoxyCodeLine{136 \textcolor{preprocessor}{  \#define V116 116}}
+\DoxyCodeLine{137 \textcolor{preprocessor}{  \#define V117 117}}
+\DoxyCodeLine{138 \textcolor{preprocessor}{  \#define V118 118}}
+\DoxyCodeLine{139 \textcolor{preprocessor}{  \#define V119 119}}
+\DoxyCodeLine{140 \textcolor{preprocessor}{  \#define V120 120}}
+\DoxyCodeLine{141 \textcolor{preprocessor}{  \#define V121 121}}
+\DoxyCodeLine{142 \textcolor{preprocessor}{  \#define V122 122}}
+\DoxyCodeLine{143 \textcolor{preprocessor}{  \#define V123 123}}
+\DoxyCodeLine{144 \textcolor{preprocessor}{  \#define V124 124}}
+\DoxyCodeLine{145 \textcolor{preprocessor}{  \#define V125 125}}
+\DoxyCodeLine{146 \textcolor{preprocessor}{  \#define V126 126}}
+\DoxyCodeLine{147 \textcolor{preprocessor}{  \#define V127 127}}
+\DoxyCodeLine{148 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{149 }
+\DoxyCodeLine{150 \textcolor{comment}{// Initial syntax:}}
+\DoxyCodeLine{151 \textcolor{preprocessor}{\#define BLYNK\_WRITE\_2(pin) \(\backslash\)}}
+\DoxyCodeLine{152 \textcolor{preprocessor}{    void BlynkWidgetWrite \#\# pin (BlynkReq BLYNK\_UNUSED \&request, const BlynkParam BLYNK\_UNUSED \&param)}}
+\DoxyCodeLine{153 }
+\DoxyCodeLine{154 \textcolor{preprocessor}{\#define BLYNK\_READ\_2(pin)  \(\backslash\)}}
+\DoxyCodeLine{155 \textcolor{preprocessor}{    void BlynkWidgetRead \#\# pin  (BlynkReq BLYNK\_UNUSED \&request)}}
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157 \textcolor{preprocessor}{\#define BLYNK\_WRITE\_DEFAULT() BLYNK\_WRITE\_2(Default)}}
+\DoxyCodeLine{158 \textcolor{preprocessor}{\#define BLYNK\_READ\_DEFAULT()  BLYNK\_READ\_2(Default)}}
+\DoxyCodeLine{159 }
+\DoxyCodeLine{160 \textcolor{preprocessor}{\#define BLYNK\_WRITE(pin)      BLYNK\_WRITE\_2(pin)}}
+\DoxyCodeLine{161 \textcolor{preprocessor}{\#define BLYNK\_READ(pin)       BLYNK\_READ\_2(pin)}}
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163 \textcolor{comment}{// New, more readable syntax:}}
+\DoxyCodeLine{164 \textcolor{preprocessor}{\#define BLYNK\_IN\_2(pin)  \(\backslash\)}}
+\DoxyCodeLine{165 \textcolor{preprocessor}{    void BlynkWidgetWrite \#\# pin (BlynkReq BLYNK\_UNUSED \&request, const BlynkParam BLYNK\_UNUSED \&getValue)}}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{167 \textcolor{preprocessor}{\#define BLYNK\_OUT\_2(pin) \(\backslash\)}}
+\DoxyCodeLine{168 \textcolor{preprocessor}{    void BlynkWidgetRead \#\# pin  (BlynkReq BLYNK\_UNUSED \&request)}}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170 \textcolor{preprocessor}{\#define BLYNK\_INPUT\_DEFAULT()   BLYNK\_IN\_2(Default)}}
+\DoxyCodeLine{171 \textcolor{preprocessor}{\#define BLYNK\_OUTPUT\_DEFAULT()  BLYNK\_OUT\_2(Default)}}
+\DoxyCodeLine{172 }
+\DoxyCodeLine{173 \textcolor{preprocessor}{\#define BLYNK\_INPUT(pin)        BLYNK\_IN\_2(pin)}}
+\DoxyCodeLine{174 \textcolor{preprocessor}{\#define BLYNK\_OUTPUT(pin)       BLYNK\_OUT\_2(pin)}}
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176 \textcolor{comment}{// Additional handlers}}
+\DoxyCodeLine{177 \textcolor{preprocessor}{\#define BLYNK\_CONNECTED()    void BlynkOnConnected()}}
+\DoxyCodeLine{178 \textcolor{preprocessor}{\#define BLYNK\_DISCONNECTED() void BlynkOnDisconnected()}}
+\DoxyCodeLine{179 }
+\DoxyCodeLine{180 \textcolor{comment}{// Advanced functions}}
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182 \textcolor{preprocessor}{\#define BLYNK\_VAR\_INT(name, pin) \(\backslash\)}}
+\DoxyCodeLine{183 \textcolor{preprocessor}{    int name;  \(\backslash\)}}
+\DoxyCodeLine{184 \textcolor{preprocessor}{    BLYNK\_WRITE(pin) \{ name = param.asInt(); \} \(\backslash\)}}
+\DoxyCodeLine{185 \textcolor{preprocessor}{    BLYNK\_READ(pin)  \{ Blynk.virtualWrite(pin, name); \}}}
+\DoxyCodeLine{186 }
+\DoxyCodeLine{187 \textcolor{preprocessor}{\#define BLYNK\_VAR\_LONG(name, pin) \(\backslash\)}}
+\DoxyCodeLine{188 \textcolor{preprocessor}{    long name;  \(\backslash\)}}
+\DoxyCodeLine{189 \textcolor{preprocessor}{    BLYNK\_WRITE(pin) \{ name = param.asLong(); \} \(\backslash\)}}
+\DoxyCodeLine{190 \textcolor{preprocessor}{    BLYNK\_READ(pin)  \{ Blynk.virtualWrite(pin, name); \}}}
+\DoxyCodeLine{191 }
+\DoxyCodeLine{192 \textcolor{preprocessor}{\#ifndef BLYNK\_NO\_FLOAT}}
+\DoxyCodeLine{193 \textcolor{preprocessor}{\#define BLYNK\_VAR\_DOUBLE(name, pin) \(\backslash\)}}
+\DoxyCodeLine{194 \textcolor{preprocessor}{    double name;  \(\backslash\)}}
+\DoxyCodeLine{195 \textcolor{preprocessor}{    BLYNK\_WRITE(pin) \{ name = param.asDouble(); \} \(\backslash\)}}
+\DoxyCodeLine{196 \textcolor{preprocessor}{    BLYNK\_READ(pin)  \{ Blynk.virtualWrite(pin, name); \}}}
+\DoxyCodeLine{197 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{198 }
+\DoxyCodeLine{199 \textcolor{preprocessor}{\#ifdef ARDUINO}}
+\DoxyCodeLine{200 \textcolor{preprocessor}{\#define BLYNK\_VAR\_STRING(name, pin) \(\backslash\)}}
+\DoxyCodeLine{201 \textcolor{preprocessor}{    String name;  \(\backslash\)}}
+\DoxyCodeLine{202 \textcolor{preprocessor}{    BLYNK\_WRITE(pin) \{ name = param.asStr(); \} \(\backslash\)}}
+\DoxyCodeLine{203 \textcolor{preprocessor}{    BLYNK\_READ(pin)  \{ Blynk.virtualWrite(pin, name); \}}}
+\DoxyCodeLine{204 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{205 }
+\DoxyCodeLine{206 \textcolor{comment}{// Default read/write handlers (you can redefine them in your code)}}
+\DoxyCodeLine{207 \textcolor{preprocessor}{\#ifdef \_\_cplusplus}}
+\DoxyCodeLine{208 \textcolor{keyword}{extern} \textcolor{stringliteral}{"{}C"{}} \{}
+\DoxyCodeLine{209 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{210 }
+\DoxyCodeLine{211 \textcolor{keyword}{struct }\mbox{\hyperlink{struct_blynk_req}{BlynkReq}}}
+\DoxyCodeLine{212 \{}
+\DoxyCodeLine{213     uint8\_t pin;}
+\DoxyCodeLine{214 \};}
+\DoxyCodeLine{215 }
+\DoxyCodeLine{216 \textcolor{keyword}{typedef} void (*WidgetReadHandler)(\mbox{\hyperlink{struct_blynk_req}{BlynkReq}} BLYNK\_UNUSED \&request);}
+\DoxyCodeLine{217 \textcolor{keyword}{typedef} void (*WidgetWriteHandler)(\mbox{\hyperlink{struct_blynk_req}{BlynkReq}} BLYNK\_UNUSED \&request, \textcolor{keyword}{const} \mbox{\hyperlink{class_blynk_param}{BlynkParam}} BLYNK\_UNUSED \&param);}
+\DoxyCodeLine{218 }
+\DoxyCodeLine{219 WidgetReadHandler GetReadHandler(uint8\_t pin);}
+\DoxyCodeLine{220 WidgetWriteHandler GetWriteHandler(uint8\_t pin);}
+\DoxyCodeLine{221 }
+\DoxyCodeLine{222 \textcolor{comment}{// Declare placeholders}}
+\DoxyCodeLine{223 BLYNK\_READ();}
+\DoxyCodeLine{224 BLYNK\_WRITE();}
+\DoxyCodeLine{225 \textcolor{keywordtype}{void} BlynkNoOpCbk();}
+\DoxyCodeLine{226 }
+\DoxyCodeLine{227 \textcolor{comment}{// Declare all pin handlers (you can redefine them in your code)}}
+\DoxyCodeLine{228 BLYNK\_CONNECTED();}
+\DoxyCodeLine{229 BLYNK\_DISCONNECTED();}
+\DoxyCodeLine{230 }
+\DoxyCodeLine{231 \textcolor{comment}{// Internal Virtual Pins}}
+\DoxyCodeLine{232 BLYNK\_WRITE(InternalPinACON);}
+\DoxyCodeLine{233 BLYNK\_WRITE(InternalPinADIS);}
+\DoxyCodeLine{234 BLYNK\_WRITE(InternalPinRTC);}
+\DoxyCodeLine{235 BLYNK\_WRITE(InternalPinUTC);}
+\DoxyCodeLine{236 BLYNK\_WRITE(InternalPinOTA);}
+\DoxyCodeLine{237 BLYNK\_WRITE(InternalPinMETA);}
+\DoxyCodeLine{238 BLYNK\_WRITE(InternalPinVFS);}
+\DoxyCodeLine{239 BLYNK\_WRITE(InternalPinDBG);}
+\DoxyCodeLine{240 }
+\DoxyCodeLine{241 \textcolor{comment}{// Aliases}}
+\DoxyCodeLine{242 \textcolor{preprocessor}{\#define BLYNK\_APP\_CONNECTED()    BLYNK\_WRITE(InternalPinACON)}}
+\DoxyCodeLine{243 \textcolor{preprocessor}{\#define BLYNK\_APP\_DISCONNECTED() BLYNK\_WRITE(InternalPinADIS)}}
+\DoxyCodeLine{244 }
+\DoxyCodeLine{245 \textcolor{comment}{// Regular Virtual Pins}}
+\DoxyCodeLine{246 BLYNK\_READ\_DEFAULT();}
+\DoxyCodeLine{247 BLYNK\_WRITE\_DEFAULT();}
+\DoxyCodeLine{248 }
+\DoxyCodeLine{249 BLYNK\_READ(0 );}
+\DoxyCodeLine{250 BLYNK\_READ(1 );}
+\DoxyCodeLine{251 BLYNK\_READ(2 );}
+\DoxyCodeLine{252 BLYNK\_READ(3 );}
+\DoxyCodeLine{253 BLYNK\_READ(4 );}
+\DoxyCodeLine{254 BLYNK\_READ(5 );}
+\DoxyCodeLine{255 BLYNK\_READ(6 );}
+\DoxyCodeLine{256 BLYNK\_READ(7 );}
+\DoxyCodeLine{257 BLYNK\_READ(8 );}
+\DoxyCodeLine{258 BLYNK\_READ(9 );}
+\DoxyCodeLine{259 BLYNK\_READ(10);}
+\DoxyCodeLine{260 BLYNK\_READ(11);}
+\DoxyCodeLine{261 BLYNK\_READ(12);}
+\DoxyCodeLine{262 BLYNK\_READ(13);}
+\DoxyCodeLine{263 BLYNK\_READ(14);}
+\DoxyCodeLine{264 BLYNK\_READ(15);}
+\DoxyCodeLine{265 BLYNK\_READ(16);}
+\DoxyCodeLine{266 BLYNK\_READ(17);}
+\DoxyCodeLine{267 BLYNK\_READ(18);}
+\DoxyCodeLine{268 BLYNK\_READ(19);}
+\DoxyCodeLine{269 BLYNK\_READ(20);}
+\DoxyCodeLine{270 BLYNK\_READ(21);}
+\DoxyCodeLine{271 BLYNK\_READ(22);}
+\DoxyCodeLine{272 BLYNK\_READ(23);}
+\DoxyCodeLine{273 BLYNK\_READ(24);}
+\DoxyCodeLine{274 BLYNK\_READ(25);}
+\DoxyCodeLine{275 BLYNK\_READ(26);}
+\DoxyCodeLine{276 BLYNK\_READ(27);}
+\DoxyCodeLine{277 BLYNK\_READ(28);}
+\DoxyCodeLine{278 BLYNK\_READ(29);}
+\DoxyCodeLine{279 BLYNK\_READ(30);}
+\DoxyCodeLine{280 BLYNK\_READ(31);}
+\DoxyCodeLine{281 \textcolor{preprocessor}{\#ifdef BLYNK\_USE\_128\_VPINS}}
+\DoxyCodeLine{282   BLYNK\_READ(32);}
+\DoxyCodeLine{283   BLYNK\_READ(33);}
+\DoxyCodeLine{284   BLYNK\_READ(34);}
+\DoxyCodeLine{285   BLYNK\_READ(35);}
+\DoxyCodeLine{286   BLYNK\_READ(36);}
+\DoxyCodeLine{287   BLYNK\_READ(37);}
+\DoxyCodeLine{288   BLYNK\_READ(38);}
+\DoxyCodeLine{289   BLYNK\_READ(39);}
+\DoxyCodeLine{290   BLYNK\_READ(40);}
+\DoxyCodeLine{291   BLYNK\_READ(41);}
+\DoxyCodeLine{292   BLYNK\_READ(42);}
+\DoxyCodeLine{293   BLYNK\_READ(43);}
+\DoxyCodeLine{294   BLYNK\_READ(44);}
+\DoxyCodeLine{295   BLYNK\_READ(45);}
+\DoxyCodeLine{296   BLYNK\_READ(46);}
+\DoxyCodeLine{297   BLYNK\_READ(47);}
+\DoxyCodeLine{298   BLYNK\_READ(48);}
+\DoxyCodeLine{299   BLYNK\_READ(49);}
+\DoxyCodeLine{300   BLYNK\_READ(50);}
+\DoxyCodeLine{301   BLYNK\_READ(51);}
+\DoxyCodeLine{302   BLYNK\_READ(52);}
+\DoxyCodeLine{303   BLYNK\_READ(53);}
+\DoxyCodeLine{304   BLYNK\_READ(54);}
+\DoxyCodeLine{305   BLYNK\_READ(55);}
+\DoxyCodeLine{306   BLYNK\_READ(56);}
+\DoxyCodeLine{307   BLYNK\_READ(57);}
+\DoxyCodeLine{308   BLYNK\_READ(58);}
+\DoxyCodeLine{309   BLYNK\_READ(59);}
+\DoxyCodeLine{310   BLYNK\_READ(60);}
+\DoxyCodeLine{311   BLYNK\_READ(61);}
+\DoxyCodeLine{312   BLYNK\_READ(62);}
+\DoxyCodeLine{313   BLYNK\_READ(63);}
+\DoxyCodeLine{314   BLYNK\_READ(64);}
+\DoxyCodeLine{315   BLYNK\_READ(65);}
+\DoxyCodeLine{316   BLYNK\_READ(66);}
+\DoxyCodeLine{317   BLYNK\_READ(67);}
+\DoxyCodeLine{318   BLYNK\_READ(68);}
+\DoxyCodeLine{319   BLYNK\_READ(69);}
+\DoxyCodeLine{320   BLYNK\_READ(70);}
+\DoxyCodeLine{321   BLYNK\_READ(71);}
+\DoxyCodeLine{322   BLYNK\_READ(72);}
+\DoxyCodeLine{323   BLYNK\_READ(73);}
+\DoxyCodeLine{324   BLYNK\_READ(74);}
+\DoxyCodeLine{325   BLYNK\_READ(75);}
+\DoxyCodeLine{326   BLYNK\_READ(76);}
+\DoxyCodeLine{327   BLYNK\_READ(77);}
+\DoxyCodeLine{328   BLYNK\_READ(78);}
+\DoxyCodeLine{329   BLYNK\_READ(79);}
+\DoxyCodeLine{330   BLYNK\_READ(80);}
+\DoxyCodeLine{331   BLYNK\_READ(81);}
+\DoxyCodeLine{332   BLYNK\_READ(82);}
+\DoxyCodeLine{333   BLYNK\_READ(83);}
+\DoxyCodeLine{334   BLYNK\_READ(84);}
+\DoxyCodeLine{335   BLYNK\_READ(85);}
+\DoxyCodeLine{336   BLYNK\_READ(86);}
+\DoxyCodeLine{337   BLYNK\_READ(87);}
+\DoxyCodeLine{338   BLYNK\_READ(88);}
+\DoxyCodeLine{339   BLYNK\_READ(89);}
+\DoxyCodeLine{340   BLYNK\_READ(90);}
+\DoxyCodeLine{341   BLYNK\_READ(91);}
+\DoxyCodeLine{342   BLYNK\_READ(92);}
+\DoxyCodeLine{343   BLYNK\_READ(93);}
+\DoxyCodeLine{344   BLYNK\_READ(94);}
+\DoxyCodeLine{345   BLYNK\_READ(95);}
+\DoxyCodeLine{346   BLYNK\_READ(96);}
+\DoxyCodeLine{347   BLYNK\_READ(97);}
+\DoxyCodeLine{348   BLYNK\_READ(98);}
+\DoxyCodeLine{349   BLYNK\_READ(99);}
+\DoxyCodeLine{350   BLYNK\_READ(100);}
+\DoxyCodeLine{351   BLYNK\_READ(101);}
+\DoxyCodeLine{352   BLYNK\_READ(102);}
+\DoxyCodeLine{353   BLYNK\_READ(103);}
+\DoxyCodeLine{354   BLYNK\_READ(104);}
+\DoxyCodeLine{355   BLYNK\_READ(105);}
+\DoxyCodeLine{356   BLYNK\_READ(106);}
+\DoxyCodeLine{357   BLYNK\_READ(107);}
+\DoxyCodeLine{358   BLYNK\_READ(108);}
+\DoxyCodeLine{359   BLYNK\_READ(109);}
+\DoxyCodeLine{360   BLYNK\_READ(110);}
+\DoxyCodeLine{361   BLYNK\_READ(111);}
+\DoxyCodeLine{362   BLYNK\_READ(112);}
+\DoxyCodeLine{363   BLYNK\_READ(113);}
+\DoxyCodeLine{364   BLYNK\_READ(114);}
+\DoxyCodeLine{365   BLYNK\_READ(115);}
+\DoxyCodeLine{366   BLYNK\_READ(116);}
+\DoxyCodeLine{367   BLYNK\_READ(117);}
+\DoxyCodeLine{368   BLYNK\_READ(118);}
+\DoxyCodeLine{369   BLYNK\_READ(119);}
+\DoxyCodeLine{370   BLYNK\_READ(120);}
+\DoxyCodeLine{371   BLYNK\_READ(121);}
+\DoxyCodeLine{372   BLYNK\_READ(122);}
+\DoxyCodeLine{373   BLYNK\_READ(123);}
+\DoxyCodeLine{374   BLYNK\_READ(124);}
+\DoxyCodeLine{375   BLYNK\_READ(125);}
+\DoxyCodeLine{376   BLYNK\_READ(126);}
+\DoxyCodeLine{377   BLYNK\_READ(127);}
+\DoxyCodeLine{378 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{379 }
+\DoxyCodeLine{380 BLYNK\_WRITE(0 );}
+\DoxyCodeLine{381 BLYNK\_WRITE(1 );}
+\DoxyCodeLine{382 BLYNK\_WRITE(2 );}
+\DoxyCodeLine{383 BLYNK\_WRITE(3 );}
+\DoxyCodeLine{384 BLYNK\_WRITE(4 );}
+\DoxyCodeLine{385 BLYNK\_WRITE(5 );}
+\DoxyCodeLine{386 BLYNK\_WRITE(6 );}
+\DoxyCodeLine{387 BLYNK\_WRITE(7 );}
+\DoxyCodeLine{388 BLYNK\_WRITE(8 );}
+\DoxyCodeLine{389 BLYNK\_WRITE(9 );}
+\DoxyCodeLine{390 BLYNK\_WRITE(10);}
+\DoxyCodeLine{391 BLYNK\_WRITE(11);}
+\DoxyCodeLine{392 BLYNK\_WRITE(12);}
+\DoxyCodeLine{393 BLYNK\_WRITE(13);}
+\DoxyCodeLine{394 BLYNK\_WRITE(14);}
+\DoxyCodeLine{395 BLYNK\_WRITE(15);}
+\DoxyCodeLine{396 BLYNK\_WRITE(16);}
+\DoxyCodeLine{397 BLYNK\_WRITE(17);}
+\DoxyCodeLine{398 BLYNK\_WRITE(18);}
+\DoxyCodeLine{399 BLYNK\_WRITE(19);}
+\DoxyCodeLine{400 BLYNK\_WRITE(20);}
+\DoxyCodeLine{401 BLYNK\_WRITE(21);}
+\DoxyCodeLine{402 BLYNK\_WRITE(22);}
+\DoxyCodeLine{403 BLYNK\_WRITE(23);}
+\DoxyCodeLine{404 BLYNK\_WRITE(24);}
+\DoxyCodeLine{405 BLYNK\_WRITE(25);}
+\DoxyCodeLine{406 BLYNK\_WRITE(26);}
+\DoxyCodeLine{407 BLYNK\_WRITE(27);}
+\DoxyCodeLine{408 BLYNK\_WRITE(28);}
+\DoxyCodeLine{409 BLYNK\_WRITE(29);}
+\DoxyCodeLine{410 BLYNK\_WRITE(30);}
+\DoxyCodeLine{411 BLYNK\_WRITE(31);}
+\DoxyCodeLine{412 \textcolor{preprocessor}{\#ifdef BLYNK\_USE\_128\_VPINS}}
+\DoxyCodeLine{413   BLYNK\_WRITE(32);}
+\DoxyCodeLine{414   BLYNK\_WRITE(33);}
+\DoxyCodeLine{415   BLYNK\_WRITE(34);}
+\DoxyCodeLine{416   BLYNK\_WRITE(35);}
+\DoxyCodeLine{417   BLYNK\_WRITE(36);}
+\DoxyCodeLine{418   BLYNK\_WRITE(37);}
+\DoxyCodeLine{419   BLYNK\_WRITE(38);}
+\DoxyCodeLine{420   BLYNK\_WRITE(39);}
+\DoxyCodeLine{421   BLYNK\_WRITE(40);}
+\DoxyCodeLine{422   BLYNK\_WRITE(41);}
+\DoxyCodeLine{423   BLYNK\_WRITE(42);}
+\DoxyCodeLine{424   BLYNK\_WRITE(43);}
+\DoxyCodeLine{425   BLYNK\_WRITE(44);}
+\DoxyCodeLine{426   BLYNK\_WRITE(45);}
+\DoxyCodeLine{427   BLYNK\_WRITE(46);}
+\DoxyCodeLine{428   BLYNK\_WRITE(47);}
+\DoxyCodeLine{429   BLYNK\_WRITE(48);}
+\DoxyCodeLine{430   BLYNK\_WRITE(49);}
+\DoxyCodeLine{431   BLYNK\_WRITE(50);}
+\DoxyCodeLine{432   BLYNK\_WRITE(51);}
+\DoxyCodeLine{433   BLYNK\_WRITE(52);}
+\DoxyCodeLine{434   BLYNK\_WRITE(53);}
+\DoxyCodeLine{435   BLYNK\_WRITE(54);}
+\DoxyCodeLine{436   BLYNK\_WRITE(55);}
+\DoxyCodeLine{437   BLYNK\_WRITE(56);}
+\DoxyCodeLine{438   BLYNK\_WRITE(57);}
+\DoxyCodeLine{439   BLYNK\_WRITE(58);}
+\DoxyCodeLine{440   BLYNK\_WRITE(59);}
+\DoxyCodeLine{441   BLYNK\_WRITE(60);}
+\DoxyCodeLine{442   BLYNK\_WRITE(61);}
+\DoxyCodeLine{443   BLYNK\_WRITE(62);}
+\DoxyCodeLine{444   BLYNK\_WRITE(63);}
+\DoxyCodeLine{445   BLYNK\_WRITE(64);}
+\DoxyCodeLine{446   BLYNK\_WRITE(65);}
+\DoxyCodeLine{447   BLYNK\_WRITE(66);}
+\DoxyCodeLine{448   BLYNK\_WRITE(67);}
+\DoxyCodeLine{449   BLYNK\_WRITE(68);}
+\DoxyCodeLine{450   BLYNK\_WRITE(69);}
+\DoxyCodeLine{451   BLYNK\_WRITE(70);}
+\DoxyCodeLine{452   BLYNK\_WRITE(71);}
+\DoxyCodeLine{453   BLYNK\_WRITE(72);}
+\DoxyCodeLine{454   BLYNK\_WRITE(73);}
+\DoxyCodeLine{455   BLYNK\_WRITE(74);}
+\DoxyCodeLine{456   BLYNK\_WRITE(75);}
+\DoxyCodeLine{457   BLYNK\_WRITE(76);}
+\DoxyCodeLine{458   BLYNK\_WRITE(77);}
+\DoxyCodeLine{459   BLYNK\_WRITE(78);}
+\DoxyCodeLine{460   BLYNK\_WRITE(79);}
+\DoxyCodeLine{461   BLYNK\_WRITE(80);}
+\DoxyCodeLine{462   BLYNK\_WRITE(81);}
+\DoxyCodeLine{463   BLYNK\_WRITE(82);}
+\DoxyCodeLine{464   BLYNK\_WRITE(83);}
+\DoxyCodeLine{465   BLYNK\_WRITE(84);}
+\DoxyCodeLine{466   BLYNK\_WRITE(85);}
+\DoxyCodeLine{467   BLYNK\_WRITE(86);}
+\DoxyCodeLine{468   BLYNK\_WRITE(87);}
+\DoxyCodeLine{469   BLYNK\_WRITE(88);}
+\DoxyCodeLine{470   BLYNK\_WRITE(89);}
+\DoxyCodeLine{471   BLYNK\_WRITE(90);}
+\DoxyCodeLine{472   BLYNK\_WRITE(91);}
+\DoxyCodeLine{473   BLYNK\_WRITE(92);}
+\DoxyCodeLine{474   BLYNK\_WRITE(93);}
+\DoxyCodeLine{475   BLYNK\_WRITE(94);}
+\DoxyCodeLine{476   BLYNK\_WRITE(95);}
+\DoxyCodeLine{477   BLYNK\_WRITE(96);}
+\DoxyCodeLine{478   BLYNK\_WRITE(97);}
+\DoxyCodeLine{479   BLYNK\_WRITE(98);}
+\DoxyCodeLine{480   BLYNK\_WRITE(99);}
+\DoxyCodeLine{481   BLYNK\_WRITE(100);}
+\DoxyCodeLine{482   BLYNK\_WRITE(101);}
+\DoxyCodeLine{483   BLYNK\_WRITE(102);}
+\DoxyCodeLine{484   BLYNK\_WRITE(103);}
+\DoxyCodeLine{485   BLYNK\_WRITE(104);}
+\DoxyCodeLine{486   BLYNK\_WRITE(105);}
+\DoxyCodeLine{487   BLYNK\_WRITE(106);}
+\DoxyCodeLine{488   BLYNK\_WRITE(107);}
+\DoxyCodeLine{489   BLYNK\_WRITE(108);}
+\DoxyCodeLine{490   BLYNK\_WRITE(109);}
+\DoxyCodeLine{491   BLYNK\_WRITE(110);}
+\DoxyCodeLine{492   BLYNK\_WRITE(111);}
+\DoxyCodeLine{493   BLYNK\_WRITE(112);}
+\DoxyCodeLine{494   BLYNK\_WRITE(113);}
+\DoxyCodeLine{495   BLYNK\_WRITE(114);}
+\DoxyCodeLine{496   BLYNK\_WRITE(115);}
+\DoxyCodeLine{497   BLYNK\_WRITE(116);}
+\DoxyCodeLine{498   BLYNK\_WRITE(117);}
+\DoxyCodeLine{499   BLYNK\_WRITE(118);}
+\DoxyCodeLine{500   BLYNK\_WRITE(119);}
+\DoxyCodeLine{501   BLYNK\_WRITE(120);}
+\DoxyCodeLine{502   BLYNK\_WRITE(121);}
+\DoxyCodeLine{503   BLYNK\_WRITE(122);}
+\DoxyCodeLine{504   BLYNK\_WRITE(123);}
+\DoxyCodeLine{505   BLYNK\_WRITE(124);}
+\DoxyCodeLine{506   BLYNK\_WRITE(125);}
+\DoxyCodeLine{507   BLYNK\_WRITE(126);}
+\DoxyCodeLine{508   BLYNK\_WRITE(127);}
+\DoxyCodeLine{509 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{510 }
+\DoxyCodeLine{511 \textcolor{preprocessor}{\#ifdef \_\_cplusplus}}
+\DoxyCodeLine{512 \}}
+\DoxyCodeLine{513 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{514 }
+\DoxyCodeLine{515 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

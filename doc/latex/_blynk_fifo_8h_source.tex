@@ -1,0 +1,155 @@
+\hypertarget{_blynk_fifo_8h_source}{}\doxysection{Blynk\+Fifo.\+h}
+\label{_blynk_fifo_8h_source}\index{lib/Blynk/src/utility/BlynkFifo.h@{lib/Blynk/src/utility/BlynkFifo.h}}
+\mbox{\hyperlink{_blynk_fifo_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef BlynkFifo\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define BlynkFifo\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_utility_8h}{utility/BlynkUtility.h}}>}}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{keyword}{template} <\textcolor{keyword}{class} T, \textcolor{keywordtype}{unsigned} N>}
+\DoxyCodeLine{17 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_fifo}{BlynkFifo}}}
+\DoxyCodeLine{18 \{}
+\DoxyCodeLine{19 \textcolor{keyword}{public}:}
+\DoxyCodeLine{20     \mbox{\hyperlink{class_blynk_fifo}{BlynkFifo}}()}
+\DoxyCodeLine{21     \{}
+\DoxyCodeLine{22         clear();}
+\DoxyCodeLine{23     \}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25     \textcolor{keywordtype}{void} clear()}
+\DoxyCodeLine{26     \{}
+\DoxyCodeLine{27         \_r = 0;}
+\DoxyCodeLine{28         \_w = 0;}
+\DoxyCodeLine{29     \}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31     \mbox{\hyperlink{class_blynk_fifo}{\string~BlynkFifo}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{32     \{\}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34     \textcolor{comment}{// writing thread/context API}}
+\DoxyCodeLine{35     \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37     \textcolor{keywordtype}{bool} writeable(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{38     \{}
+\DoxyCodeLine{39         \textcolor{keywordflow}{return} free() > 0;}
+\DoxyCodeLine{40     \}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     \textcolor{keywordtype}{int} free(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{43     \{}
+\DoxyCodeLine{44         \textcolor{keywordtype}{int} s = \_r -\/ \_w;}
+\DoxyCodeLine{45         \textcolor{keywordflow}{if} (s <= 0)}
+\DoxyCodeLine{46             s += N;}
+\DoxyCodeLine{47         \textcolor{keywordflow}{return} s -\/ 1;}
+\DoxyCodeLine{48     \}}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50     T put(\textcolor{keyword}{const} T\& c)}
+\DoxyCodeLine{51     \{}
+\DoxyCodeLine{52         \textcolor{keywordtype}{int} i = \_w;}
+\DoxyCodeLine{53         \textcolor{keywordtype}{int} j = i;}
+\DoxyCodeLine{54         i = \_inc(i);}
+\DoxyCodeLine{55         \textcolor{keywordflow}{while} (i == \_r) \textcolor{comment}{// = !writeable()}}
+\DoxyCodeLine{56             \textcolor{comment}{/* nothing / just wait */};}
+\DoxyCodeLine{57         \_b[j] = c;}
+\DoxyCodeLine{58         \_w = i;}
+\DoxyCodeLine{59         \textcolor{keywordflow}{return} c;}
+\DoxyCodeLine{60     \}}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62     \textcolor{keywordtype}{int} put(\textcolor{keyword}{const} T* p, \textcolor{keywordtype}{int} n, \textcolor{keywordtype}{bool} blocking = \textcolor{keyword}{false})}
+\DoxyCodeLine{63     \{}
+\DoxyCodeLine{64         \textcolor{keywordtype}{int} c = n;}
+\DoxyCodeLine{65         \textcolor{keywordflow}{while} (c)}
+\DoxyCodeLine{66         \{}
+\DoxyCodeLine{67             \textcolor{keywordtype}{int} f;}
+\DoxyCodeLine{68             \textcolor{keywordflow}{while} ((f = free()) == 0) \textcolor{comment}{// wait for space}}
+\DoxyCodeLine{69             \{}
+\DoxyCodeLine{70                 \textcolor{keywordflow}{if} (!blocking) \textcolor{keywordflow}{return} n -\/ c; \textcolor{comment}{// no more space and not blocking}}
+\DoxyCodeLine{71                 \textcolor{comment}{/* nothing / just wait */};}
+\DoxyCodeLine{72             \}}
+\DoxyCodeLine{73             \textcolor{comment}{// check free space}}
+\DoxyCodeLine{74             \textcolor{keywordflow}{if} (c < f) f = c;}
+\DoxyCodeLine{75             \textcolor{keywordtype}{int} w = \_w;}
+\DoxyCodeLine{76             \textcolor{keywordtype}{int} m = N -\/ w;}
+\DoxyCodeLine{77             \textcolor{comment}{// check wrap}}
+\DoxyCodeLine{78             \textcolor{keywordflow}{if} (f > m) f = m;}
+\DoxyCodeLine{79             memcpy(\&\_b[w], p, f);}
+\DoxyCodeLine{80             \_w = \_inc(w, f);}
+\DoxyCodeLine{81             c -\/= f;}
+\DoxyCodeLine{82             p += f;}
+\DoxyCodeLine{83         \}}
+\DoxyCodeLine{84         \textcolor{keywordflow}{return} n -\/ c;}
+\DoxyCodeLine{85     \}}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87     \textcolor{comment}{// reading thread/context API}}
+\DoxyCodeLine{88     \textcolor{comment}{// -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90     \textcolor{keywordtype}{bool} readable(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{91     \{}
+\DoxyCodeLine{92         \textcolor{keywordflow}{return} (\_r != \_w);}
+\DoxyCodeLine{93     \}}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95     \textcolor{keywordtype}{size\_t} size(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{96     \{}
+\DoxyCodeLine{97         \textcolor{keywordtype}{int} s = \_w -\/ \_r;}
+\DoxyCodeLine{98         \textcolor{keywordflow}{if} (s < 0)}
+\DoxyCodeLine{99             s += N;}
+\DoxyCodeLine{100         \textcolor{keywordflow}{return} s;}
+\DoxyCodeLine{101     \}}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103     T get(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{104     \{}
+\DoxyCodeLine{105         \textcolor{keywordtype}{int} r = \_r;}
+\DoxyCodeLine{106         \textcolor{keywordflow}{while} (r == \_w) \textcolor{comment}{// = !readable()}}
+\DoxyCodeLine{107             \textcolor{comment}{/* nothing / just wait */};}
+\DoxyCodeLine{108         T t = \_b[r];}
+\DoxyCodeLine{109         \_r = \_inc(r);}
+\DoxyCodeLine{110         \textcolor{keywordflow}{return} t;}
+\DoxyCodeLine{111     \}}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113     T peek(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{114     \{}
+\DoxyCodeLine{115         \textcolor{keywordtype}{int} r = \_r;}
+\DoxyCodeLine{116         \textcolor{keywordflow}{while} (r == \_w);}
+\DoxyCodeLine{117         \textcolor{keywordflow}{return} \_b[r];}
+\DoxyCodeLine{118     \}}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120     \textcolor{keywordtype}{int} get(T* p, \textcolor{keywordtype}{int} n, \textcolor{keywordtype}{bool} blocking = \textcolor{keyword}{false})}
+\DoxyCodeLine{121     \{}
+\DoxyCodeLine{122         \textcolor{keywordtype}{int} c = n;}
+\DoxyCodeLine{123         \textcolor{keywordflow}{while} (c)}
+\DoxyCodeLine{124         \{}
+\DoxyCodeLine{125             \textcolor{keywordtype}{int} f;}
+\DoxyCodeLine{126             \textcolor{keywordflow}{for} (;;) \textcolor{comment}{// wait for data}}
+\DoxyCodeLine{127             \{}
+\DoxyCodeLine{128                 f = size();}
+\DoxyCodeLine{129                 \textcolor{keywordflow}{if} (f)  \textcolor{keywordflow}{break};        \textcolor{comment}{// free space}}
+\DoxyCodeLine{130                 \textcolor{keywordflow}{if} (!blocking) \textcolor{keywordflow}{return} n -\/ c; \textcolor{comment}{// no space and not blocking}}
+\DoxyCodeLine{131                 \textcolor{comment}{/* nothing / just wait */};}
+\DoxyCodeLine{132             \}}
+\DoxyCodeLine{133             \textcolor{comment}{// check available data}}
+\DoxyCodeLine{134             \textcolor{keywordflow}{if} (c < f) f = c;}
+\DoxyCodeLine{135             \textcolor{keywordtype}{int} r = \_r;}
+\DoxyCodeLine{136             \textcolor{keywordtype}{int} m = N -\/ r;}
+\DoxyCodeLine{137             \textcolor{comment}{// check wrap}}
+\DoxyCodeLine{138             \textcolor{keywordflow}{if} (f > m) f = m;}
+\DoxyCodeLine{139             memcpy(p, \&\_b[r], f);}
+\DoxyCodeLine{140             \_r = \_inc(r, f);}
+\DoxyCodeLine{141             c -\/= f;}
+\DoxyCodeLine{142             p += f;}
+\DoxyCodeLine{143         \}}
+\DoxyCodeLine{144         \textcolor{keywordflow}{return} n -\/ c;}
+\DoxyCodeLine{145     \}}
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147 \textcolor{keyword}{private}:}
+\DoxyCodeLine{148     \textcolor{keywordtype}{int} \_inc(\textcolor{keywordtype}{int} i, \textcolor{keywordtype}{int} n = 1)}
+\DoxyCodeLine{149     \{}
+\DoxyCodeLine{150         \textcolor{keywordflow}{return} (i + n) \% N;}
+\DoxyCodeLine{151     \}}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153     T             \_b[N];}
+\DoxyCodeLine{154     \textcolor{keyword}{volatile} \textcolor{keywordtype}{int}  \_w;}
+\DoxyCodeLine{155     \textcolor{keyword}{volatile} \textcolor{keywordtype}{int}  \_r;}
+\DoxyCodeLine{156 \};}
+\DoxyCodeLine{157 }
+\DoxyCodeLine{158 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

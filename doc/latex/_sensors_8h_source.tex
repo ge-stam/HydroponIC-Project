@@ -1,0 +1,40 @@
+\hypertarget{_sensors_8h_source}{}\doxysection{Sensors.\+h}
+\label{_sensors_8h_source}\index{lib/Sensors/Sensors.h@{lib/Sensors/Sensors.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef Sensors\_h}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define Sensors\_h}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_d_h_t_8h}{DHT.h}}"{}}}
+\DoxyCodeLine{5     }
+\DoxyCodeLine{6 \textcolor{keyword}{class }\mbox{\hyperlink{class_sensors}{Sensors}}\{}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8   \textcolor{keyword}{public}:}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10   \mbox{\hyperlink{class_sensors_aa5b909ae902c3834af249c2c78193910}{Sensors}}();}
+\DoxyCodeLine{11   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_sensors_a63d3e7f22f4643762e013242c81f5dd0}{Init\_DHT}}();}
+\DoxyCodeLine{12   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_sensors_a478b383b57c71c32cb9000f0467a2c8c}{Init\_Light}}();}
+\DoxyCodeLine{13   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_sensors_ae6c6d2b282c5a95774d905a919b91ba5}{Init\_DS18B20}}();}
+\DoxyCodeLine{14   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_sensors_a6afed30b2f3602855bb19961a92afcb0}{Init\_TDS}}();}
+\DoxyCodeLine{15   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_sensors_a603a21db615a54ed736d64c3712cbc41}{Init\_PH}}();}
+\DoxyCodeLine{16   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_sensors_a9b861da53c972d54609e5bc059d6c6fb}{Init\_sensors}}();}
+\DoxyCodeLine{17   \textcolor{keywordtype}{float} \mbox{\hyperlink{class_sensors_a8b463aa2f44b9e990557a1fda6a8b977}{Read\_Temp}}();}
+\DoxyCodeLine{18   \textcolor{keywordtype}{float} \mbox{\hyperlink{class_sensors_a3516a6c7ce662a0b45f837426f20a98f}{Read\_Hum}}();}
+\DoxyCodeLine{19   \textcolor{keywordtype}{float} \mbox{\hyperlink{class_sensors_abc70aefd1485e4330b494af20a85ebcf}{Read\_Light}}();  }
+\DoxyCodeLine{20   \textcolor{keywordtype}{float} \mbox{\hyperlink{class_sensors_a273ce9edb60a2b2391cd17a1ef310081}{Read\_DS18B20}}();}
+\DoxyCodeLine{21   \textcolor{keywordtype}{float} \mbox{\hyperlink{class_sensors_a9b876f7fe22a83c5ca4b54569db0c359}{Read\_TDS}}(); }
+\DoxyCodeLine{22   \textcolor{keywordtype}{float} \mbox{\hyperlink{class_sensors_a7a2665bfe8e0e28a7905e3087c4f931a}{Read\_PH}}(); }
+\DoxyCodeLine{23   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_sensors_aa86c36ee51dc1ffcc76ed666db5d1ca2}{Read\_high\_freq\_sensors}}();}
+\DoxyCodeLine{24   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_sensors_a6f6c0eb3b529be7558a26a151047c001}{Read\_low\_freq\_sensors}}();}
+\DoxyCodeLine{25   \textcolor{keywordtype}{float} \mbox{\hyperlink{class_sensors_ab606e5a4a22ffb8be9f25ea2b8b47ecb}{get\_my\_PH}}();}
+\DoxyCodeLine{26   \textcolor{keywordtype}{float} \mbox{\hyperlink{class_sensors_af144264966f14c43ee8686cea4f242e3}{get\_my\_TDS}}();}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28   \textcolor{keyword}{private}:}
+\DoxyCodeLine{29   \textcolor{keywordtype}{float} myPH = 0.0;}
+\DoxyCodeLine{30   \textcolor{keywordtype}{float} myTDS = 0.0;}
+\DoxyCodeLine{31   \};}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{34 }
+
+\end{DoxyCode}

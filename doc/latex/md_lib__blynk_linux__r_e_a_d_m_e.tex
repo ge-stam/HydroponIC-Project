@@ -1,0 +1,29 @@
+0. Connect your Raspberry Pi to the internet and open it\textquotesingle{}s console. $^\wedge$\+\_\+$^\wedge$
+
+
+\begin{DoxyEnumerate}
+\item Install Wiring\+Pi\+: \href{http://wiringpi.com/download-and-install/}{\texttt{ http\+://wiringpi.\+com/download-\/and-\/install/}}
+\item Download and build Blynk\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ git clone https://github.com/blynkkk/blynk-\/library.git}
+\DoxyCodeLine{\$ cd blynk-\/library/linux}
+\DoxyCodeLine{\$ make clean all target=raspberry}
+
+\end{DoxyCode}
+
+\item Run Blynk\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ sudo ./blynk -\/-\/token=YourAuthToken}
+
+\end{DoxyCode}
+
+\end{DoxyEnumerate}
+
+We have also provided a build script, you can try just running (inside of the \char`\"{}linux\char`\"{} directory)\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ ./build.sh raspberry}
+
+\end{DoxyCode}
+ 

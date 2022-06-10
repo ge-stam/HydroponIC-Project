@@ -1,0 +1,153 @@
+\hypertarget{structsensors__event__t}{}\doxysection{sensors\+\_\+event\+\_\+t Struct Reference}
+\label{structsensors__event__t}\index{sensors\_event\_t@{sensors\_event\_t}}
+
+
+{\ttfamily \#include $<$Adafruit\+\_\+\+Sensor.\+h$>$}
+
+\doxysubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+int32\+\_\+t \mbox{\hyperlink{structsensors__event__t_a67fae7dd1de9edce3656ed214d20377f}{version}}
+\item 
+int32\+\_\+t \mbox{\hyperlink{structsensors__event__t_a6429c13b9cff87152fc3027267f2784e}{sensor\+\_\+id}}
+\item 
+int32\+\_\+t \mbox{\hyperlink{structsensors__event__t_a449e574ed6911881dc55507cb5635c2c}{type}}
+\item 
+int32\+\_\+t \mbox{\hyperlink{structsensors__event__t_a3b1869501b35bf41f2ff54de072b6c2c}{reserved0}}
+\item 
+int32\+\_\+t \mbox{\hyperlink{structsensors__event__t_af424c5c51376cd09eb214ebec28e933d}{timestamp}}
+\item 
+\mbox{\Hypertarget{structsensors__event__t_ac1d164a3bd2d2ba539068fc6ba2690dc}\label{structsensors__event__t_ac1d164a3bd2d2ba539068fc6ba2690dc}} 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>float {\bfseries data} \mbox{[}4\mbox{]}\\
+\>\>{\em Raw data. }\\
+\>\mbox{\hyperlink{structsensors__vec__t}{sensors\_vec\_t}} \mbox{\hyperlink{structsensors__event__t_afdd828afc697e597d6c9dd6d3360cdba}{acceleration}}\\
+\>\mbox{\hyperlink{structsensors__vec__t}{sensors\_vec\_t}} \mbox{\hyperlink{structsensors__event__t_af237d30b9ce83483d0748dcc1c1cdf6b}{magnetic}}\\
+\>\mbox{\hyperlink{structsensors__vec__t}{sensors\_vec\_t}} \mbox{\hyperlink{structsensors__event__t_ad3e85e7ec6990fe1932443d1f3a01d47}{orientation}}\\
+\>\mbox{\hyperlink{structsensors__vec__t}{sensors\_vec\_t}} \mbox{\hyperlink{structsensors__event__t_acda3f7b94f1f66665c651fc381a33660}{gyro}}\\
+\>float \mbox{\hyperlink{structsensors__event__t_afc1d28cfbce795d6ea954ebe725241f5}{temperature}}\\
+\>float \mbox{\hyperlink{structsensors__event__t_a06f14a9abd47b91465f895d5259cdc1b}{distance}}\\
+\>float \mbox{\hyperlink{structsensors__event__t_aaf8b2537020ae0b7450785724d77a3e0}{light}}\\
+\>float \mbox{\hyperlink{structsensors__event__t_ac870e1249bab4a2a68cc4126761d24ef}{pressure}}\\
+\>float \mbox{\hyperlink{structsensors__event__t_ad60830bc80efb7e8a11d6fb25518f55b}{relative\_humidity}}\\
+\>float \mbox{\hyperlink{structsensors__event__t_af9653d31acfffa5a40aa709b2065e00b}{current}}\\
+\>float \mbox{\hyperlink{structsensors__event__t_a47061fcae597f83f8a0a99d4b7b5a5c1}{voltage}}\\
+\>\mbox{\hyperlink{structsensors__color__t}{sensors\_color\_t}} \mbox{\hyperlink{structsensors__event__t_afa3ffd4e1c9f7cfb5dffdd89fedcd107}{color}}\\
+\}; \\
+
+\end{tabbing}\begin{DoxyCompactList}\small\item\em Union for the wide ranges of data we can carry. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+struct sensor\+\_\+event\+\_\+s is used to provide a single sensor event in a common format. 
+
+\doxysubsection{Field Documentation}
+\mbox{\Hypertarget{structsensors__event__t_afdd828afc697e597d6c9dd6d3360cdba}\label{structsensors__event__t_afdd828afc697e597d6c9dd6d3360cdba}} 
+\index{sensors\_event\_t@{sensors\_event\_t}!acceleration@{acceleration}}
+\index{acceleration@{acceleration}!sensors\_event\_t@{sensors\_event\_t}}
+\doxysubsubsection{\texorpdfstring{acceleration}{acceleration}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structsensors__vec__t}{sensors\+\_\+vec\+\_\+t}} acceleration}
+
+acceleration values are in meter per second per second (m/s$^\wedge$2) \mbox{\Hypertarget{structsensors__event__t_afa3ffd4e1c9f7cfb5dffdd89fedcd107}\label{structsensors__event__t_afa3ffd4e1c9f7cfb5dffdd89fedcd107}} 
+\index{sensors\_event\_t@{sensors\_event\_t}!color@{color}}
+\index{color@{color}!sensors\_event\_t@{sensors\_event\_t}}
+\doxysubsubsection{\texorpdfstring{color}{color}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structsensors__color__t}{sensors\+\_\+color\+\_\+t}} color}
+
+color in RGB component values \mbox{\Hypertarget{structsensors__event__t_af9653d31acfffa5a40aa709b2065e00b}\label{structsensors__event__t_af9653d31acfffa5a40aa709b2065e00b}} 
+\index{sensors\_event\_t@{sensors\_event\_t}!current@{current}}
+\index{current@{current}!sensors\_event\_t@{sensors\_event\_t}}
+\doxysubsubsection{\texorpdfstring{current}{current}}
+{\footnotesize\ttfamily float current}
+
+current in milliamps (mA) \mbox{\Hypertarget{structsensors__event__t_a06f14a9abd47b91465f895d5259cdc1b}\label{structsensors__event__t_a06f14a9abd47b91465f895d5259cdc1b}} 
+\index{sensors\_event\_t@{sensors\_event\_t}!distance@{distance}}
+\index{distance@{distance}!sensors\_event\_t@{sensors\_event\_t}}
+\doxysubsubsection{\texorpdfstring{distance}{distance}}
+{\footnotesize\ttfamily float distance}
+
+distance in centimeters \mbox{\Hypertarget{structsensors__event__t_acda3f7b94f1f66665c651fc381a33660}\label{structsensors__event__t_acda3f7b94f1f66665c651fc381a33660}} 
+\index{sensors\_event\_t@{sensors\_event\_t}!gyro@{gyro}}
+\index{gyro@{gyro}!sensors\_event\_t@{sensors\_event\_t}}
+\doxysubsubsection{\texorpdfstring{gyro}{gyro}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structsensors__vec__t}{sensors\+\_\+vec\+\_\+t}} gyro}
+
+gyroscope values are in rad/s \mbox{\Hypertarget{structsensors__event__t_aaf8b2537020ae0b7450785724d77a3e0}\label{structsensors__event__t_aaf8b2537020ae0b7450785724d77a3e0}} 
+\index{sensors\_event\_t@{sensors\_event\_t}!light@{light}}
+\index{light@{light}!sensors\_event\_t@{sensors\_event\_t}}
+\doxysubsubsection{\texorpdfstring{light}{light}}
+{\footnotesize\ttfamily float light}
+
+light in SI lux units \mbox{\Hypertarget{structsensors__event__t_af237d30b9ce83483d0748dcc1c1cdf6b}\label{structsensors__event__t_af237d30b9ce83483d0748dcc1c1cdf6b}} 
+\index{sensors\_event\_t@{sensors\_event\_t}!magnetic@{magnetic}}
+\index{magnetic@{magnetic}!sensors\_event\_t@{sensors\_event\_t}}
+\doxysubsubsection{\texorpdfstring{magnetic}{magnetic}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structsensors__vec__t}{sensors\+\_\+vec\+\_\+t}} magnetic}
+
+magnetic vector values are in micro-\/\+Tesla (uT) \mbox{\Hypertarget{structsensors__event__t_ad3e85e7ec6990fe1932443d1f3a01d47}\label{structsensors__event__t_ad3e85e7ec6990fe1932443d1f3a01d47}} 
+\index{sensors\_event\_t@{sensors\_event\_t}!orientation@{orientation}}
+\index{orientation@{orientation}!sensors\_event\_t@{sensors\_event\_t}}
+\doxysubsubsection{\texorpdfstring{orientation}{orientation}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structsensors__vec__t}{sensors\+\_\+vec\+\_\+t}} orientation}
+
+orientation values are in degrees \mbox{\Hypertarget{structsensors__event__t_ac870e1249bab4a2a68cc4126761d24ef}\label{structsensors__event__t_ac870e1249bab4a2a68cc4126761d24ef}} 
+\index{sensors\_event\_t@{sensors\_event\_t}!pressure@{pressure}}
+\index{pressure@{pressure}!sensors\_event\_t@{sensors\_event\_t}}
+\doxysubsubsection{\texorpdfstring{pressure}{pressure}}
+{\footnotesize\ttfamily float pressure}
+
+pressure in hectopascal (h\+Pa) \mbox{\Hypertarget{structsensors__event__t_ad60830bc80efb7e8a11d6fb25518f55b}\label{structsensors__event__t_ad60830bc80efb7e8a11d6fb25518f55b}} 
+\index{sensors\_event\_t@{sensors\_event\_t}!relative\_humidity@{relative\_humidity}}
+\index{relative\_humidity@{relative\_humidity}!sensors\_event\_t@{sensors\_event\_t}}
+\doxysubsubsection{\texorpdfstring{relative\_humidity}{relative\_humidity}}
+{\footnotesize\ttfamily float relative\+\_\+humidity}
+
+relative humidity in percent \mbox{\Hypertarget{structsensors__event__t_a3b1869501b35bf41f2ff54de072b6c2c}\label{structsensors__event__t_a3b1869501b35bf41f2ff54de072b6c2c}} 
+\index{sensors\_event\_t@{sensors\_event\_t}!reserved0@{reserved0}}
+\index{reserved0@{reserved0}!sensors\_event\_t@{sensors\_event\_t}}
+\doxysubsubsection{\texorpdfstring{reserved0}{reserved0}}
+{\footnotesize\ttfamily int32\+\_\+t reserved0}
+
+reserved \mbox{\Hypertarget{structsensors__event__t_a6429c13b9cff87152fc3027267f2784e}\label{structsensors__event__t_a6429c13b9cff87152fc3027267f2784e}} 
+\index{sensors\_event\_t@{sensors\_event\_t}!sensor\_id@{sensor\_id}}
+\index{sensor\_id@{sensor\_id}!sensors\_event\_t@{sensors\_event\_t}}
+\doxysubsubsection{\texorpdfstring{sensor\_id}{sensor\_id}}
+{\footnotesize\ttfamily int32\+\_\+t sensor\+\_\+id}
+
+unique sensor identifier \mbox{\Hypertarget{structsensors__event__t_afc1d28cfbce795d6ea954ebe725241f5}\label{structsensors__event__t_afc1d28cfbce795d6ea954ebe725241f5}} 
+\index{sensors\_event\_t@{sensors\_event\_t}!temperature@{temperature}}
+\index{temperature@{temperature}!sensors\_event\_t@{sensors\_event\_t}}
+\doxysubsubsection{\texorpdfstring{temperature}{temperature}}
+{\footnotesize\ttfamily float temperature}
+
+temperature is in degrees centigrade (Celsius) \mbox{\Hypertarget{structsensors__event__t_af424c5c51376cd09eb214ebec28e933d}\label{structsensors__event__t_af424c5c51376cd09eb214ebec28e933d}} 
+\index{sensors\_event\_t@{sensors\_event\_t}!timestamp@{timestamp}}
+\index{timestamp@{timestamp}!sensors\_event\_t@{sensors\_event\_t}}
+\doxysubsubsection{\texorpdfstring{timestamp}{timestamp}}
+{\footnotesize\ttfamily int32\+\_\+t timestamp}
+
+time is in milliseconds \mbox{\Hypertarget{structsensors__event__t_a449e574ed6911881dc55507cb5635c2c}\label{structsensors__event__t_a449e574ed6911881dc55507cb5635c2c}} 
+\index{sensors\_event\_t@{sensors\_event\_t}!type@{type}}
+\index{type@{type}!sensors\_event\_t@{sensors\_event\_t}}
+\doxysubsubsection{\texorpdfstring{type}{type}}
+{\footnotesize\ttfamily int32\+\_\+t type}
+
+sensor type \mbox{\Hypertarget{structsensors__event__t_a67fae7dd1de9edce3656ed214d20377f}\label{structsensors__event__t_a67fae7dd1de9edce3656ed214d20377f}} 
+\index{sensors\_event\_t@{sensors\_event\_t}!version@{version}}
+\index{version@{version}!sensors\_event\_t@{sensors\_event\_t}}
+\doxysubsubsection{\texorpdfstring{version}{version}}
+{\footnotesize\ttfamily int32\+\_\+t version}
+
+must be sizeof(struct sensors\+\_\+event\+\_\+t) \mbox{\Hypertarget{structsensors__event__t_a47061fcae597f83f8a0a99d4b7b5a5c1}\label{structsensors__event__t_a47061fcae597f83f8a0a99d4b7b5a5c1}} 
+\index{sensors\_event\_t@{sensors\_event\_t}!voltage@{voltage}}
+\index{voltage@{voltage}!sensors\_event\_t@{sensors\_event\_t}}
+\doxysubsubsection{\texorpdfstring{voltage}{voltage}}
+{\footnotesize\ttfamily float voltage}
+
+voltage in volts (V) 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+Adafruit\+\_\+\+Sensor/Adafruit\+\_\+\+Sensor.\+h\end{DoxyCompactItemize}

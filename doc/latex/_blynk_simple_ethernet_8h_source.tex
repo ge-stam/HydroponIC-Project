@@ -1,0 +1,25 @@
+\hypertarget{_blynk_simple_ethernet_8h_source}{}\doxysection{Blynk\+Simple\+Ethernet.\+h}
+\label{_blynk_simple_ethernet_8h_source}\index{lib/Blynk/src/BlynkSimpleEthernet.h@{lib/Blynk/src/BlynkSimpleEthernet.h}}
+\mbox{\hyperlink{_blynk_simple_ethernet_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef BlynkSimpleEthernet\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define BlynkSimpleEthernet\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#ifndef BLYNK\_INFO\_CONNECTION}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#define BLYNK\_INFO\_CONNECTION "{}W5100"{}}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#include <Ethernet.h>}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#include <EthernetClient.h>}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_ethernet_8h}{Adapters/BlynkEthernet.h}}>}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{keyword}{static} EthernetClient \_blynkEthernetClient;}
+\DoxyCodeLine{23 \textcolor{keyword}{static} \mbox{\hyperlink{class_blynk_arduino_client_gen}{BlynkArduinoClient}} \_blynkTransport(\_blynkEthernetClient);}
+\DoxyCodeLine{24 \mbox{\hyperlink{class_blynk_ethernet}{BlynkEthernet}} Blynk(\_blynkTransport);}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_widgets_8h}{BlynkWidgets.h}}>}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,74 @@
+\hypertarget{_blynk_simple_red_bear_lab___b_l_e___nano_8h}{}\doxysection{lib/\+Blynk/src/\+Blynk\+Simple\+Red\+Bear\+Lab\+\_\+\+BLE\+\_\+\+Nano.h File Reference}
+\label{_blynk_simple_red_bear_lab___b_l_e___nano_8h}\index{lib/Blynk/src/BlynkSimpleRedBearLab\_BLE\_Nano.h@{lib/Blynk/src/BlynkSimpleRedBearLab\_BLE\_Nano.h}}
+{\ttfamily \#include $<$Blynk\+Api\+Arduino.\+h$>$}\newline
+{\ttfamily \#include $<$Blynk/\+Blynk\+Protocol.\+h$>$}\newline
+{\ttfamily \#include $<$utility/\+Blynk\+Fifo.\+h$>$}\newline
+{\ttfamily \#include $<$BLE\+\_\+\+API.\+h$>$}\newline
+{\ttfamily \#include $<$Blynk\+Widgets.\+h$>$}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_blynk_transport_red_bear_lab___b_l_e___nano}{Blynk\+Transport\+Red\+Bear\+Lab\+\_\+\+BLE\+\_\+\+Nano}}
+\item 
+class \mbox{\hyperlink{class_blynk_red_bear_lab___b_l_e___nano}{Blynk\+Red\+Bear\+Lab\+\_\+\+BLE\+\_\+\+Nano}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_blynk_simple_red_bear_lab___b_l_e___nano_8h_a33284361f2c2edaecda374e136b4b2cb}\label{_blynk_simple_red_bear_lab___b_l_e___nano_8h_a33284361f2c2edaecda374e136b4b2cb}} 
+\#define {\bfseries BLYNK\+\_\+\+INFO\+\_\+\+CONNECTION}~\char`\"{}RBL\+\_\+\+BLE\+\_\+\+Nano\char`\"{}
+\item 
+\mbox{\Hypertarget{_blynk_simple_red_bear_lab___b_l_e___nano_8h_ad498cfca060101a974a8471adaad4002}\label{_blynk_simple_red_bear_lab___b_l_e___nano_8h_ad498cfca060101a974a8471adaad4002}} 
+\#define {\bfseries BLYNK\+\_\+\+SEND\+\_\+\+ATOMIC}
+\item 
+\mbox{\Hypertarget{_blynk_simple_red_bear_lab___b_l_e___nano_8h_afa4b162d2c64525338afec57d50efd42}\label{_blynk_simple_red_bear_lab___b_l_e___nano_8h_afa4b162d2c64525338afec57d50efd42}} 
+\#define {\bfseries BLYNK\+\_\+\+SEND\+\_\+\+CHUNK}~20
+\item 
+\mbox{\Hypertarget{_blynk_simple_red_bear_lab___b_l_e___nano_8h_ae99e89fa2bf5a23790dcf5de510fca4e}\label{_blynk_simple_red_bear_lab___b_l_e___nano_8h_ae99e89fa2bf5a23790dcf5de510fca4e}} 
+\#define {\bfseries BLYNK\+\_\+\+SEND\+\_\+\+THROTTLE}~20
+\item 
+\mbox{\Hypertarget{_blynk_simple_red_bear_lab___b_l_e___nano_8h_ad8e2a701c69e325311d62cdb81301f26}\label{_blynk_simple_red_bear_lab___b_l_e___nano_8h_ad8e2a701c69e325311d62cdb81301f26}} 
+\#define {\bfseries TXRX\+\_\+\+BUF\+\_\+\+LEN}~20
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_blynk_simple_red_bear_lab___b_l_e___nano_8h_a0132b3aa0b301597eec1355f57759d8a}\label{_blynk_simple_red_bear_lab___b_l_e___nano_8h_a0132b3aa0b301597eec1355f57759d8a}} 
+Gatt\+Characteristic {\bfseries tx\+Characteristic} (uart\+\_\+tx\+\_\+uuid, tx\+Payload, 1, TXRX\+\_\+\+BUF\+\_\+\+LEN, Gatt\+Characteristic\+::\+BLE\+\_\+\+GATT\+\_\+\+CHAR\+\_\+\+PROPERTIES\+\_\+\+WRITE$\vert$Gatt\+Characteristic\+::\+BLE\+\_\+\+GATT\+\_\+\+CHAR\+\_\+\+PROPERTIES\+\_\+\+WRITE\+\_\+\+WITHOUT\+\_\+\+RESPONSE)
+\item 
+\mbox{\Hypertarget{_blynk_simple_red_bear_lab___b_l_e___nano_8h_afdb58210f1307a0abcf171ac871e3bf1}\label{_blynk_simple_red_bear_lab___b_l_e___nano_8h_afdb58210f1307a0abcf171ac871e3bf1}} 
+Gatt\+Characteristic {\bfseries rx\+Characteristic} (uart\+\_\+rx\+\_\+uuid, rx\+Payload, 1, TXRX\+\_\+\+BUF\+\_\+\+LEN, Gatt\+Characteristic\+::\+BLE\+\_\+\+GATT\+\_\+\+CHAR\+\_\+\+PROPERTIES\+\_\+\+NOTIFY)
+\item 
+\mbox{\Hypertarget{_blynk_simple_red_bear_lab___b_l_e___nano_8h_a7e6e6c81b9f0190957b7ae428b5a2cac}\label{_blynk_simple_red_bear_lab___b_l_e___nano_8h_a7e6e6c81b9f0190957b7ae428b5a2cac}} 
+Gatt\+Service {\bfseries uart\+Service} (uart\+\_\+base\+\_\+uuid, uart\+Chars, sizeof(uart\+Chars)/sizeof(Gatt\+Characteristic $\ast$))
+\item 
+\mbox{\Hypertarget{_blynk_simple_red_bear_lab___b_l_e___nano_8h_aedc960d4fd39cf33bac037a1cceb1f4c}\label{_blynk_simple_red_bear_lab___b_l_e___nano_8h_aedc960d4fd39cf33bac037a1cceb1f4c}} 
+\mbox{\hyperlink{class_blynk_red_bear_lab___b_l_e___nano}{Blynk\+Red\+Bear\+Lab\+\_\+\+BLE\+\_\+\+Nano}} {\bfseries Blynk} (\+\_\+blynk\+Transport)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_blynk_simple_red_bear_lab___b_l_e___nano_8h_a5271cf3caf52e3ad4442ca097cceaf6b}\label{_blynk_simple_red_bear_lab___b_l_e___nano_8h_a5271cf3caf52e3ad4442ca097cceaf6b}} 
+uint8\+\_\+t {\bfseries tx\+Payload} \mbox{[}TXRX\+\_\+\+BUF\+\_\+\+LEN\mbox{]} = \{0,\}
+\item 
+\mbox{\Hypertarget{_blynk_simple_red_bear_lab___b_l_e___nano_8h_a49e2abb91f87b249fb34f40e8756aa9d}\label{_blynk_simple_red_bear_lab___b_l_e___nano_8h_a49e2abb91f87b249fb34f40e8756aa9d}} 
+uint8\+\_\+t {\bfseries rx\+Payload} \mbox{[}TXRX\+\_\+\+BUF\+\_\+\+LEN\mbox{]} = \{0,\}
+\item 
+\mbox{\Hypertarget{_blynk_simple_red_bear_lab___b_l_e___nano_8h_aec687c1191fcc2a6d9a3c72a7ed01e6a}\label{_blynk_simple_red_bear_lab___b_l_e___nano_8h_aec687c1191fcc2a6d9a3c72a7ed01e6a}} 
+Gatt\+Characteristic $\ast$ {\bfseries uart\+Chars} \mbox{[}$\,$\mbox{]} = \{\&tx\+Characteristic, \&rx\+Characteristic\}
+\item 
+\mbox{\Hypertarget{_blynk_simple_red_bear_lab___b_l_e___nano_8h_a19a31458827f66fed4ff845d26a67c77}\label{_blynk_simple_red_bear_lab___b_l_e___nano_8h_a19a31458827f66fed4ff845d26a67c77}} 
+BLE {\bfseries ble}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Volodymyr Shymanskyy @license This project is released under the MIT License (MIT) 
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2015 Volodymyr Shymanskyy 
+\end{DoxyCopyright}
+\begin{DoxyDate}{Date}
+May 2016 
+\end{DoxyDate}

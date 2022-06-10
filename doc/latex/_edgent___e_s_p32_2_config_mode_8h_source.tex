@@ -1,0 +1,495 @@
+\hypertarget{_edgent___e_s_p32_2_config_mode_8h_source}{}\doxysection{Config\+Mode.\+h}
+\label{_edgent___e_s_p32_2_config_mode_8h_source}\index{lib/Blynk/examples/Blynk.Edgent/Edgent\_ESP32/ConfigMode.h@{lib/Blynk/examples/Blynk.Edgent/Edgent\_ESP32/ConfigMode.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include <WiFiClient.h>}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <WebServer.h>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <DNSServer.h>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <Update.h>}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <nvs.h>}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <nvs\_flash.h>}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 WebServer server(80);}
+\DoxyCodeLine{11 DNSServer dnsServer;}
+\DoxyCodeLine{12 \textcolor{keyword}{const} \textcolor{keywordtype}{byte} DNS\_PORT = 53;}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#ifdef BLYNK\_USE\_SPIFFS}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{  \#include "{}SPIFFS.h"{}}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{17   \textcolor{keyword}{const} \textcolor{keywordtype}{char}* config\_form = R\textcolor{stringliteral}{"{}html(}}
+\DoxyCodeLine{18 \textcolor{stringliteral}{<!DOCTYPE HTML>}}
+\DoxyCodeLine{19 \textcolor{stringliteral}{<html>}}
+\DoxyCodeLine{20 \textcolor{stringliteral}{<head>}}
+\DoxyCodeLine{21 \textcolor{stringliteral}{  <title>WiFi setup</title>}}
+\DoxyCodeLine{22 \textcolor{stringliteral}{  <style>}}
+\DoxyCodeLine{23 \textcolor{stringliteral}{  body \{}}
+\DoxyCodeLine{24 \textcolor{stringliteral}{    background-\/color: \#fcfcfc;}}
+\DoxyCodeLine{25 \textcolor{stringliteral}{    box-\/sizing: border-\/box;}}
+\DoxyCodeLine{26 \textcolor{stringliteral}{  \}}}
+\DoxyCodeLine{27 \textcolor{stringliteral}{  body, input \{}}
+\DoxyCodeLine{28 \textcolor{stringliteral}{    font-\/family: Roboto, sans-\/serif;}}
+\DoxyCodeLine{29 \textcolor{stringliteral}{    font-\/weight: 400;}}
+\DoxyCodeLine{30 \textcolor{stringliteral}{    font-\/size: 16px;}}
+\DoxyCodeLine{31 \textcolor{stringliteral}{  \}}}
+\DoxyCodeLine{32 \textcolor{stringliteral}{  .centered \{}}
+\DoxyCodeLine{33 \textcolor{stringliteral}{    position: fixed;}}
+\DoxyCodeLine{34 \textcolor{stringliteral}{    top: 50\%;}}
+\DoxyCodeLine{35 \textcolor{stringliteral}{    left: 50\%;}}
+\DoxyCodeLine{36 \textcolor{stringliteral}{    transform: translate(-\/50\%, -\/50\%);}}
+\DoxyCodeLine{37 \textcolor{stringliteral}{}}
+\DoxyCodeLine{38 \textcolor{stringliteral}{    padding: 20px;}}
+\DoxyCodeLine{39 \textcolor{stringliteral}{    background-\/color: \#ccc;}}
+\DoxyCodeLine{40 \textcolor{stringliteral}{    border-\/radius: 4px;}}
+\DoxyCodeLine{41 \textcolor{stringliteral}{  \}}}
+\DoxyCodeLine{42 \textcolor{stringliteral}{  td \{ padding:0 0 0 5px; \}}}
+\DoxyCodeLine{43 \textcolor{stringliteral}{  label \{ white-\/space:nowrap; \}}}
+\DoxyCodeLine{44 \textcolor{stringliteral}{  input \{ width: 20em; \}}}
+\DoxyCodeLine{45 \textcolor{stringliteral}{  input[name="{}port"{}] \{ width: 5em; \}}}
+\DoxyCodeLine{46 \textcolor{stringliteral}{  input[type="{}submit"{}], img \{ margin: auto; display: block; width: 30\%; \}}}
+\DoxyCodeLine{47 \textcolor{stringliteral}{  </style>}}
+\DoxyCodeLine{48 \textcolor{stringliteral}{</head> }}
+\DoxyCodeLine{49 \textcolor{stringliteral}{<body>}}
+\DoxyCodeLine{50 \textcolor{stringliteral}{<div class="{}centered"{}>}}
+\DoxyCodeLine{51 \textcolor{stringliteral}{  <form method="{}get"{} action="{}config"{}>}}
+\DoxyCodeLine{52 \textcolor{stringliteral}{    <table>}}
+\DoxyCodeLine{53 \textcolor{stringliteral}{    <tr><td><label for="{}ssid"{}>WiFi SSID:</label></td>  <td><input type="{}text"{} name="{}ssid"{} length=64 required="{}required"{}></td></tr>}}
+\DoxyCodeLine{54 \textcolor{stringliteral}{    <tr><td><label for="{}pass"{}>Password:</label></td>   <td><input type="{}text"{} name="{}pass"{} length=64></td></tr>}}
+\DoxyCodeLine{55 \textcolor{stringliteral}{    <tr><td><label for="{}blynk"{}>Auth token:</label></td><td><input type="{}text"{} name="{}blynk"{} placeholder="{}a0b1c2d..."{} pattern="{}[-\/\_a-\/zA-\/Z0-\/9]\{32\}"{} maxlength="{}32"{} required="{}required"{}></td></tr>}}
+\DoxyCodeLine{56 \textcolor{stringliteral}{    <tr><td><label for="{}host"{}>Host:</label></td>       <td><input type="{}text"{} name="{}host"{} value="{}blynk.cloud"{} length=64></td></tr>}}
+\DoxyCodeLine{57 \textcolor{stringliteral}{    <tr><td><label for="{}port\_ssl"{}>Port:</label></td>   <td><input type="{}number"{} name="{}port\_ssl"{} value="{}443"{} min="{}1"{} max="{}65535"{}></td></tr>}}
+\DoxyCodeLine{58 \textcolor{stringliteral}{    </table><br/>}}
+\DoxyCodeLine{59 \textcolor{stringliteral}{    <input type="{}submit"{} value="{}Apply"{}>}}
+\DoxyCodeLine{60 \textcolor{stringliteral}{  </form>}}
+\DoxyCodeLine{61 \textcolor{stringliteral}{</div>}}
+\DoxyCodeLine{62 \textcolor{stringliteral}{</body>}}
+\DoxyCodeLine{63 \textcolor{stringliteral}{</html>}}
+\DoxyCodeLine{64 \textcolor{stringliteral}{)html"{};}}
+\DoxyCodeLine{65 \textcolor{stringliteral}{}\textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67 \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{char} serverUpdateForm[] PROGMEM =}
+\DoxyCodeLine{68   R\textcolor{stringliteral}{"{}(<html><body>}}
+\DoxyCodeLine{69 \textcolor{stringliteral}{      <form method='POST' action='' enctype='multipart/form-\/data'>}}
+\DoxyCodeLine{70 \textcolor{stringliteral}{        <input type='file' name='update'>}}
+\DoxyCodeLine{71 \textcolor{stringliteral}{        <input type='submit' value='Update'>}}
+\DoxyCodeLine{72 \textcolor{stringliteral}{      </form>}}
+\DoxyCodeLine{73 \textcolor{stringliteral}{    </body></html>)"{};}}
+\DoxyCodeLine{74 \textcolor{stringliteral}{}}
+\DoxyCodeLine{75 \textcolor{stringliteral}{}\textcolor{keywordtype}{void} restartMCU() \{}
+\DoxyCodeLine{76   ESP.restart();}
+\DoxyCodeLine{77   \textcolor{keywordflow}{while}(1) \{\};}
+\DoxyCodeLine{78 \}}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80 \textcolor{keywordtype}{void} eraseMcuConfig() \{}
+\DoxyCodeLine{81   \textcolor{comment}{// Erase ESP32 NVS}}
+\DoxyCodeLine{82   \textcolor{keywordtype}{int} err;}
+\DoxyCodeLine{83   \textcolor{comment}{//err=nvs\_flash\_init();}}
+\DoxyCodeLine{84   \textcolor{comment}{//BLYNK\_LOG2("{}nvs\_flash\_init: "{}, err ? String(err) : "{}Success"{});}}
+\DoxyCodeLine{85   err=nvs\_flash\_erase();}
+\DoxyCodeLine{86   BLYNK\_LOG2(\textcolor{stringliteral}{"{}nvs\_flash\_erase: "{}}, err ? String(err) : \textcolor{stringliteral}{"{}Success"{}});}
+\DoxyCodeLine{87 \}}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89 \textcolor{keywordtype}{void} getWiFiName(\textcolor{keywordtype}{char}* buff, \textcolor{keywordtype}{size\_t} len, \textcolor{keywordtype}{bool} withPrefix = \textcolor{keyword}{true}) \{}
+\DoxyCodeLine{90   \textcolor{keyword}{const} uint64\_t chipId = ESP.getEfuseMac();}
+\DoxyCodeLine{91   uint32\_t unique = 0;}
+\DoxyCodeLine{92   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i=0; i<4; i++) \{}
+\DoxyCodeLine{93     unique = BlynkCRC32(\&chipId, \textcolor{keyword}{sizeof}(chipId), unique);}
+\DoxyCodeLine{94   \}}
+\DoxyCodeLine{95   unique \&= 0xFFFFF;}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97   \textcolor{keywordflow}{if} (withPrefix) \{}
+\DoxyCodeLine{98     snprintf(buff, len, \textcolor{stringliteral}{"{}Blynk \%s-\/\%05X"{}}, BLYNK\_DEVICE\_NAME, unique);}
+\DoxyCodeLine{99   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{100     snprintf(buff, len, \textcolor{stringliteral}{"{}\%s-\/\%05X"{}}, BLYNK\_DEVICE\_NAME, unique);}
+\DoxyCodeLine{101   \}}
+\DoxyCodeLine{102 \}}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104 \textcolor{keywordtype}{void} enterConfigMode()}
+\DoxyCodeLine{105 \{}
+\DoxyCodeLine{106   \textcolor{keywordtype}{char} ssidBuff[64];}
+\DoxyCodeLine{107   getWiFiName(ssidBuff, \textcolor{keyword}{sizeof}(ssidBuff));}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109   WiFi.mode(WIFI\_OFF);}
+\DoxyCodeLine{110   delay(100);}
+\DoxyCodeLine{111   WiFi.mode(WIFI\_AP);}
+\DoxyCodeLine{112   delay(2000);}
+\DoxyCodeLine{113   WiFi.softAPConfig(WIFI\_AP\_IP, WIFI\_AP\_IP, WIFI\_AP\_Subnet);}
+\DoxyCodeLine{114   WiFi.softAP(ssidBuff);}
+\DoxyCodeLine{115   delay(500);}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117   IPAddress myIP = WiFi.softAPIP();}
+\DoxyCodeLine{118   \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(String(\textcolor{stringliteral}{"{}AP SSID: "{}}) + ssidBuff);}
+\DoxyCodeLine{119   \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(String(\textcolor{stringliteral}{"{}AP IP:   "{}}) + myIP[0] + \textcolor{stringliteral}{"{}."{}} + myIP[1] + \textcolor{stringliteral}{"{}."{}} + myIP[2] + \textcolor{stringliteral}{"{}."{}} + myIP[3]);}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121   \textcolor{comment}{// Set up DNS Server}}
+\DoxyCodeLine{122   dnsServer.setTTL(300); \textcolor{comment}{// Time-\/to-\/live 300s}}
+\DoxyCodeLine{123   dnsServer.setErrorReplyCode(DNSReplyCode::ServerFailure); \textcolor{comment}{// Return code for non-\/accessible domains}}
+\DoxyCodeLine{124 \textcolor{preprocessor}{\#ifdef WIFI\_CAPTIVE\_PORTAL\_ENABLE}}
+\DoxyCodeLine{125   dnsServer.start(DNS\_PORT, \textcolor{stringliteral}{"{}*"{}}, WiFi.softAPIP()); \textcolor{comment}{// Point all to our IP}}
+\DoxyCodeLine{126   server.onNotFound(handleRoot);}
+\DoxyCodeLine{127 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{128   dnsServer.start(DNS\_PORT, CONFIG\_AP\_URL, WiFi.softAPIP());}
+\DoxyCodeLine{129   \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(String(\textcolor{stringliteral}{"{}AP URL:  "{}}) + CONFIG\_AP\_URL);}
+\DoxyCodeLine{130 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132   server.on(\textcolor{stringliteral}{"{}/update"{}}, HTTP\_GET, []() \{}
+\DoxyCodeLine{133     server.sendHeader(\textcolor{stringliteral}{"{}Connection"{}}, \textcolor{stringliteral}{"{}close"{}});}
+\DoxyCodeLine{134     server.send(200, \textcolor{stringliteral}{"{}text/html"{}}, serverUpdateForm);}
+\DoxyCodeLine{135   \});}
+\DoxyCodeLine{136   server.on(\textcolor{stringliteral}{"{}/update"{}}, HTTP\_POST, []() \{}
+\DoxyCodeLine{137     server.sendHeader(\textcolor{stringliteral}{"{}Connection"{}}, \textcolor{stringliteral}{"{}close"{}});}
+\DoxyCodeLine{138     \textcolor{keywordflow}{if} (!Update.hasError()) \{}
+\DoxyCodeLine{139       server.send(200, \textcolor{stringliteral}{"{}text/plain"{}}, \textcolor{stringliteral}{"{}OK"{}});}
+\DoxyCodeLine{140     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{141       server.send(500, \textcolor{stringliteral}{"{}text/plain"{}}, \textcolor{stringliteral}{"{}FAIL"{}});}
+\DoxyCodeLine{142     \}}
+\DoxyCodeLine{143     delay(1000);}
+\DoxyCodeLine{144     restartMCU();}
+\DoxyCodeLine{145   \}, []() \{}
+\DoxyCodeLine{146     HTTPUpload\& upload = server.upload();}
+\DoxyCodeLine{147     \textcolor{keywordflow}{if} (upload.status == UPLOAD\_FILE\_START) \{}
+\DoxyCodeLine{148       \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(String(\textcolor{stringliteral}{"{}Update: "{}}) + upload.filename);}
+\DoxyCodeLine{149       \textcolor{comment}{//WiFiUDP::stop();}}
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151       \textcolor{keywordflow}{if} (!Update.begin(UPDATE\_SIZE\_UNKNOWN)) \{ \textcolor{comment}{//start with max available size}}
+\DoxyCodeLine{152         Update.printError(BLYNK\_PRINT);}
+\DoxyCodeLine{153       \}}
+\DoxyCodeLine{154     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (upload.status == UPLOAD\_FILE\_WRITE) \{}
+\DoxyCodeLine{155       \textcolor{comment}{/* flashing firmware to ESP*/}}
+\DoxyCodeLine{156       \textcolor{keywordflow}{if} (Update.write(upload.buf, upload.currentSize) != upload.currentSize) \{}
+\DoxyCodeLine{157         Update.printError(BLYNK\_PRINT);}
+\DoxyCodeLine{158       \}}
+\DoxyCodeLine{159       BLYNK\_PRINT.print(\textcolor{stringliteral}{"{}."{}});}
+\DoxyCodeLine{160     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (upload.status == UPLOAD\_FILE\_END) \{}
+\DoxyCodeLine{161       BLYNK\_PRINT.println();}
+\DoxyCodeLine{162       \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}Finishing..."{}});}
+\DoxyCodeLine{163       \textcolor{keywordflow}{if} (Update.end(\textcolor{keyword}{true})) \{ \textcolor{comment}{//true to set the size to the current progress}}
+\DoxyCodeLine{164         \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}Update Success. Rebooting"{}});}
+\DoxyCodeLine{165       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{166         Update.printError(BLYNK\_PRINT);}
+\DoxyCodeLine{167       \}}
+\DoxyCodeLine{168     \}}
+\DoxyCodeLine{169   \});}
+\DoxyCodeLine{170 }
+\DoxyCodeLine{171   server.on(\textcolor{stringliteral}{"{}/config"{}}, []() \{}
+\DoxyCodeLine{172     \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}Applying configuration..."{}});}
+\DoxyCodeLine{173     String ssid = server.arg(\textcolor{stringliteral}{"{}ssid"{}});}
+\DoxyCodeLine{174     String ssidManual = server.arg(\textcolor{stringliteral}{"{}ssidManual"{}});}
+\DoxyCodeLine{175     String pass = server.arg(\textcolor{stringliteral}{"{}pass"{}});}
+\DoxyCodeLine{176     \textcolor{keywordflow}{if} (ssidManual != \textcolor{stringliteral}{"{}"{}}) \{}
+\DoxyCodeLine{177       ssid = ssidManual;}
+\DoxyCodeLine{178     \}}
+\DoxyCodeLine{179     String token = server.arg(\textcolor{stringliteral}{"{}blynk"{}});}
+\DoxyCodeLine{180     String host  = server.arg(\textcolor{stringliteral}{"{}host"{}});}
+\DoxyCodeLine{181     String port  = server.arg(\textcolor{stringliteral}{"{}port\_ssl"{}});}
+\DoxyCodeLine{182 }
+\DoxyCodeLine{183     String ip   = server.arg(\textcolor{stringliteral}{"{}ip"{}});}
+\DoxyCodeLine{184     String mask = server.arg(\textcolor{stringliteral}{"{}mask"{}});}
+\DoxyCodeLine{185     String gw   = server.arg(\textcolor{stringliteral}{"{}gw"{}});}
+\DoxyCodeLine{186     String dns  = server.arg(\textcolor{stringliteral}{"{}dns"{}});}
+\DoxyCodeLine{187     String dns2 = server.arg(\textcolor{stringliteral}{"{}dns2"{}});}
+\DoxyCodeLine{188 }
+\DoxyCodeLine{189     \textcolor{keywordtype}{bool} save  = server.arg(\textcolor{stringliteral}{"{}save"{}}).toInt();}
+\DoxyCodeLine{190 }
+\DoxyCodeLine{191     String content;}
+\DoxyCodeLine{192 }
+\DoxyCodeLine{193     \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(String(\textcolor{stringliteral}{"{}WiFi SSID: "{}}) + ssid + \textcolor{stringliteral}{"{} Pass: "{}} + pass);}
+\DoxyCodeLine{194     \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(String(\textcolor{stringliteral}{"{}Blynk cloud: "{}}) + token + \textcolor{stringliteral}{"{} @ "{}} + host + \textcolor{stringliteral}{"{}:"{}} + port);}
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196     \textcolor{keywordflow}{if} (token.length() == 32 \&\& ssid.length() > 0) \{}
+\DoxyCodeLine{197       configStore.setFlag(CONFIG\_FLAG\_VALID, \textcolor{keyword}{false});}
+\DoxyCodeLine{198       CopyString(ssid, configStore.wifiSSID);}
+\DoxyCodeLine{199       CopyString(pass, configStore.wifiPass);}
+\DoxyCodeLine{200       CopyString(token, configStore.cloudToken);}
+\DoxyCodeLine{201       \textcolor{keywordflow}{if} (host.length()) \{}
+\DoxyCodeLine{202         CopyString(host,  configStore.cloudHost);}
+\DoxyCodeLine{203       \}}
+\DoxyCodeLine{204       \textcolor{keywordflow}{if} (port.length()) \{}
+\DoxyCodeLine{205         configStore.cloudPort = port.toInt();}
+\DoxyCodeLine{206       \}}
+\DoxyCodeLine{207 }
+\DoxyCodeLine{208       IPAddress addr;}
+\DoxyCodeLine{209       }
+\DoxyCodeLine{210       \textcolor{keywordflow}{if} (ip.length() \&\& addr.fromString(ip)) \{}
+\DoxyCodeLine{211         configStore.staticIP = addr;}
+\DoxyCodeLine{212         configStore.setFlag(CONFIG\_FLAG\_STATIC\_IP, \textcolor{keyword}{true});}
+\DoxyCodeLine{213       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{214         configStore.setFlag(CONFIG\_FLAG\_STATIC\_IP, \textcolor{keyword}{false});}
+\DoxyCodeLine{215       \}}
+\DoxyCodeLine{216       \textcolor{keywordflow}{if} (mask.length() \&\& addr.fromString(mask)) \{}
+\DoxyCodeLine{217         configStore.staticMask = addr;}
+\DoxyCodeLine{218       \}}
+\DoxyCodeLine{219       \textcolor{keywordflow}{if} (gw.length() \&\& addr.fromString(gw)) \{}
+\DoxyCodeLine{220         configStore.staticGW = addr;}
+\DoxyCodeLine{221       \}}
+\DoxyCodeLine{222       \textcolor{keywordflow}{if} (dns.length() \&\& addr.fromString(dns)) \{}
+\DoxyCodeLine{223         configStore.staticDNS = addr;}
+\DoxyCodeLine{224       \}}
+\DoxyCodeLine{225       \textcolor{keywordflow}{if} (dns2.length() \&\& addr.fromString(dns2)) \{}
+\DoxyCodeLine{226         configStore.staticDNS2 = addr;}
+\DoxyCodeLine{227       \}}
+\DoxyCodeLine{228 }
+\DoxyCodeLine{229       \textcolor{keywordflow}{if} (save) \{}
+\DoxyCodeLine{230         configStore.setFlag(CONFIG\_FLAG\_VALID, \textcolor{keyword}{true});}
+\DoxyCodeLine{231         config\_save();}
+\DoxyCodeLine{232 }
+\DoxyCodeLine{233         content = R\textcolor{stringliteral}{"{}json(\{"{}status"{}:"{}ok"{},"{}msg"{}:"{}Configuration saved"{}\})json"{};}}
+\DoxyCodeLine{234 \textcolor{stringliteral}{      \} }\textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{235         content = R\textcolor{stringliteral}{"{}json(\{"{}status"{}:"{}ok"{},"{}msg"{}:"{}Trying to connect..."{}\})json"{};}}
+\DoxyCodeLine{236 \textcolor{stringliteral}{      \}}}
+\DoxyCodeLine{237 \textcolor{stringliteral}{      server.send(200, }\textcolor{stringliteral}{"{}application/json"{}}, content);}
+\DoxyCodeLine{238 }
+\DoxyCodeLine{239       BlynkState::set(MODE\_SWITCH\_TO\_STA);}
+\DoxyCodeLine{240     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{241       \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}Configuration invalid"{}});}
+\DoxyCodeLine{242       content = R\textcolor{stringliteral}{"{}json(\{"{}status"{}:"{}error"{},"{}msg"{}:"{}Configuration invalid"{}\})json"{};}}
+\DoxyCodeLine{243 \textcolor{stringliteral}{      server.send(500, }\textcolor{stringliteral}{"{}application/json"{}}, content);}
+\DoxyCodeLine{244     \}}
+\DoxyCodeLine{245   \});}
+\DoxyCodeLine{246   server.on(\textcolor{stringliteral}{"{}/board\_info.json"{}}, []() \{}
+\DoxyCodeLine{247     \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}Sending board info..."{}});}
+\DoxyCodeLine{248     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* tmpl = BLYNK\_TEMPLATE\_ID;}
+\DoxyCodeLine{249     \textcolor{keywordtype}{char} ssidBuff[64];}
+\DoxyCodeLine{250     getWiFiName(ssidBuff, \textcolor{keyword}{sizeof}(ssidBuff));}
+\DoxyCodeLine{251     \textcolor{keywordtype}{char} buff[512];}
+\DoxyCodeLine{252     snprintf(buff, \textcolor{keyword}{sizeof}(buff),}
+\DoxyCodeLine{253       R\textcolor{stringliteral}{"{}json(\{"{}board"{}:"{}\%s"{},"{}tmpl\_id"{}:"{}\%s"{},"{}fw\_type"{}:"{}\%s"{},"{}fw\_ver"{}:"{}\%s"{},"{}ssid"{}:"{}\%s"{},"{}bssid"{}:"{}\%s"{},"{}last\_error"{}:\%d,"{}wifi\_scan"{}:true,"{}static\_ip"{}:true\})json"{},}}
+\DoxyCodeLine{254 \textcolor{stringliteral}{      BLYNK\_DEVICE\_NAME,}}
+\DoxyCodeLine{255 \textcolor{stringliteral}{      tmpl ? tmpl : }\textcolor{stringliteral}{"{}Unknown"{}},}
+\DoxyCodeLine{256       BLYNK\_FIRMWARE\_TYPE,}
+\DoxyCodeLine{257       BLYNK\_FIRMWARE\_VERSION,}
+\DoxyCodeLine{258       ssidBuff,}
+\DoxyCodeLine{259       WiFi.softAPmacAddress().c\_str(),}
+\DoxyCodeLine{260       configStore.last\_error}
+\DoxyCodeLine{261     );}
+\DoxyCodeLine{262     server.send(200, \textcolor{stringliteral}{"{}application/json"{}}, buff);}
+\DoxyCodeLine{263   \});}
+\DoxyCodeLine{264   server.on(\textcolor{stringliteral}{"{}/wifi\_scan.json"{}}, []() \{}
+\DoxyCodeLine{265     \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}Scanning networks..."{}});}
+\DoxyCodeLine{266     \textcolor{keywordtype}{int} wifi\_nets = WiFi.scanNetworks(\textcolor{keyword}{true}, \textcolor{keyword}{true});}
+\DoxyCodeLine{267     \textcolor{keyword}{const} uint32\_t t = millis();}
+\DoxyCodeLine{268     \textcolor{keywordflow}{while} (wifi\_nets < 0 \&\&}
+\DoxyCodeLine{269            millis() -\/ t < 20000)}
+\DoxyCodeLine{270     \{}
+\DoxyCodeLine{271       delay(20);}
+\DoxyCodeLine{272       wifi\_nets = WiFi.scanComplete();}
+\DoxyCodeLine{273     \}}
+\DoxyCodeLine{274     \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(String(\textcolor{stringliteral}{"{}Found networks: "{}}) + wifi\_nets);}
+\DoxyCodeLine{275 }
+\DoxyCodeLine{276     \textcolor{keywordflow}{if} (wifi\_nets > 0) \{}
+\DoxyCodeLine{277       \textcolor{comment}{// Sort networks}}
+\DoxyCodeLine{278       \textcolor{keywordtype}{int} indices[wifi\_nets];}
+\DoxyCodeLine{279       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < wifi\_nets; i++) \{}
+\DoxyCodeLine{280         indices[i] = i;}
+\DoxyCodeLine{281       \}}
+\DoxyCodeLine{282       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < wifi\_nets; i++) \{}
+\DoxyCodeLine{283         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = i + 1; j < wifi\_nets; j++) \{}
+\DoxyCodeLine{284           \textcolor{keywordflow}{if} (WiFi.RSSI(indices[j]) > WiFi.RSSI(indices[i])) \{}
+\DoxyCodeLine{285             std::swap(indices[i], indices[j]);}
+\DoxyCodeLine{286           \}}
+\DoxyCodeLine{287         \}}
+\DoxyCodeLine{288       \}}
+\DoxyCodeLine{289 }
+\DoxyCodeLine{290       wifi\_nets = BlynkMin(15, wifi\_nets); \textcolor{comment}{// Show top 15 networks}}
+\DoxyCodeLine{291 }
+\DoxyCodeLine{292       \textcolor{comment}{// TODO: skip empty names}}
+\DoxyCodeLine{293       String result = \textcolor{stringliteral}{"{}[\(\backslash\)n"{}};}
+\DoxyCodeLine{294 }
+\DoxyCodeLine{295       \textcolor{keywordtype}{char} buff[256];}
+\DoxyCodeLine{296       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < wifi\_nets; i++)\{}
+\DoxyCodeLine{297         \textcolor{keywordtype}{int} \textcolor{keywordtype}{id} = indices[i];}
+\DoxyCodeLine{298 }
+\DoxyCodeLine{299         \textcolor{keyword}{const} \textcolor{keywordtype}{char}* sec;}
+\DoxyCodeLine{300         \textcolor{keywordflow}{switch} (WiFi.encryptionType(\textcolor{keywordtype}{id})) \{}
+\DoxyCodeLine{301         \textcolor{keywordflow}{case} WIFI\_AUTH\_WEP:          sec = \textcolor{stringliteral}{"{}WEP"{}}; \textcolor{keywordflow}{break};}
+\DoxyCodeLine{302         \textcolor{keywordflow}{case} WIFI\_AUTH\_WPA\_PSK:      sec = \textcolor{stringliteral}{"{}WPA/PSK"{}}; \textcolor{keywordflow}{break};}
+\DoxyCodeLine{303         \textcolor{keywordflow}{case} WIFI\_AUTH\_WPA2\_PSK:     sec = \textcolor{stringliteral}{"{}WPA2/PSK"{}}; \textcolor{keywordflow}{break};}
+\DoxyCodeLine{304         \textcolor{keywordflow}{case} WIFI\_AUTH\_WPA\_WPA2\_PSK: sec = \textcolor{stringliteral}{"{}WPA/WPA2/PSK"{}}; \textcolor{keywordflow}{break};}
+\DoxyCodeLine{305         \textcolor{keywordflow}{case} WIFI\_AUTH\_OPEN:         sec = \textcolor{stringliteral}{"{}OPEN"{}}; \textcolor{keywordflow}{break};}
+\DoxyCodeLine{306         \textcolor{keywordflow}{default}:                     sec = \textcolor{stringliteral}{"{}unknown"{}}; \textcolor{keywordflow}{break};}
+\DoxyCodeLine{307         \}}
+\DoxyCodeLine{308 }
+\DoxyCodeLine{309         snprintf(buff, \textcolor{keyword}{sizeof}(buff),}
+\DoxyCodeLine{310           R\textcolor{stringliteral}{"{}json(  \{"{}ssid"{}:"{}\%s"{},"{}bssid"{}:"{}\%s"{},"{}rssi"{}:\%i,"{}sec"{}:"{}\%s"{},"{}ch"{}:\%i\})json"{},}}
+\DoxyCodeLine{311 \textcolor{stringliteral}{          WiFi.SSID(}\textcolor{keywordtype}{id}).c\_str(),}
+\DoxyCodeLine{312           WiFi.BSSIDstr(\textcolor{keywordtype}{id}).c\_str(),}
+\DoxyCodeLine{313           WiFi.RSSI(\textcolor{keywordtype}{id}),}
+\DoxyCodeLine{314           sec,}
+\DoxyCodeLine{315           WiFi.channel(\textcolor{keywordtype}{id})}
+\DoxyCodeLine{316         );}
+\DoxyCodeLine{317 }
+\DoxyCodeLine{318         result += buff;}
+\DoxyCodeLine{319         \textcolor{keywordflow}{if} (i != wifi\_nets-\/1) result += \textcolor{stringliteral}{"{},\(\backslash\)n"{}};}
+\DoxyCodeLine{320       \}}
+\DoxyCodeLine{321       server.send(200, \textcolor{stringliteral}{"{}application/json"{}}, result + \textcolor{stringliteral}{"{}\(\backslash\)n]"{}});}
+\DoxyCodeLine{322     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{323       server.send(200, \textcolor{stringliteral}{"{}application/json"{}}, \textcolor{stringliteral}{"{}[]"{}});}
+\DoxyCodeLine{324     \}}
+\DoxyCodeLine{325   \});}
+\DoxyCodeLine{326   server.on(\textcolor{stringliteral}{"{}/reset"{}}, []() \{}
+\DoxyCodeLine{327     BlynkState::set(MODE\_RESET\_CONFIG);}
+\DoxyCodeLine{328     server.send(200, \textcolor{stringliteral}{"{}application/json"{}}, R\textcolor{stringliteral}{"{}json(\{"{}status"{}:"{}ok"{},"{}msg"{}:"{}Configuration reset"{}\})json"{});}}
+\DoxyCodeLine{329 \textcolor{stringliteral}{  \});}}
+\DoxyCodeLine{330 \textcolor{stringliteral}{  server.on(}\textcolor{stringliteral}{"{}/reboot"{}}, []() \{}
+\DoxyCodeLine{331     restartMCU();}
+\DoxyCodeLine{332   \});}
+\DoxyCodeLine{333 }
+\DoxyCodeLine{334 \textcolor{preprocessor}{\#ifdef BLYNK\_USE\_SPIFFS}}
+\DoxyCodeLine{335   \textcolor{keywordflow}{if} (SPIFFS.begin()) \{}
+\DoxyCodeLine{336     server.serveStatic(\textcolor{stringliteral}{"{}/img/favicon.png"{}}, SPIFFS, \textcolor{stringliteral}{"{}/img/favicon.png"{}});}
+\DoxyCodeLine{337     server.serveStatic(\textcolor{stringliteral}{"{}/img/logo.png"{}}, SPIFFS, \textcolor{stringliteral}{"{}/img/logo.png"{}});}
+\DoxyCodeLine{338     server.serveStatic(\textcolor{stringliteral}{"{}/"{}}, SPIFFS, \textcolor{stringliteral}{"{}/index.html"{}});}
+\DoxyCodeLine{339   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{340     \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}Webpage: No SPIFFS"{}});}
+\DoxyCodeLine{341   \}}
+\DoxyCodeLine{342 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{343 }
+\DoxyCodeLine{344   server.begin();}
+\DoxyCodeLine{345 }
+\DoxyCodeLine{346   \textcolor{keywordflow}{while} (BlynkState::is(MODE\_WAIT\_CONFIG) || BlynkState::is(MODE\_CONFIGURING)) \{}
+\DoxyCodeLine{347     delay(10);}
+\DoxyCodeLine{348     dnsServer.processNextRequest();}
+\DoxyCodeLine{349     server.handleClient();}
+\DoxyCodeLine{350     app\_loop();}
+\DoxyCodeLine{351     \textcolor{keywordflow}{if} (BlynkState::is(MODE\_WAIT\_CONFIG) \&\& WiFi.softAPgetStationNum() > 0) \{}
+\DoxyCodeLine{352       BlynkState::set(MODE\_CONFIGURING);}
+\DoxyCodeLine{353     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (BlynkState::is(MODE\_CONFIGURING) \&\& WiFi.softAPgetStationNum() == 0) \{}
+\DoxyCodeLine{354       BlynkState::set(MODE\_WAIT\_CONFIG);}
+\DoxyCodeLine{355     \}}
+\DoxyCodeLine{356   \}}
+\DoxyCodeLine{357 }
+\DoxyCodeLine{358   server.stop();}
+\DoxyCodeLine{359   }
+\DoxyCodeLine{360 \textcolor{preprocessor}{\#ifdef BLYNK\_USE\_SPIFFS}}
+\DoxyCodeLine{361   SPIFFS.end();}
+\DoxyCodeLine{362 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{363 \}}
+\DoxyCodeLine{364 }
+\DoxyCodeLine{365 \textcolor{keywordtype}{void} enterConnectNet() \{}
+\DoxyCodeLine{366   BlynkState::set(MODE\_CONNECTING\_NET);}
+\DoxyCodeLine{367   \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(String(\textcolor{stringliteral}{"{}Connecting to WiFi: "{}}) + configStore.wifiSSID);}
+\DoxyCodeLine{368 }
+\DoxyCodeLine{369   \textcolor{keywordtype}{char} ssidBuff[64];}
+\DoxyCodeLine{370   getWiFiName(ssidBuff, \textcolor{keyword}{sizeof}(ssidBuff));}
+\DoxyCodeLine{371   String hostname(ssidBuff);}
+\DoxyCodeLine{372   hostname.replace(\textcolor{stringliteral}{"{} "{}}, \textcolor{stringliteral}{"{}-\/"{}});}
+\DoxyCodeLine{373   WiFi.setHostname(hostname.c\_str());}
+\DoxyCodeLine{374 }
+\DoxyCodeLine{375   \textcolor{keywordflow}{if} (configStore.getFlag(CONFIG\_FLAG\_STATIC\_IP)) \{}
+\DoxyCodeLine{376     \textcolor{keywordflow}{if} (!WiFi.config(configStore.staticIP,}
+\DoxyCodeLine{377                     configStore.staticGW,}
+\DoxyCodeLine{378                     configStore.staticMask,}
+\DoxyCodeLine{379                     configStore.staticDNS,}
+\DoxyCodeLine{380                     configStore.staticDNS2)}
+\DoxyCodeLine{381     ) \{}
+\DoxyCodeLine{382       \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}Failed to configure Static IP"{}});}
+\DoxyCodeLine{383       config\_set\_last\_error(BLYNK\_PROV\_ERR\_CONFIG);}
+\DoxyCodeLine{384       BlynkState::set(MODE\_ERROR);}
+\DoxyCodeLine{385       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{386     \}}
+\DoxyCodeLine{387   \}}
+\DoxyCodeLine{388 }
+\DoxyCodeLine{389   WiFi.begin(configStore.wifiSSID, configStore.wifiPass);}
+\DoxyCodeLine{390 }
+\DoxyCodeLine{391   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} timeoutMs = millis() + WIFI\_NET\_CONNECT\_TIMEOUT;}
+\DoxyCodeLine{392   \textcolor{keywordflow}{while} ((timeoutMs > millis()) \&\& (WiFi.status() != WL\_CONNECTED))}
+\DoxyCodeLine{393   \{}
+\DoxyCodeLine{394     delay(10);}
+\DoxyCodeLine{395     app\_loop();}
+\DoxyCodeLine{396 }
+\DoxyCodeLine{397     \textcolor{keywordflow}{if} (!BlynkState::is(MODE\_CONNECTING\_NET)) \{}
+\DoxyCodeLine{398       WiFi.disconnect();}
+\DoxyCodeLine{399       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{400     \}}
+\DoxyCodeLine{401   \}}
+\DoxyCodeLine{402 }
+\DoxyCodeLine{403   \textcolor{keywordflow}{if} (WiFi.status() == WL\_CONNECTED) \{}
+\DoxyCodeLine{404     IPAddress localip = WiFi.localIP();}
+\DoxyCodeLine{405     \textcolor{keywordflow}{if} (configStore.getFlag(CONFIG\_FLAG\_STATIC\_IP)) \{}
+\DoxyCodeLine{406       BLYNK\_LOG\_IP(\textcolor{stringliteral}{"{}Using Static IP: "{}}, localip);}
+\DoxyCodeLine{407     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{408       BLYNK\_LOG\_IP(\textcolor{stringliteral}{"{}Using Dynamic IP: "{}}, localip);}
+\DoxyCodeLine{409     \}}
+\DoxyCodeLine{410 }
+\DoxyCodeLine{411     BlynkState::set(MODE\_CONNECTING\_CLOUD);}
+\DoxyCodeLine{412   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{413     config\_set\_last\_error(BLYNK\_PROV\_ERR\_NETWORK);}
+\DoxyCodeLine{414     BlynkState::set(MODE\_ERROR);}
+\DoxyCodeLine{415   \}}
+\DoxyCodeLine{416 \}}
+\DoxyCodeLine{417 }
+\DoxyCodeLine{418 \textcolor{keywordtype}{void} enterConnectCloud() \{}
+\DoxyCodeLine{419   BlynkState::set(MODE\_CONNECTING\_CLOUD);}
+\DoxyCodeLine{420 }
+\DoxyCodeLine{421   Blynk.config(configStore.cloudToken, configStore.cloudHost, configStore.cloudPort);}
+\DoxyCodeLine{422   Blynk.connect(0);}
+\DoxyCodeLine{423 }
+\DoxyCodeLine{424   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} timeoutMs = millis() + WIFI\_CLOUD\_CONNECT\_TIMEOUT;}
+\DoxyCodeLine{425   \textcolor{keywordflow}{while} ((timeoutMs > millis()) \&\&}
+\DoxyCodeLine{426         (!Blynk.isTokenInvalid()) \&\&}
+\DoxyCodeLine{427         (Blynk.connected() == \textcolor{keyword}{false}))}
+\DoxyCodeLine{428   \{}
+\DoxyCodeLine{429     delay(10);}
+\DoxyCodeLine{430     Blynk.run();}
+\DoxyCodeLine{431     app\_loop();}
+\DoxyCodeLine{432     \textcolor{keywordflow}{if} (!BlynkState::is(MODE\_CONNECTING\_CLOUD)) \{}
+\DoxyCodeLine{433       Blynk.disconnect();}
+\DoxyCodeLine{434       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{435     \}}
+\DoxyCodeLine{436   \}}
+\DoxyCodeLine{437 }
+\DoxyCodeLine{438   \textcolor{keywordflow}{if} (millis() > timeoutMs) \{}
+\DoxyCodeLine{439     \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}Timeout"{}});}
+\DoxyCodeLine{440   \}}
+\DoxyCodeLine{441 }
+\DoxyCodeLine{442   \textcolor{keywordflow}{if} (Blynk.isTokenInvalid()) \{}
+\DoxyCodeLine{443     config\_set\_last\_error(BLYNK\_PROV\_ERR\_TOKEN);}
+\DoxyCodeLine{444     BlynkState::set(MODE\_WAIT\_CONFIG);}
+\DoxyCodeLine{445   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (Blynk.connected()) \{}
+\DoxyCodeLine{446     BlynkState::set(MODE\_RUNNING);}
+\DoxyCodeLine{447 }
+\DoxyCodeLine{448     \textcolor{keywordflow}{if} (!configStore.getFlag(CONFIG\_FLAG\_VALID)) \{}
+\DoxyCodeLine{449       configStore.last\_error = BLYNK\_PROV\_ERR\_NONE;}
+\DoxyCodeLine{450       configStore.setFlag(CONFIG\_FLAG\_VALID, \textcolor{keyword}{true});}
+\DoxyCodeLine{451       config\_save();}
+\DoxyCodeLine{452     \}}
+\DoxyCodeLine{453   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{454     config\_set\_last\_error(BLYNK\_PROV\_ERR\_CLOUD);}
+\DoxyCodeLine{455     BlynkState::set(MODE\_ERROR);}
+\DoxyCodeLine{456   \}}
+\DoxyCodeLine{457 \}}
+\DoxyCodeLine{458 }
+\DoxyCodeLine{459 \textcolor{keywordtype}{void} enterSwitchToSTA() \{}
+\DoxyCodeLine{460   BlynkState::set(MODE\_SWITCH\_TO\_STA);}
+\DoxyCodeLine{461 }
+\DoxyCodeLine{462   \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}Switching to STA..."{}});}
+\DoxyCodeLine{463 }
+\DoxyCodeLine{464   delay(1000);}
+\DoxyCodeLine{465   WiFi.mode(WIFI\_OFF);}
+\DoxyCodeLine{466   delay(100);}
+\DoxyCodeLine{467   WiFi.mode(WIFI\_STA);}
+\DoxyCodeLine{468 }
+\DoxyCodeLine{469   BlynkState::set(MODE\_CONNECTING\_NET);}
+\DoxyCodeLine{470 \}}
+\DoxyCodeLine{471 }
+\DoxyCodeLine{472 \textcolor{keywordtype}{void} enterError() \{}
+\DoxyCodeLine{473   BlynkState::set(MODE\_ERROR);}
+\DoxyCodeLine{474   }
+\DoxyCodeLine{475   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} timeoutMs = millis() + 10000;}
+\DoxyCodeLine{476   \textcolor{keywordflow}{while} (timeoutMs > millis() || g\_buttonPressed)}
+\DoxyCodeLine{477   \{}
+\DoxyCodeLine{478     delay(10);}
+\DoxyCodeLine{479     app\_loop();}
+\DoxyCodeLine{480     \textcolor{keywordflow}{if} (!BlynkState::is(MODE\_ERROR)) \{}
+\DoxyCodeLine{481       \textcolor{keywordflow}{return};}
+\DoxyCodeLine{482     \}}
+\DoxyCodeLine{483   \}}
+\DoxyCodeLine{484   \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}Restarting after error."{}});}
+\DoxyCodeLine{485   delay(10);}
+\DoxyCodeLine{486 }
+\DoxyCodeLine{487   restartMCU();}
+\DoxyCodeLine{488 \}}
+\DoxyCodeLine{489 }
+
+\end{DoxyCode}

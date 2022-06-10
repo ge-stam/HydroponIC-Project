@@ -1,0 +1,117 @@
+\hypertarget{_blynk_wi_fly_8h_source}{}\doxysection{Blynk\+Wi\+Fly.\+h}
+\label{_blynk_wi_fly_8h_source}\index{lib/Blynk/src/Adapters/BlynkWiFly.h@{lib/Blynk/src/Adapters/BlynkWiFly.h}}
+\mbox{\hyperlink{_blynk_wi_fly_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef BlynkWiFly\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define BlynkWiFly\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#ifndef BLYNK\_INFO\_CONNECTION}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#define BLYNK\_INFO\_CONNECTION "{}RN-\/XV"{}}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_api_arduino_8h}{BlynkApiArduino.h}}>}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_protocol_8h}{Blynk/BlynkProtocol.h}}>}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#include <WiFlyHQ.h>}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_transport_wi_fly}{BlynkTransportWiFly}}}
+\DoxyCodeLine{23 \{}
+\DoxyCodeLine{24 \textcolor{keyword}{public}:}
+\DoxyCodeLine{25     \mbox{\hyperlink{class_blynk_transport_wi_fly}{BlynkTransportWiFly}}()}
+\DoxyCodeLine{26         : wifly(NULL)}
+\DoxyCodeLine{27         , domain(NULL)}
+\DoxyCodeLine{28         , port(0)}
+\DoxyCodeLine{29     \{\}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31     \textcolor{keywordtype}{void} setWiFly(WiFly* rnxv) \{}
+\DoxyCodeLine{32         wifly = rnxv;}
+\DoxyCodeLine{33     \}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     \textcolor{keywordtype}{void} begin(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* h,  uint16\_t p) \{}
+\DoxyCodeLine{36         domain = h;}
+\DoxyCodeLine{37         port = p;}
+\DoxyCodeLine{38     \}}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \textcolor{keywordtype}{bool} connect() \{}
+\DoxyCodeLine{41         \textcolor{keywordflow}{return} wifly-\/>open(domain, port);}
+\DoxyCodeLine{42     \}}
+\DoxyCodeLine{43     \textcolor{keywordtype}{void} disconnect() \{ wifly-\/>close(); \}}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     \textcolor{keywordtype}{size\_t} read(\textcolor{keywordtype}{void}* buf, \textcolor{keywordtype}{size\_t} len) \{}
+\DoxyCodeLine{46         \textcolor{keywordflow}{return} wifly-\/>readBytes((\textcolor{keywordtype}{char}*)buf, len);}
+\DoxyCodeLine{47     \}}
+\DoxyCodeLine{48     \textcolor{keywordtype}{size\_t} write(\textcolor{keyword}{const} \textcolor{keywordtype}{void}* buf, \textcolor{keywordtype}{size\_t} len) \{}
+\DoxyCodeLine{49         wifly-\/>write((\textcolor{keyword}{const} uint8\_t*)buf, len);}
+\DoxyCodeLine{50         \textcolor{keywordflow}{return} len;}
+\DoxyCodeLine{51     \}}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53     \textcolor{keywordtype}{bool} connected() \{ \textcolor{keywordflow}{return} wifly-\/>isConnected(); \}}
+\DoxyCodeLine{54     \textcolor{keywordtype}{int} available() \{ \textcolor{keywordflow}{return} wifly-\/>available(); \}}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56 \textcolor{keyword}{private}:}
+\DoxyCodeLine{57     WiFly*      wifly;}
+\DoxyCodeLine{58     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* domain;}
+\DoxyCodeLine{59     uint16\_t    port;}
+\DoxyCodeLine{60 \};}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_wi_fly}{BlynkWiFly}}}
+\DoxyCodeLine{63     : \textcolor{keyword}{public} \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol}}<BlynkTransportWiFly>}
+\DoxyCodeLine{64 \{}
+\DoxyCodeLine{65     \textcolor{keyword}{typedef} \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol<BlynkTransportWiFly>}} \mbox{\hyperlink{class_blynk_protocol}{Base}};}
+\DoxyCodeLine{66 \textcolor{keyword}{public}:}
+\DoxyCodeLine{67     \mbox{\hyperlink{class_blynk_wi_fly}{BlynkWiFly}}(\mbox{\hyperlink{class_blynk_transport_wi_fly}{BlynkTransportWiFly}}\& transp)}
+\DoxyCodeLine{68         : \mbox{\hyperlink{class_blynk_protocol}{Base}}(transp)}
+\DoxyCodeLine{69         , wifly(NULL)}
+\DoxyCodeLine{70     \{\}}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72     \textcolor{keywordtype}{void} connectWiFi(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* ssid, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* pass) \{}
+\DoxyCodeLine{73         \textcolor{keywordflow}{if} (!wifly-\/>isAssociated()) \{}
+\DoxyCodeLine{74             BLYNK\_LOG2(BLYNK\_F(\textcolor{stringliteral}{"{}Connecting to "{}}), ssid);}
+\DoxyCodeLine{75             wifly-\/>setSSID(ssid);}
+\DoxyCodeLine{76             \textcolor{keywordflow}{if} (pass \&\& strlen(pass)) \{}
+\DoxyCodeLine{77                  wifly-\/>setPassphrase(pass);}
+\DoxyCodeLine{78             \}}
+\DoxyCodeLine{79             wifly-\/>enableDHCP();}
+\DoxyCodeLine{80             \textcolor{keywordflow}{if} (!wifly-\/>join()) \{}
+\DoxyCodeLine{81                 BLYNK\_FATAL(\textcolor{stringliteral}{"{}Failed."{}});}
+\DoxyCodeLine{82             \}}
+\DoxyCodeLine{83         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{84             BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}Already connected to WiFi"{}}));}
+\DoxyCodeLine{85         \}}
+\DoxyCodeLine{86         \textcolor{keywordflow}{if} (wifly-\/>isConnected()) \{}
+\DoxyCodeLine{87             wifly-\/>close();}
+\DoxyCodeLine{88         \}}
+\DoxyCodeLine{89         wifly-\/>setIpFlags(1 << 1);}
+\DoxyCodeLine{90     \}}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92     \textcolor{keywordtype}{void} config(WiFly\&      rnxv,}
+\DoxyCodeLine{93                 \textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth,}
+\DoxyCodeLine{94                 \textcolor{keyword}{const} \textcolor{keywordtype}{char}* domain = BLYNK\_DEFAULT\_DOMAIN,}
+\DoxyCodeLine{95                 uint16\_t    port   = BLYNK\_DEFAULT\_PORT)}
+\DoxyCodeLine{96     \{}
+\DoxyCodeLine{97         Base::begin(auth);}
+\DoxyCodeLine{98         wifly = \&rnxv;}
+\DoxyCodeLine{99         this-\/>conn.setWiFly(wifly);}
+\DoxyCodeLine{100         this-\/>conn.begin(domain, port);}
+\DoxyCodeLine{101     \}}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103     \textcolor{keywordtype}{void} begin( \textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth,}
+\DoxyCodeLine{104                 WiFly\&      rnxv,}
+\DoxyCodeLine{105                 \textcolor{keyword}{const} \textcolor{keywordtype}{char}* ssid,}
+\DoxyCodeLine{106                 \textcolor{keyword}{const} \textcolor{keywordtype}{char}* pass,}
+\DoxyCodeLine{107                 \textcolor{keyword}{const} \textcolor{keywordtype}{char}* domain = BLYNK\_DEFAULT\_DOMAIN,}
+\DoxyCodeLine{108                 uint16\_t    port   = BLYNK\_DEFAULT\_PORT)}
+\DoxyCodeLine{109     \{}
+\DoxyCodeLine{110         wifly = \&rnxv;}
+\DoxyCodeLine{111         connectWiFi(ssid, pass);}
+\DoxyCodeLine{112         config(rnxv, auth, domain, port);}
+\DoxyCodeLine{113         \textcolor{keywordflow}{while}(this-\/>connect() != \textcolor{keyword}{true}) \{\}}
+\DoxyCodeLine{114     \}}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116 \textcolor{keyword}{private}:}
+\DoxyCodeLine{117     WiFly* wifly;}
+\DoxyCodeLine{118 \};}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

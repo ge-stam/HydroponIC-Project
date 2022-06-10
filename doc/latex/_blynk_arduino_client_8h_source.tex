@@ -1,0 +1,125 @@
+\hypertarget{_blynk_arduino_client_8h_source}{}\doxysection{Blynk\+Arduino\+Client.\+h}
+\label{_blynk_arduino_client_8h_source}\index{lib/Blynk/src/Adapters/BlynkArduinoClient.h@{lib/Blynk/src/Adapters/BlynkArduinoClient.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef BlynkArduinoClient\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define BlynkArduinoClient\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_api_arduino_8h}{BlynkApiArduino.h}}>}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_debug_8h}{Blynk/BlynkDebug.h}}>}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#include <Client.h>}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#if defined(ESP8266) \&\& !defined(BLYNK\_NO\_YIELD)}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{    \#define YIELD\_FIX() BLYNK\_RUN\_YIELD();}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{21 \textcolor{preprocessor}{    \#define YIELD\_FIX()}}
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 \textcolor{keyword}{template} <\textcolor{keyword}{typename} Client>}
+\DoxyCodeLine{25 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_arduino_client_gen}{BlynkArduinoClientGen}}}
+\DoxyCodeLine{26 \{}
+\DoxyCodeLine{27 \textcolor{keyword}{public}:}
+\DoxyCodeLine{28     \mbox{\hyperlink{class_blynk_arduino_client_gen}{BlynkArduinoClientGen}}(Client\& c)}
+\DoxyCodeLine{29         : client(NULL), domain(NULL), port(0), isConn(\textcolor{keyword}{false})}
+\DoxyCodeLine{30     \{}
+\DoxyCodeLine{31         setClient(\&c);}
+\DoxyCodeLine{32     \}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34     \mbox{\hyperlink{class_blynk_arduino_client_gen}{BlynkArduinoClientGen}}()}
+\DoxyCodeLine{35         : client(NULL), domain(NULL), port(0), isConn(\textcolor{keyword}{false})}
+\DoxyCodeLine{36     \{\}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38     \textcolor{keywordtype}{void} setClient(Client* c) \{}
+\DoxyCodeLine{39         client = c;}
+\DoxyCodeLine{40         client-\/>setTimeout(BLYNK\_TIMEOUT\_MS);}
+\DoxyCodeLine{41     \}}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \textcolor{keywordtype}{void} begin(IPAddress a, uint16\_t p) \{}
+\DoxyCodeLine{44         domain = NULL;}
+\DoxyCodeLine{45         port = p;}
+\DoxyCodeLine{46         addr = a;}
+\DoxyCodeLine{47     \}}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49     \textcolor{keywordtype}{void} begin(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* d, uint16\_t p) \{}
+\DoxyCodeLine{50         domain = d;}
+\DoxyCodeLine{51         port = p;}
+\DoxyCodeLine{52     \}}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54     \textcolor{keywordtype}{bool} connect() \{}
+\DoxyCodeLine{55         \textcolor{keywordflow}{if} (domain) \{}
+\DoxyCodeLine{56             BLYNK\_LOG4(BLYNK\_F(\textcolor{stringliteral}{"{}Connecting to "{}}), domain, \textcolor{charliteral}{':'}, port);}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58             isConn = (1 == client-\/>connect(domain, port));}
+\DoxyCodeLine{59             \textcolor{keywordflow}{return} isConn;}
+\DoxyCodeLine{60         \} \textcolor{keywordflow}{else} \{ \textcolor{comment}{//if (uint32\_t(addr) != 0) \{}}
+\DoxyCodeLine{61             BLYNK\_LOG\_IP(\textcolor{stringliteral}{"{}Connecting to "{}}, addr);}
+\DoxyCodeLine{62             isConn = (1 == client-\/>connect(addr, port));}
+\DoxyCodeLine{63             \textcolor{keywordflow}{return} isConn;}
+\DoxyCodeLine{64         \}}
+\DoxyCodeLine{65         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{66     \}}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68     \textcolor{keywordtype}{void} disconnect() \{ isConn = \textcolor{keyword}{false}; client-\/>stop(); \}}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70 \textcolor{preprocessor}{\#ifdef BLYNK\_ENC28J60\_FIX}}
+\DoxyCodeLine{71     \textcolor{keywordtype}{size\_t} read(\textcolor{keywordtype}{void}* buf, \textcolor{keywordtype}{size\_t} len) \{}
+\DoxyCodeLine{72         \textcolor{keywordflow}{while} (client-\/>available() < len) \{ BLYNK\_RUN\_YIELD(); \}}
+\DoxyCodeLine{73         \textcolor{keywordflow}{return} client-\/>read((uint8\_t*)buf, len);}
+\DoxyCodeLine{74     \}}
+\DoxyCodeLine{75 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{76     \textcolor{keywordtype}{size\_t} read(\textcolor{keywordtype}{void}* buf, \textcolor{keywordtype}{size\_t} len) \{}
+\DoxyCodeLine{77         \textcolor{keywordtype}{size\_t} res = client-\/>readBytes((\textcolor{keywordtype}{char}*)buf, len);}
+\DoxyCodeLine{78         YIELD\_FIX();}
+\DoxyCodeLine{79         \textcolor{keywordflow}{return} res;}
+\DoxyCodeLine{80     \}}
+\DoxyCodeLine{81 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83 \textcolor{preprocessor}{\#ifdef BLYNK\_RETRY\_SEND}}
+\DoxyCodeLine{84     \textcolor{keywordtype}{size\_t} write(\textcolor{keyword}{const} \textcolor{keywordtype}{void}* buf, \textcolor{keywordtype}{size\_t} len) \{}
+\DoxyCodeLine{85         \textcolor{keywordtype}{size\_t} sent = 0;}
+\DoxyCodeLine{86         \textcolor{keywordtype}{int} retry = 0;}
+\DoxyCodeLine{87         \textcolor{keywordflow}{while} (sent < len \&\& ++retry < 10) \{}
+\DoxyCodeLine{88             \textcolor{keywordtype}{size\_t} w = client-\/>write((\textcolor{keyword}{const} uint8\_t*)buf+sent, len-\/sent);}
+\DoxyCodeLine{89             \textcolor{keywordflow}{if} (w != 0 \&\& w != -\/1) \{}
+\DoxyCodeLine{90                 sent += w;}
+\DoxyCodeLine{91             \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{92                 BlynkDelay(50);}
+\DoxyCodeLine{93 \textcolor{preprocessor}{\#if defined(BLYNK\_DEBUG) \&\& defined(BLYNK\_PRINT)}}
+\DoxyCodeLine{94                 BLYNK\_PRINT\_TIME();}
+\DoxyCodeLine{95                 BLYNK\_PRINT.print(BLYNK\_F(\textcolor{stringliteral}{"{}Retry "{}}));}
+\DoxyCodeLine{96                 BLYNK\_PRINT.print(retry);}
+\DoxyCodeLine{97                 BLYNK\_PRINT.print(BLYNK\_F(\textcolor{stringliteral}{"{} send: "{}}));}
+\DoxyCodeLine{98                 BLYNK\_PRINT.print(sent);}
+\DoxyCodeLine{99                 BLYNK\_PRINT.print(\textcolor{charliteral}{'/'});}
+\DoxyCodeLine{100                 BLYNK\_PRINT.println(len);}
+\DoxyCodeLine{101 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{102             \}}
+\DoxyCodeLine{103         \}}
+\DoxyCodeLine{104         \textcolor{keywordflow}{return} sent;}
+\DoxyCodeLine{105     \}}
+\DoxyCodeLine{106 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{107     \textcolor{keywordtype}{size\_t} write(\textcolor{keyword}{const} \textcolor{keywordtype}{void}* buf, \textcolor{keywordtype}{size\_t} len) \{}
+\DoxyCodeLine{108         YIELD\_FIX();}
+\DoxyCodeLine{109         \textcolor{keywordtype}{size\_t} res = client-\/>write((\textcolor{keyword}{const} uint8\_t*)buf, len);}
+\DoxyCodeLine{110         YIELD\_FIX();}
+\DoxyCodeLine{111         \textcolor{keywordflow}{return} res;}
+\DoxyCodeLine{112     \}}
+\DoxyCodeLine{113 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115     \textcolor{keywordtype}{bool} connected() \{ YIELD\_FIX(); \textcolor{keywordflow}{return} isConn \&\& client-\/>connected(); \}}
+\DoxyCodeLine{116     \textcolor{keywordtype}{int} available() \{  YIELD\_FIX(); \textcolor{keywordflow}{return} client-\/>available(); \}}
+\DoxyCodeLine{117 }
+\DoxyCodeLine{118 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{119     Client*     client;}
+\DoxyCodeLine{120     IPAddress   addr;}
+\DoxyCodeLine{121     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* domain;}
+\DoxyCodeLine{122     uint16\_t    port;}
+\DoxyCodeLine{123     \textcolor{keywordtype}{bool}        isConn;}
+\DoxyCodeLine{124 \};}
+\DoxyCodeLine{125 }
+\DoxyCodeLine{126 \textcolor{keyword}{typedef} \mbox{\hyperlink{class_blynk_arduino_client_gen}{BlynkArduinoClientGen<Client>}} \mbox{\hyperlink{class_blynk_arduino_client_gen}{BlynkArduinoClient}};}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,170 @@
+\hypertarget{_blynk_b_l_e_peripheral_serial_8h_source}{}\doxysection{Blynk\+BLEPeripheral\+Serial.\+h}
+\label{_blynk_b_l_e_peripheral_serial_8h_source}\index{lib/Blynk/src/Adapters/BlynkBLEPeripheralSerial.h@{lib/Blynk/src/Adapters/BlynkBLEPeripheralSerial.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef BlynkBLEPeripheralSerial\_h}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define BlynkBLEPeripheralSerial\_h}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <BLEPeripheral.h>}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{keywordtype}{void} BLESerial\_onConnect(BLECentral\& central);}
+\DoxyCodeLine{7 \textcolor{keywordtype}{void} BLESerial\_onDisconnect(BLECentral\& central);}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{keyword}{class }\mbox{\hyperlink{class_b_l_e_serial}{BLESerial}} : \textcolor{keyword}{public} BLEPeripheral, \textcolor{keyword}{public} Stream}
+\DoxyCodeLine{10 \{}
+\DoxyCodeLine{11   \textcolor{keyword}{public}:}
+\DoxyCodeLine{12     \mbox{\hyperlink{class_b_l_e_serial}{BLESerial}}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} req = BLE\_DEFAULT\_REQ, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} rdy = BLE\_DEFAULT\_RDY, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} rst = BLE\_DEFAULT\_RST);}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14     \textcolor{keywordtype}{void} begin(...);}
+\DoxyCodeLine{15     \textcolor{keywordtype}{void} poll();}
+\DoxyCodeLine{16     \textcolor{keywordtype}{void} end();}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18     \textcolor{keyword}{virtual} \textcolor{keywordtype}{int} available(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{19     \textcolor{keyword}{virtual} \textcolor{keywordtype}{int} peek(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{20     \textcolor{keyword}{virtual} \textcolor{keywordtype}{int} read(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{21     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} flush(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{22     \textcolor{keyword}{virtual} \textcolor{keywordtype}{size\_t} write(uint8\_t \textcolor{keywordtype}{byte});}
+\DoxyCodeLine{23     \textcolor{keyword}{using }Print::write;}
+\DoxyCodeLine{24     \textcolor{keyword}{virtual} \textcolor{keyword}{operator} bool();}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26   \textcolor{keyword}{private}:}
+\DoxyCodeLine{27     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \_flushed;}
+\DoxyCodeLine{28     \textcolor{keyword}{static} \mbox{\hyperlink{class_b_l_e_serial}{BLESerial}}* \_instance;}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30     \textcolor{keywordtype}{size\_t} \_rxHead;}
+\DoxyCodeLine{31     \textcolor{keywordtype}{size\_t} \_rxTail;}
+\DoxyCodeLine{32     uint8\_t \_rxBuffer[BLYNK\_MAX\_READBYTES*2];}
+\DoxyCodeLine{33     \textcolor{keywordtype}{size\_t} \_txCount;}
+\DoxyCodeLine{34     uint8\_t \_txBuffer[BLE\_ATTRIBUTE\_MAX\_VALUE\_LENGTH];}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36     BLEService \_uartService = BLEService(\textcolor{stringliteral}{"{}713D0000-\/503E-\/4C75-\/BA94-\/3148F18D941E"{}});}
+\DoxyCodeLine{37     BLECharacteristic \_rxCharacteristic = BLECharacteristic(\textcolor{stringliteral}{"{}713D0003-\/503E-\/4C75-\/BA94-\/3148F18D941E"{}}, BLEWrite, BLE\_ATTRIBUTE\_MAX\_VALUE\_LENGTH);}
+\DoxyCodeLine{38     BLECharacteristic \_txCharacteristic = BLECharacteristic(\textcolor{stringliteral}{"{}713D0002-\/503E-\/4C75-\/BA94-\/3148F18D941E"{}}, BLENotify, BLE\_ATTRIBUTE\_MAX\_VALUE\_LENGTH);}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \textcolor{keywordtype}{void} \_received(\textcolor{keyword}{const} uint8\_t* data, \textcolor{keywordtype}{size\_t} size);}
+\DoxyCodeLine{41     \textcolor{keyword}{static} \textcolor{keywordtype}{void} \_received(BLECentral\& \textcolor{comment}{/*central*/}, BLECharacteristic\& rxCharacteristic);}
+\DoxyCodeLine{42 \};}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44 \mbox{\hyperlink{class_b_l_e_serial}{BLESerial}}* BLESerial::\_instance = NULL;}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46 \textcolor{keyword}{inline}}
+\DoxyCodeLine{47 BLESerial::BLESerial(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} req, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} rdy, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} rst) :}
+\DoxyCodeLine{48   BLEPeripheral(req, rdy, rst)}
+\DoxyCodeLine{49 \{}
+\DoxyCodeLine{50   this-\/>\_txCount = 0;}
+\DoxyCodeLine{51   this-\/>\_rxHead = this-\/>\_rxTail = 0;}
+\DoxyCodeLine{52   this-\/>\_flushed = 0;}
+\DoxyCodeLine{53   BLESerial::\_instance = \textcolor{keyword}{this};}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55   addAttribute(this-\/>\_uartService);}
+\DoxyCodeLine{56   setAdvertisedServiceUuid(this-\/>\_uartService.uuid());}
+\DoxyCodeLine{57   addAttribute(this-\/>\_rxCharacteristic);}
+\DoxyCodeLine{58   this-\/>\_rxCharacteristic.setEventHandler(BLEWritten, BLESerial::\_received);}
+\DoxyCodeLine{59   addAttribute(this-\/>\_txCharacteristic);}
+\DoxyCodeLine{60     }
+\DoxyCodeLine{61   this-\/>setEventHandler(BLEConnected, BLESerial\_onConnect);}
+\DoxyCodeLine{62   this-\/>setEventHandler(BLEDisconnected, BLESerial\_onDisconnect);}
+\DoxyCodeLine{63 \}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65 \textcolor{keyword}{inline}}
+\DoxyCodeLine{66 \textcolor{keywordtype}{void} BLESerial::begin(...) \{}
+\DoxyCodeLine{67   BLEPeripheral::begin();}
+\DoxyCodeLine{68 \}}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70 \textcolor{keyword}{inline}}
+\DoxyCodeLine{71 \textcolor{keywordtype}{void} BLESerial::poll() \{}
+\DoxyCodeLine{72   \textcolor{keywordflow}{if} (millis() < this-\/>\_flushed + 100) \{}
+\DoxyCodeLine{73     BLEPeripheral::poll();}
+\DoxyCodeLine{74   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{75     flush();}
+\DoxyCodeLine{76   \}}
+\DoxyCodeLine{77 \}}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79 \textcolor{keyword}{inline}}
+\DoxyCodeLine{80 \textcolor{keywordtype}{void} BLESerial::end() \{}
+\DoxyCodeLine{81   this-\/>\_rxCharacteristic.setEventHandler(BLEWritten, NULL);}
+\DoxyCodeLine{82   this-\/>\_rxHead = this-\/>\_rxTail = 0;}
+\DoxyCodeLine{83   flush();}
+\DoxyCodeLine{84   BLEPeripheral::disconnect();}
+\DoxyCodeLine{85 \}}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87 \textcolor{keyword}{inline}}
+\DoxyCodeLine{88 \textcolor{keywordtype}{int} BLESerial::available(\textcolor{keywordtype}{void}) \{}
+\DoxyCodeLine{89   BLEPeripheral::poll();}
+\DoxyCodeLine{90   \textcolor{keywordtype}{int} retval = (this-\/>\_rxHead -\/ this-\/>\_rxTail + \textcolor{keyword}{sizeof}(this-\/>\_rxBuffer)) \% \textcolor{keyword}{sizeof}(this-\/>\_rxBuffer);}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92   \textcolor{keywordflow}{return} retval;}
+\DoxyCodeLine{93 \}}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95 \textcolor{keyword}{inline}}
+\DoxyCodeLine{96 \textcolor{keywordtype}{int} BLESerial::peek(\textcolor{keywordtype}{void}) \{}
+\DoxyCodeLine{97   BLEPeripheral::poll();}
+\DoxyCodeLine{98   \textcolor{keywordflow}{if} (this-\/>\_rxTail == this-\/>\_rxHead) \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{99   uint8\_t \textcolor{keywordtype}{byte} = this-\/>\_rxBuffer[ (this-\/>\_rxTail + 1) \% \textcolor{keyword}{sizeof}(this-\/>\_rxBuffer)];}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101   \textcolor{keywordflow}{return} byte;}
+\DoxyCodeLine{102 \}}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104 \textcolor{keyword}{inline}}
+\DoxyCodeLine{105 \textcolor{keywordtype}{int} BLESerial::read(\textcolor{keywordtype}{void}) \{}
+\DoxyCodeLine{106   BLEPeripheral::poll();}
+\DoxyCodeLine{107   \textcolor{keywordflow}{if} (this-\/>\_rxTail == this-\/>\_rxHead) \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{108   this-\/>\_rxTail = (this-\/>\_rxTail + 1) \% \textcolor{keyword}{sizeof}(this-\/>\_rxBuffer);}
+\DoxyCodeLine{109   uint8\_t \textcolor{keywordtype}{byte} = this-\/>\_rxBuffer[this-\/>\_rxTail];}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111   \textcolor{keywordflow}{return} byte;}
+\DoxyCodeLine{112 \}}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114 \textcolor{keyword}{inline}}
+\DoxyCodeLine{115 \textcolor{keywordtype}{void} BLESerial::flush(\textcolor{keywordtype}{void}) \{}
+\DoxyCodeLine{116   \textcolor{keywordflow}{if} (this-\/>\_txCount == 0) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{117   this-\/>\_txCharacteristic.setValue(this-\/>\_txBuffer, this-\/>\_txCount);}
+\DoxyCodeLine{118   this-\/>\_flushed = millis();}
+\DoxyCodeLine{119   this-\/>\_txCount = 0;}
+\DoxyCodeLine{120   BLEPeripheral::poll();}
+\DoxyCodeLine{121 \}}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123 \textcolor{keyword}{inline}}
+\DoxyCodeLine{124 \textcolor{keywordtype}{size\_t} BLESerial::write(uint8\_t \textcolor{keywordtype}{byte}) \{}
+\DoxyCodeLine{125   BLEPeripheral::poll();}
+\DoxyCodeLine{126   \textcolor{keywordflow}{if} (this-\/>\_txCharacteristic.subscribed() == \textcolor{keyword}{false}) \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{127   this-\/>\_txBuffer[this-\/>\_txCount++] = byte;}
+\DoxyCodeLine{128   \textcolor{keywordflow}{if} (this-\/>\_txCount == \textcolor{keyword}{sizeof}(this-\/>\_txBuffer)) flush();}
+\DoxyCodeLine{129 }
+\DoxyCodeLine{130   \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{131 \}}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133 \textcolor{keyword}{inline}}
+\DoxyCodeLine{134 BLESerial::operator bool() \{}
+\DoxyCodeLine{135   \textcolor{keywordtype}{bool} retval = BLEPeripheral::connected();}
+\DoxyCodeLine{136   }
+\DoxyCodeLine{137   \textcolor{keywordflow}{return} retval;}
+\DoxyCodeLine{138 \}}
+\DoxyCodeLine{139 }
+\DoxyCodeLine{140 \textcolor{keyword}{inline}}
+\DoxyCodeLine{141 \textcolor{keywordtype}{void} BLESerial::\_received(\textcolor{keyword}{const} uint8\_t* data, \textcolor{keywordtype}{size\_t} size) \{}
+\DoxyCodeLine{142   \textcolor{comment}{// BLYNK\_DBG\_DUMP("{}>> "{}, data, size);}}
+\DoxyCodeLine{143   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < size; i++) \{}
+\DoxyCodeLine{144     this-\/>\_rxHead = (this-\/>\_rxHead + 1) \% \textcolor{keyword}{sizeof}(this-\/>\_rxBuffer);}
+\DoxyCodeLine{145     this-\/>\_rxBuffer[this-\/>\_rxHead] = data[i];}
+\DoxyCodeLine{146   \}}
+\DoxyCodeLine{147 \}}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{149 \textcolor{keyword}{inline}}
+\DoxyCodeLine{150 \textcolor{keywordtype}{void} BLESerial::\_received(BLECentral\& \textcolor{comment}{/*central*/}, BLECharacteristic\& rxCharacteristic) \{}
+\DoxyCodeLine{151   BLESerial::\_instance-\/>\_received(rxCharacteristic.value(), rxCharacteristic.valueLength());}
+\DoxyCodeLine{152 \}}
+\DoxyCodeLine{153 }
+\DoxyCodeLine{154 \textcolor{keywordtype}{void} BLESerial\_onConnect(BLECentral\& central) \{}
+\DoxyCodeLine{155  BLYNK\_LOG1(\textcolor{stringliteral}{"{}Device connected"{}});}
+\DoxyCodeLine{156  Blynk.startSession();}
+\DoxyCodeLine{157 \}}
+\DoxyCodeLine{158 }
+\DoxyCodeLine{159 \textcolor{keywordtype}{void} BLESerial\_onDisconnect(BLECentral\& central) \{}
+\DoxyCodeLine{160  BLYNK\_LOG1(\textcolor{stringliteral}{"{}Device disconnected"{}});}
+\DoxyCodeLine{161  Blynk.disconnect();}
+\DoxyCodeLine{162 \}}
+\DoxyCodeLine{163 }
+\DoxyCodeLine{164 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

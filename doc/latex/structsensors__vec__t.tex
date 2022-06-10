@@ -1,0 +1,73 @@
+\hypertarget{structsensors__vec__t}{}\doxysection{sensors\+\_\+vec\+\_\+t Struct Reference}
+\label{structsensors__vec__t}\index{sensors\_vec\_t@{sensors\_vec\_t}}
+
+
+{\ttfamily \#include $<$Adafruit\+\_\+\+Sensor.\+h$>$}
+
+\doxysubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>float {\bfseries v} \mbox{[}3\mbox{]}\\
+\>\>{\em 3D vector elements }\\
+\mbox{\Hypertarget{unionsensors__vec__t_1_1_0d0_a1228bf9789491dfd59ba0d24473190b3}\label{unionsensors__vec__t_1_1_0d0_a1228bf9789491dfd59ba0d24473190b3}} 
+\>struct \{\\
+\>\>float {\bfseries x}\\
+\>\>\>{\em X component of vector. }\\
+\>\>float {\bfseries y}\\
+\>\>\>{\em Y component of vector. }\\
+\>\>float {\bfseries z}\\
+\>\>\>{\em Z component of vector. }\\
+\>\} \\
+\>\>\>{\em Struct for holding XYZ component. }\\
+\mbox{\Hypertarget{unionsensors__vec__t_1_1_0d0_ab2e57c02d7604249835cb17ecce29ce5}\label{unionsensors__vec__t_1_1_0d0_ab2e57c02d7604249835cb17ecce29ce5}} 
+\>struct \{\\
+\>\>float \mbox{\hyperlink{structsensors__vec__t_a26fd84d522945b6038221d9e38c7cc39}{roll}}\\
+\>\>float \mbox{\hyperlink{structsensors__vec__t_a282e7d4378d4a18a805b8980295ac86c}{pitch}}\\
+\>\>float \mbox{\hyperlink{structsensors__vec__t_ac5682e48513a771560df50e3b213e61a}{heading}}\\
+\>\} \\
+\>\>\>{\em Struct for holding roll/pitch/heading. }\\
+\}; \\
+
+\end{tabbing}\item 
+\mbox{\Hypertarget{structsensors__vec__t_a555c2084e8436de01dc76a23590e8824}\label{structsensors__vec__t_a555c2084e8436de01dc76a23590e8824}} 
+int8\+\_\+t {\bfseries status}
+\begin{DoxyCompactList}\small\item\em Status byte. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structsensors__vec__t_a72aca6ea6d8153b28ea8f139b932ec3e}\label{structsensors__vec__t_a72aca6ea6d8153b28ea8f139b932ec3e}} 
+uint8\+\_\+t {\bfseries reserved} \mbox{[}3\mbox{]}
+\begin{DoxyCompactList}\small\item\em Reserved. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+struct sensors\+\_\+vec\+\_\+s is used to return a vector in a common format. 
+
+\doxysubsection{Field Documentation}
+\mbox{\Hypertarget{structsensors__vec__t_a3cd4133f83a6c99212e10112e50b85fa}\label{structsensors__vec__t_a3cd4133f83a6c99212e10112e50b85fa}} 
+\doxysubsubsection{\texorpdfstring{}{}}
+{\footnotesize\ttfamily union  \{ ... \}  @1}
+
+Union that can hold 3D vector array, XYZ components or roll/pitch/heading \mbox{\Hypertarget{structsensors__vec__t_ac5682e48513a771560df50e3b213e61a}\label{structsensors__vec__t_ac5682e48513a771560df50e3b213e61a}} 
+\index{sensors\_vec\_t@{sensors\_vec\_t}!heading@{heading}}
+\index{heading@{heading}!sensors\_vec\_t@{sensors\_vec\_t}}
+\doxysubsubsection{\texorpdfstring{heading}{heading}}
+{\footnotesize\ttfamily float heading}
+
+Angle between the longitudinal axis (the plane body) and magnetic north, measured clockwise when viewing from the top of the device. 0-\/359 degrees \mbox{\Hypertarget{structsensors__vec__t_a282e7d4378d4a18a805b8980295ac86c}\label{structsensors__vec__t_a282e7d4378d4a18a805b8980295ac86c}} 
+\index{sensors\_vec\_t@{sensors\_vec\_t}!pitch@{pitch}}
+\index{pitch@{pitch}!sensors\_vec\_t@{sensors\_vec\_t}}
+\doxysubsubsection{\texorpdfstring{pitch}{pitch}}
+{\footnotesize\ttfamily float pitch}
+
+Rotation around the lateral axis (the wing span, \textquotesingle{}Y axis\textquotesingle{}). Pitch is positive and increasing when moving upwards. -\/180 degrees \texorpdfstring{$<$}{<}= pitch \texorpdfstring{$<$}{<}= 180 degrees) \mbox{\Hypertarget{structsensors__vec__t_a26fd84d522945b6038221d9e38c7cc39}\label{structsensors__vec__t_a26fd84d522945b6038221d9e38c7cc39}} 
+\index{sensors\_vec\_t@{sensors\_vec\_t}!roll@{roll}}
+\index{roll@{roll}!sensors\_vec\_t@{sensors\_vec\_t}}
+\doxysubsubsection{\texorpdfstring{roll}{roll}}
+{\footnotesize\ttfamily float roll}
+
+Rotation around the longitudinal axis (the plane body, \textquotesingle{}X axis\textquotesingle{}). Roll is positive and increasing when moving downward. -\/90 degrees \texorpdfstring{$<$}{<}= roll \texorpdfstring{$<$}{<}= 90 degrees 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+Adafruit\+\_\+\+Sensor/Adafruit\+\_\+\+Sensor.\+h\end{DoxyCompactItemize}

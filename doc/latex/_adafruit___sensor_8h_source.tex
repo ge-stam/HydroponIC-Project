@@ -1,0 +1,165 @@
+\hypertarget{_adafruit___sensor_8h_source}{}\doxysection{Adafruit\+\_\+\+Sensor.\+h}
+\label{_adafruit___sensor_8h_source}\index{lib/Adafruit\_Sensor/Adafruit\_Sensor.h@{lib/Adafruit\_Sensor/Adafruit\_Sensor.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ * Copyright (C) 2008 The Android Open Source Project}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ * Licensed under the Apache License, Version 2.0 (the "{}License"{});}}
+\DoxyCodeLine{5 \textcolor{comment}{ * you may not use this file except in compliance with the License.}}
+\DoxyCodeLine{6 \textcolor{comment}{ * You may obtain a copy of the License at}}
+\DoxyCodeLine{7 \textcolor{comment}{ *}}
+\DoxyCodeLine{8 \textcolor{comment}{ * http://www.apache.org/licenses/LICENSE-\/2.0}}
+\DoxyCodeLine{9 \textcolor{comment}{ *}}
+\DoxyCodeLine{10 \textcolor{comment}{ * Unless required by applicable law or agreed to in writing, software< /span>}}
+\DoxyCodeLine{11 \textcolor{comment}{ * distributed under the License is distributed on an "{}AS IS"{} BASIS,}}
+\DoxyCodeLine{12 \textcolor{comment}{ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.}}
+\DoxyCodeLine{13 \textcolor{comment}{ * See the License for the specific language governing permissions and}}
+\DoxyCodeLine{14 \textcolor{comment}{ * limitations under the License.}}
+\DoxyCodeLine{15 \textcolor{comment}{ */}}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 \textcolor{comment}{/* Update by K. Townsend (Adafruit Industries) for lighter typedefs, and}}
+\DoxyCodeLine{18 \textcolor{comment}{ * extended sensor support to include color, voltage and current */}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#ifndef \_ADAFRUIT\_SENSOR\_H}}
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#define \_ADAFRUIT\_SENSOR\_H}}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#ifndef ARDUINO}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#include <stdint.h>}}
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#elif ARDUINO >= 100}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include "{}Arduino.h"{}}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include "{}Print.h"{}}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#include "{}WProgram.h"{}}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{comment}{/* Constants */}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#define SENSORS\_GRAVITY\_EARTH (9.80665F) }}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#define SENSORS\_GRAVITY\_MOON (1.6F)      }}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#define SENSORS\_GRAVITY\_SUN (275.0F)     }}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#define SENSORS\_GRAVITY\_STANDARD (SENSORS\_GRAVITY\_EARTH)}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#define SENSORS\_MAGFIELD\_EARTH\_MAX                                             \(\backslash\)}}
+\DoxyCodeLine{38 \textcolor{preprocessor}{  (60.0F) }}
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#define SENSORS\_MAGFIELD\_EARTH\_MIN                                             \(\backslash\)}}
+\DoxyCodeLine{40 \textcolor{preprocessor}{  (30.0F) }}
+\DoxyCodeLine{41 \textcolor{preprocessor}{\#define SENSORS\_PRESSURE\_SEALEVELHPA                                           \(\backslash\)}}
+\DoxyCodeLine{42 \textcolor{preprocessor}{  (1013.25F) }}
+\DoxyCodeLine{43 \textcolor{preprocessor}{\#define SENSORS\_DPS\_TO\_RADS                                                    \(\backslash\)}}
+\DoxyCodeLine{44 \textcolor{preprocessor}{  (0.017453293F) }}
+\DoxyCodeLine{46 \textcolor{preprocessor}{\#define SENSORS\_RADS\_TO\_DPS                                                    \(\backslash\)}}
+\DoxyCodeLine{47 \textcolor{preprocessor}{  (57.29577793F) }}
+\DoxyCodeLine{48 \textcolor{preprocessor}{\#define SENSORS\_GAUSS\_TO\_MICROTESLA                                            \(\backslash\)}}
+\DoxyCodeLine{49 \textcolor{preprocessor}{  (100) }}
+\DoxyCodeLine{52 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \{}
+\DoxyCodeLine{53   SENSOR\_TYPE\_ACCELEROMETER = (1), }
+\DoxyCodeLine{54   SENSOR\_TYPE\_MAGNETIC\_FIELD = (2),}
+\DoxyCodeLine{55   SENSOR\_TYPE\_ORIENTATION = (3),}
+\DoxyCodeLine{56   SENSOR\_TYPE\_GYROSCOPE = (4),}
+\DoxyCodeLine{57   SENSOR\_TYPE\_LIGHT = (5),}
+\DoxyCodeLine{58   SENSOR\_TYPE\_PRESSURE = (6),}
+\DoxyCodeLine{59   SENSOR\_TYPE\_PROXIMITY = (8),}
+\DoxyCodeLine{60   SENSOR\_TYPE\_GRAVITY = (9),}
+\DoxyCodeLine{61   SENSOR\_TYPE\_LINEAR\_ACCELERATION =}
+\DoxyCodeLine{62       (10), }
+\DoxyCodeLine{63   SENSOR\_TYPE\_ROTATION\_VECTOR = (11),}
+\DoxyCodeLine{64   SENSOR\_TYPE\_RELATIVE\_HUMIDITY = (12),}
+\DoxyCodeLine{65   SENSOR\_TYPE\_AMBIENT\_TEMPERATURE = (13),}
+\DoxyCodeLine{66   SENSOR\_TYPE\_OBJECT\_TEMPERATURE = (14),}
+\DoxyCodeLine{67   SENSOR\_TYPE\_VOLTAGE = (15),}
+\DoxyCodeLine{68   SENSOR\_TYPE\_CURRENT = (16),}
+\DoxyCodeLine{69   SENSOR\_TYPE\_COLOR = (17)}
+\DoxyCodeLine{70 \} sensors\_type\_t;}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{73 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{74   \textcolor{keyword}{union }\{}
+\DoxyCodeLine{75     \textcolor{keywordtype}{float} v[3]; }
+\DoxyCodeLine{76     \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{77       \textcolor{keywordtype}{float} \mbox{\hyperlink{structsensors__vec__t_ad0da36b2558901e21e7a30f6c227a45e}{x}}; }
+\DoxyCodeLine{78       \textcolor{keywordtype}{float} \mbox{\hyperlink{structsensors__vec__t_aa4f0d3eebc3c443f9be81bf48561a217}{y}}; }
+\DoxyCodeLine{79       \textcolor{keywordtype}{float} \mbox{\hyperlink{structsensors__vec__t_af73583b1e980b0aa03f9884812e9fd4d}{z}}; }
+\DoxyCodeLine{80     \};         }
+\DoxyCodeLine{81     \textcolor{comment}{/* Orientation sensors */}}
+\DoxyCodeLine{82     \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{83       \textcolor{keywordtype}{float} \mbox{\hyperlink{structsensors__vec__t_a26fd84d522945b6038221d9e38c7cc39}{roll}}; }
+\DoxyCodeLine{86       \textcolor{keywordtype}{float} \mbox{\hyperlink{structsensors__vec__t_a282e7d4378d4a18a805b8980295ac86c}{pitch}};   }
+\DoxyCodeLine{89       \textcolor{keywordtype}{float} \mbox{\hyperlink{structsensors__vec__t_ac5682e48513a771560df50e3b213e61a}{heading}}; }
+\DoxyCodeLine{92     \};               }
+\DoxyCodeLine{93   \};                 }
+\DoxyCodeLine{95   int8\_t \mbox{\hyperlink{structsensors__vec__t_a555c2084e8436de01dc76a23590e8824}{status}};     }
+\DoxyCodeLine{96   uint8\_t reserved[3]; }
+\DoxyCodeLine{97 \} \mbox{\hyperlink{structsensors__vec__t}{sensors\_vec\_t}};}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{100 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{101   \textcolor{keyword}{union }\{}
+\DoxyCodeLine{102     \textcolor{keywordtype}{float} c[3]; }
+\DoxyCodeLine{103     \textcolor{comment}{/* RGB color space */}}
+\DoxyCodeLine{104     \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{105       \textcolor{keywordtype}{float} \mbox{\hyperlink{structsensors__color__t_a4788d82c901b9367dd5c0daff8a7616b}{r}};   }
+\DoxyCodeLine{106       \textcolor{keywordtype}{float} \mbox{\hyperlink{structsensors__color__t_a8cf17d727651616de6f2b79ef32170cd}{g}};   }
+\DoxyCodeLine{107       \textcolor{keywordtype}{float} \mbox{\hyperlink{structsensors__color__t_a83fc1af92e29717b4513d121b0c72c7d}{b}};   }
+\DoxyCodeLine{108     \};           }
+\DoxyCodeLine{109   \};             }
+\DoxyCodeLine{110   uint32\_t \mbox{\hyperlink{structsensors__color__t_ad246cca749f91633ab99bc5f1b004651}{rgba}}; }
+\DoxyCodeLine{111 \} \mbox{\hyperlink{structsensors__color__t}{sensors\_color\_t}};}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113 \textcolor{comment}{/* Sensor event (36 bytes) */}}
+\DoxyCodeLine{116 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{117   int32\_t \mbox{\hyperlink{structsensors__event__t_a67fae7dd1de9edce3656ed214d20377f}{version}};   }
+\DoxyCodeLine{118   int32\_t \mbox{\hyperlink{structsensors__event__t_a6429c13b9cff87152fc3027267f2784e}{sensor\_id}}; }
+\DoxyCodeLine{119   int32\_t \mbox{\hyperlink{structsensors__event__t_a449e574ed6911881dc55507cb5635c2c}{type}};      }
+\DoxyCodeLine{120   int32\_t \mbox{\hyperlink{structsensors__event__t_a3b1869501b35bf41f2ff54de072b6c2c}{reserved0}}; }
+\DoxyCodeLine{121   int32\_t \mbox{\hyperlink{structsensors__event__t_af424c5c51376cd09eb214ebec28e933d}{timestamp}}; }
+\DoxyCodeLine{122   \textcolor{keyword}{union }\{}
+\DoxyCodeLine{123     \textcolor{keywordtype}{float} data[4];              }
+\DoxyCodeLine{124     \mbox{\hyperlink{structsensors__vec__t}{sensors\_vec\_t}} \mbox{\hyperlink{structsensors__event__t_afdd828afc697e597d6c9dd6d3360cdba}{acceleration}}; }
+\DoxyCodeLine{126     \mbox{\hyperlink{structsensors__vec__t}{sensors\_vec\_t}}}
+\DoxyCodeLine{127         \mbox{\hyperlink{structsensors__event__t_af237d30b9ce83483d0748dcc1c1cdf6b}{magnetic}}; }
+\DoxyCodeLine{128     \mbox{\hyperlink{structsensors__vec__t}{sensors\_vec\_t}} \mbox{\hyperlink{structsensors__event__t_ad3e85e7ec6990fe1932443d1f3a01d47}{orientation}}; }
+\DoxyCodeLine{129     \mbox{\hyperlink{structsensors__vec__t}{sensors\_vec\_t}} \mbox{\hyperlink{structsensors__event__t_acda3f7b94f1f66665c651fc381a33660}{gyro}};        }
+\DoxyCodeLine{130     \textcolor{keywordtype}{float} \mbox{\hyperlink{structsensors__event__t_afc1d28cfbce795d6ea954ebe725241f5}{temperature}}; }
+\DoxyCodeLine{131     \textcolor{keywordtype}{float} \mbox{\hyperlink{structsensors__event__t_a06f14a9abd47b91465f895d5259cdc1b}{distance}};    }
+\DoxyCodeLine{132     \textcolor{keywordtype}{float} \mbox{\hyperlink{structsensors__event__t_aaf8b2537020ae0b7450785724d77a3e0}{light}};       }
+\DoxyCodeLine{133     \textcolor{keywordtype}{float} \mbox{\hyperlink{structsensors__event__t_ac870e1249bab4a2a68cc4126761d24ef}{pressure}};    }
+\DoxyCodeLine{134     \textcolor{keywordtype}{float} \mbox{\hyperlink{structsensors__event__t_ad60830bc80efb7e8a11d6fb25518f55b}{relative\_humidity}}; }
+\DoxyCodeLine{135     \textcolor{keywordtype}{float} \mbox{\hyperlink{structsensors__event__t_af9653d31acfffa5a40aa709b2065e00b}{current}};           }
+\DoxyCodeLine{136     \textcolor{keywordtype}{float} \mbox{\hyperlink{structsensors__event__t_a47061fcae597f83f8a0a99d4b7b5a5c1}{voltage}};           }
+\DoxyCodeLine{137     \mbox{\hyperlink{structsensors__color__t}{sensors\_color\_t}} \mbox{\hyperlink{structsensors__event__t_afa3ffd4e1c9f7cfb5dffdd89fedcd107}{color}};   }
+\DoxyCodeLine{138   \};                         }
+\DoxyCodeLine{139 \} \mbox{\hyperlink{structsensors__event__t}{sensors\_event\_t}};}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141 \textcolor{comment}{/* Sensor details (40 bytes) */}}
+\DoxyCodeLine{144 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{145   \textcolor{keywordtype}{char} name[12];     }
+\DoxyCodeLine{146   int32\_t \mbox{\hyperlink{structsensor__t_a67fae7dd1de9edce3656ed214d20377f}{version}};   }
+\DoxyCodeLine{147   int32\_t \mbox{\hyperlink{structsensor__t_a6429c13b9cff87152fc3027267f2784e}{sensor\_id}}; }
+\DoxyCodeLine{148   int32\_t \mbox{\hyperlink{structsensor__t_a449e574ed6911881dc55507cb5635c2c}{type}};      }
+\DoxyCodeLine{149   \textcolor{keywordtype}{float} \mbox{\hyperlink{structsensor__t_ab57d4076e7e499e5da8c1ae500170a02}{max\_value}};   }
+\DoxyCodeLine{150   \textcolor{keywordtype}{float} \mbox{\hyperlink{structsensor__t_aad5729d76ea20f8aded557bc39d776bf}{min\_value}};   }
+\DoxyCodeLine{151   \textcolor{keywordtype}{float} \mbox{\hyperlink{structsensor__t_a4333d786c60465d20826583358b2798d}{resolution}}; }
+\DoxyCodeLine{153   int32\_t \mbox{\hyperlink{structsensor__t_ab63874406049ab96a4acb232b49ad0b8}{min\_delay}}; }
+\DoxyCodeLine{155 \} \mbox{\hyperlink{structsensor__t}{sensor\_t}};}
+\DoxyCodeLine{156 }
+\DoxyCodeLine{161 \textcolor{keyword}{class }\mbox{\hyperlink{class_adafruit___sensor}{Adafruit\_Sensor}} \{}
+\DoxyCodeLine{162 \textcolor{keyword}{public}:}
+\DoxyCodeLine{163   \textcolor{comment}{// Constructor(s)}}
+\DoxyCodeLine{164   \mbox{\hyperlink{class_adafruit___sensor}{Adafruit\_Sensor}}() \{\}}
+\DoxyCodeLine{165   \textcolor{keyword}{virtual} \mbox{\hyperlink{class_adafruit___sensor}{\string~Adafruit\_Sensor}}() \{\}}
+\DoxyCodeLine{166 }
+\DoxyCodeLine{167   \textcolor{comment}{// These must be defined by the subclass}}
+\DoxyCodeLine{168 }
+\DoxyCodeLine{172   \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_adafruit___sensor_ae1c28a20a45a1173e13a028b34e5f6ba}{enableAutoRange}}(\textcolor{keywordtype}{bool} enabled) \{}
+\DoxyCodeLine{173     (void)enabled; \textcolor{comment}{/* suppress unused warning */}}
+\DoxyCodeLine{174   \};}
+\DoxyCodeLine{175 }
+\DoxyCodeLine{178   \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_adafruit___sensor_ac54c74a0a51e7af8f4f59339967d0988}{getEvent}}(\mbox{\hyperlink{structsensors__event__t}{sensors\_event\_t}} *) = 0;}
+\DoxyCodeLine{180   \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_adafruit___sensor_a396d196231a92a3b3023c2bee8b2d897}{getSensor}}(\mbox{\hyperlink{structsensor__t}{sensor\_t}} *) = 0;}
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_adafruit___sensor_ae9760003007eca9aa7d6861e7fd12024}{printSensorDetails}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{183 }
+\DoxyCodeLine{184 \textcolor{keyword}{private}:}
+\DoxyCodeLine{185   \textcolor{keywordtype}{bool} \_autoRange;}
+\DoxyCodeLine{186 \};}
+\DoxyCodeLine{187 }
+\DoxyCodeLine{188 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

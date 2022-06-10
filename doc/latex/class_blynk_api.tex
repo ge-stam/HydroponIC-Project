@@ -1,0 +1,177 @@
+\hypertarget{class_blynk_api}{}\doxysection{Blynk\+Api\texorpdfstring{$<$}{<} Proto \texorpdfstring{$>$}{>} Class Template Reference}
+\label{class_blynk_api}\index{BlynkApi$<$ Proto $>$@{BlynkApi$<$ Proto $>$}}
+
+
+{\ttfamily \#include $<$Blynk\+Api.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename... Args$>$ }\\void \mbox{\hyperlink{class_blynk_api_a2d8229be57903f8d1140dbad6dbf6e05}{virtual\+Write}} (int pin, Args... values)
+\item 
+void \mbox{\hyperlink{class_blynk_api_a5ee9823f7399f94240a0f61fc0c7f17e}{virtual\+Write\+Binary}} (int pin, const void $\ast$buff, size\+\_\+t len)
+\item 
+void \mbox{\hyperlink{class_blynk_api_a7c50b9985bf41b482e7efe1faff91e4b}{virtual\+Write}} (int pin, const \mbox{\hyperlink{class_blynk_param}{Blynk\+Param}} \&param)
+\item 
+\mbox{\Hypertarget{class_blynk_api_aebf7c3a1ab5c9ccf3313e8563231bbbb}\label{class_blynk_api_aebf7c3a1ab5c9ccf3313e8563231bbbb}} 
+void {\bfseries virtual\+Write} (int pin, const \mbox{\hyperlink{class_blynk_param_allocated}{Blynk\+Param\+Allocated}} \&param)
+\item 
+\mbox{\Hypertarget{class_blynk_api_a77c0f05b54e19ce2dab042b1d713b9ec}\label{class_blynk_api_a77c0f05b54e19ce2dab042b1d713b9ec}} 
+void {\bfseries call\+Write\+Handler} (int pin, const \mbox{\hyperlink{class_blynk_param}{Blynk\+Param}} \&param)
+\item 
+\mbox{\Hypertarget{class_blynk_api_afa199742ca4ca2962965f3662ae44b53}\label{class_blynk_api_afa199742ca4ca2962965f3662ae44b53}} 
+void {\bfseries call\+Read\+Handler} (int pin)
+\item 
+void \mbox{\hyperlink{class_blynk_api_ac68728c0ab83e8f1fb8df3d638a3692f}{sync\+All}} ()
+\item 
+{\footnotesize template$<$typename... Args$>$ }\\void \mbox{\hyperlink{class_blynk_api_aa063b15eeb3de5ba855a223670190e85}{send\+Internal}} (Args... params)
+\item 
+{\footnotesize template$<$typename... Args$>$ }\\void \mbox{\hyperlink{class_blynk_api_a1d1b0cbd9d7f6e098b7bc048fc74e6cd}{sync\+Virtual}} (Args... pins)
+\item 
+\mbox{\Hypertarget{class_blynk_api_a6865d0fb5917288e1dde62808435d2fa}\label{class_blynk_api_a6865d0fb5917288e1dde62808435d2fa}} 
+{\footnotesize template$<$typename T $>$ }\\BLYNK\+\_\+\+DEPRECATED void {\bfseries tweet} (const T \&msg)
+\item 
+\mbox{\Hypertarget{class_blynk_api_a53ec05bae21561c4e0a5854b51cc72df}\label{class_blynk_api_a53ec05bae21561c4e0a5854b51cc72df}} 
+{\footnotesize template$<$typename T $>$ }\\BLYNK\+\_\+\+DEPRECATED void {\bfseries notify} (const T \&msg)
+\item 
+\mbox{\Hypertarget{class_blynk_api_af018183c1f79fdd20d301ae0e20f3a1b}\label{class_blynk_api_af018183c1f79fdd20d301ae0e20f3a1b}} 
+{\footnotesize template$<$typename T1 , typename T2 $>$ }\\BLYNK\+\_\+\+DEPRECATED void {\bfseries email} (const char $\ast$email, const T1 \&subject, const T2 \&msg)
+\item 
+\mbox{\Hypertarget{class_blynk_api_a23c9253424751ef5e7ddad3c5e3162c9}\label{class_blynk_api_a23c9253424751ef5e7ddad3c5e3162c9}} 
+{\footnotesize template$<$typename T1 , typename T2 $>$ }\\BLYNK\+\_\+\+DEPRECATED void {\bfseries email} (const T1 \&subject, const T2 \&msg)
+\item 
+{\footnotesize template$<$typename T , typename... Args$>$ }\\void \mbox{\hyperlink{class_blynk_api_a151346ac5507d012f405c9ec39f483c3}{set\+Property}} (int pin, const T \&property, Args... values)
+\item 
+\mbox{\Hypertarget{class_blynk_api_a1a227dc18185d2a7d704b7de81bedd49}\label{class_blynk_api_a1a227dc18185d2a7d704b7de81bedd49}} 
+{\footnotesize template$<$typename T $>$ }\\void {\bfseries set\+Property} (int pin, const T \&property, const \mbox{\hyperlink{class_blynk_param}{Blynk\+Param}} \&param)
+\item 
+\mbox{\Hypertarget{class_blynk_api_a30741791fd7baad133baad64686f762a}\label{class_blynk_api_a30741791fd7baad133baad64686f762a}} 
+{\footnotesize template$<$typename T $>$ }\\void {\bfseries set\+Property} (int pin, const T \&property, const \mbox{\hyperlink{class_blynk_param_allocated}{Blynk\+Param\+Allocated}} \&param)
+\item 
+\mbox{\Hypertarget{class_blynk_api_acea3605a1d44fddf931a2dd43e775bb6}\label{class_blynk_api_acea3605a1d44fddf931a2dd43e775bb6}} 
+{\footnotesize template$<$typename NAME $>$ }\\void {\bfseries log\+Event} (const NAME \&event\+\_\+name)
+\item 
+\mbox{\Hypertarget{class_blynk_api_a27d109aaf74641dbf156ab4e24e43841}\label{class_blynk_api_a27d109aaf74641dbf156ab4e24e43841}} 
+{\footnotesize template$<$typename NAME , typename DESCR $>$ }\\void {\bfseries log\+Event} (const NAME \&event\+\_\+name, const DESCR \&description)
+\item 
+\mbox{\Hypertarget{class_blynk_api_ac53bb1b9903cd37e3dc9eb66249f83c3}\label{class_blynk_api_ac53bb1b9903cd37e3dc9eb66249f83c3}} 
+{\footnotesize template$<$typename NAME $>$ }\\void {\bfseries clear\+Event} (const NAME \&event\+\_\+name)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_blynk_api_ae08ad93c8773c4f004bae8fb9116e665}\label{class_blynk_api_ae08ad93c8773c4f004bae8fb9116e665}} 
+void {\bfseries process\+Cmd} (const void $\ast$buff, size\+\_\+t len)
+\item 
+\mbox{\Hypertarget{class_blynk_api_ada26b0647f846b6a6d06e3d147c93d8e}\label{class_blynk_api_ada26b0647f846b6a6d06e3d147c93d8e}} 
+void {\bfseries send\+Info} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class Proto$>$\newline
+class Blynk\+Api$<$ Proto $>$}
+Represents high-\/level functions of Blynk 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_blynk_api_aa063b15eeb3de5ba855a223670190e85}\label{class_blynk_api_aa063b15eeb3de5ba855a223670190e85}} 
+\index{BlynkApi$<$ Proto $>$@{BlynkApi$<$ Proto $>$}!sendInternal@{sendInternal}}
+\index{sendInternal@{sendInternal}!BlynkApi$<$ Proto $>$@{BlynkApi$<$ Proto $>$}}
+\doxysubsubsection{\texorpdfstring{sendInternal()}{sendInternal()}}
+{\footnotesize\ttfamily void send\+Internal (\begin{DoxyParamCaption}\item[{Args...}]{params }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Sends internal command \mbox{\Hypertarget{class_blynk_api_a151346ac5507d012f405c9ec39f483c3}\label{class_blynk_api_a151346ac5507d012f405c9ec39f483c3}} 
+\index{BlynkApi$<$ Proto $>$@{BlynkApi$<$ Proto $>$}!setProperty@{setProperty}}
+\index{setProperty@{setProperty}!BlynkApi$<$ Proto $>$@{BlynkApi$<$ Proto $>$}}
+\doxysubsubsection{\texorpdfstring{setProperty()}{setProperty()}}
+{\footnotesize\ttfamily void set\+Property (\begin{DoxyParamCaption}\item[{int}]{pin,  }\item[{const T \&}]{property,  }\item[{Args...}]{values }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Sets property of a Widget
+
+@experimental
+
+
+\begin{DoxyParams}{Parameters}
+{\em pin} & Virtual Pin number \\
+\hline
+{\em property} & Property name (\char`\"{}label\char`\"{}, \char`\"{}labels\char`\"{}, \char`\"{}color\char`\"{}, ...) \\
+\hline
+{\em value} & Property value \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_blynk_api_ac68728c0ab83e8f1fb8df3d638a3692f}\label{class_blynk_api_ac68728c0ab83e8f1fb8df3d638a3692f}} 
+\index{BlynkApi$<$ Proto $>$@{BlynkApi$<$ Proto $>$}!syncAll@{syncAll}}
+\index{syncAll@{syncAll}!BlynkApi$<$ Proto $>$@{BlynkApi$<$ Proto $>$}}
+\doxysubsubsection{\texorpdfstring{syncAll()}{syncAll()}}
+{\footnotesize\ttfamily void sync\+All (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Requests Server to re-\/send current values for all widgets. \mbox{\Hypertarget{class_blynk_api_a1d1b0cbd9d7f6e098b7bc048fc74e6cd}\label{class_blynk_api_a1d1b0cbd9d7f6e098b7bc048fc74e6cd}} 
+\index{BlynkApi$<$ Proto $>$@{BlynkApi$<$ Proto $>$}!syncVirtual@{syncVirtual}}
+\index{syncVirtual@{syncVirtual}!BlynkApi$<$ Proto $>$@{BlynkApi$<$ Proto $>$}}
+\doxysubsubsection{\texorpdfstring{syncVirtual()}{syncVirtual()}}
+{\footnotesize\ttfamily void sync\+Virtual (\begin{DoxyParamCaption}\item[{Args...}]{pins }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Requests App or Server to re-\/send current value of a Virtual Pin. This will probably cause user-\/defined BLYNK\+\_\+\+WRITE handler to be called.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pin} & Virtual Pin number \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_blynk_api_a2d8229be57903f8d1140dbad6dbf6e05}\label{class_blynk_api_a2d8229be57903f8d1140dbad6dbf6e05}} 
+\index{BlynkApi$<$ Proto $>$@{BlynkApi$<$ Proto $>$}!virtualWrite@{virtualWrite}}
+\index{virtualWrite@{virtualWrite}!BlynkApi$<$ Proto $>$@{BlynkApi$<$ Proto $>$}}
+\doxysubsubsection{\texorpdfstring{virtualWrite()}{virtualWrite()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void virtual\+Write (\begin{DoxyParamCaption}\item[{int}]{pin,  }\item[{Args...}]{values }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Sends value to a Virtual Pin
+
+
+\begin{DoxyParams}{Parameters}
+{\em pin} & Virtual Pin number \\
+\hline
+{\em data} & Value to be sent \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_blynk_api_a7c50b9985bf41b482e7efe1faff91e4b}\label{class_blynk_api_a7c50b9985bf41b482e7efe1faff91e4b}} 
+\index{BlynkApi$<$ Proto $>$@{BlynkApi$<$ Proto $>$}!virtualWrite@{virtualWrite}}
+\index{virtualWrite@{virtualWrite}!BlynkApi$<$ Proto $>$@{BlynkApi$<$ Proto $>$}}
+\doxysubsubsection{\texorpdfstring{virtualWrite()}{virtualWrite()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void virtual\+Write (\begin{DoxyParamCaption}\item[{int}]{pin,  }\item[{const \mbox{\hyperlink{class_blynk_param}{Blynk\+Param}} \&}]{param }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Sends \mbox{\hyperlink{class_blynk_param}{Blynk\+Param}} to a Virtual Pin
+
+
+\begin{DoxyParams}{Parameters}
+{\em pin} & Virtual Pin number \\
+\hline
+{\em param} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_blynk_api_a5ee9823f7399f94240a0f61fc0c7f17e}\label{class_blynk_api_a5ee9823f7399f94240a0f61fc0c7f17e}} 
+\index{BlynkApi$<$ Proto $>$@{BlynkApi$<$ Proto $>$}!virtualWriteBinary@{virtualWriteBinary}}
+\index{virtualWriteBinary@{virtualWriteBinary}!BlynkApi$<$ Proto $>$@{BlynkApi$<$ Proto $>$}}
+\doxysubsubsection{\texorpdfstring{virtualWriteBinary()}{virtualWriteBinary()}}
+{\footnotesize\ttfamily void virtual\+Write\+Binary (\begin{DoxyParamCaption}\item[{int}]{pin,  }\item[{const void $\ast$}]{buff,  }\item[{size\+\_\+t}]{len }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Sends buffer to a Virtual Pin
+
+
+\begin{DoxyParams}{Parameters}
+{\em pin} & Virtual Pin number \\
+\hline
+{\em buff} & Data buffer \\
+\hline
+{\em len} & Length of data \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+Blynk/src/\+Blynk/\mbox{\hyperlink{_blynk_api_8h}{Blynk\+Api.\+h}}\item 
+lib/\+Blynk/linux/\mbox{\hyperlink{_blynk_api_linux_8h}{Blynk\+Api\+Linux.\+h}}\item 
+lib/\+Blynk/linux/\mbox{\hyperlink{_blynk_api_wiring_pi_8h}{Blynk\+Api\+Wiring\+Pi.\+h}}\item 
+lib/\+Blynk/src/\mbox{\hyperlink{_blynk_api_arduino_8h}{Blynk\+Api\+Arduino.\+h}}\item 
+lib/\+Blynk/src/\mbox{\hyperlink{_blynk_api_mbed_8h}{Blynk\+Api\+Mbed.\+h}}\item 
+lib/\+Blynk/src/\mbox{\hyperlink{_blynk_api_particle_8h}{Blynk\+Api\+Particle.\+h}}\end{DoxyCompactItemize}

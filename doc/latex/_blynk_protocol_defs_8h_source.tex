@@ -1,0 +1,125 @@
+\hypertarget{_blynk_protocol_defs_8h_source}{}\doxysection{Blynk\+Protocol\+Defs.\+h}
+\label{_blynk_protocol_defs_8h_source}\index{lib/Blynk/src/Blynk/BlynkProtocolDefs.h@{lib/Blynk/src/Blynk/BlynkProtocolDefs.h}}
+\mbox{\hyperlink{_blynk_protocol_defs_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef BlynkProtocolDefs\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define BlynkProtocolDefs\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{comment}{// Command definitions from:}}
+\DoxyCodeLine{15 \textcolor{comment}{//   https://github.com/blynkkk/blynk-\/server/blob/master/server/core/src/main/java/cc/blynk/server/core/protocol/enums/Command.java}}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 \textcolor{keyword}{enum} BlynkCmd}
+\DoxyCodeLine{18 \{}
+\DoxyCodeLine{19     BLYNK\_CMD\_RESPONSE       = 0,}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21     BLYNK\_CMD\_LOGIN          = 2,}
+\DoxyCodeLine{22     BLYNK\_CMD\_PING           = 6,}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24     BLYNK\_CMD\_TWEET          = 12,}
+\DoxyCodeLine{25     BLYNK\_CMD\_EMAIL          = 13,}
+\DoxyCodeLine{26     BLYNK\_CMD\_NOTIFY         = 14,}
+\DoxyCodeLine{27     BLYNK\_CMD\_BRIDGE         = 15,}
+\DoxyCodeLine{28     BLYNK\_CMD\_HARDWARE\_SYNC  = 16,}
+\DoxyCodeLine{29     BLYNK\_CMD\_INTERNAL       = 17,}
+\DoxyCodeLine{30     BLYNK\_CMD\_SMS            = 18,}
+\DoxyCodeLine{31     BLYNK\_CMD\_PROPERTY       = 19,}
+\DoxyCodeLine{32     BLYNK\_CMD\_HARDWARE       = 20,}
+\DoxyCodeLine{33     BLYNK\_CMD\_HW\_LOGIN       = 29,}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     BLYNK\_CMD\_REDIRECT       = 41,}
+\DoxyCodeLine{36     BLYNK\_CMD\_DEBUG\_PRINT    = 55,}
+\DoxyCodeLine{37     BLYNK\_CMD\_EVENT\_LOG      = 64,}
+\DoxyCodeLine{38     BLYNK\_CMD\_EVENT\_CLEAR    = 65}
+\DoxyCodeLine{39 \};}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41 \textcolor{keyword}{enum} BlynkStatus}
+\DoxyCodeLine{42 \{}
+\DoxyCodeLine{43     BLYNK\_SUCCESS                = 200,}
+\DoxyCodeLine{44     BLYNK\_QUOTA\_LIMIT\_EXCEPTION  = 1,}
+\DoxyCodeLine{45     BLYNK\_ILLEGAL\_COMMAND        = 2,}
+\DoxyCodeLine{46     BLYNK\_NOT\_REGISTERED         = 3,}
+\DoxyCodeLine{47     BLYNK\_ALREADY\_REGISTERED     = 4,}
+\DoxyCodeLine{48     BLYNK\_NOT\_AUTHENTICATED      = 5,}
+\DoxyCodeLine{49     BLYNK\_NOT\_ALLOWED            = 6,}
+\DoxyCodeLine{50     BLYNK\_DEVICE\_NOT\_IN\_NETWORK  = 7,}
+\DoxyCodeLine{51     BLYNK\_NO\_ACTIVE\_DASHBOARD    = 8,}
+\DoxyCodeLine{52     BLYNK\_INVALID\_TOKEN          = 9,}
+\DoxyCodeLine{53     BLYNK\_ILLEGAL\_COMMAND\_BODY   = 11,}
+\DoxyCodeLine{54     BLYNK\_GET\_GRAPH\_DATA\_EXCEPTION = 12,}
+\DoxyCodeLine{55     BLYNK\_NO\_DATA\_EXCEPTION      = 17,}
+\DoxyCodeLine{56     BLYNK\_DEVICE\_WENT\_OFFLINE    = 18,}
+\DoxyCodeLine{57     BLYNK\_SERVER\_EXCEPTION       = 19,}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59     BLYNK\_NTF\_INVALID\_BODY       = 13,}
+\DoxyCodeLine{60     BLYNK\_NTF\_NOT\_AUTHORIZED     = 14,}
+\DoxyCodeLine{61     BLYNK\_NTF\_ECXEPTION          = 15,}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63     BLYNK\_TIMEOUT                = 16,}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     BLYNK\_NOT\_SUPPORTED\_VERSION  = 20,}
+\DoxyCodeLine{66     BLYNK\_ENERGY\_LIMIT           = 21,}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68     BLYNK\_OPERATION\_ACCEPT       = 23,}
+\DoxyCodeLine{69     BLYNK\_OPERATION\_DECLINE      = 24,}
+\DoxyCodeLine{70 \};}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72 \textcolor{keyword}{struct }\mbox{\hyperlink{struct_blynk_header}{BlynkHeader}}}
+\DoxyCodeLine{73 \{}
+\DoxyCodeLine{74     uint8\_t  type;}
+\DoxyCodeLine{75     uint16\_t msg\_id;}
+\DoxyCodeLine{76     uint16\_t length;}
+\DoxyCodeLine{77 \}}
+\DoxyCodeLine{78 BLYNK\_ATTR\_PACKED;}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80 \textcolor{preprocessor}{\#if defined(ESP32)}}
+\DoxyCodeLine{81 \textcolor{preprocessor}{    \#include <lwip/ip\_addr.h>}}
+\DoxyCodeLine{82 \textcolor{preprocessor}{\#elif !defined(htons) \&\& (defined(ARDUINO) || defined(ESP8266) || defined(PARTICLE) || defined(\_\_MBED\_\_))}}
+\DoxyCodeLine{83 \textcolor{preprocessor}{    \#if \_\_BYTE\_ORDER\_\_ == \_\_ORDER\_LITTLE\_ENDIAN\_\_}}
+\DoxyCodeLine{84 \textcolor{preprocessor}{        \#define htons(x) ( ((x)<<8) | (((x)>>8)\&0xFF) )}}
+\DoxyCodeLine{85 \textcolor{preprocessor}{        \#define htonl(x) ( ((x)<<24 \& 0xFF000000UL) | \(\backslash\)}}
+\DoxyCodeLine{86 \textcolor{preprocessor}{                           ((x)<< 8 \& 0x00FF0000UL) | \(\backslash\)}}
+\DoxyCodeLine{87 \textcolor{preprocessor}{                           ((x)>> 8 \& 0x0000FF00UL) | \(\backslash\)}}
+\DoxyCodeLine{88 \textcolor{preprocessor}{                           ((x)>>24 \& 0x000000FFUL) )}}
+\DoxyCodeLine{89 \textcolor{preprocessor}{        \#define ntohs(x) htons(x)}}
+\DoxyCodeLine{90 \textcolor{preprocessor}{        \#define ntohl(x) htonl(x)}}
+\DoxyCodeLine{91 \textcolor{preprocessor}{    \#elif \_\_BYTE\_ORDER\_\_ == \_\_ORDER\_BIG\_ENDIAN\_\_}}
+\DoxyCodeLine{92 \textcolor{preprocessor}{        \#define htons(x) (x)}}
+\DoxyCodeLine{93 \textcolor{preprocessor}{        \#define htonl(x) (x)}}
+\DoxyCodeLine{94 \textcolor{preprocessor}{        \#define ntohs(x) (x)}}
+\DoxyCodeLine{95 \textcolor{preprocessor}{        \#define ntohl(x) (x)}}
+\DoxyCodeLine{96 \textcolor{preprocessor}{    \#else}}
+\DoxyCodeLine{97 \textcolor{preprocessor}{        \#error byte order problem}}
+\DoxyCodeLine{98 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{99 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101 \textcolor{preprocessor}{\#if \_\_BYTE\_ORDER\_\_ == \_\_ORDER\_LITTLE\_ENDIAN\_\_}}
+\DoxyCodeLine{102 \textcolor{preprocessor}{    \#define BLYNK\_STR\_16(a,b)     ((uint16\_t(a) << 0) | (uint16\_t(b) << 8))}}
+\DoxyCodeLine{103 \textcolor{preprocessor}{    \#define BLYNK\_STR\_32(a,b,c,d) ((uint32\_t(a) << 0) | (uint32\_t(b) << 8) | (uint32\_t(c) << 16) | (uint32\_t(d) << 24))}}
+\DoxyCodeLine{104 \textcolor{preprocessor}{\#elif \_\_BYTE\_ORDER\_\_ == \_\_ORDER\_BIG\_ENDIAN\_\_}}
+\DoxyCodeLine{105 \textcolor{preprocessor}{    \#define BLYNK\_STR\_16(a,b)     ((uint16\_t(b) << 0) | (uint16\_t(a) << 8))}}
+\DoxyCodeLine{106 \textcolor{preprocessor}{    \#define BLYNK\_STR\_32(a,b,c,d) ((uint32\_t(d) << 0) | (uint32\_t(c) << 8) | (uint32\_t(b) << 16) | (uint32\_t(a) << 24))}}
+\DoxyCodeLine{107 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{108 \textcolor{preprocessor}{    \#error byte order problem}}
+\DoxyCodeLine{109 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111 \textcolor{preprocessor}{\#define BLYNK\_HW\_PM BLYNK\_STR\_16('p','m')}}
+\DoxyCodeLine{112 \textcolor{preprocessor}{\#define BLYNK\_HW\_DW BLYNK\_STR\_16('d','w')}}
+\DoxyCodeLine{113 \textcolor{preprocessor}{\#define BLYNK\_HW\_DR BLYNK\_STR\_16('d','r')}}
+\DoxyCodeLine{114 \textcolor{preprocessor}{\#define BLYNK\_HW\_AW BLYNK\_STR\_16('a','w')}}
+\DoxyCodeLine{115 \textcolor{preprocessor}{\#define BLYNK\_HW\_AR BLYNK\_STR\_16('a','r')}}
+\DoxyCodeLine{116 \textcolor{preprocessor}{\#define BLYNK\_HW\_VW BLYNK\_STR\_16('v','w')}}
+\DoxyCodeLine{117 \textcolor{preprocessor}{\#define BLYNK\_HW\_VR BLYNK\_STR\_16('v','r')}}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{119 \textcolor{preprocessor}{\#define BLYNK\_INT\_RTC  BLYNK\_STR\_32('r','t','c',0)}}
+\DoxyCodeLine{120 \textcolor{preprocessor}{\#define BLYNK\_INT\_UTC  BLYNK\_STR\_32('u','t','c',0)}}
+\DoxyCodeLine{121 \textcolor{preprocessor}{\#define BLYNK\_INT\_OTA  BLYNK\_STR\_32('o','t','a',0)}}
+\DoxyCodeLine{122 \textcolor{preprocessor}{\#define BLYNK\_INT\_VFS  BLYNK\_STR\_32('v','f','s',0)}}
+\DoxyCodeLine{123 \textcolor{preprocessor}{\#define BLYNK\_INT\_DBG  BLYNK\_STR\_32('d','b','g',0)}}
+\DoxyCodeLine{124 \textcolor{preprocessor}{\#define BLYNK\_INT\_ACON BLYNK\_STR\_32('a','c','o','n')}}
+\DoxyCodeLine{125 \textcolor{preprocessor}{\#define BLYNK\_INT\_ADIS BLYNK\_STR\_32('a','d','i','s')}}
+\DoxyCodeLine{126 \textcolor{preprocessor}{\#define BLYNK\_INT\_META BLYNK\_STR\_32('m','e','t','a')}}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

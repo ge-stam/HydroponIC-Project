@@ -1,0 +1,131 @@
+\hypertarget{_blynk_simple_esp32___s_s_l_8h_source}{}\doxysection{Blynk\+Simple\+Esp32\+\_\+\+SSL.\+h}
+\label{_blynk_simple_esp32___s_s_l_8h_source}\index{lib/Blynk/src/BlynkSimpleEsp32\_SSL.h@{lib/Blynk/src/BlynkSimpleEsp32\_SSL.h}}
+\mbox{\hyperlink{_blynk_simple_esp32___s_s_l_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef BlynkSimpleEsp32\_SSL\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define BlynkSimpleEsp32\_SSL\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#ifndef ESP32}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#error This code is intended to run on the ESP32 platform! Please check your Tools-\/>Board setting.}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{char} BLYNK\_DEFAULT\_ROOT\_CA[] =}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#include <certs/letsencrypt\_pem.h>}}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_api_arduino_8h}{BlynkApiArduino.h}}>}}
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_protocol_8h}{Blynk/BlynkProtocol.h}}>}}
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#include <Adapters/BlynkArduinoClient.h>}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#include <WiFiClientSecure.h>}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{keyword}{template} <\textcolor{keyword}{typename} Client>}
+\DoxyCodeLine{27 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_arduino_client_secure}{BlynkArduinoClientSecure}}}
+\DoxyCodeLine{28     : \textcolor{keyword}{public} \mbox{\hyperlink{class_blynk_arduino_client_gen}{BlynkArduinoClientGen}}<Client>}
+\DoxyCodeLine{29 \{}
+\DoxyCodeLine{30 \textcolor{keyword}{public}:}
+\DoxyCodeLine{31     \mbox{\hyperlink{class_blynk_arduino_client_secure}{BlynkArduinoClientSecure}}(Client\& client)}
+\DoxyCodeLine{32         : \mbox{\hyperlink{class_blynk_arduino_client_gen}{BlynkArduinoClientGen}}<Client>(client)}
+\DoxyCodeLine{33         , caCert(NULL)}
+\DoxyCodeLine{34     \{\}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36     \textcolor{keywordtype}{void} setRootCA(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* fp) \{ caCert = fp; \}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38     \textcolor{keywordtype}{bool} connect() \{}
+\DoxyCodeLine{39         this-\/>client-\/>setCACert(caCert);}
+\DoxyCodeLine{40         \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_blynk_arduino_client_gen}{BlynkArduinoClientGen<Client>::connect}}()) \{}
+\DoxyCodeLine{41           BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}Certificate OK"{}}));}
+\DoxyCodeLine{42           \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{43         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{44           BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}Secure connection failed"{}}));}
+\DoxyCodeLine{45         \}}
+\DoxyCodeLine{46         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{47     \}}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49 \textcolor{keyword}{private}:}
+\DoxyCodeLine{50     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* caCert;}
+\DoxyCodeLine{51 \};}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53 \textcolor{keyword}{template} <\textcolor{keyword}{typename} Transport>}
+\DoxyCodeLine{54 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_wifi}{BlynkWifi}}}
+\DoxyCodeLine{55     : \textcolor{keyword}{public} \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol}}<Transport>}
+\DoxyCodeLine{56 \{}
+\DoxyCodeLine{57     \textcolor{keyword}{typedef} \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol<Transport>}} Base;}
+\DoxyCodeLine{58 \textcolor{keyword}{public}:}
+\DoxyCodeLine{59     \mbox{\hyperlink{class_blynk_wifi}{BlynkWifi}}(Transport\& transp)}
+\DoxyCodeLine{60         : Base(transp)}
+\DoxyCodeLine{61     \{\}}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63     \textcolor{keywordtype}{void} connectWiFi(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* ssid, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* pass)}
+\DoxyCodeLine{64     \{}
+\DoxyCodeLine{65         BLYNK\_LOG2(BLYNK\_F(\textcolor{stringliteral}{"{}Connecting to "{}}), ssid);}
+\DoxyCodeLine{66         WiFi.mode(WIFI\_STA);}
+\DoxyCodeLine{67         \textcolor{keywordflow}{if} (pass \&\& strlen(pass)) \{}
+\DoxyCodeLine{68             WiFi.begin(ssid, pass);}
+\DoxyCodeLine{69         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{70             WiFi.begin(ssid);}
+\DoxyCodeLine{71         \}}
+\DoxyCodeLine{72         \textcolor{keywordflow}{while} (WiFi.status() != WL\_CONNECTED) \{}
+\DoxyCodeLine{73             BlynkDelay(500);}
+\DoxyCodeLine{74         \}}
+\DoxyCodeLine{75         BLYNK\_LOG1(BLYNK\_F(\textcolor{stringliteral}{"{}Connected to WiFi"{}}));}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77         IPAddress myip = WiFi.localIP();}
+\DoxyCodeLine{78         (void)myip; \textcolor{comment}{// Eliminate warnings about unused myip}}
+\DoxyCodeLine{79         BLYNK\_LOG\_IP(\textcolor{stringliteral}{"{}IP: "{}}, myip);}
+\DoxyCodeLine{80     \}}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82     \textcolor{keywordtype}{void} config(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth,}
+\DoxyCodeLine{83                 \textcolor{keyword}{const} \textcolor{keywordtype}{char}* domain = BLYNK\_DEFAULT\_DOMAIN,}
+\DoxyCodeLine{84                 uint16\_t    port   = BLYNK\_DEFAULT\_PORT\_SSL,}
+\DoxyCodeLine{85                 \textcolor{keyword}{const} \textcolor{keywordtype}{char}* root\_ca = BLYNK\_DEFAULT\_ROOT\_CA)}
+\DoxyCodeLine{86     \{}
+\DoxyCodeLine{87         Base::begin(auth);}
+\DoxyCodeLine{88         this-\/>conn.begin(domain, port);}
+\DoxyCodeLine{89         this-\/>conn.setRootCA(root\_ca);}
+\DoxyCodeLine{90     \}}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92     \textcolor{keywordtype}{void} config(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth,}
+\DoxyCodeLine{93                 IPAddress   ip,}
+\DoxyCodeLine{94                 uint16\_t    port = BLYNK\_DEFAULT\_PORT\_SSL,}
+\DoxyCodeLine{95                 \textcolor{keyword}{const} \textcolor{keywordtype}{char}* root\_ca = BLYNK\_DEFAULT\_ROOT\_CA)}
+\DoxyCodeLine{96     \{}
+\DoxyCodeLine{97         Base::begin(auth);}
+\DoxyCodeLine{98         this-\/>conn.begin(ip, port);}
+\DoxyCodeLine{99         this-\/>conn.setRootCA(root\_ca);}
+\DoxyCodeLine{100     \}}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102     \textcolor{keywordtype}{void} begin(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth,}
+\DoxyCodeLine{103                \textcolor{keyword}{const} \textcolor{keywordtype}{char}* ssid,}
+\DoxyCodeLine{104                \textcolor{keyword}{const} \textcolor{keywordtype}{char}* pass,}
+\DoxyCodeLine{105                \textcolor{keyword}{const} \textcolor{keywordtype}{char}* domain = BLYNK\_DEFAULT\_DOMAIN,}
+\DoxyCodeLine{106                uint16\_t    port   = BLYNK\_DEFAULT\_PORT\_SSL,}
+\DoxyCodeLine{107                \textcolor{keyword}{const} \textcolor{keywordtype}{char}* root\_ca = BLYNK\_DEFAULT\_ROOT\_CA)}
+\DoxyCodeLine{108     \{}
+\DoxyCodeLine{109         connectWiFi(ssid, pass);}
+\DoxyCodeLine{110         config(auth, domain, port, root\_ca);}
+\DoxyCodeLine{111         \textcolor{keywordflow}{while}(this-\/>connect() != \textcolor{keyword}{true}) \{\}}
+\DoxyCodeLine{112     \}}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114     \textcolor{keywordtype}{void} begin(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth,}
+\DoxyCodeLine{115                \textcolor{keyword}{const} \textcolor{keywordtype}{char}* ssid,}
+\DoxyCodeLine{116                \textcolor{keyword}{const} \textcolor{keywordtype}{char}* pass,}
+\DoxyCodeLine{117                IPAddress   ip,}
+\DoxyCodeLine{118                uint16\_t    port   = BLYNK\_DEFAULT\_PORT\_SSL,}
+\DoxyCodeLine{119                \textcolor{keyword}{const} \textcolor{keywordtype}{char}* root\_ca = BLYNK\_DEFAULT\_ROOT\_CA)}
+\DoxyCodeLine{120     \{}
+\DoxyCodeLine{121         connectWiFi(ssid, pass);}
+\DoxyCodeLine{122         config(auth, ip, port, root\_ca);}
+\DoxyCodeLine{123         \textcolor{keywordflow}{while}(this-\/>connect() != \textcolor{keyword}{true}) \{\}}
+\DoxyCodeLine{124     \}}
+\DoxyCodeLine{125 }
+\DoxyCodeLine{126 \};}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128 \textcolor{keyword}{static} WiFiClientSecure \_blynkWifiClient;}
+\DoxyCodeLine{129 \textcolor{keyword}{static} \mbox{\hyperlink{class_blynk_arduino_client_secure}{BlynkArduinoClientSecure<WiFiClientSecure>}} \_blynkTransport(\_blynkWifiClient);}
+\DoxyCodeLine{130 \mbox{\hyperlink{class_blynk_wifi}{BlynkWifi<BlynkArduinoClientSecure<WiFiClientSecure>}} > Blynk(\_blynkTransport);}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_widgets_8h}{BlynkWidgets.h}}>}}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,37 @@
+\hypertarget{class_widget_bridge}{}\doxysection{Widget\+Bridge Class Reference}
+\label{class_widget_bridge}\index{WidgetBridge@{WidgetBridge}}
+Inheritance diagram for Widget\+Bridge\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_widget_bridge}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_widget_bridge_a358c5eb0008a4242d485b35ca2d0367f}\label{class_widget_bridge_a358c5eb0008a4242d485b35ca2d0367f}} 
+{\bfseries Widget\+Bridge} (uint8\+\_\+t v\+Pin)
+\item 
+\mbox{\Hypertarget{class_widget_bridge_a911cf84dc40519d33204121666217087}\label{class_widget_bridge_a911cf84dc40519d33204121666217087}} 
+void {\bfseries set\+Auth\+Token} (const char $\ast$token)
+\item 
+\mbox{\Hypertarget{class_widget_bridge_ae396f78cb6ceab568e7b4c224a85a434}\label{class_widget_bridge_ae396f78cb6ceab568e7b4c224a85a434}} 
+{\footnotesize template$<$typename T $>$ }\\void {\bfseries digital\+Write} (const T \&pin, int val)
+\item 
+\mbox{\Hypertarget{class_widget_bridge_a9b300d33eaa856a20d2701465183bd44}\label{class_widget_bridge_a9b300d33eaa856a20d2701465183bd44}} 
+{\footnotesize template$<$typename T $>$ }\\void {\bfseries analog\+Write} (const T \&pin, int val)
+\item 
+\mbox{\Hypertarget{class_widget_bridge_a2d8229be57903f8d1140dbad6dbf6e05}\label{class_widget_bridge_a2d8229be57903f8d1140dbad6dbf6e05}} 
+{\footnotesize template$<$typename... Args$>$ }\\void {\bfseries virtual\+Write} (int pin, Args... values)
+\item 
+\mbox{\Hypertarget{class_widget_bridge_a5ee9823f7399f94240a0f61fc0c7f17e}\label{class_widget_bridge_a5ee9823f7399f94240a0f61fc0c7f17e}} 
+void {\bfseries virtual\+Write\+Binary} (int pin, const void $\ast$buff, size\+\_\+t len)
+\item 
+\mbox{\Hypertarget{class_widget_bridge_a7c50b9985bf41b482e7efe1faff91e4b}\label{class_widget_bridge_a7c50b9985bf41b482e7efe1faff91e4b}} 
+void {\bfseries virtual\+Write} (int pin, const \mbox{\hyperlink{class_blynk_param}{Blynk\+Param}} \&param)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+Blynk/src/\mbox{\hyperlink{_widget_bridge_8h}{Widget\+Bridge.\+h}}\end{DoxyCompactItemize}

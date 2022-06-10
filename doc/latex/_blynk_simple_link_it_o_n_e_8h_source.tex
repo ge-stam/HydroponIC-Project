@@ -1,0 +1,91 @@
+\hypertarget{_blynk_simple_link_it_o_n_e_8h_source}{}\doxysection{Blynk\+Simple\+Link\+It\+ONE.\+h}
+\label{_blynk_simple_link_it_o_n_e_8h_source}\index{lib/Blynk/src/BlynkSimpleLinkItONE.h@{lib/Blynk/src/BlynkSimpleLinkItONE.h}}
+\mbox{\hyperlink{_blynk_simple_link_it_o_n_e_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef BlynkSimpleLinkItONE\_h}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define BlynkSimpleLinkItONE\_h}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#ifndef BLYNK\_INFO\_DEVICE}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#define BLYNK\_INFO\_DEVICE  "{}LinkIt ONE"{}}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{comment}{// cause this causes crashes...}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#define BLYNK\_NO\_YIELD}}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_api_arduino_8h}{BlynkApiArduino.h}}>}}
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_protocol_8h}{Blynk/BlynkProtocol.h}}>}}
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#include <Adapters/BlynkArduinoClient.h>}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#include <LWiFi.h>}}
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#include <LWiFiClient.h>}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{keyword}{class }\mbox{\hyperlink{class_blynk_link_it_one_wifi}{BlynkLinkItOneWifi}}}
+\DoxyCodeLine{28     : \textcolor{keyword}{public} \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol}}<BlynkArduinoClient>}
+\DoxyCodeLine{29 \{}
+\DoxyCodeLine{30     \textcolor{keyword}{typedef} \mbox{\hyperlink{class_blynk_protocol}{BlynkProtocol<BlynkArduinoClient>}} \mbox{\hyperlink{class_blynk_protocol}{Base}};}
+\DoxyCodeLine{31 \textcolor{keyword}{public}:}
+\DoxyCodeLine{32     \mbox{\hyperlink{class_blynk_link_it_one_wifi}{BlynkLinkItOneWifi}}(\mbox{\hyperlink{class_blynk_arduino_client_gen}{BlynkArduinoClient}}\& transp)}
+\DoxyCodeLine{33         : \mbox{\hyperlink{class_blynk_protocol}{Base}}(transp)}
+\DoxyCodeLine{34     \{\}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36     \textcolor{keywordtype}{void} connectWiFi(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* ssid, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* pass, \textcolor{keywordtype}{int} wifi\_auth)}
+\DoxyCodeLine{37     \{}
+\DoxyCodeLine{38         BLYNK\_LOG2(BLYNK\_F(\textcolor{stringliteral}{"{}Connecting to "{}}), ssid);}
+\DoxyCodeLine{39         LWiFi.begin();}
+\DoxyCodeLine{40         \textcolor{keywordflow}{while}(!LWiFi.connect(ssid, LWiFiLoginInfo((LWiFiEncryption)wifi\_auth, pass)))\{}
+\DoxyCodeLine{41             BlynkDelay(1000);}
+\DoxyCodeLine{42         \}}
+\DoxyCodeLine{43     \}}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     \textcolor{keywordtype}{void} config(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth,}
+\DoxyCodeLine{46                 \textcolor{keyword}{const} \textcolor{keywordtype}{char}* domain = BLYNK\_DEFAULT\_DOMAIN,}
+\DoxyCodeLine{47                 uint16\_t    port   = BLYNK\_DEFAULT\_PORT)}
+\DoxyCodeLine{48     \{}
+\DoxyCodeLine{49         Base::begin(auth);}
+\DoxyCodeLine{50         this-\/>conn.begin(domain, port);}
+\DoxyCodeLine{51     \}}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53     \textcolor{keywordtype}{void} config(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth,}
+\DoxyCodeLine{54                 IPAddress   ip,}
+\DoxyCodeLine{55                 uint16\_t    port   = BLYNK\_DEFAULT\_PORT)}
+\DoxyCodeLine{56     \{}
+\DoxyCodeLine{57         Base::begin(auth);}
+\DoxyCodeLine{58         this-\/>conn.begin(ip, port);}
+\DoxyCodeLine{59     \}}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61     \textcolor{keywordtype}{void} begin(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth,}
+\DoxyCodeLine{62                \textcolor{keyword}{const} \textcolor{keywordtype}{char}* ssid,}
+\DoxyCodeLine{63                \textcolor{keyword}{const} \textcolor{keywordtype}{char}* pass,}
+\DoxyCodeLine{64                \textcolor{keywordtype}{int}         wifi\_auth,}
+\DoxyCodeLine{65                \textcolor{keyword}{const} \textcolor{keywordtype}{char}* domain = BLYNK\_DEFAULT\_DOMAIN,}
+\DoxyCodeLine{66                uint16\_t port      = BLYNK\_DEFAULT\_PORT)}
+\DoxyCodeLine{67     \{}
+\DoxyCodeLine{68         connectWiFi(ssid, pass, wifi\_auth);}
+\DoxyCodeLine{69         config(auth, domain, port);}
+\DoxyCodeLine{70         \textcolor{keywordflow}{while}(this-\/>connect() != \textcolor{keyword}{true}) \{\}}
+\DoxyCodeLine{71     \}}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73     \textcolor{keywordtype}{void} begin(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* auth,}
+\DoxyCodeLine{74                \textcolor{keyword}{const} \textcolor{keywordtype}{char}* ssid,}
+\DoxyCodeLine{75                \textcolor{keyword}{const} \textcolor{keywordtype}{char}* pass,}
+\DoxyCodeLine{76                \textcolor{keywordtype}{int}         wifi\_auth,}
+\DoxyCodeLine{77                IPAddress   ip,}
+\DoxyCodeLine{78                uint16\_t    port = BLYNK\_DEFAULT\_PORT)}
+\DoxyCodeLine{79     \{}
+\DoxyCodeLine{80         connectWiFi(ssid, pass, wifi\_auth);}
+\DoxyCodeLine{81         config(auth, ip, port);}
+\DoxyCodeLine{82         \textcolor{keywordflow}{while}(this-\/>connect() != \textcolor{keyword}{true}) \{\}}
+\DoxyCodeLine{83     \}}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85 \};}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88 \textcolor{keyword}{static} LWiFiClient \_blynkWifiClient;}
+\DoxyCodeLine{89 \textcolor{keyword}{static} \mbox{\hyperlink{class_blynk_arduino_client_gen}{BlynkArduinoClient}} \_blynkTransport(\_blynkWifiClient);}
+\DoxyCodeLine{90 \mbox{\hyperlink{class_blynk_link_it_one_wifi}{BlynkLinkItOneWifi}} Blynk(\_blynkTransport);}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_widgets_8h}{BlynkWidgets.h}}>}}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,255 @@
+\hypertarget{_edgent___wio___terminal_2_indicator_8h_source}{}\doxysection{Indicator.\+h}
+\label{_edgent___wio___terminal_2_indicator_8h_source}\index{lib/Blynk/examples/Blynk.Edgent/Edgent\_Wio\_Terminal/Indicator.h@{lib/Blynk/examples/Blynk.Edgent/Edgent\_Wio\_Terminal/Indicator.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#if defined(BOARD\_LED\_PIN\_WS2812)}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{  \#include <\mbox{\hyperlink{_adafruit___neo_pixel_8h}{Adafruit\_NeoPixel.h}}>}    \textcolor{comment}{// Library: https://github.com/adafruit/Adafruit\_NeoPixel}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5   \mbox{\hyperlink{class_adafruit___neo_pixel}{Adafruit\_NeoPixel}} rgb = \mbox{\hyperlink{class_adafruit___neo_pixel}{Adafruit\_NeoPixel}}(1, BOARD\_LED\_PIN\_WS2812, \mbox{\hyperlink{_adafruit___neo_pixel_8h_a95d0d6b0a1f52bc72d9dcea2b3a48e3f}{NEO\_GRB}} + \mbox{\hyperlink{_adafruit___neo_pixel_8h_a475fef7028a743310aa4311a97899d5d}{NEO\_KHZ800}});}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{keywordtype}{void} indicator\_run();}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#if !defined(BOARD\_LED\_BRIGHTNESS)}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#define BOARD\_LED\_BRIGHTNESS 255}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#if defined(BOARD\_LED\_PIN\_WS2812) || defined(BOARD\_LED\_PIN\_R)}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#define BOARD\_LED\_IS\_RGB}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#define DIMM(x)    ((uint32\_t)(x)*(BOARD\_LED\_BRIGHTNESS)/255)}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#define RGB(r,g,b) (DIMM(r) << 16 | DIMM(g) << 8 | DIMM(b) << 0)}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#define TO\_PWM(x)  ((uint32\_t)(x)*(BOARD\_PWM\_MAX)/255)}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{keyword}{class }\mbox{\hyperlink{class_indicator}{Indicator}} \{}
+\DoxyCodeLine{23 \textcolor{keyword}{public}:}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25   \textcolor{keyword}{enum} Colors \{}
+\DoxyCodeLine{26     COLOR\_BLACK   = RGB(0x00, 0x00, 0x00),}
+\DoxyCodeLine{27     COLOR\_WHITE   = RGB(0xFF, 0xFF, 0xE7),}
+\DoxyCodeLine{28     COLOR\_BLUE    = RGB(0x0D, 0x36, 0xFF),}
+\DoxyCodeLine{29     COLOR\_BLYNK   = RGB(0x2E, 0xFF, 0xB9),}
+\DoxyCodeLine{30     COLOR\_RED     = RGB(0xFF, 0x10, 0x08),}
+\DoxyCodeLine{31     COLOR\_MAGENTA = RGB(0xA7, 0x00, 0xFF),}
+\DoxyCodeLine{32   \};}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34   \mbox{\hyperlink{class_indicator}{Indicator}}() \{}
+\DoxyCodeLine{35   \}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37   \textcolor{keywordtype}{void} init() \{}
+\DoxyCodeLine{38     m\_Counter = 0;}
+\DoxyCodeLine{39     initLED();}
+\DoxyCodeLine{40   \}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42   uint32\_t run() \{}
+\DoxyCodeLine{43     State currState = BlynkState::get();}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     \textcolor{comment}{// Reset counter if indicator state changes}}
+\DoxyCodeLine{46     \textcolor{keywordflow}{if} (m\_PrevState != currState) \{}
+\DoxyCodeLine{47       m\_PrevState = currState;}
+\DoxyCodeLine{48       m\_Counter = 0;}
+\DoxyCodeLine{49     \}}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     \textcolor{keywordflow}{if} (g\_buttonPressed) \{}
+\DoxyCodeLine{52       \textcolor{keywordflow}{if} (millis() -\/ g\_buttonPressTime > BUTTON\_HOLD\_TIME\_ACTION)     \{ \textcolor{keywordflow}{return} beatLED(COLOR\_WHITE,   (\textcolor{keywordtype}{int}[])\{ 100, 100 \}); \}}
+\DoxyCodeLine{53       \textcolor{keywordflow}{if} (millis() -\/ g\_buttonPressTime > BUTTON\_HOLD\_TIME\_INDICATION) \{ \textcolor{keywordflow}{return} waveLED(COLOR\_WHITE,   1000); \}}
+\DoxyCodeLine{54     \}}
+\DoxyCodeLine{55     \textcolor{keywordflow}{switch} (currState) \{}
+\DoxyCodeLine{56     \textcolor{keywordflow}{case} MODE\_RESET\_CONFIG:}
+\DoxyCodeLine{57     \textcolor{keywordflow}{case} MODE\_WAIT\_CONFIG:       \textcolor{keywordflow}{return} beatLED(COLOR\_BLUE,    (\textcolor{keywordtype}{int}[])\{ 50, 500 \});}
+\DoxyCodeLine{58     \textcolor{keywordflow}{case} MODE\_CONFIGURING:       \textcolor{keywordflow}{return} beatLED(COLOR\_BLUE,    (\textcolor{keywordtype}{int}[])\{ 200, 200 \});}
+\DoxyCodeLine{59     \textcolor{keywordflow}{case} MODE\_CONNECTING\_NET:    \textcolor{keywordflow}{return} beatLED(COLOR\_BLYNK,   (\textcolor{keywordtype}{int}[])\{ 50, 500 \});}
+\DoxyCodeLine{60     \textcolor{keywordflow}{case} MODE\_CONNECTING\_CLOUD:  \textcolor{keywordflow}{return} beatLED(COLOR\_BLYNK,   (\textcolor{keywordtype}{int}[])\{ 100, 100 \});}
+\DoxyCodeLine{61     \textcolor{keywordflow}{case} MODE\_RUNNING:           \textcolor{keywordflow}{return} waveLED(COLOR\_BLYNK,   5000);}
+\DoxyCodeLine{62     \textcolor{keywordflow}{case} MODE\_OTA\_UPGRADE:       \textcolor{keywordflow}{return} beatLED(COLOR\_MAGENTA, (\textcolor{keywordtype}{int}[])\{ 50, 50 \});}
+\DoxyCodeLine{63     \textcolor{keywordflow}{default}:                     \textcolor{keywordflow}{return} beatLED(COLOR\_RED,     (\textcolor{keywordtype}{int}[])\{ 80, 100, 80, 1000 \} );}
+\DoxyCodeLine{64     \}}
+\DoxyCodeLine{65   \}}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69   \textcolor{comment}{/*}}
+\DoxyCodeLine{70 \textcolor{comment}{   * LED drivers}}
+\DoxyCodeLine{71 \textcolor{comment}{   */}}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73 \textcolor{preprocessor}{\#if defined(BOARD\_LED\_PIN\_WS2812)  }\textcolor{comment}{// Addressable, NeoPixel RGB LED}}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75   \textcolor{keywordtype}{void} initLED() \{}
+\DoxyCodeLine{76     rgb.\mbox{\hyperlink{class_adafruit___neo_pixel_aad78931e44ce43c9b9c460dba7c9bbb7}{begin}}();}
+\DoxyCodeLine{77     setRGB(COLOR\_BLACK);}
+\DoxyCodeLine{78   \}}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80   \textcolor{keywordtype}{void} setRGB(uint32\_t color) \{}
+\DoxyCodeLine{81     rgb.\mbox{\hyperlink{class_adafruit___neo_pixel_a0ec91c90f337e806cd98956514257cf1}{setPixelColor}}(0, color);}
+\DoxyCodeLine{82     rgb.\mbox{\hyperlink{class_adafruit___neo_pixel_ae335a7c214036a6c1734969f2bc3f4f7}{show}}();}
+\DoxyCodeLine{83   \}}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85 \textcolor{preprocessor}{\#elif defined(BOARD\_LED\_PIN\_R)     }\textcolor{comment}{// Normal RGB LED (common anode or common cathode)}}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87   \textcolor{keywordtype}{void} initLED() \{}
+\DoxyCodeLine{88     pinMode(BOARD\_LED\_PIN\_R, OUTPUT);}
+\DoxyCodeLine{89     pinMode(BOARD\_LED\_PIN\_G, OUTPUT);}
+\DoxyCodeLine{90     pinMode(BOARD\_LED\_PIN\_B, OUTPUT);}
+\DoxyCodeLine{91   \}}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93   \textcolor{keywordtype}{void} setRGB(uint32\_t color) \{}
+\DoxyCodeLine{94     uint8\_t r = (color \& 0xFF0000) >> 16;}
+\DoxyCodeLine{95     uint8\_t g = (color \& 0x00FF00) >> 8;}
+\DoxyCodeLine{96     uint8\_t b = (color \& 0x0000FF);}
+\DoxyCodeLine{97 \textcolor{preprocessor}{    \#if BOARD\_LED\_INVERSE}}
+\DoxyCodeLine{98     analogWrite(BOARD\_LED\_PIN\_R, TO\_PWM(255 -\/ r));}
+\DoxyCodeLine{99     analogWrite(BOARD\_LED\_PIN\_G, TO\_PWM(255 -\/ g));}
+\DoxyCodeLine{100     analogWrite(BOARD\_LED\_PIN\_B, TO\_PWM(255 -\/ b));}
+\DoxyCodeLine{101 \textcolor{preprocessor}{    \#else}}
+\DoxyCodeLine{102     analogWrite(BOARD\_LED\_PIN\_R, TO\_PWM(r));}
+\DoxyCodeLine{103     analogWrite(BOARD\_LED\_PIN\_G, TO\_PWM(g));}
+\DoxyCodeLine{104     analogWrite(BOARD\_LED\_PIN\_B, TO\_PWM(b));}
+\DoxyCodeLine{105 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{106   \}}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108 \textcolor{preprocessor}{\#elif defined(BOARD\_LED\_PIN)       }\textcolor{comment}{// Single color LED}}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110   \textcolor{keywordtype}{void} initLED() \{}
+\DoxyCodeLine{111     pinMode(BOARD\_LED\_PIN, OUTPUT);}
+\DoxyCodeLine{112   \}}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114   \textcolor{keywordtype}{void} setLED(uint32\_t color) \{}
+\DoxyCodeLine{115 \textcolor{preprocessor}{    \#if BOARD\_LED\_INVERSE}}
+\DoxyCodeLine{116     analogWrite(BOARD\_LED\_PIN, TO\_PWM(255 -\/ color));}
+\DoxyCodeLine{117 \textcolor{preprocessor}{    \#else}}
+\DoxyCodeLine{118     analogWrite(BOARD\_LED\_PIN, TO\_PWM(color));}
+\DoxyCodeLine{119 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{120   \}}
+\DoxyCodeLine{121 }
+\DoxyCodeLine{122 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124 \textcolor{preprocessor}{  \#warning Invalid LED configuration.}}
+\DoxyCodeLine{125 }
+\DoxyCodeLine{126   \textcolor{keywordtype}{void} initLED() \{}
+\DoxyCodeLine{127   \}}
+\DoxyCodeLine{128 }
+\DoxyCodeLine{129   \textcolor{keywordtype}{void} setLED(uint32\_t color) \{}
+\DoxyCodeLine{130   \}}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134   \textcolor{comment}{/*}}
+\DoxyCodeLine{135 \textcolor{comment}{   * Animations}}
+\DoxyCodeLine{136 \textcolor{comment}{   */}}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138   uint32\_t skipLED() \{}
+\DoxyCodeLine{139     \textcolor{keywordflow}{return} 20;}
+\DoxyCodeLine{140   \}}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142 \textcolor{preprocessor}{\#if defined(BOARD\_LED\_IS\_RGB)}}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144   \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{145   uint32\_t beatLED(uint32\_t onColor, \textcolor{keyword}{const} T\& beat) \{}
+\DoxyCodeLine{146     \textcolor{keyword}{const} uint8\_t cnt = \textcolor{keyword}{sizeof}(beat)/\textcolor{keyword}{sizeof}(beat[0]);}
+\DoxyCodeLine{147     setRGB((m\_Counter \% 2 == 0) ? onColor : (uint32\_t)COLOR\_BLACK);}
+\DoxyCodeLine{148     uint32\_t next = beat[m\_Counter \% cnt];}
+\DoxyCodeLine{149     m\_Counter = (m\_Counter+1) \% cnt;}
+\DoxyCodeLine{150     \textcolor{keywordflow}{return} next;}
+\DoxyCodeLine{151   \}}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153   uint32\_t waveLED(uint32\_t colorMax, \textcolor{keywordtype}{unsigned} breathePeriod) \{}
+\DoxyCodeLine{154     uint8\_t redMax = (colorMax \& 0xFF0000) >> 16;}
+\DoxyCodeLine{155     uint8\_t greenMax = (colorMax \& 0x00FF00) >> 8;}
+\DoxyCodeLine{156     uint8\_t blueMax = (colorMax \& 0x0000FF);}
+\DoxyCodeLine{157 }
+\DoxyCodeLine{158     \textcolor{comment}{// Brightness will rise from 0 to 128, then fall back to 0}}
+\DoxyCodeLine{159     uint8\_t brightness = (m\_Counter < 128) ? m\_Counter : 255 -\/ m\_Counter;}
+\DoxyCodeLine{160 }
+\DoxyCodeLine{161     \textcolor{comment}{// Multiply our three colors by the brightness:}}
+\DoxyCodeLine{162     redMax *= ((float)brightness / 128.0);}
+\DoxyCodeLine{163     greenMax *= ((float)brightness / 128.0);}
+\DoxyCodeLine{164     blueMax *= ((float)brightness / 128.0);}
+\DoxyCodeLine{165     \textcolor{comment}{// And turn the LED to that color:}}
+\DoxyCodeLine{166     setRGB((redMax << 16) | (greenMax << 8) | blueMax);}
+\DoxyCodeLine{167 }
+\DoxyCodeLine{168     \textcolor{comment}{// This function relies on the 8-\/bit, unsigned m\_Counter rolling over.}}
+\DoxyCodeLine{169     m\_Counter = (m\_Counter+1) \% 256;}
+\DoxyCodeLine{170     \textcolor{keywordflow}{return} breathePeriod / 256;}
+\DoxyCodeLine{171   \}}
+\DoxyCodeLine{172 }
+\DoxyCodeLine{173 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175   \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{176   uint32\_t beatLED(uint32\_t, \textcolor{keyword}{const} T\& beat) \{}
+\DoxyCodeLine{177     \textcolor{keyword}{const} uint8\_t cnt = \textcolor{keyword}{sizeof}(beat)/\textcolor{keyword}{sizeof}(beat[0]);}
+\DoxyCodeLine{178     setLED((m\_Counter \% 2 == 0) ? BOARD\_LED\_BRIGHTNESS : 0);}
+\DoxyCodeLine{179     uint32\_t next = beat[m\_Counter \% cnt];}
+\DoxyCodeLine{180     m\_Counter = (m\_Counter+1) \% cnt;}
+\DoxyCodeLine{181     \textcolor{keywordflow}{return} next;}
+\DoxyCodeLine{182   \}}
+\DoxyCodeLine{183 }
+\DoxyCodeLine{184   uint32\_t waveLED(uint32\_t, \textcolor{keywordtype}{unsigned} breathePeriod) \{}
+\DoxyCodeLine{185     uint32\_t brightness = (m\_Counter < 128) ? m\_Counter : 255 -\/ m\_Counter;}
+\DoxyCodeLine{186 }
+\DoxyCodeLine{187     setLED(DIMM(brightness*2));}
+\DoxyCodeLine{188 }
+\DoxyCodeLine{189     \textcolor{comment}{// This function relies on the 8-\/bit, unsigned m\_Counter rolling over.}}
+\DoxyCodeLine{190     m\_Counter = (m\_Counter+1) \% 256;}
+\DoxyCodeLine{191     \textcolor{keywordflow}{return} breathePeriod / 256;}
+\DoxyCodeLine{192   \}}
+\DoxyCodeLine{193 }
+\DoxyCodeLine{194 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196 \textcolor{keyword}{private}:}
+\DoxyCodeLine{197   uint8\_t m\_Counter;}
+\DoxyCodeLine{198   State   m\_PrevState;}
+\DoxyCodeLine{199 \};}
+\DoxyCodeLine{200 }
+\DoxyCodeLine{201 \mbox{\hyperlink{class_indicator}{Indicator}} indicator;}
+\DoxyCodeLine{202 }
+\DoxyCodeLine{203 \textcolor{comment}{/*}}
+\DoxyCodeLine{204 \textcolor{comment}{ * Animation timers}}
+\DoxyCodeLine{205 \textcolor{comment}{ */}}
+\DoxyCodeLine{206 }
+\DoxyCodeLine{207 \textcolor{preprocessor}{\#if defined(USE\_TC3)}}
+\DoxyCodeLine{208 }
+\DoxyCodeLine{209 \textcolor{preprocessor}{  \#include <TimerTC3.h>}}
+\DoxyCodeLine{210 }
+\DoxyCodeLine{211   \textcolor{keywordtype}{void} indicator\_run() \{}
+\DoxyCodeLine{212     uint32\_t returnTime = indicator.run();}
+\DoxyCodeLine{213     \textcolor{keywordflow}{if} (returnTime) \{}
+\DoxyCodeLine{214       TimerTc3.initialize(returnTime*1000);}
+\DoxyCodeLine{215     \}}
+\DoxyCodeLine{216   \}}
+\DoxyCodeLine{217 }
+\DoxyCodeLine{218   \textcolor{keywordtype}{void} indicator\_init() \{}
+\DoxyCodeLine{219     indicator.init();}
+\DoxyCodeLine{220     TimerTc3.initialize(100*1000);}
+\DoxyCodeLine{221     TimerTc3.attachInterrupt(indicator\_run);}
+\DoxyCodeLine{222   \}}
+\DoxyCodeLine{223 }
+\DoxyCodeLine{224 \textcolor{preprocessor}{\#elif defined(USE\_TCC0)}}
+\DoxyCodeLine{225 }
+\DoxyCodeLine{226 \textcolor{preprocessor}{  \#include <TimerThree.h>}}
+\DoxyCodeLine{227 }
+\DoxyCodeLine{228   \textcolor{keywordtype}{void} indicator\_run() \{}
+\DoxyCodeLine{229     uint32\_t returnTime = indicator.run();}
+\DoxyCodeLine{230     \textcolor{keywordflow}{if} (returnTime) \{}
+\DoxyCodeLine{231       Timer3.initialize(returnTime*1000);}
+\DoxyCodeLine{232     \}}
+\DoxyCodeLine{233   \}}
+\DoxyCodeLine{234 }
+\DoxyCodeLine{235   \textcolor{keywordtype}{void} indicator\_init() \{}
+\DoxyCodeLine{236     indicator.init();}
+\DoxyCodeLine{237     Timer3.initialize(100*1000);}
+\DoxyCodeLine{238     Timer3.attachInterrupt(indicator\_run);}
+\DoxyCodeLine{239   \}}
+\DoxyCodeLine{240 }
+\DoxyCodeLine{241 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{242 }
+\DoxyCodeLine{243 \textcolor{preprocessor}{  \#warning LED indicator needs a functional timer!}}
+\DoxyCodeLine{244 }
+\DoxyCodeLine{245   \textcolor{keywordtype}{void} indicator\_run() \{\}}
+\DoxyCodeLine{246   \textcolor{keywordtype}{void} indicator\_init() \{\}}
+\DoxyCodeLine{247 }
+\DoxyCodeLine{248 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{249 }
+
+\end{DoxyCode}

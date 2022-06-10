@@ -1,0 +1,131 @@
+\hypertarget{_edgent___m_k_r1010_2_blynk_edgent_8h_source}{}\doxysection{Blynk\+Edgent.\+h}
+\label{_edgent___m_k_r1010_2_blynk_edgent_8h_source}\index{lib/Blynk/examples/Blynk.Edgent/Edgent\_MKR1010/BlynkEdgent.h@{lib/Blynk/examples/Blynk.Edgent/Edgent\_MKR1010/BlynkEdgent.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{2 \textcolor{keyword}{extern} \textcolor{stringliteral}{"{}C"{}} \{}
+\DoxyCodeLine{3   \textcolor{keywordtype}{void} app\_loop();}
+\DoxyCodeLine{4   \textcolor{keywordtype}{void} restartMCU();}
+\DoxyCodeLine{5 \}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}Settings.h"{}}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <SPI.h>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <WiFiNINA.h>}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#define BLYNK\_SEND\_ATOMIC}}
+\DoxyCodeLine{12 \textcolor{comment}{//\#define BLYNK\_USE\_SSL}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_8h}{Blynk.h}}>}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_wi_fi_common_8h}{Adapters/BlynkWiFiCommon.h}}>}}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 WiFiSSLClient \_blynkWifiClient;}
+\DoxyCodeLine{18 \textcolor{comment}{//WiFiClient \_blynkWifiClient;}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20 \mbox{\hyperlink{class_blynk_arduino_client_gen}{BlynkArduinoClient}} \_blynkTransport(\_blynkWifiClient);}
+\DoxyCodeLine{21 \mbox{\hyperlink{class_blynk_wifi_common}{BlynkWifiCommon}} Blynk(\_blynkTransport);}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_blynk_widgets_8h}{BlynkWidgets.h}}>}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#ifndef BLYNK\_NEW\_LIBRARY}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#error "{}Old version of Blynk library is in use. Please replace it with the new one."{}}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#if !defined(BLYNK\_TEMPLATE\_ID) || !defined(BLYNK\_DEVICE\_NAME)}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#error "{}Please specify your BLYNK\_TEMPLATE\_ID and BLYNK\_DEVICE\_NAME"{}}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include "{}BlynkState.h"{}}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#include "{}ConfigStore.h"{}}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#include "{}ResetButton.h"{}}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#include "{}ConfigMode.h"{}}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#include "{}Indicator.h"{}}}
+\DoxyCodeLine{38 \textcolor{preprocessor}{\#include "{}OTA.h"{}}}
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#include "{}Console.h"{}}}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41 \textcolor{keyword}{inline}}
+\DoxyCodeLine{42 \textcolor{keywordtype}{void} BlynkState::set(State m) \{}
+\DoxyCodeLine{43   \textcolor{keywordflow}{if} (state != m \&\& m < MODE\_MAX\_VALUE) \{}
+\DoxyCodeLine{44     \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(String(StateStr[state]) + \textcolor{stringliteral}{"{} => "{}} + StateStr[m]);}
+\DoxyCodeLine{45     state = m;}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{comment}{// You can put your state handling here,}}
+\DoxyCodeLine{48     \textcolor{comment}{// i.e. implement custom indication}}
+\DoxyCodeLine{49   \}}
+\DoxyCodeLine{50 \}}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52 \textcolor{keywordtype}{void} printDeviceBanner()}
+\DoxyCodeLine{53 \{}
+\DoxyCodeLine{54   Blynk.printBanner();}
+\DoxyCodeLine{55   \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/"{}});}
+\DoxyCodeLine{56   \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(String(\textcolor{stringliteral}{"{}Product:  "{}}) + BLYNK\_DEVICE\_NAME);}
+\DoxyCodeLine{57   \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(String(\textcolor{stringliteral}{"{}Firmware: "{}}) + BLYNK\_FIRMWARE\_VERSION \textcolor{stringliteral}{"{} (build "{}} \_\_DATE\_\_ \textcolor{stringliteral}{"{} "{}} \_\_TIME\_\_ \textcolor{stringliteral}{"{})"{}});}
+\DoxyCodeLine{58   \textcolor{keywordflow}{if} (configStore.getFlag(CONFIG\_FLAG\_VALID)) \{}
+\DoxyCodeLine{59     \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(String(\textcolor{stringliteral}{"{}Token:    ..."{}}) + (configStore.cloudToken+28));}
+\DoxyCodeLine{60   \}}
+\DoxyCodeLine{61   \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(String(\textcolor{stringliteral}{"{}Device:   "{}}) + BLYNK\_INFO\_DEVICE);}
+\DoxyCodeLine{62   \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(String(\textcolor{stringliteral}{"{}WiFi FW:  "{}}) + WiFi.firmwareVersion());}
+\DoxyCodeLine{63   \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/"{}});}
+\DoxyCodeLine{64 \}}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66 \textcolor{keywordtype}{void} runBlynkWithChecks() \{}
+\DoxyCodeLine{67   Blynk.run();}
+\DoxyCodeLine{68   \textcolor{keywordflow}{if} (BlynkState::get() == MODE\_RUNNING) \{}
+\DoxyCodeLine{69     \textcolor{keywordflow}{if} (!Blynk.connected()) \{}
+\DoxyCodeLine{70       \textcolor{keywordflow}{if} (WiFi.status() == WL\_CONNECTED) \{}
+\DoxyCodeLine{71         BlynkState::set(MODE\_CONNECTING\_CLOUD);}
+\DoxyCodeLine{72       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{73         BlynkState::set(MODE\_CONNECTING\_NET);}
+\DoxyCodeLine{74       \}}
+\DoxyCodeLine{75     \}}
+\DoxyCodeLine{76   \}}
+\DoxyCodeLine{77 \}}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79 \textcolor{keyword}{class }\mbox{\hyperlink{class_edgent}{Edgent}} \{}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81 \textcolor{keyword}{public}:}
+\DoxyCodeLine{82   \textcolor{keywordtype}{void} begin()}
+\DoxyCodeLine{83   \{}
+\DoxyCodeLine{84     indicator\_init();}
+\DoxyCodeLine{85     button\_init();}
+\DoxyCodeLine{86     config\_init();}
+\DoxyCodeLine{87     console\_init();}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89     printDeviceBanner();}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91     \textcolor{keywordflow}{if} (configStore.getFlag(CONFIG\_FLAG\_VALID)) \{}
+\DoxyCodeLine{92       BlynkState::set(MODE\_CONNECTING\_NET);}
+\DoxyCodeLine{93     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (config\_load\_blnkopt()) \{}
+\DoxyCodeLine{94       \mbox{\hyperlink{_d_h_t_8h_a88edd2aa4feabff4af21a997d5d8aa23}{DEBUG\_PRINT}}(\textcolor{stringliteral}{"{}Firmware is preprovisioned"{}});}
+\DoxyCodeLine{95       BlynkState::set(MODE\_CONNECTING\_NET);}
+\DoxyCodeLine{96     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{97       BlynkState::set(MODE\_WAIT\_CONFIG);}
+\DoxyCodeLine{98     \}}
+\DoxyCodeLine{99   \}}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101   \textcolor{keywordtype}{void} run() \{}
+\DoxyCodeLine{102     app\_loop();}
+\DoxyCodeLine{103     \textcolor{keywordflow}{switch} (BlynkState::get()) \{}
+\DoxyCodeLine{104     \textcolor{keywordflow}{case} MODE\_WAIT\_CONFIG:       }
+\DoxyCodeLine{105     \textcolor{keywordflow}{case} MODE\_CONFIGURING:       enterConfigMode();    \textcolor{keywordflow}{break};}
+\DoxyCodeLine{106     \textcolor{keywordflow}{case} MODE\_CONNECTING\_NET:    enterConnectNet();    \textcolor{keywordflow}{break};}
+\DoxyCodeLine{107     \textcolor{keywordflow}{case} MODE\_CONNECTING\_CLOUD:  enterConnectCloud();  \textcolor{keywordflow}{break};}
+\DoxyCodeLine{108     \textcolor{keywordflow}{case} MODE\_RUNNING:           runBlynkWithChecks(); \textcolor{keywordflow}{break};}
+\DoxyCodeLine{109     \textcolor{keywordflow}{case} MODE\_OTA\_UPGRADE:       enterOTA();           \textcolor{keywordflow}{break};}
+\DoxyCodeLine{110     \textcolor{keywordflow}{case} MODE\_SWITCH\_TO\_STA:     enterSwitchToSTA();   \textcolor{keywordflow}{break};}
+\DoxyCodeLine{111     \textcolor{keywordflow}{case} MODE\_RESET\_CONFIG:      enterResetConfig();   \textcolor{keywordflow}{break};}
+\DoxyCodeLine{112     \textcolor{keywordflow}{default}:                     enterError();         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{113     \}}
+\DoxyCodeLine{114   \}}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116 \};}
+\DoxyCodeLine{117 }
+\DoxyCodeLine{118 \mbox{\hyperlink{class_edgent}{Edgent}} BlynkEdgent;}
+\DoxyCodeLine{119 BlynkTimer edgentTimer;}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121 \textcolor{keywordtype}{void} app\_loop() \{}
+\DoxyCodeLine{122     edgentTimer.run();}
+\DoxyCodeLine{123     edgentConsole.run();}
+\DoxyCodeLine{124 \}}
+\DoxyCodeLine{125 }
+
+\end{DoxyCode}

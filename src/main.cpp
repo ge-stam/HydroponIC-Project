@@ -38,10 +38,10 @@ char hour_buffer[5];
 char min_buffer[5];
 // WiFi credentials.
 // Set password to "" for open networks.
-//char ssid[] = "Sensors";
-//char pass[] = "sensorslab";
-char ssid[] = "WIND_2.4G_12CA41";
-char pass[] = "U4T78YGG";
+char ssid[] = "Sensors";
+char pass[] = "sensorslab";
+//char ssid[] = "WIND_2.4G_12CA41";
+//char pass[] = "U4T78YGG";
 
 static float voltage;
 static unsigned long previous_time;
@@ -118,7 +118,7 @@ BLYNK_WRITE(V11)
 }
 
 /**
- * @brief Get channel's cayenne datatype
+ * @brief Get the value of PH_UP_PUMP Switch from Blynk
  * @param V13 Datastream from Blynk
  */
 BLYNK_WRITE(V13)
@@ -133,7 +133,7 @@ BLYNK_WRITE(V13)
 }
 
 /**
- * @brief Get channel's cayenne datatype
+ * @brief Get the value of PH_DOWN_PUMP Switch from Blynk
  * @param V14 Datastream from Blynk
  */
 BLYNK_WRITE(V14)
@@ -150,7 +150,7 @@ BLYNK_WRITE(V14)
 }
 
 /**
- * @brief Get channel's cayenne datatype
+ * @brief Get the value of EC_UP_PUMP Switch from Blynk
  * @param V15 Datastream from Blynk
  */
 BLYNK_WRITE(V15)
@@ -189,6 +189,8 @@ void HighFreqData()
   Blynk.virtualWrite(V6, s.Read_Light());
   Blynk.virtualWrite(V7, s.Read_DS18B20());
   Blynk.virtualWrite(V12, date_buffer);
+  Blynk.virtualWrite(V8, s.Read_TDS());
+  Blynk.virtualWrite(V9, s.Read_PH());
 }
 
 /**
@@ -222,13 +224,17 @@ void Check_Led()
   printLocalTime();
   if((atoi(hour_buffer) > LED_START_HOUR_TIME || (atoi(hour_buffer) == LED_START_HOUR_TIME && atoi(min_buffer) >= LED_START_MIN_TIME))
       && (atoi(hour_buffer) < LED_STOP_HOUR_TIME || (atoi(hour_buffer) == LED_STOP_HOUR_TIME && atoi(min_buffer) <= LED_STOP_MIN_TIME))){
+        Blynk.virtualWrite(V21, "ON");
+        Serial.println("Led is ON");
         for(int i=0;i<NUMPIXELS;i++)
         {
-          pixels.setPixelColor(i, pixels.Color(160,20,20)); // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255 
+          pixels.setPixelColor(i, pixels.Color(80,10,10)); // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255 
           pixels.show(); // This sends the updated pixel color to the hardware.
         }
       }
       else{
+       Blynk.virtualWrite(V21, "OFF");
+       Serial.println("Led is OFF");
        for(int i=0;i<NUMPIXELS;i++)
         {
           pixels.setPixelColor(i, pixels.Color(0,0,0)); 
@@ -243,13 +249,14 @@ void setup()
   EEPROM.begin(512); // Initialise EEPROM
   Blynk.begin(auth, ssid, pass); //Initialise Blynk
   connectWifi_getTime();
-  pixels.begin(); // This initializes the NeoPixel library.
   /* Initialize sensors and parts */
   s.Init_sensors();
   wp.Init_WaterPump();
   wp.Set_WP_ON();
   lp.Init_LiquidPumps();
   Serial.println(date_buffer);
+  pixels.begin(); // This initializes the NeoPixel library.
+  Check_Led();
   timer.setInterval(900000L, LowFreqData); // reads data every 15 minutes
   timer.setInterval(2000L, HighFreqData);  // reads data every 2 secs
   timer.setInterval(120000L, Check_Led);   // checks every 2 mins
