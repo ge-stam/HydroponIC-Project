@@ -25,9 +25,9 @@ class Sensors{
   float get_my_PH();
   float get_my_TDS();
 
-  private:
-  float myPH = 0.0;
-  float myTDS = 0.0;
+  public:
+  float myPH = 6.0;
+  float myTDS = 750.0;
   };
 
 #endif

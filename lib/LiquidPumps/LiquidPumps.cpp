@@ -10,8 +10,7 @@ static unsigned long previousMillis;
  * @brief Constructor of LiquidPumps
  * @param An object of class Sensors
  */
-LiquidPumps::LiquidPumps(Sensors &sens){
-    my_sens = sens;
+LiquidPumps::LiquidPumps(){
 }
 
 /**
@@ -114,7 +113,7 @@ void LiquidPumps::set_EC_UP_PUMP_OFF(){
 /**
  * @brief Raise PH by setting the pump that contains PH UP Liquid ON for a while
  */
-void LiquidPumps::raise_PH(){ 
+/*void LiquidPumps::raise_PH(){ 
     Serial.println("LOW pH level");
     set_PH_UP_PUMP_ON();
     currentMillis = millis();
@@ -124,12 +123,12 @@ void LiquidPumps::raise_PH(){
     }  
     set_PH_UP_PUMP_OFF();
     Serial.println("Completed");       
-}
+}*/
 
 /**
  * @brief Lower PH by setting the pump that contains PH DOWN Liquid ON for a while
  */
-void LiquidPumps::lower_PH(){
+/*void LiquidPumps::lower_PH(){
     Serial.println("HIGH pH level");
     set_PH_DOWN_PUMP_ON();
     currentMillis = millis();
@@ -139,12 +138,12 @@ void LiquidPumps::lower_PH(){
     }  
     set_PH_DOWN_PUMP_OFF();
     Serial.println("Completed");
-}
+}*/
 
 /**
  * @brief Raise EC by setting the pump that contains EC UP Liquid ON for a while
  */
-void LiquidPumps::raise_EC(){
+/*void LiquidPumps::raise_EC(){
     Serial.println("LOW EC level");
     set_EC_UP_PUMP_ON();
     currentMillis = millis();
@@ -154,13 +153,13 @@ void LiquidPumps::raise_EC(){
     }  
     set_EC_UP_PUMP_OFF();
     Serial.println("Completed");
-}
+}*/
 
 
 /**
  * @brief Check if PH needs configuration
  */
-void LiquidPumps::check_ph(){
+/*void LiquidPumps::check_ph(){
     float phv = my_sens.get_my_PH();
     if (phv > MAX_PH) { 
         lower_PH();
@@ -168,14 +167,14 @@ void LiquidPumps::check_ph(){
     else if(phv < MIN_PH){
         raise_PH();
     }
-}
+}*/
 
 /**
  * @brief Check if EC needs configuration
  */
-void LiquidPumps::check_ec(){
+/*void LiquidPumps::check_ec(){
     float ecv = my_sens.get_my_TDS();
     if (ecv < MIN_EC) { 
         raise_EC();
     }
-}
+}*/

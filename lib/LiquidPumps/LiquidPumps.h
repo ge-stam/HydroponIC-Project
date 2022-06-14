@@ -6,7 +6,7 @@
 class LiquidPumps{
 
     public: 
-    LiquidPumps(Sensors &sens);
+    LiquidPumps();
     void Init_LiquidPumps();
     int get_PH_UP_state();
     int get_PH_DOWN_state();
@@ -17,12 +17,11 @@ class LiquidPumps{
     void set_PH_UP_PUMP_OFF();
     void set_PH_DOWN_PUMP_OFF();
     void set_EC_UP_PUMP_OFF();
-    void raise_PH();
+    /*void raise_PH();
     void lower_PH();
     void raise_EC();
     void check_ph();
-    void check_ec();
-    Sensors my_sens;
+    void check_ec();*/
 
     private:
     int PH_UP_state = 0;

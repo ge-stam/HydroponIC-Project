@@ -43,17 +43,87 @@ char pass[] = "sensorslab";
 //char ssid[] = "WIND_2.4G_12CA41";
 //char pass[] = "U4T78YGG";
 
+static unsigned long currentMillis;
+static unsigned long previousMillis;
 static float voltage;
 static unsigned long previous_time;
 static unsigned long current_time;
 static Sensors s;
 static WaterPump wp;
-static LiquidPumps lp(s);
+static LiquidPumps lp;
 static Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, LED_RING_PIN, NEO_GRB + NEO_KHZ800);
 BlynkTimer timer;
 const char* ntpServer = "pool.ntp.org";
 const long  gmtOffset_sec = 7200;
 const int   daylightOffset_sec = 3600;
+
+/**
+ * @brief Raise PH by setting the pump that contains PH UP Liquid ON for a while
+ */
+void raise_PH(){ 
+    Serial.println("LOW pH level");
+    lp.set_PH_UP_PUMP_ON();
+    currentMillis = millis();
+    previousMillis = millis();     
+    while (currentMillis - previousMillis < PH_ADJ_TIME) { 
+        currentMillis = millis(); 
+    }  
+    lp.set_PH_UP_PUMP_OFF();
+    Serial.println("Completed");       
+}
+
+/**
+ * @brief Lower PH by setting the pump that contains PH DOWN Liquid ON for a while
+ */
+void lower_PH(){
+    Serial.println("HIGH pH level");
+    lp.set_PH_DOWN_PUMP_ON();
+    currentMillis = millis();
+    previousMillis = millis();     
+    while (currentMillis - previousMillis < PH_ADJ_TIME) { 
+        currentMillis = millis(); 
+    }  
+    lp.set_PH_DOWN_PUMP_OFF();
+    Serial.println("Completed");
+}
+
+/**
+ * @brief Raise EC by setting the pump that contains EC UP Liquid ON for a while
+ */
+void raise_EC(){
+    Serial.println("LOW EC level");
+    lp.set_EC_UP_PUMP_ON();
+    currentMillis = millis();
+    previousMillis = millis();     
+    while (currentMillis - previousMillis < PH_ADJ_TIME) { 
+        currentMillis = millis(); 
+    }  
+    lp.set_EC_UP_PUMP_OFF();
+    Serial.println("Completed");
+}
+
+/**
+ * @brief Checks PH
+ */
+void check_ph(){
+  float phv = s.get_my_PH();
+  if (phv > MAX_PH) { 
+      lower_PH();
+  }
+  else if(phv < MIN_PH){
+      raise_PH();
+  }
+}
+
+/**
+ * @brief Checks EC
+ */
+void check_ec(){
+  float ecv = s.get_my_TDS();
+    if (ecv < MIN_EC) { 
+        raise_EC();
+    }
+}
 
 /**
  * @brief Prints Local Date
@@ -140,11 +210,9 @@ BLYNK_WRITE(V14)
 {
   int value = param.asInt();
   if(value){
-    Blynk.virtualWrite(V17, "ON");
     lp.set_PH_DOWN_PUMP_ON();
   }
   else{
-    Blynk.virtualWrite(V17, "OFF");
     lp.set_PH_DOWN_PUMP_OFF();
   }
 }
@@ -200,8 +268,8 @@ void HighFreqData()
 void LowFreqData()
 {
   s.Read_low_freq_sensors();
-  lp.check_ph();
-  lp.check_ec(); 
+  check_ph();
+  check_ec(); 
 
   float tds_val = s.get_my_TDS();
   Blynk.virtualWrite(V8, tds_val);
@@ -257,7 +325,7 @@ void setup()
   Serial.println(date_buffer);
   pixels.begin(); // This initializes the NeoPixel library.
   Check_Led();
-  timer.setInterval(900000L, LowFreqData); // reads data every 15 minutes
+  timer.setInterval(10000L, LowFreqData); // reads data every 15 minutes
   timer.setInterval(2000L, HighFreqData);  // reads data every 2 secs
   timer.setInterval(120000L, Check_Led);   // checks every 2 mins
 }
